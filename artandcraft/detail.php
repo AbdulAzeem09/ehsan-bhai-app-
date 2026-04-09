@@ -2006,7 +2006,7 @@ Pay only after collecting item</p>
                   <?php
 
                   $pid = $_SESSION['pid'];
-                  $con = mysqli_connect(DOMAIN, UNAME, PASS);
+                  $con = mysqli_connect(DBHOST, UNAME, PASS);
                   if (mysqli_select_db($con, DBNAME)) {
                     $sql = "SELECT * FROM `sppostingsartcraft` ORDER BY spPostingDate ASC";
                     $result = mysqli_query($con, $sql);
@@ -2117,7 +2117,7 @@ Pay only after collecting item</p>
 <?php
 
     $pid = $_SESSION['pid'];
-    $con = mysqli_connect(DOMAIN, UNAME, PASS);
+    $con = mysqli_connect(DBHOST, UNAME, PASS);
     if (mysqli_select_db($con, DBNAME)) {
       $sql = "SELECT * FROM `sppostingsartcraft` where spProfiles_idspProfiles= $pid AND saveasdraft=0 ORDER BY spPostingDate ASC";
       $result = mysqli_query($con, $sql);

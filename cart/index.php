@@ -1768,7 +1768,7 @@ echo "<div class='col-md-12 ' style=' float: right; margin-bottom: 25px; '>
 </div></div>   
 "; ?>
 <?php
-$con =  mysqli_connect(DOMAIN, UNAME, PASS);
+$con =  mysqli_connect(DBHOST, UNAME, PASS);
 
 if (!$con) {
   die('Not Connected To Server');
@@ -2063,7 +2063,7 @@ if (isset($shipnotshow) && $shipnotshow == 1) {
     <?php } ?>
     <h3 style="color: #032350; float-left;">Shipping Address</h3>
     <?php
-    $con =  mysqli_connect(DOMAIN, UNAME, PASS);
+    $con =  mysqli_connect(DBHOST, UNAME, PASS);
 
     if (!$con) {
       die('Not Connected To Server');

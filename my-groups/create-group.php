@@ -8,7 +8,7 @@ include('../univ/baseurl.php');
 // $dbPass     =   'Office@256';
 // $dbName     =   'thesharepage';
 include('../univ/main.php');
-$dbConn = mysqli_connect(DOMAIN, UNAME, PASS, DBNAME);
+$dbConn = mysqli_connect(DBHOST, UNAME, PASS, DBNAME);
 // Check connection
 if (mysqli_connect_errno()) {
 echo "Failed to connect to MySQL: " . mysqli_connect_error();
@@ -178,7 +178,7 @@ $result2 = $g->groupdetails($row['idspGroup']);
 // $row2 = mysqli_fetch_assoc($result2);  
 if ($result2 != false) {
 $row2 = mysqli_fetch_assoc($result2);
-$con = mysqli_connect(DOMAIN, UNAME, PASS);
+$con = mysqli_connect(DBHOST, UNAME, PASS);
 if (!$con) {
 die('Not Connected To Server');
 }
@@ -608,7 +608,7 @@ if ($result2 != false) {
 $row2 = mysqli_fetch_assoc($result2);
 //print_r($row2);
 
-$con = mysqli_connect(DOMAIN, UNAME, PASS);
+$con = mysqli_connect(DBHOST, UNAME, PASS);
 
 if (!$con) {
 

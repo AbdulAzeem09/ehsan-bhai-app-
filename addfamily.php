@@ -9,7 +9,7 @@ include("../univ/main.php");
 /*require_once '../library/config.php';
 	require_once '../library/functions.php';*/
 //$conn = _data::getConnection();
-$con = mysqli_connect(DOMAIN, UNAME, PASS);
+$con = mysqli_connect(DBHOST, UNAME, PASS);
 
 if (!$con) {
 	die('Not Connected To Server');

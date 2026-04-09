@@ -247,7 +247,7 @@ padding:9px 12px!important;
 include_once("../../header.php");
 
 
-$con = mysqli_connect(DOMAIN, UNAME, PASS, DBNAME);
+$con = mysqli_connect(DBHOST, UNAME, PASS, DBNAME);
 
 if (!$con) {
 die('Not Connected To Server');
@@ -873,7 +873,7 @@ if ($acc['is_email_verify'] && $acc['is_phone_verify']) {
 
 <?php
 
-$con = mysqli_connect(DOMAIN, UNAME, PASS, DBNAME);
+$con = mysqli_connect(DBHOST, UNAME, PASS, DBNAME);
 
 if (!$con) {
 die('Not Connected To Server');
@@ -1560,7 +1560,7 @@ name="spUserEmail" value="<?php //echo $useremail;
 
 <?php
 
-$con = mysqli_connect(DOMAIN, UNAME, PASS, DBNAME);
+$con = mysqli_connect(DBHOST, UNAME, PASS, DBNAME);
 //echo DBNAME;
 
 

@@ -48,7 +48,7 @@ if($res != false){
 
 while ($row = mysqli_fetch_assoc($res)) {
 $idsp=$row['idspPostings'];
-$conn = mysqli_connect(DOMAIN, UNAME, PASS);
+$conn = mysqli_connect(DBHOST, UNAME, PASS);
 if(mysqli_select_db($conn, DBNAME)) {
 $sqli = "SELECT * FROM `sppostfield` WHERE spPostings_idspPostings= $idsp AND spPostFieldName='photos_'  AND spPostFieldValue = $catid";
 //echo $sqli; 

@@ -496,7 +496,7 @@ if ($result2 != false) {
 $row2 = mysqli_fetch_assoc($result2);
 //print_r($row2);
 
-$con = mysqli_connect(DOMAIN, UNAME, PASS);
+$con = mysqli_connect(DBHOST, UNAME, PASS);
 
 if (!$con) {
 

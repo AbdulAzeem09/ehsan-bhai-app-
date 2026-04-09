@@ -9,7 +9,7 @@ error_reporting(E_ALL);
 
 
 
-   $con = mysqli_connect(DOMAIN, UNAME, PASS);
+   $con = mysqli_connect(DBHOST, UNAME, PASS);
 
      if(!$con) {
         die('Not Connected To Server');
