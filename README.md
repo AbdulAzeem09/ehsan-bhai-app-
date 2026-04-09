@@ -117,6 +117,7 @@ http://localhost/SHAREPAGE_CODES-Hafiz_Dev/
 |---|---|---|
 | `mysqli_connect(): (HY000/2002)` | `DB_HOST` is wrong | Set `DB_HOST=localhost` in `.env` |
 | Assets 404 / blank page | `BASE_URL` missing subdirectory | Already fixed – dynamic computation; ensure project folder is correct |
+| CSS not loading / design broken | Wrong CSS path in templates | Main stylesheet is at `css/style.css`; verify templates use `<?= $BaseUrl ?>/css/style.css` – **not** `assets/style.css` or `/new-homepage.css` |
 | `net::ERR_NAME_NOT_RESOLVED` | `DOMAIN` used as a URL hostname | Set `DOMAIN=localhost` (bare hostname, no path) |
 | `.env` not found / `parse_ini_file` warning | `.env` missing | Create `.env` at `C:\xampp\htdocs\.env` or in the project root |
 

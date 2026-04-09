@@ -254,7 +254,7 @@ header("Location: $BaseUrl/artandcraft/dashboard/index.php?msg=notacess");
 
 <!--<script src="<?php echo $BaseUrl; ?>/assets/js/home.js"></script>-->
 <script src="<?php echo $BaseUrl; ?>/assets/js/posting/photos.js?<?php echo rand(); ?>"></script>
-<link rel="stylesheet" type="text/css" href="https://dev.thesharepage.com/assets/css/style.css">
+<link rel="stylesheet" type="text/css" href="<?php echo $BaseUrl; ?>/css/style.css">
 <link rel="stylesheet" href="<?php echo $BaseUrl; ?>/assets/css/alert.core.min.css">
 <link rel="stylesheet" href="<?php echo $BaseUrl; ?>/assets/css/alert.default.min.css">
 <link rel="stylesheet" href="<?php echo $BaseUrl; ?>/assets/css/alert.lite.min.css">

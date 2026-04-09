@@ -118,7 +118,7 @@ if ($rpvt != false) {
         <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
         <!-- Template Main CSS File -->
-        <link href="assets/css/style.css" rel="stylesheet">
+        <link href="<?php echo $BaseUrl; ?>/css/style.css" rel="stylesheet">
         <?php include('../component/f_links.php');
         ?>
 

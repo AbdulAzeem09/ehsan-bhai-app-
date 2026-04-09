@@ -123,7 +123,7 @@ if(!isset($_SESSION['pid'])){
 
 
 <!--Font awesome core css-->
-<link rel="stylesheet" type="text/css" href="https://dev.thesharepage.com/assets/css/style.css">
+<link rel="stylesheet" type="text/css" href="<?php echo $BaseUrl; ?>/css/style.css">
 <link href="<?php echo $BaseUrl; ?>/assets/css/font-awesome.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo $BaseUrl; ?>/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 <!--custom css jis ki wja say issue ho rha tha form submit main-->
