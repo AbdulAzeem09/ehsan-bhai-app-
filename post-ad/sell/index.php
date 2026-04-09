@@ -413,7 +413,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
       <meta name="description" content="The SharePage">
       <title>The SharePage</title>
-      <link rel="stylesheet" type="text/css" href="https://dev.thesharepage.com/assets/css/style.css">
+      <link rel="stylesheet" type="text/css" href="<?php echo $BaseUrl; ?>/css/style.css">
       <link rel="stylesheet" type="text/css" href="<?php echo $BaseUrl; ?>/assets/css/design.css">
       <link rel="icon" href="<?php echo $BaseUrl . '/assets/images/logo/tsp_trans.png' ?>" sizes="16x16" type="image/png">
       <!--Bootstrap core css-->

@@ -226,7 +226,7 @@ header("Location: $BaseUrl/freelancer/dashboard/poster_dashboard.php?msg=notaces
 
 <!-- Design.css -->
 <link rel="stylesheet" type="text/css" href="<?php echo $BaseUrl; ?>/assets/css/design.css">
-<link rel="stylesheet" type="text/css" href="https://dev.thesharepage.com/assets/css/style.css">
+<link rel="stylesheet" type="text/css" href="<?php echo $BaseUrl; ?>/css/style.css">
 <link rel="icon" href="<?php echo $BaseUrl . '/assets/images/logo/tsp_trans.png' ?>" sizes="16x16" type="image/png">
 <!--Bootstrap core css-->
 <link href="<?php echo $BaseUrl; ?>/assets/css/bootstrap.css" rel="stylesheet" type="text/css">
