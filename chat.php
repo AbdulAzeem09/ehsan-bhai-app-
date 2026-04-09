@@ -41,7 +41,7 @@ global $dbh;
 //$dbh = mysql_connect(DBPATH,DBUSER,DBPASS);
 //mysql_selectdb(DBNAME,$dbh);
 
-	$dbh = mysqli_connect(DOMAIN,UNAME,PASS,DBNAME) or die(mysqli_error()); 
+	$dbh = mysqli_connect(DBHOST,UNAME,PASS,DBNAME) or die(mysqli_error()); 
 // echo constant('UNAME');
 // exit;	
 

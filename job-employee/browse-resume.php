@@ -91,7 +91,7 @@ if (!isset($_SESSION['uid'])) {
                                             {
                                                 $profile = mysqli_fetch_assoc($profile);
                                             }
-                                            $conn = mysqli_connect(DOMAIN, UNAME, PASS, DBNAME);
+                                            $conn = mysqli_connect(DBHOST, UNAME, PASS, DBNAME);
                                             $sql = "SELECT tbl_country.country_title,tbl_state.state_title, tbl_city.city_title  
                                                 FROM spprofiles
                                                 left join tbl_country on tbl_country.country_id = ".$_SESSION['Countryfilter']."

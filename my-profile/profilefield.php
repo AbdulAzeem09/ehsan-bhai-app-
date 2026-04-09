@@ -147,7 +147,7 @@ if ($res != false) {
 	$address_city = $row["address"];
 }
 
-$con =  mysqli_connect(DOMAIN, UNAME, PASS);
+$con =  mysqli_connect(DBHOST, UNAME, PASS);
 
 if (!$con) {
 	die('Not Connected To Server');

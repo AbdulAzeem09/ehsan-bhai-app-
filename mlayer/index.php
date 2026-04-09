@@ -2169,7 +2169,7 @@ echo" <div class='col-md-3' style='float: right; padding-bottom: 25px; padding-l
 											
 											<?php  
 												
-												$con =  mysqli_connect(DOMAIN, UNAME, PASS);
+												$con =  mysqli_connect(DBHOST, UNAME, PASS);
 												
 												if(!$con) {
 													die('Not Connected To Server');

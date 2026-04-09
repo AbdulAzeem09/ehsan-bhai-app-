@@ -11,7 +11,7 @@ $rowperpage = 3;
  $start = date('Y-m-d', strtotime('-7 days'));
 // selecting posts
 
-    $con = mysqli_connect(DOMAIN, UNAME, PASS);
+    $con = mysqli_connect(DBHOST, UNAME, PASS);
 
      if(!$con) {
         die('Not Connected To Server');

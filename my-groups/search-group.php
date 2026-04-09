@@ -5,7 +5,7 @@ ini_set('display_errors', '1');*/
 include('../univ/baseurl.php');
 include("../univ/main.php");
 session_start();
-$dbConn = mysqli_connect(DOMAIN, UNAME, PASS, DBNAME);
+$dbConn = mysqli_connect(DBHOST, UNAME, PASS, DBNAME);
 // Check connection
 if (mysqli_connect_errno()) {
 	echo "Failed to connect to MySQL: " . mysqli_connect_error();

@@ -15,7 +15,7 @@ function sp_autoloader($class)
 include '../mlayer/' . $class . '.class.php';
 }
 include('../univ/main.php');
-$dbConn = mysqli_connect(DOMAIN, UNAME, PASS, DBNAME);
+$dbConn = mysqli_connect(DBHOST, UNAME, PASS, DBNAME);
 // Check connection
 if (mysqli_connect_errno()) {
 echo "Failed to connect to MySQL: " . mysqli_connect_error();

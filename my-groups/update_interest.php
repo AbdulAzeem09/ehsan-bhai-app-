@@ -2,7 +2,7 @@
 include('../univ/baseurl.php');
 include('../univ/main.php');
 session_start();
-$dbConn = mysqli_connect(DOMAIN, UNAME, PASS, DBNAME);
+$dbConn = mysqli_connect(DBHOST, UNAME, PASS, DBNAME);
 
 if (!isset($_SESSION['pid'])) {
     $_SESSION['afterlogin'] = "my-groups/";

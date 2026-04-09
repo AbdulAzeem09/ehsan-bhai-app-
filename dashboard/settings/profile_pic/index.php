@@ -858,7 +858,7 @@
 					
 					<?php  
 						
-						$con = mysqli_connect(DOMAIN, UNAME, PASS, DBNAME);
+						$con = mysqli_connect(DBHOST, UNAME, PASS, DBNAME);
 						
 						if(!$con) {
 							die('Not Connected To Server');

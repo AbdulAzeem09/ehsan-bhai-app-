@@ -15,7 +15,7 @@ $p = new _resumeget;
 $pid = $_SESSION['pid'];
 $id = $_POST['id'];
 
-$conn = mysqli_connect(DOMAIN, UNAME, PASS, DBNAME);
+$conn = mysqli_connect(DBHOST, UNAME, PASS, DBNAME);
 $sql = "UPDATE `spboard_resumes` SET `default_resume` = '0' WHERE `spboard_resumes`.`pid` = '".$pid."'";
 mysqli_query($conn, $sql);
 $sql2 = "UPDATE `spboard_resumes` SET `default_resume` = '1' WHERE `spboard_resumes`.`idResume` = '".$id."'";

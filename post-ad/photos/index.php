@@ -178,7 +178,7 @@ if ($postid) {
 //$p = new _postingviewartcraft;
 //$r = $p->read($_GET["postid"]);
 //$postid = $_GET["postid"];
-$con = mysqli_connect(DOMAIN, UNAME, PASS);
+$con = mysqli_connect(DBHOST, UNAME, PASS);
 mysqli_select_db($con, DBNAME);
 $sql = "SELECT * FROM `sppostingsartcraft` WHERE idspPostings=$postid";
 
@@ -201,7 +201,7 @@ if ($postid) {
 //$p = new _postingviewartcraft;
 //$r = $p->read($_GET["postid"]);
 //$postid = $_GET["postid"];
-$con = mysqli_connect(DOMAIN, UNAME, PASS);
+$con = mysqli_connect(DBHOST, UNAME, PASS);
 mysqli_select_db($con, DBNAME);
 $sql = "SELECT * FROM `sppostingsartcraft` WHERE idspPostings=$postid";
 $r = mysqli_query($con, $sql);
@@ -725,7 +725,7 @@ if ($postid) {
 //$p = new _postingviewartcraft;
 //$r = $p->read($_GET["postid"]);
 //$postid = $_GET["postid"];
-$con = mysqli_connect(DOMAIN, UNAME, PASS);
+$con = mysqli_connect(DBHOST, UNAME, PASS);
 mysqli_select_db($con, DBNAME);
 $sql = "SELECT * FROM `sppostingsartcraft` WHERE idspPostings=$postid";
 $r = mysqli_query($con, $sql);

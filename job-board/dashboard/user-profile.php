@@ -34,7 +34,7 @@ $sl = new _shortlist;
 
 $pid = $_GET['pid'];
 
-$conn = mysqli_connect(DOMAIN, UNAME, PASS, DBNAME);
+$conn = mysqli_connect(DBHOST, UNAME, PASS, DBNAME);
 $sql = "SELECT * FROM spemployment_profile Where spprofiles_idspProfiles='$pid'";
 
 $result = mysqli_query($conn, $sql);

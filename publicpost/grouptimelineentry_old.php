@@ -310,7 +310,7 @@ if (isset($rows['spGroupName']) &&  !empty($rows['spGroupName'])) {
 <div class="dropdown pull-right right_profile_timeline">
 <?php
 
-$con = mysqli_connect(DOMAIN, UNAME, PASS);
+$con = mysqli_connect(DBHOST, UNAME, PASS);
 
 if (!$con) {
 die('Not Connected To Server');

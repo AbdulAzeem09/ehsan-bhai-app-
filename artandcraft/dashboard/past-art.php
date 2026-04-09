@@ -166,7 +166,7 @@ color: #999;
                                             $result = $p->myExpireProduct($_GET['categoryID'], $_SESSION['pid']);
 
   /*  $pid = $_SESSION['pid'];
-    $con = mysqli_connect(DOMAIN, UNAME, PASS);
+    $con = mysqli_connect(DBHOST, UNAME, PASS);
     mysqli_select_db($con, DBNAME);
     
     $sqla =  "SELECT * FROM `expire_date`";

@@ -2,7 +2,7 @@
 //error_reporting(E_ALL);
 //ini_set('display_errors', 'On');
 include( "../univ/main.php");
-$con = mysqli_connect(DOMAIN, UNAME, PASS);
+$con = mysqli_connect(DBHOST, UNAME, PASS);
 
 if(!$con) {
 echo 'Not connected to server';

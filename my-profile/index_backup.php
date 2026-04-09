@@ -644,7 +644,7 @@ remove by ashish api not working -> onkeyup="getaddress();"
 
 <?php
 
-$con = mysqli_connect(DOMAIN, UNAME, PASS, DBNAME);
+$con = mysqli_connect(DBHOST, UNAME, PASS, DBNAME);
 
 if (!$con) {
   die('Not Connected To Server');
@@ -1014,7 +1014,7 @@ left: 16px!important;">Date of Upload : <?php echo date('d/m/Y', $timestamp); ?>
 <?php
 
 
-$con = mysqli_connect(DOMAIN, UNAME, PASS, DBNAME);
+$con = mysqli_connect(DBHOST, UNAME, PASS, DBNAME);
 
 if (!$con) {
   die('Not Connected To Server');

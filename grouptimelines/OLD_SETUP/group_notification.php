@@ -2,7 +2,7 @@
 include('../univ/baseurl.php');
 session_start();
 include('../univ/main.php');
-$dbConn = mysqli_connect(DOMAIN,UNAME,PASS,DBNAME);
+$dbConn = mysqli_connect(DBHOST,UNAME,PASS,DBNAME);
 
 function sp_autoloader($class) {
 include '../mlayer/' . $class . '.class.php';

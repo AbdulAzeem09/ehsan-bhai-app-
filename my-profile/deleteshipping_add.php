@@ -1,7 +1,7 @@
 <?php  
 	include('../univ/baseurl.php');
     include( "../univ/main.php");
-  $con = mysqli_connect(DOMAIN, UNAME, PASS);
+  $con = mysqli_connect(DBHOST, UNAME, PASS);
 
      if(!$con) {
         die('Not Connected To Server');

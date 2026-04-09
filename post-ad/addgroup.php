@@ -61,7 +61,7 @@ if (isset($_POST["idspGroup"])) {
 } else if (isset($_POST["idspGroup"])) {
     $id = $grp->updategroupdata($_POST['spGroupAbout'], $_POST['spgroupLocation'], $_POST["idspGroup"]);
 } else {
-    $dbConn = mysqli_connect(DOMAIN, UNAME, PASS, DBNAME);
+    $dbConn = mysqli_connect(DBHOST, UNAME, PASS, DBNAME);
     $_POST['spGroupName'] = mysqli_real_escape_string($dbConn, $_POST['spGroupName']);
     $_POST['CreatedDate'] = date('Y-m-d');
     $_POST['spgroupLocation'] = getLocation($_POST['spUserCountry'], $_POST['spUserState'], $_POST['spUserCity']);

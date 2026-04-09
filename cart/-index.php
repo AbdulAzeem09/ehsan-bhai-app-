@@ -1475,7 +1475,7 @@ echo"<span class='sp-order a-link-normal' data-oid='".$tr_order['idspOrder']."' 
 													";?>
 													<?php  
 											
-											$con =  mysqli_connect(DOMAIN, UNAME, PASS);
+											$con =  mysqli_connect(DBHOST, UNAME, PASS);
 											
 											if(!$con) {
 												die('Not Connected To Server');
@@ -2260,7 +2260,7 @@ echo"<span class='sp-order a-link-normal' data-oid='".$tr_order['idspOrder']."' 
 										
 										<?php  
 											
-											$con =  mysqli_connect(DOMAIN, UNAME, PASS);
+											$con =  mysqli_connect(DBHOST, UNAME, PASS);
 											
 											if(!$con) {
 												die('Not Connected To Server');
