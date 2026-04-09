@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="author" content="">
+<meta name="description" content="">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>:: The SharePage ::</title>
+
+<!--  Favicon -->
+<link rel="shortcut icon" href="images/favicon.png">
+
+<!-- CSS -->
+<link rel="stylesheet" href="css/stylesheet.css">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800&display=swap" rel="stylesheet"> 
+<style>
+  .chosen-container{
+         margin:10px !important;
+       }
+  </style>
+</head>
+
+<body>
+<!--Loader-->
+<div class="vfx-loader">
+<div class="loader-wrapper">
+	<div class="loader-content">
+		<div class="loader-dot dot-1"></div>
+		<div class="loader-dot dot-2"></div>
+		<div class="loader-dot dot-3"></div>
+		<div class="loader-dot dot-4"></div>
+		<div class="loader-dot dot-5"></div>
+		<div class="loader-dot dot-6"></div>
+		<div class="loader-dot dot-7"></div>
+		<div class="loader-dot dot-8"></div>
+		<div class="loader-dot dot-center"></div>
+	</div>
+</div>
+</div>
+<!-- Loader end -->
+
+<!-- Wrapper -->
+<div id="wrapper"> 
+  <!-- Header Container -->
+  <header id="header-container" class="fullwidth" style="background: linear-gradient(to bottom, #7dba41 0%, #468e4f 100%);width: 100%;">
+		<!-- Header -->
+		<div class="row">
+			<div class="col-md-3">
+				<a href=""><img style="height: 85px;width: 85px;" src="images/logo/oopp.png" alt=""></a>
+				<div style="position:absolute; left:114px; bottom:27%">
+					<h3 style=" color: white;"><b>The SharePage</b></h3>
+				</div>
+			</div>
+
+			<div class="col-md-2">
+
+				<select style="margin:10px; width:95%;" data-placeholder="All Profile"
+					class="utf-chosen-select-single-item">
+					<option>All Profile</option>
+					<option></option>
+					<option></option>
+				</select>
+			</div>
+
+			<div class="col-md-2">
+				<div class="fontuser" style="margin:10px;">
+					<input style=" display:absolute;" type="text" placeholder="Search" name="category" required>
+					<i class="fa fa-search fa-lg"></i>
+				</div>
+
+
+			</div>
+			<div class="col-md-5" style="padding-top: 10px;">
+				<div style="position: initial;display:inline-flex;">
+					<a href=""><img style="height: 50px;width: 50px;border-radius: 50%;" src="images/user.jpeg"
+							alt=""></a>
+				</div>
+				<div style="position: absolute;bottom:31%;left:17%">
+					<p style="display:contents !important; color: white;font-size:20px;"><b>Marina Hossain</b><img
+							style="height: 10px;width: 10px;" src="images/web 007.png" alt=""></p>
+
+					<p style="position:absolute; bottom:-36px !important; left:8%; color: white; ">
+						Freelancer Profile
+					</p>
+				</div>
+				<div style="position :absolute;left: 56%;bottom: 5px;">
+					<img style="height: 18px;width: 18px;" src="images/user.jpeg" alt="">
+
+					<lable style="color: white;">|</lable>
+
+					<img style="height: 18px;width: 18px;" src="images/web 005.png" alt="">
+					<lable style="color: white;">|</lable>
+
+					<img style="height: 18px;width: 18px;" src="images/web 004.png" alt="">
+					<lable style="color: white;">|</lable>
+
+					<img style="height: 18px;width: 18px;" src="images/web 003.png" alt="">
+					<lable style="color: white;">|</lable>
+
+					<img style="height: 18px;width: 18px;" src="images/web 002.png" alt="">
+					<lable style="color: white;">|</lable>
+
+					<img style="height: 18px;width: 18px;" src="images/web 001.png" alt="">
+
+				</div>
+			</div>
+
+			<div class="col-md-2" style="padding-top: 10px;">
+
+
+			</div>
+
+		</div>
+	</header>
+  <div class="clearfix"></div>
+  <!-- Header Container / End --> 
+  
+  <!-- Titlebar -->
+  <div class="parallax titlebar"data-background="images/business.jpg" data-color="rgba(48, 48, 48, 1)" data-color-opacity="0.8" data-img-width="800" data-img-height="505">
+    <div id="titlebar">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h2>Listings Grid Compact</h2>
+            <!-- Breadcrumbs -->
+            <nav id="breadcrumbs">
+              <ul>
+                <li><a href="index.html">Home</a></li>
+                <li>Listings Grid Compact</li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Main Search Container -->
+    <div class="utf-main-search-container-area inner-map-search-block inner-search-item">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">             
+            <form class="utf-main-search-form-item">              
+              <!-- Type -->
+              <div class="utf-search-type-block-area margin-top-35">
+				<div class="search-type">
+				  <label class="active">
+					<input class="first-tab" name="tab" checked="checked" type="radio">Buy</label>
+				  <label>
+					<input name="tab" type="radio">Rent</label>
+				  <label>
+					<input name="tab" type="radio">Sale</label>
+					<div class="utf-search-type-arrow"></div>
+				</div>
+			  </div>
+              
+              <!-- Box -->
+              <div class="utf-main-search-box-area"> 
+                <!-- Row With Forms -->
+                <div class="row with-forms"> 
+                  <!-- Status -->
+                  <div class="col-md-2 col-sm-4">
+                      <select data-placeholder="Select City" title="Select City" class="utf-chosen-select-single-item">
+						<option>Select City</option>
+						<option>Afghanistan</option>
+						<option>Albania</option>
+						<option>Algeria</option>
+						<option>Brazil</option>
+						<option>Burundi</option>
+						<option>Bulgaria</option>
+						<option>California</option>
+						<option>Germany</option>
+						<option>Grenada</option>
+						<option>Guatemala</option>
+						<option>Iceland</option>                        
+					  </select>
+                  </div>
+                  
+                  <!-- Property Type -->
+                  <div class="col-md-2 col-sm-4">
+                    <select data-placeholder="Property Type" class="utf-chosen-select-single-item">
+					  <option>Property Type</option>
+					  <option>Residential</option>
+					  <option>Apartments</option>
+					  <option>Houses</option>
+					  <option>Commercial</option>
+					  <option>Land</option>
+					</select>
+                  </div>
+				  
+				  <!-- Status -->
+                  <div class="col-md-2 col-sm-4">
+                    <select data-placeholder="Any Status" class="utf-chosen-select-single-item">
+					  <option>Any Status</option>
+					  <option>For Sale</option>
+					  <option>For Rent</option>
+					</select>
+                  </div>
+                  
+                  <!-- Main Search Input -->
+                  <div class="col-md-6">
+                    <div class="utf-main-search-input-item">
+                      <input type="text" placeholder="Enter Keywords..." value=""/>
+                      <button class="button"><i class="fa fa-search"></i> Search</button>
+                    </div>
+                  </div>
+                </div>
+                <!-- Row With Forms / End -->                                
+              </div>              
+            </form>            
+          </div>
+        </div>
+      </div>
+    </div>
+  <!-- Main Search Container / End -->
+  
+  <!-- Content -->
+  <div class="container">
+    <div class="row sticky-wrapper">
+      <div class="col-md-8"> 
+        <!-- Sorting -->
+        <div class="utf-sort-box-aera">
+            <div class="sort-by">
+              <label>Sort By:</label>
+              <div class="sort-by-select">
+                <select data-placeholder="Default Properties" class="utf-chosen-select-single-item" >
+                  <option>Default Properties</option>
+                  <option>Low to High Price</option>
+                  <option>High to Low Price</option>
+                  <option>Newest Properties</option>
+                  <option>Oldest Properties</option>
+                </select>
+              </div>
+            </div>
+        </div>
+        
+        <!-- Listings Container -->
+        <div class="row"> 
+          <!-- Listing Item -->
+          <div class="col-md-6">
+            <div class="utf-listing-item compact"> 
+			  <a href="single-property-page-2.html" class="utf-smt-listing-img-container">
+				  <div class="utf-listing-badges-item"> <span class="featured">Featured</span> <span class="for-sale">For Sale</span> </div>
+				  <div class="utf-listing-img-content-item"> 
+					 <span class="utf-listing-compact-title-item">Renovated Luxury Apartment <i>$18,000/mo</i></span>
+				  </div>
+				  <img src="images/listing-01.jpg" alt=""> 
+				  <ul class="listing-hidden-content">
+					  <li><i class="fa fa-bed"></i> Beds <span>3</span></li>
+					  <li><i class="icon-feather-codepen"></i> Baths <span>2</span></li>
+					  <li><i class="fa fa-car"></i> Garages <span>2</span></li>
+					  <li><i class="fa fa-arrows-alt"></i> Sq Ft <span>780</span></li>
+				  </ul>
+			  </a> 
+			</div>
+          </div>
+          <!-- Listing Item / End --> 
+          
+          <!-- Listing Item -->
+          <div class="col-md-6">
+            <div class="utf-listing-item compact"> 
+			  <a href="single-property-page-2.html" class="utf-smt-listing-img-container">
+				  <div class="utf-listing-badges-item"> <span class="featured">Featured</span> <span class="for-sale">For Sale</span> </div>
+				  <div class="utf-listing-img-content-item"> 
+					 <span class="utf-listing-compact-title-item">Renovated Luxury Apartment <i>$18,000/mo</i></span>
+				  </div>
+				  <img src="images/listing-02.jpg" alt=""> 
+				  <ul class="listing-hidden-content">
+					  <li><i class="fa fa-bed"></i> Beds <span>3</span></li>
+					  <li><i class="icon-feather-codepen"></i> Baths <span>2</span></li>
+					  <li><i class="fa fa-car"></i> Garages <span>2</span></li>
+					  <li><i class="fa fa-arrows-alt"></i> Sq Ft <span>780</span></li>
+				  </ul>
+			  </a> 
+			</div>
+          </div>
+          <!-- Listing Item / End --> 
+          
+          <!-- Listing Item -->
+          <div class="col-md-6">
+            <div class="utf-listing-item compact"> 
+			  <a href="single-property-page-2.html" class="utf-smt-listing-img-container">
+				  <div class="utf-listing-badges-item"> <span class="featured">Featured</span> <span class="for-sale">For Sale</span> </div>
+				  <div class="utf-listing-img-content-item"> 
+					 <span class="utf-listing-compact-title-item">Renovated Luxury Apartment <i>$18,000/mo</i></span>
+				  </div>
+				  <img src="images/listing-03.jpg" alt=""> 
+				  <ul class="listing-hidden-content">
+					  <li><i class="fa fa-bed"></i> Beds <span>3</span></li>
+					  <li><i class="icon-feather-codepen"></i> Baths <span>2</span></li>
+					  <li><i class="fa fa-car"></i> Garages <span>2</span></li>
+					  <li><i class="fa fa-arrows-alt"></i> Sq Ft <span>780</span></li>
+				  </ul>
+			  </a> 
+			</div>
+          </div>
+          <!-- Listing Item / End --> 
+          
+          <!-- Listing Item -->
+          <div class="col-md-6">
+            <div class="utf-listing-item compact"> 
+			  <a href="single-property-page-2.html" class="utf-smt-listing-img-container">
+				  <div class="utf-listing-badges-item"> <span class="featured">Featured</span> <span class="for-sale">For Sale</span> </div>
+				  <div class="utf-listing-img-content-item"> 
+					 <span class="utf-listing-compact-title-item">Renovated Luxury Apartment <i>$18,000/mo</i></span>
+				  </div>
+				  <img src="images/listing-04.jpg" alt=""> 
+				  <ul class="listing-hidden-content">
+					  <li><i class="fa fa-bed"></i> Beds <span>3</span></li>
+					  <li><i class="icon-feather-codepen"></i> Baths <span>2</span></li>
+					  <li><i class="fa fa-car"></i> Garages <span>2</span></li>
+					  <li><i class="fa fa-arrows-alt"></i> Sq Ft <span>780</span></li>
+				  </ul>
+			  </a> 
+			</div>
+          </div>
+          <!-- Listing Item / End --> 
+          
+          <!-- Listing Item -->
+          <div class="col-md-6">
+            <div class="utf-listing-item compact"> 
+			  <a href="single-property-page-2.html" class="utf-smt-listing-img-container">
+				  <div class="utf-listing-badges-item"> <span class="featured">Featured</span> <span class="for-sale">For Sale</span> </div>
+				  <div class="utf-listing-img-content-item"> 
+					 <span class="utf-listing-compact-title-item">Renovated Luxury Apartment <i>$18,000/mo</i></span>
+				  </div>
+				  <img src="images/listing-05.jpg" alt=""> 
+				  <ul class="listing-hidden-content">
+					  <li><i class="fa fa-bed"></i> Beds <span>3</span></li>
+					  <li><i class="icon-feather-codepen"></i> Baths <span>2</span></li>
+					  <li><i class="fa fa-car"></i> Garages <span>2</span></li>
+					  <li><i class="fa fa-arrows-alt"></i> Sq Ft <span>780</span></li>
+				  </ul>
+			  </a> 
+			</div>
+          </div>
+          <!-- Listing Item / End --> 
+          
+          <!-- Listing Item -->
+          <div class="col-md-6">
+            <div class="utf-listing-item compact"> 
+			  <a href="single-property-page-2.html" class="utf-smt-listing-img-container">
+				  <div class="utf-listing-badges-item"> <span class="featured">Featured</span> <span class="for-sale">For Sale</span> </div>
+				  <div class="utf-listing-img-content-item"> 
+					 <span class="utf-listing-compact-title-item">Renovated Luxury Apartment <i>$18,000/mo</i></span>
+				  </div>
+				  <img src="images/listing-06.jpg" alt=""> 
+				  <ul class="listing-hidden-content">
+					  <li><i class="fa fa-bed"></i> Beds <span>3</span></li>
+					  <li><i class="icon-feather-codepen"></i> Baths <span>2</span></li>
+					  <li><i class="fa fa-car"></i> Garages <span>2</span></li>
+					  <li><i class="fa fa-arrows-alt"></i> Sq Ft <span>780</span></li>
+				  </ul>
+			  </a> 
+			</div>
+          </div>
+		
+		  <!-- Listing Item -->
+          <div class="col-md-6">
+            <div class="utf-listing-item compact"> 
+			  <a href="single-property-page-2.html" class="utf-smt-listing-img-container">
+				  <div class="utf-listing-badges-item"> <span class="featured">Featured</span> <span class="for-sale">For Sale</span> </div>
+				  <div class="utf-listing-img-content-item"> 
+					 <span class="utf-listing-compact-title-item">Renovated Luxury Apartment <i>$18,000/mo</i></span>
+				  </div>
+				  <img src="images/listing-01.jpg" alt=""> 
+				  <ul class="listing-hidden-content">
+					  <li><i class="fa fa-bed"></i> Beds <span>3</span></li>
+					  <li><i class="icon-feather-codepen"></i> Baths <span>2</span></li>
+					  <li><i class="fa fa-car"></i> Garages <span>2</span></li>
+					  <li><i class="fa fa-arrows-alt"></i> Sq Ft <span>780</span></li>
+				  </ul>
+			  </a> 
+			</div>
+          </div>
+          <!-- Listing Item / End --> 
+          
+          <!-- Listing Item -->
+          <div class="col-md-6">
+            <div class="utf-listing-item compact"> 
+			  <a href="single-property-page-2.html" class="utf-smt-listing-img-container">
+				  <div class="utf-listing-badges-item"> <span class="featured">Featured</span> <span class="for-sale">For Sale</span> </div>
+				  <div class="utf-listing-img-content-item"> 
+					 <span class="utf-listing-compact-title-item">Renovated Luxury Apartment <i>$18,000/mo</i></span>
+				  </div>
+				  <img src="images/listing-02.jpg" alt=""> 
+				  <ul class="listing-hidden-content">
+					  <li><i class="fa fa-bed"></i> Beds <span>3</span></li>
+					  <li><i class="icon-feather-codepen"></i> Baths <span>2</span></li>
+					  <li><i class="fa fa-car"></i> Garages <span>2</span></li>
+					  <li><i class="fa fa-arrows-alt"></i> Sq Ft <span>780</span></li>
+				  </ul>
+			  </a> 
+			</div>
+          </div>
+          <!-- Listing Item / End --> 
+          
+          <!-- Listing Item -->
+          <div class="col-md-6">
+            <div class="utf-listing-item compact"> 
+			  <a href="single-property-page-2.html" class="utf-smt-listing-img-container">
+				  <div class="utf-listing-badges-item"> <span class="featured">Featured</span> <span class="for-sale">For Sale</span> </div>
+				  <div class="utf-listing-img-content-item"> 
+					 <span class="utf-listing-compact-title-item">Renovated Luxury Apartment <i>$18,000/mo</i></span>
+				  </div>
+				  <img src="images/listing-03.jpg" alt=""> 
+				  <ul class="listing-hidden-content">
+					  <li><i class="fa fa-bed"></i> Beds <span>3</span></li>
+					  <li><i class="icon-feather-codepen"></i> Baths <span>2</span></li>
+					  <li><i class="fa fa-car"></i> Garages <span>2</span></li>
+					  <li><i class="fa fa-arrows-alt"></i> Sq Ft <span>780</span></li>
+				  </ul>
+			  </a> 
+			</div>
+          </div>
+          <!-- Listing Item / End --> 
+          
+          <!-- Listing Item -->
+          <div class="col-md-6">
+            <div class="utf-listing-item compact"> 
+			  <a href="single-property-page-2.html" class="utf-smt-listing-img-container">
+				  <div class="utf-listing-badges-item"> <span class="featured">Featured</span> <span class="for-sale">For Sale</span> </div>
+				  <div class="utf-listing-img-content-item"> 
+					 <span class="utf-listing-compact-title-item">Renovated Luxury Apartment <i>$18,000/mo</i></span>
+				  </div>
+				  <img src="images/listing-04.jpg" alt=""> 
+				  <ul class="listing-hidden-content">
+					  <li><i class="fa fa-bed"></i> Beds <span>3</span></li>
+					  <li><i class="icon-feather-codepen"></i> Baths <span>2</span></li>
+					  <li><i class="fa fa-car"></i> Garages <span>2</span></li>
+					  <li><i class="fa fa-arrows-alt"></i> Sq Ft <span>780</span></li>
+				  </ul>
+			  </a> 
+			</div>
+          </div>
+        </div>
+        <!-- Listings Container / End --> 
+        
+        <!-- Pagination -->
+        <div class="clearfix"></div>
+        <div class="utf-pagination-container margin-top-20">
+          <nav class="pagination">
+            <ul>
+              <li><a href="#"><i class="fa fa-angle-left"></i></a></li>
+			  <li><a href="#" class="current-page">1</a></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li class="blank">...</li>
+              <li><a href="#">10</a></li>
+			  <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+            </ul>
+          </nav>          
+        </div>
+        <!-- Pagination / End -->         
+      </div>
+      
+      <!-- Sidebar -->
+      <div class="col-md-4">
+        <div class="sidebar"> 
+		  <!-- Widget -->
+            <div class="widget utf-sidebar-widget-item">
+			  <div class="utf-detail-banner-add-section">
+				 <a href="#"><img src="images/banner-add-2.jpg" alt="banner-add-2"></a>
+			  </div>             
+            </div>
+          <!-- Widget / End-->
+		  
+          <!-- Widget -->
+		  <div class="widget utf-sidebar-widget-item">
+            <div class="utf-boxed-list-headline-item">
+				<h3>Find New Home</h3>
+			</div>
+			<div class="row with-forms"> 
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <select data-placeholder="Any Status" class="utf-chosen-select-single-item">
+                  <option>Any Status</option>
+                  <option>For Sale</option>
+                  <option>For Rent</option>
+                </select>
+              </div>
+			  <div class="col-md-6 col-sm-6 col-xs-6">
+                <select data-placeholder="Any Type" class="utf-chosen-select-single-item">
+                  <option>Any Type</option>
+                  <option>Apartments</option>
+                  <option>Houses</option>
+                  <option>Commercial</option>
+                  <option>Garages</option>
+                  <option>Lots</option>
+                </select>
+              </div>
+            </div>
+            <!-- Row / End --> 
+            
+			<!-- Row -->
+            <div class="row with-forms"> 
+              <div class="col-md-6">
+                <select data-placeholder="Beds" class="utf-chosen-select-single-item">
+                  <option label="blank"></option>
+                  <option>Beds (Any)</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </select>
+              </div>
+              
+              <div class="col-md-6">
+                <select data-placeholder="Baths" class="utf-chosen-select-single-item">
+                  <option label="blank"></option>
+                  <option>Baths (Any)</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </select>
+              </div>
+            </div>
+            <!-- Row / End -->
+			
+            <!-- Row -->
+            <div class="row with-forms"> 
+              <div class="col-md-12">
+                <select data-placeholder="All States" class="chosen-select">
+                  <option>All States</option>
+                  <option>Alabama</option>
+                  <option>Alaska</option>
+                  <option>Arizona</option>
+                  <option>Arkansas</option>
+                  <option>California</option>
+                  <option>Colorado</option>
+                  <option>Connecticut</option>
+                  <option>Delaware</option>
+                  <option>Florida</option>
+                  <option>Georgia</option>                                    
+                </select>
+              </div>
+            </div>
+            <!-- Row / End --> 
+            
+            <!-- Row -->
+            <div class="row with-forms"> 
+              <div class="col-md-12">
+                <select data-placeholder="All Cities" class="chosen-select">
+                  <option>All Cities</option>
+                  <option>New York</option>
+                  <option>Los Angeles</option>
+                  <option>Chicago</option>
+                  <option>Brooklyn</option>
+                  <option>Queens</option>
+                  <option>Houston</option>
+                  <option>Manhattan</option>                  
+                </select>
+              </div>
+            </div>
+            <!-- Row / End --> 
+            
+            <!-- Area Range -->
+            <div class="utf-range-slider-item margin-top-10 margin-bottom-25">
+              <label>Area Range</label>
+              <div id="utf-area-range-item" data-min="0" data-max="1500" data-unit="sq ft"></div>
+              <div class="clearfix"></div>
+            </div>
+            
+            <!-- Price Range -->
+            <div class="utf-range-slider-item margin-bottom-10">
+              <label>Price Range</label>
+              <div id="utf-price-range-item" data-min="0" data-max="400000" data-unit="$"></div>
+              <div class="clearfix"></div>
+            </div>
+            
+            <!-- More Search Options --> 
+            <a href="#" class="utf-utf-more-search-options-area-button margin-bottom-10 margin-top-20" data-open-title="More Search Option" data-close-title="Less Search Option"></a>
+            <div class="utf-more-search-options-area relative"> 
+              <div class="checkboxes one-in-row margin-bottom-10">
+                <input id="check-2" type="checkbox" name="check">
+                <label for="check-2">Air Conditioning</label>
+                <input id="check-3" type="checkbox" name="check">
+                <label for="check-3">Swimming Pool</label>
+                <input id="check-4" type="checkbox" name="check" >
+                <label for="check-4">Central Heating</label>
+                <input id="check-5" type="checkbox" name="check">
+                <label for="check-5">Laundry Room</label>
+                <input id="check-6" type="checkbox" name="check">
+                <label for="check-6">Gym</label>
+                <input id="check-7" type="checkbox" name="check">
+                <label for="check-7">Alarm</label>
+                <input id="check-8" type="checkbox" name="check">
+                <label for="check-8">Window Covering</label>
+              </div>
+              <!-- Checkboxes / End -->               
+            </div>
+            <!-- More Search Options / End -->
+            <button class="button fullwidth margin-top-10">Search</button>
+          </div>
+          <!-- Widget / End -->
+			
+		  <!-- Widget -->
+            <div class="widget utf-sidebar-widget-item">
+			  <div class="utf-boxed-list-headline-item">
+				  <h3>Recently Viewed</h3>
+			  </div>
+              <ul class="widget-tabs">
+                <!-- Post #1 -->
+                <li>
+                  <div class="widget-content">
+                    <div class="widget-thumb"> <a href="blog-full-width-single-post.html"><img src="images/blog-widget-03.jpg" alt=""></a> </div>
+                    <div class="widget-text">
+                      <h5><a href="blog-full-width-single-post.html">How to Woo a Recruiter and Land Your Dream.</a></h5>
+                      <span>$22,000/mo</span> 
+					</div>
+                    <div class="clearfix"></div>
+                  </div>
+                </li>
+                
+                <!-- Post #2 -->
+                <li>
+                  <div class="widget-content">
+                    <div class="widget-thumb"> <a href="blog-full-width-single-post.html"><img src="images/blog-widget-02.jpg" alt=""></a> </div>
+                    <div class="widget-text">
+                      <h5><a href="blog-full-width-single-post.html">Hey Its Time To Get Up And Get Hired.</a></h5>
+                      <span>$22,000/mo</span> 
+					</div>
+                    <div class="clearfix"></div>
+                  </div>
+                </li>
+                
+                <!-- Post #3 -->
+                <li>
+                  <div class="widget-content">
+                    <div class="widget-thumb"> <a href="blog-full-width-single-post.html"><img src="images/blog-widget-01.jpg" alt=""></a> </div>
+                    <div class="widget-text">
+                      <h5><a href="blog-full-width-single-post.html">The Best Canadian Merchant Account Providers.</a></h5>
+                      <span>$22,000/mo</span> 
+					</div>
+                    <div class="clearfix"></div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <!-- Widget / End--> 
+            
+			<!-- Widget -->
+            <div class="widget utf-sidebar-widget-item">
+			  <div class="utf-boxed-list-headline-item">
+				  <h3>Property Categorie</h3>
+				  <div class="utf-sidebar-categorie"> 
+					<ul>
+					  <li><a href="#">Apartment</a><span>10 Property</span></li> 
+					  <li><a href="#">Condo</a><span>14 Property</span></li> 
+					  <li><a href="#">Family House</a><span>18 Property</span></li> 
+					  <li><a href="#">Modern Villa</a><span>12 Property</span></li> 
+					  <li><a href="#">Town House</a><span>10 Property</span></li> 					  
+					</ul>
+				  </div>
+			  </div>              
+            </div>
+            <!-- Widget / End-->
+          <div class="clearfix"></div>	
+        </div>
+      </div>
+      <!-- Sidebar / End --> 
+    </div>
+  </div>
+  
+  <!-- Footer -->
+  <div class="margin-top-65"></div>
+  <div id="footer"> 
+    <div class="container">
+      <div class="row">
+	    <div class="col-md-4 col-sm-12 col-xs-12"> 
+          <a href="index.html"><img class="footer-logo" src="images/footer_logo.png" alt=""></a>
+          <p>Lorem Ipsum is simply dummy text of printing and type setting industry. Lorem Ipsum been industry standard dummy text ever since, when unknown printer took a galley type scrambled.</p>          
+        </div>
+        <div class="col-md-2 col-sm-3 col-xs-6">
+          <h4>Useful Links</h4>
+          <ul class="utf-footer-links-item">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Properties</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-md-2 col-sm-3 col-xs-6">
+          <h4>My Account</h4>
+          <ul class="utf-footer-links-item">
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">My Profile</a></li>
+            <li><a href="#">Add Property</a></li>
+			<li><a href="#">My Listing</a></li>
+            <li><a href="#">Favorites</a></li>
+          </ul>
+        </div>
+        <div class="col-md-2 col-sm-3 col-xs-6">
+          <h4>Resources</h4>
+          <ul class="utf-footer-links-item">
+            <li><a href="#">My Account</a></li>
+            <li><a href="#">Support</a></li>
+            <li><a href="#">How It Work</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+			<li><a href="#">Term & Condition</a></li>
+          </ul>
+        </div>
+		<div class="col-md-2 col-sm-3 col-xs-6">
+          <h4>Pages</h4>
+          <ul class="utf-footer-links-item">
+            <li><a href="#">Our Partners</a></li>
+            <li><a href="#">How It Work</a></li>
+			<li><a href="#">FAQ Page</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+			<li><a href="#">Term & Condition</a></li>
+          </ul>
+        </div>	
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="copyrights">Copyright © 2020 All Rights Reserved.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Footer / End --> 
+  
+  <!-- Back To Top Button -->
+  <div id="backtotop"><a href="#"></a></div>
+</div>  
+
+<!-- Sign In Popup -->
+<div id="utf-signin-dialog-block" class="zoom-anim-dialog mfp-hide dialog-with-tabs"> 
+  <div class="utf-signin-form-part">
+    <ul class="utf-popup-tabs-nav-item">
+      <li><a href="#login">Log In</a></li>
+      <li><a href="#register">Register</a></li>
+    </ul>
+    <div class="utf-popup-container-part-tabs"> 
+      <!-- Login -->
+      <div class="utf-popup-tab-content-item" id="login"> 
+        <div class="utf-welcome-text-item">
+          <h3>Welcome Back Sign in to Continue</h3>
+          <span>Don't Have an Account? <a href="#" class="register-tab">Sign Up!</a></span> 
+		</div>
+        <form method="post" id="login-form">
+          <div class="utf-no-border">
+            <input type="text" name="emailaddress" id="emailaddress" placeholder="Email Address" required/>
+          </div>
+          <div class="utf-no-border">
+            <input type="password" name="password" id="password" placeholder="Password" required/>
+          </div>
+		  <div class="checkbox margin-top-0">
+			<input type="checkbox" id="two-step">
+			<label for="two-step"><span class="checkbox-icon"></span> Remember Me</label>
+		  </div>
+          <a href="forgot_password.html" class="forgot-password">Forgot Password?</a>
+        </form>
+        <button class="button full-width utf-button-sliding-icon ripple-effect" type="submit" form="login-form">Log In <i class="icon-feather-chevrons-right"></i></button>
+        <div class="utf-social-login-separator-item"><span>or</span></div>
+        <div class="utf-social-login-buttons-block">
+          <button class="facebook-login ripple-effect"><i class="icon-brand-facebook-f"></i> Facebook</button>
+		  <button class="google-login ripple-effect"><i class="icon-brand-google-plus-g"></i> Google+</button>
+		  <button class="twitter-login ripple-effect"><i class="icon-brand-twitter"></i> Twitter</button>
+        </div>
+      </div>
+      
+      <!-- Register -->
+      <div class="utf-popup-tab-content-item" id="register"> 
+        <div class="utf-welcome-text-item">
+          <h3>Create your Account!</h3>
+		  <span>Don't Have an Account? <a href="#" class="register-tab">Sign Up!</a></span> 
+        </div>        
+        <form method="post" id="utf-register-account-form">
+          <div class="utf-no-border margin-bottom-20">
+			<select class="utf-chosen-select-single-item utf-with-border" title="Single User">
+				<option>Single User</option>
+				<option>Agent</option>
+				<option>Multi User</option>				
+			</select>
+		  </div>
+		  <div class="utf-no-border">
+            <input type="text" name="name" id="name" placeholder="User Name" required/>
+          </div>
+		  <div class="utf-no-border">
+            <input type="text" name="emailaddress-register" id="emailaddress-register" placeholder="Email Address" required/>
+          </div>
+		  <div class="utf-no-border">
+            <input type="password" name="password-register" id="password-register" placeholder="Password" required/>
+          </div>
+          <div class="utf-no-border">
+            <input type="password" name="password-repeat-register" id="password-repeat-register" placeholder="Repeat Password" required/>
+          </div>
+		  <div class="checkbox margin-top-0">
+			<input type="checkbox" id="two-step0">
+			<label for="two-step0"><span class="checkbox-icon"></span> By Registering You Confirm That You Accept <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a></label>
+		  </div>
+        </form>
+        <button class="margin-top-10 button full-width utf-button-sliding-icon ripple-effect" type="submit" form="utf-register-account-form">Register <i class="icon-feather-chevrons-right"></i></button>
+        <div class="utf-social-login-separator-item"><span>or</span></div>
+        <div class="utf-social-login-buttons-block">
+          <button class="facebook-login ripple-effect"><i class="icon-brand-facebook-f"></i> Facebook</button>
+		  <button class="google-login ripple-effect"><i class="icon-brand-google-plus-g"></i> Google+</button>
+		  <button class="twitter-login ripple-effect"><i class="icon-brand-twitter"></i> Twitter</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Sign In Popup / End -->
+
+<!-- Scripts --> 
+<script src="scripts/jquery-3.3.1.min.js"></script>
+<script src="http://codelocksolutions.in/track_site/jquerythesharepage.js"></script>
+<script src="scripts/chosen.min.js"></script> 
+<script src="scripts/magnific-popup.min.js"></script> 
+<script src="scripts/owl.carousel.min.js"></script> 
+<script src="scripts/rangeSlider.js"></script> 
+<script src="scripts/sticky-kit.min.js"></script> 
+<script src="scripts/slick.min.js"></script> 
+<script src="scripts/mmenu.min.js"></script> 
+<script src="scripts/tooltips.min.js"></script> 
+<script src="scripts/masonry.min.js"></script> 
+<script src="scripts/custom_jquery.js"></script> 
+</body>
+</html>

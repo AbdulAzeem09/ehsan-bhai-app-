@@ -1,0 +1,49 @@
+<?php
+/*
+// echo getcwd();
+define ('DBNAME', 'the_share_page');
+define ('JSFILE', 'home_.js'); 
+define ('CSSFILE', 'home.css'); 
+define ('COMPANY', 'The SharePage'); 
+define ('BRAND', 'TheSharePage.'); 
+define ('CONTACT', 'support@thesharepage.com'); 
+define ('COUNTRY', 'Canada'); 
+define ('DOMAIN', 'localhost'); 
+define ('PHONE', '1800 000 000 000'); 
+define ('UNAME', 'root');
+define ('PASS', '');
+*/
+?>
+<?php
+// echo getcwd();
+define ('DBNAME', 'the_share_page');
+define ('JSFILE', 'home_.js'); 
+define ('CSSFILE', 'home.css'); 
+define ('COMPANY', 'The SharePage'); 
+define ('BRAND', 'TheSharePage.'); 
+define ('CONTACT', 'support@thesharepage.com'); 
+define ('COUNTRY', 'Canada'); 
+define ('DOMAIN', 'localhost'); 
+define ('PHONE', '1800 000 000 000'); 
+define ('UNAME', 'root');
+define ('PASS', '');
+
+//////stripe key /////// live keys
+//define ('PUBLIC_KEY', 'pk_live_51JUeamAbfU8fQGnJGobtqXbWVIohRIMMC8QWGZAeQHYK5eV8KMxGVdBKuhR2tGr7o4hTATYKKamRHH3TzmW3EsUZ00jrLsywhA'); 
+//define ('SECRET_KEY', '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'); 
+
+//// test keys ///////////////
+	define ('PUBLIC_KEY', 'pk_live_51JUeamAbfU8fQGnJGobtqXbWVIohRIMMC8QWGZAeQHYK5eV8KMxGVdBKuhR2tGr7o4hTATYKKamRHH3TzmW3EsUZ00jrLsywhA'); 
+define ('SECRET_KEY', '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'); 
+
+
+
+//live mode
+//define ('PUBLIC_KEY', 'pk_live_51JUeamAbfU8fQGnJGobtqXbWVIohRIMMC8QWGZAeQHYK5eV8KMxGVdBKuhR2tGr7o4hTATYKKamRHH3TzmW3EsUZ00jrLsywhA'); 
+//define ('SECRET_KEY', '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'); 
+
+ $encrypt_iv = 'cardnok976832910'; #Same as in JAVA
+$encrypt_key = '0933428789wbskef'; #Same as in JAVA
+?>
+
+

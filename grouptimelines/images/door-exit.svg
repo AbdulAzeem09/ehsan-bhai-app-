@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="15"
+   height="15"
+   viewBox="0 0 15 15"
+   fill="none"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="door-exit.svg"
+   inkscape:version="1.3.2 (1:1.3.2+202311252150+091e20ef0f)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="17.064844"
+     inkscape:cx="4.8052008"
+     inkscape:cy="2.5491004"
+     inkscape:window-width="1920"
+     inkscape:window-height="1014"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <path
+     fill="#000000"
+     fill-rule="evenodd"
+     d="M 6.0122511,0.38960585 A 2.0765433,2.0765433 0 0 1 8.6854534,2.3782428 V 12.500698 A 2.0765433,2.0765433 0 0 1 6.0122511,14.489336 L 1.8591625,13.243409 A 2.0765433,2.0765433 0 0 1 0.37928033,11.254776 V 3.6241694 A 2.0765433,2.0765433 0 0 1 1.8591625,1.6355326 Z m 3.365384,1.51241605 a 0.69218112,0.69218112 0 0 1 0.6921819,-0.692179 h 2.076543 a 2.0765433,2.0765433 0 0 1 2.076543,2.0765425 v 0.6921819 a 0.69218112,0.69218112 0 1 1 -1.38436,0 V 3.2863854 A 0.69218112,0.69218112 0 0 0 12.14636,2.5942038 H 10.069817 A 0.69218112,0.69218112 0 0 1 9.3776351,1.9020219 Z m 4.1530869,8.3061731 a 0.69218112,0.69218112 0 0 1 0.692181,0.692182 v 0.692181 a 2.0765433,2.0765433 0 0 1 -2.076543,2.076544 h -2.076543 a 0.69218112,0.69218112 0 1 1 0,-1.384361 h 2.076543 a 0.69218112,0.69218112 0 0 0 0.692183,-0.692183 v -0.692181 a 0.69218112,0.69218112 0 0 1 0.692179,-0.692182 z M 5.2245473,6.7472918 a 0.69218112,0.69218112 0 1 0 0,1.384361 h 6.971e-4 a 0.69218112,0.69218112 0 1 0 0,-1.384361 z"
+     clip-rule="evenodd"
+     id="path1-5"
+     style="fill:#f9f9f9;stroke-width:0.692182" />
+  <path
+     stroke="#000000"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     stroke-width="1.38437"
+     d="m 10.069817,7.4394709 h 3.460905 m 0,0 -1.384362,-1.384361 m 1.384362,1.384361 -1.384362,1.3843634"
+     id="path2"
+     style="stroke:#f9f9f9" />
+</svg>

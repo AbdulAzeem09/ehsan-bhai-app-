@@ -1,0 +1,1118 @@
+<?php
+//require_once('../common.php');
+include('../univ/baseurl.php');
+session_start();
+include "check_job_employee.php";
+if (!isset($_SESSION['uid'])) {
+$_SESSION['afterlogin'] = "job-employee/";
+include_once("../authentication/check.php");
+} else {
+function sp_autoloader($class)
+{
+include '../mlayer/'. $class .'.class.php';
+}
+spl_autoload_register("sp_autoloader");
+$_GET["categoryid"] = "2";
+$_GET["categoryName"] = "Job Board";
+$postId = isset($_REQUEST['postId']) ? (int)$_REQUEST['postId'] : 0;
+	$p = new _jobpostings;
+  
+	 $res = $p->singletimelines($postId);
+     $uid = $_SESSION['uid'];
+     $pid = $_SESSION['pid'];
+     $page = "jobBoard";
+     $page = "jobBoard";
+     if($res){
+        $pre_data = mysqli_fetch_assoc($res);
+       // print_r($pre_data);exit;
+     }
+     //var_dump(mysqli_fetch_assoc($res));exit;
+	//echo "<pre>";
+    //var_dump($_SESSION);
+
+    // echo "</pre>";
+  //   exit;
+ if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $errors = [];
+    $jobData = $_POST;
+  //print_r($_POST);exit;
+    // Validate each field individually
+    $requiredFields = [
+        'title' => 'Job Title',
+        'description' => 'Description',
+        'skill' => 'Skills',
+        'salary_from' => 'Salary From',
+        'salary_to' => 'Salary To',
+        'closingdate' => 'Closing Date',
+    ];
+    foreach ($requiredFields as $field => $label) {
+        if (empty($_POST[$field])) {
+            $errors[$field] = $label . ' is required.';
+        }
+    }
+
+    // Additional validations
+    if (isset($_POST['salary_from']) && isset($_POST['salary_to']) && ($_POST['salary_from'] > $_POST['salary_to'])) {
+        $errors['salary_from'] = 'Salary From must be less than or equal to Salary To.';
+    }
+ // Validate description
+    if (empty(trim($_POST['description']))) {
+        $errors['description'] = 'Description is required.';
+    }
+
+    // Handle errors or proceed with form processing
+    if (empty($errors)) {
+        // Save data to session for preview
+        // Remove skills with more than 20 characters
+        $jobData['skill'] = implode(',', array_filter(explode(',', $jobData['skill']), function($skill) {
+            return strlen($skill) <= 20;
+        }));
+        // Ensure job title does not exceed 100 characters
+        if (strlen($jobData['title']) > 100) {
+            $jobData['title'] = substr($jobData['title'], 0, 100);
+        }
+        $_SESSION['jobData'] = $jobData;
+        // Redirect to preview.php
+        header("Location: preview.php");
+        exit();
+    }
+   }else{
+    if(isset($_SESSION['jobData'])){
+        $jobData = $_SESSION['jobData'];
+    }
+   }
+	
+	  // echo "<pre>";
+    //  var_dump($_SESSION);
+
+  //    echo "</pre>";
+ //   exit;
+    //position-relative
+    ?>
+
+<?php include_once("../views/common/header.php"); ?>
+<?php $job_seeker_nav = 'post-a-job'; ?>
+<style>
+.autocomplete-items {
+    border: 1px solid #d4d4d4;
+    max-height: 150px;
+    overflow-y: auto;
+}
+small{
+    color:grey !important;
+    display: inline-block;
+    width: 100%;
+    text-align: right;
+}
+.autocomplete-item {
+    padding: 10px;
+    cursor: pointer;
+}
+#spCategoryId{
+    text-transform: uppercase;
+}
+.autocomplete-item:hover {
+    background-color: #e9e9e9;
+}
+
+.skills-selected {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.skill {
+    background-color: #f1f1f1;
+    padding: 5px 10px;
+    margin: 5px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.remove-skill {
+    margin-left: 10px;
+    cursor: pointer;
+    color: red;
+}
+
+</style>
+<style>
+.quill-editor {
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+/* Style adjustments for the Quill editor container */
+#editor-container {
+    width: 100%; /* Adjust width as needed */
+    height: 200px; /* Adjust height as needed */
+    border: 1px solid #ddd;
+    padding: 10px;
+    box-sizing: border-box; /* Ensures padding is included in total width and height */
+}
+
+/* Style adjustments for the textarea */
+#pdf-content {
+    width: 100%;
+    height: 100%;
+    border: none; /* Remove default border if you don't need it */
+    box-sizing: border-box; /* Ensures padding is included in total width and height */
+}
+button.btn.btn-sm.btn-danger.custom_question_delete {
+    width: 15px;
+    height: 15px;
+    font-size: 8px;
+    padding: 0px;
+    margin: 0px;
+}
+</style>
+<link rel="stylesheet" href="./job-employee.css">
+<div class="body-wrapper">
+    <div class="job-wrapper">
+        <div class="job-body-wrapper">
+            <?php include "employee-nav.php"; ?>
+            <div class="main-body">
+                <div class="main-heading">
+                    Post a Job
+                </div>
+                <?php if(isset($pre_data)){ ?>
+                    <form class="post-a-job" method="post" action="post-a-job.php" id='post_a_job_form'>
+                    <?php if(isset($pre_data)){ ?>
+                        <input type="hidden" name="idspPostings" value="<?= $pre_data['idspPostings'] ?>">
+                    <?php } ?>
+                    <div class="input-group in-1-col">
+                        <label>Job Title<span style="color: #EF1D26;">*</span></label>
+                        <input type="text" name="title" placeholder="Enter Job Title" <?php echo ( isset($pre_data) ? "value='".$pre_data['spPostingTitle']."'" : '' ) ?>>
+                        <small id="titleCharCount">100 characters remaining</small>
+                      <?php if (isset($errors['title'])): ?>
+                            <div class="error-message" style="color: #EF1D26;">
+                                <?php echo htmlspecialchars($errors['title']); ?>
+                            </div>
+                        <?php endif; ?>               
+				   </div>
+				    <div class="input-group in-1-col desc">
+                        <label>Description<span style="color: #EF1D26;">*</span></label>
+					    <textarea id="pdf-content" name="description" style="display: none;"><?php echo ( isset($pre_data) ? "value='".$pre_data['spPostingNotes']."'" : '' ) ?></textarea>
+                        <div id="editor-container">
+                        <?php echo ( isset($pre_data) ? $pre_data['spPostingNotes'] : '' ) ?>
+                        </div>
+                        <?php if (isset($errors['description'])): ?>
+                        <div class="error-message" style="color: #EF1D26;">
+                        <?php echo ( isset($pre_data) ? "value='".$pre_data['spPostingNotes']."'" : '' ) ?>
+                        </div>
+                        <?php endif; ?>     
+                    </div>
+                    <small id="char-counter">6500 characters remaining</small>
+                   <div class="input-group in-1-col skills">
+                    <label>Skills <span style="color: #EF1D26;">*(Please Select at least 5)</span></label>
+                    <input type="text" id="skillInput" placeholder="Enter Search Skills">
+                    <small id="charCount" class='w-100'>20 characters remaining</small>
+                    <?php if (isset($errors['skill'])): ?>
+                    <div class="error-message" style="color: #EF1D26;">
+                       <?php echo htmlspecialchars($errors['skill']); ?>
+                    </div>
+                    <?php endif; ?>   
+
+                      <!-- This hidden input will hold the selected skills for form submission -->
+                     <input type="hidden" name="skill" id="skillData" value="<?php if(isset($pre_data)){ echo $pre_data['spPostingSkill']; } ?>">
+
+                     <!-- Display selected skills here -->
+                     <div class="skills-selected" id="selectedSkills">
+                        <!------------->
+                        <?php if(isset($pre_data)){ ?>
+                            <?php foreach(explode(',',$pre_data['spPostingSkill']) as $pre_skill){ ?>
+                                <div class="skill">
+                                    <?= $pre_skill ?> 
+                                    <span class="remove-skill">
+                                        <img src="./images/mini-cross.svg" alt="">
+                                    </span>
+                                </div>
+                            <?php } ?>
+                        <?php } ?>
+                        <!------------->
+                     </div>
+                    </div>
+                    
+					       <div class="input-group in-3-col">
+    <label>Job Category<span style="color: #EF1D26;">*</span></label>
+    <select class="form-select" aria-label="Default select example" name="spCategoryId" id="spCategoryId">
+        <option value="" selected>Select Job Category</option>
+        <?php
+            $co = new _subcategory;
+            $result3 = $co->read(2);
+            if ($result3 != false) {
+                while ($row3 = mysqli_fetch_assoc($result3)) {
+        ?>
+                <option value='<?php echo $row3['idsubCategory']; ?>'
+                <?php echo ( isset($pre_data)&&$pre_data['idsubCategory']==$row3['idsubCategory'] ? "selected" : $pre_data['spCategories_idspCategory'].'-'.$row3['idsubCategory'] ) ?>
+            >
+            <?php echo $row3['subCategoryTitle']; ?>
+        </option>
+        <?php
+                }
+            }
+        ?>
+    </select>
+    
+    <!-- Hidden field to store the selected category name -->
+    <input type="hidden" name="spCategoryName" id="spCategoryName">
+</div>
+
+                    <div class="input-group in-3-col">
+                        <label>Job Location<span style="color: #EF1D26;">*</span></label>
+                        <select class="form-select" aria-label="Default select example" name="location" value="<?php echo isset($jobData['location']) ? htmlspecialchars($jobData['location']) : ''; ?>">
+                            <option value=''>Select Job Location</option>
+                            <option value="REMOTE" <?php echo ( isset($pre_data)&&$pre_data['spPostingLocation']=='REMOTE' ? "selected" : '' ) ?> >REMOTE</option>
+                            <option value="ON SITE" <?php echo ( isset($pre_data)&&$pre_data['spPostingLocation']=='ON SITE' ? "selected" : '' ) ?>>ON SITE</option>
+                            <option value="HYBRID" <?php echo ( isset($pre_data)&&$pre_data['spPostingLocation']=='HYBRID' ? "selected" : '' ) ?>>HYBRID</option>
+                       
+					   </select>
+                    </div>
+                    <div class="input-group in-3-col">
+                        <label>Job Type<span style="color: #EF1D26;">*</span></label>
+                        <select class="form-select" aria-label="Default select example" name="jobtype" value="<?php echo isset($jobData['jobtype']) ? htmlspecialchars($jobData['jobtype']) : ''; ?>">
+                            <option selected>Select Job Type</option>
+                            <option value="Full-time" <?php echo ( isset($pre_data)&&$pre_data['spPostingJobType']=='Full-time' ? "selected" : '' ) ?>>Full-time</option>
+                            <option value="Part-time" <?php echo ( isset($pre_data)&&$pre_data['spPostingJobType']=='Part-time' ? "selected" : '' ) ?>>Part-time</option>
+                            <option value="Contract" <?php echo ( isset($pre_data)&&$pre_data['spPostingJobType']=='Contract' ? "selected" : '' ) ?>>Contract</option>
+                            <option value="Temporary" <?php echo ( isset($pre_data)&&$pre_data['spPostingJobType']=='Temporary' ? "selected" : '' ) ?>>Temporary</option>
+                            <option value="Internship" <?php echo ( isset($pre_data)&&$pre_data['spPostingJobType']=='Internship' ? "selected" : '' ) ?>>Internship</option>
+                        </select>
+                    </div>  
+                    <div class="input-group in-3-col">
+                        <label>Salary Type<span style="color: #EF1D26;">*</span></label>
+                        <select class="form-select" aria-label="Default select example" name="salary" value="<?php echo isset($jobData['salary']) ? htmlspecialchars($jobData['salary']) : ''; ?>">
+                            <option selected>Select Salary Type</option>   
+                            <option value="Hourly" <?php echo ( isset($pre_data)&&$pre_data['salary']=='Hourly' ? "selected" : '' ) ?>>Hourly</option>
+                            <option value="Project Based" <?php echo ( isset($pre_data)&&$pre_data['salary']=='Project Based' ? "selected" : '' ) ?>>Project Based</option>
+                            <option value="Monthly" <?php echo ( isset($pre_data)&&$pre_data['salary']=='Monthly' ? "selected" : '' ) ?>>Monthly</option>
+                            <option value="Yearly" <?php echo ( isset($pre_data)&&$pre_data['salary']=='Yearly' ? "selected" : '' ) ?>>Yearly</option>
+                        </select>
+                    </div>
+                    <div class="input-group in-3-col">
+                      <!--  <label>Currency<span style="color: #EF1D26;">*</span></label>
+                        <select class="form-select" aria-label="Default select example" name="currency" value="<?php echo isset($jobData['currency']) ? htmlspecialchars($jobData['currency']) : ''; ?>">
+                            <option selected>Select Currency</option>-->
+                             <label for="currency">Currency:</label>
+                              <select id="currency" name="currency" class="form-control"  name="currency" value="<?php echo ( isset($pre_data) ? $pre_data['job_currency'] : '' ) ?>">
+                                  <option value="">Loading currencies...</option>
+                             </select>
+                    </div>
+                    <div class="input-group in-3-col">
+                        <label>No. of Position<span style="color: #EF1D26;">*</span></label>
+                        <input type='number' name='noposition' class='form-control' <?php echo ( isset($pre_data) ? "value='".$pre_data['spPostingNoofposition']."'" : '' ) ?> >
+                    </div>
+                           <div class="input-group in-3-col">
+                        <label for="spProfilesCountry">Country</label>
+                        <select id="spUserCountry_default_address" class="form-control " name="spUserCountry"
+                            name="country"   value="<?php echo isset($jobData['spUserCountry']) ? htmlspecialchars($jobData['spUserCountry']) : ''; ?>">
+                            <option value="0">Select Country</option>
+                            <?php
+                             $co = new _country;
+                             $result3 = $co->readCountry();
+                             if($result3 != false){
+                            while ($row3 = mysqli_fetch_assoc($result3)) {
+                                ?>
+                            <option value='<?php echo $row3['country_id'];?>'
+                                >
+                                <?php echo $row3['country_title'];?>
+                            </option>
+                            <?php
+                            } 
+                        }
+                        ?>
+                        </select>
+                        <span id="shippcounrty_error" style="color:red;"></span>
+                        <!-- <input type="text" list="suggested_address" class="form-control" name="address"  id="address" onkeyup="getaddress();" value="<?php //echo $address_city;?>"  >
+                       <datalist id="suggested_address"></datalist> 
+                        <input type="hidden" name="latitude" id="latitude">
+                        <input type="hidden" name="longitude" id="longitude">-->
+                    </div>
+                 <div class="loadUserState input-group in-3-col">
+    <label for="spUserState">State</label>
+    <select class="form-select" name="spUserState" id="spUserState">
+        <option value="0">Select State</option>
+        <?php 
+        if (isset($userstate) && $userstate > 0) {
+            $pr = new _state;
+            $result2 = $pr->readState($usercountry);
+            if($result2 != false){
+                while ($row2 = mysqli_fetch_assoc($result2)) { ?>
+                    <option value='<?php echo $row2["state_id"];?>' 
+                        <?php echo (isset($userstate) && $userstate == $row2["state_id"] ) ? 'selected' : ''; ?>>
+                        <?php echo $row2["state_title"];?>
+                    </option>
+                <?php
+                }
+            }
+        }
+        ?>
+    </select>
+    <span id="shippsstate_error" style="color:red;"></span> 
+</div>
+
+                    <div class="loadCity input-group in-3-col">
+                        <label for="spUserCity">City</label>
+                        <select class="form-select" name="spUserCity" id="spUserCity" name="city" value="<?php echo isset($jobData['city']) ? htmlspecialchars($jobData['city']) : ''; ?>">
+                            <option value="0">Select City</option>
+                            <?php 
+                                if (isset($usercity) && $usercity > 0) {
+                                    $co = new _city;
+                                    $result3 = $co->readCity($userstate);
+                                    if($result3 != false) {
+                                        while ($row3 = mysqli_fetch_assoc($result3)) { ?>
+                            <option value='<?php echo $row3['city_title']; ?>'
+                                <?php echo (isset($usercity) && $usercity == $row3['city_id'])?'selected':''; ?>>
+                                <?php echo $row3['city_title'];?></option> <?php
+                                        }
+                                    }
+                                } 
+                            ?>
+                        </select>
+                        <span id="shippcity_error" style="color:red;"></span>
+                    </div>
+
+                    <div class="input-group in-3-col">
+                        <label>Salary Range($)<span style="color: #EF1D26;">*</span></label>
+                        <div class="range">
+						  <?php if (isset($errors['salary_from'])): ?>
+                            <div class="error-message" style="color: #EF1D26;">
+                                <?php echo htmlspecialchars($errors['salary_from']); ?>
+                            </div>
+                        <?php endif; ?>
+                            <input type="number" name="salary_from" placeholder="From" <?php echo ( isset($pre_data) ? "value='".$pre_data['spPostingSlryRngFrm']."'" : '' ) ?>>
+							<span>-</span>
+							 <?php if (isset($errors['salary_to'])): ?>
+                            <div class="error-message" style="color: #EF1D26;">
+                                <?php echo htmlspecialchars($errors['salary_to']); ?>
+                            </div>
+                        <?php endif; ?>
+                            <input type="number" name="salary_to" placeholder="To" <?php echo ( isset($pre_data) ? "value='".$pre_data['spPostingSlryRngTo']."'" : '' ) ?>>
+                        </div>		     
+                    </div>
+                    <div class="input-group in-3-col">
+                        <label>Minimum Experience(Years)<span style="color: #EF1D26;">*</span></label>
+                        <input type='number' min='0' class="form-control" name="experience" <?php echo ( isset($pre_data) ? "value='".$pre_data['spPostingExperience']."'" : '' ) ?>>
+                    </div>
+                    <div class="input-group in-3-col">
+                        <label>Closing Date</label>
+                        <input type="date" placeholder="Enter Job Title" name="closingdate" <?php echo ( isset($pre_data) ? "value='".$pre_data['spPostingClosing']."'" : '' ) ?>>
+                     <?php if (isset($errors['closingdate'])): ?>
+                            <div class="error-message" style="color: #EF1D26;">
+                                <?php echo htmlspecialchars($errors['closingdate']); ?>
+                            </div>
+                        <?php endif; ?>
+					</div>
+					
+					
+                    <div class="check-box-heading">
+                        Questions for mandatory Answers
+                    </div>
+                    <div style='width:100%;margin-bottom:15px;'>
+                    <button type='button' class='btn btn-secondary btn-xs' data-bs-toggle="modal" data-bs-target="#myModal">Create Custom Question</button>
+                     </div>
+                    <!------------->
+                    <div class="modal" id="myModal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Create Custom Question</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    
+                                        <div class="mb-3 mt-3">
+                                            <label for="email" class="form-label">Type:</label>
+                                            <select class="form-control" id='custom_question_type'>
+                                                <option>Yes/No</option>
+                                                <option>Short Answer</option>
+                                                <option>Long Answer</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="pwd" class="form-label">Question :</label>
+                                            <input type="text" class="form-control" id="custom_question_title" placeholder="Type your question here" name="pswd">
+                                            <small id="customQuestionCharCount">100 characters remaining</small>
+                                            <script>
+                                                document.getElementById('custom_question_title').addEventListener('input', function() {
+                                                    const maxChars = 100;
+                                                    const remaining = maxChars - this.value.length;
+                                                    document.getElementById('customQuestionCharCount').textContent = remaining + " characters remaining";
+                                                });
+                                            </script>
+                                        </div>
+                                   
+                                </div>
+
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" onclick='addCustomQuestion()'>Add Question</button>
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                     <!------------>
+                    <br>
+                    
+                    <ol class='custom_question_list w-100'>
+                        <?php if(isset($pre_data) && $pre_data['spPostingCustomQuestion']!=null){ ?>
+                            <?php $pre_spPostingCustomQuestion = json_decode($pre_data['spPostingCustomQuestion'],true); 
+                              foreach($pre_spPostingCustomQuestion['custom_question_title'] as $key=>$value){
+                                if($pre_spPostingCustomQuestion['custom_question_type'][$key] == 'Short Answer'){ 
+                            ?>
+                            <li>
+                                <div class="mb-3 mt-3">
+                                    <label class="form-label"><?= $value ?>
+                                        <input type="hidden" form="post_a_job_form" value="<?= $value ?>" name="custom_question_title[]">
+                                        <input type="hidden" form="post_a_job_form" value="Short Answer" name="custom_question_type[]">
+                                    </label><input type="text" class="form-control" placeholder="Write your answer here" name="email">
+                                </div>
+                                <button class="btn btn-sm btn-danger custom_question_delete" type="button">x</button>
+                            </li>
+                            <?php }else if($pre_spPostingCustomQuestion['custom_question_type'][$key] == 'Long Answer'){ ?>
+                                <li>
+                                    <div class="mb-3 mt-3">
+                                        <label class="form-label"><?= $value ?>
+                                            <input type="hidden" form="post_a_job_form" value="<?= $value ?>" name="custom_question_title[]">
+                                            <input type="hidden" form="post_a_job_form" value="Long Answer" name="custom_question_type[]">
+                                        </label>
+                                        <textarea type="text" class="form-control" placeholder="Write your answer here" name="email"></textarea>
+                                    </div>
+                                    <button class="btn btn-sm btn-danger custom_question_delete" type="button">x</button>
+                                </li>
+                            <?php  } ?>
+                            <?php  } ?>
+                        <?php } ?>
+                     </ol>
+					<input type="hidden" id="spCountryName" name="spCountryName">
+					<input type="hidden" id="stateName" name="stateName">
+                    <div class="main-btn">
+                        <button>SAVE AS DRAFT</button>
+                        <button type="submit" class="prim">PREVIEW</button>
+                    </div>
+                </form>
+                <?php }else{ ?>
+                   <form class="post-a-job" method="post" action="post-a-job.php" id='post_a_job_form'>
+                    <div class="input-group in-1-col">
+                        <label>Job Title<span style="color: #EF1D26;">*</span></label>
+                        <input type="text" name="title" placeholder="Enter Job Title" value="<?php echo isset($jobData['title']) ? htmlspecialchars($jobData['title']) : ''; ?>" <?php ( isset($pre_data) ? "value='".$pre_data['spPostingTitle']."'" : '' ) ?>>
+                        <small id="titleCharCount">100 characters remaining</small>
+                      <?php if (isset($errors['title'])): ?>
+                            <div class="error-message" style="color: #EF1D26;">
+                                <?php echo htmlspecialchars($errors['title']); ?>
+                            </div>
+                        <?php endif; ?>               
+				   </div>
+				    <div class="input-group in-1-col desc">
+                        <label>Description<span style="color: #EF1D26;">*</span></label>
+					    <textarea id="pdf-content" name="description" style="display: none;"><?php echo isset($jobData['description']) ? htmlspecialchars($jobData['description']) : ''; ?></textarea>
+                        <div id="editor-container">
+                       
+                        </div>
+                        <?php if (isset($errors['description'])): ?>
+                        <div class="error-message" style="color: #EF1D26;">
+                        <?php echo htmlspecialchars($errors['description']); ?>
+                        </div>
+                        <?php endif; ?>     
+                    </div>
+                    <small id="char-counter">6500 characters remaining</small>
+                   <div class="input-group in-1-col skills">
+                    <label>Skills <span style="color: #EF1D26;">*(Please Select at least 5)</span></label>
+                    <input type="text" id="skillInput" placeholder="Enter Search Skills">
+                    <small id="charCount"  class='w-100'>20 characters remaining</small>
+                    <?php if (isset($errors['skill'])): ?>
+                    <div class="error-message" style="color: #EF1D26;">
+                       <?php echo htmlspecialchars($errors['skill']); ?>
+                    </div>
+                    <?php endif; ?>   
+
+                      <!-- This hidden input will hold the selected skills for form submission -->
+                     <input type="hidden" name="skill" id="skillData" value="<?php echo isset($jobData['skill']) ? htmlspecialchars($jobData['skill']) : ''; ?>">
+
+                     <!-- Display selected skills here -->
+                     <div class="skills-selected" id="selectedSkills">
+                     <!-- Dynamically populated skills will appear here -->
+                     </div>
+                    </div>
+                    
+					       <div class="input-group in-3-col">
+    <label>Job Category<span style="color: #EF1D26;">*</span></label>
+    <select class="form-select" aria-label="Default select example" name="spCategoryId" id="spCategoryId">
+        <option value="" selected>Select Job Category</option>
+        <?php
+            $co = new _subcategory;
+            $result3 = $co->read(2);
+            if ($result3 != false) {
+                while ($row3 = mysqli_fetch_assoc($result3)) {
+        ?>
+        <option value='<?php echo $row3['idsubCategory']; ?>'
+            >
+            <?php echo $row3['subCategoryTitle']; ?>
+        </option>
+        <?php
+                }
+            }
+        ?>
+    </select>
+    
+    <!-- Hidden field to store the selected category name -->
+    <input type="hidden" name="spCategoryName" id="spCategoryName">
+</div>
+
+                    <div class="input-group in-3-col">
+                        <label>Job Location<span style="color: #EF1D26;">*</span></label>
+                        <select class="form-select" aria-label="Default select example" name="location" value="<?php echo isset($jobData['location']) ? htmlspecialchars($jobData['location']) : ''; ?>">
+                        <option value=''>Select Job Location</option>
+                            <option value="REMOTE" <?php echo ( isset($pre_data)&&$pre_data['spPostingLocation']=='REMOTE' ? "selected" : '' ) ?> >REMOTE</option>
+                            <option value="ON SITE" <?php echo ( isset($pre_data)&&$pre_data['spPostingLocation']=='ON SITE' ? "selected" : '' ) ?>>ON SITE</option>
+                            <option value="HYBRID" <?php echo ( isset($pre_data)&&$pre_data['spPostingLocation']=='HYBRID' ? "selected" : '' ) ?>>HYBRID</option>
+                       
+					   </select>
+                    </div>
+                    <div class="input-group in-3-col">
+                        <label>Job Type<span style="color: #EF1D26;">*</span></label>
+                        <select class="form-select" aria-label="Default select example" name="jobtype" value="<?php echo isset($jobData['jobtype']) ? htmlspecialchars($jobData['jobtype']) : ''; ?>">
+                            <option selected>Select Job Type</option>
+                            <option value="Full-time">Full-time</option>
+                            <option value="Part-time">Part-time</option>
+                            <option value="Contract">Contract</option>
+                            <option value="Temporary">Temporary</option>
+                            <option value="Internship">Internship</option>
+                        </select>
+                    </div>
+                    <div class="input-group in-3-col">
+                        <label>Salary Type<span style="color: #EF1D26;">*</span></label>
+                        <select class="form-select" aria-label="Default select example" name="salary" value="<?php echo isset($jobData['salary']) ? htmlspecialchars($jobData['salary']) : ''; ?>">
+                            <option selected>Select Salary Type</option>   
+                            <option value="Hourly">Hourly</option>
+                            <option value="Project Based">Project Based</option>
+                            <option value="Monthly">Monthly</option>
+                            <option value="Yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="input-group in-3-col">
+                      <!--  <label>Currency<span style="color: #EF1D26;">*</span></label>
+                        <select class="form-select" aria-label="Default select example" name="currency" value="<?php echo isset($jobData['currency']) ? htmlspecialchars($jobData['currency']) : ''; ?>">
+                            <option selected>Select Currency</option>-->
+                             <label for="currency">Currency:</label>
+                              <select id="currency" name="currency" class="form-control"  name="currency" value="<?php echo isset($jobData['currency']) ? htmlspecialchars($jobData['currency']) : ''; ?>">
+                                  <option value="">Loading currencies...</option>
+                             </select>
+                    </div>
+                    <div class="input-group in-3-col">
+                        <label>No. of Position<span style="color: #EF1D26;">*</span></label>
+                        <input type='number' name='noposition' class='form-control'>
+                    </div>
+                           <div class="input-group in-3-col">
+                        <label for="spProfilesCountry">Country</label>
+                        <select id="spUserCountry_default_address" class="form-control " name="spUserCountry"
+                            name="country"   value="<?php echo isset($jobData['spUserCountry']) ? htmlspecialchars($jobData['spUserCountry']) : ''; ?>">
+                            <option value="0">Select Country</option>
+                            <?php
+                             $co = new _country;
+                             $result3 = $co->readCountry();
+                             if($result3 != false){
+                            while ($row3 = mysqli_fetch_assoc($result3)) {
+                                ?>
+                            <option value='<?php echo $row3['country_id'];?>'
+                                <?php echo (isset($usercountry) && $usercountry == $row3['country_id'])?'selected':''; ?>>
+                                <?php echo $row3['country_title'];?>
+                            </option>
+                            <?php
+                            } 
+                        }
+                        ?>
+                        </select>
+                        <span id="shippcounrty_error" style="color:red;"></span>
+                        <!-- <input type="text" list="suggested_address" class="form-control" name="address"  id="address" onkeyup="getaddress();" value="<?php //echo $address_city;?>"  >
+                       <datalist id="suggested_address"></datalist> 
+                        <input type="hidden" name="latitude" id="latitude">
+                        <input type="hidden" name="longitude" id="longitude">-->
+                    </div>
+                 <div class="loadUserState input-group in-3-col">
+    <label for="spUserState">State</label>
+    <select class="form-select" name="spUserState" id="spUserState">
+        <option value="0">Select State</option>
+        <?php 
+        if (isset($userstate) && $userstate > 0) {
+            $pr = new _state;
+            $result2 = $pr->readState($usercountry);
+            if($result2 != false){
+                while ($row2 = mysqli_fetch_assoc($result2)) { ?>
+                    <option value='<?php echo $row2["state_id"];?>' 
+                        <?php echo (isset($userstate) && $userstate == $row2["state_id"] ) ? 'selected' : ''; ?>>
+                        <?php echo $row2["state_title"];?>
+                    </option>
+                <?php
+                }
+            }
+        }
+        ?>
+    </select>
+    <span id="shippsstate_error" style="color:red;"></span> 
+</div>
+
+                    <div class="loadCity input-group in-3-col">
+                        <label for="spUserCity">City</label>
+                        <select class="form-select" name="spUserCity" id="spUserCity" name="city" value="<?php echo isset($jobData['city']) ? htmlspecialchars($jobData['city']) : ''; ?>">
+                            <option value="0">Select City</option>
+                            <?php 
+                                if (isset($usercity) && $usercity > 0) {
+                                    $co = new _city;
+                                    $result3 = $co->readCity($userstate);
+                                    if($result3 != false) {
+                                        while ($row3 = mysqli_fetch_assoc($result3)) { ?>
+                            <option value='<?php echo $row3['city_title']; ?>'
+                                <?php echo (isset($usercity) && $usercity == $row3['city_id'])?'selected':''; ?>>
+                                <?php echo $row3['city_title'];?></option> <?php
+                                        }
+                                    }
+                                } 
+                            ?>
+                        </select>
+                        <span id="shippcity_error" style="color:red;"></span>
+                    </div>
+
+                    <div class="input-group in-3-col">
+                        <label>Salary Range($)<span style="color: #EF1D26;">*</span></label>
+                        <div class="range">
+						  <?php if (isset($errors['salary_from'])): ?>
+                            <div class="error-message" style="color: #EF1D26;">
+                                <?php echo htmlspecialchars($errors['salary_from']); ?>
+                            </div>
+                        <?php endif; ?>
+                            <input type="number" name="salary_from" placeholder="From" value="<?php echo isset($jobData['salary_from']) ? htmlspecialchars($jobData['salary_from']) : ''; ?>">
+							<span>-</span>
+							 <?php if (isset($errors['salary_to'])): ?>
+                            <div class="error-message" style="color: #EF1D26;">
+                                <?php echo htmlspecialchars($errors['salary_to']); ?>
+                            </div>
+                        <?php endif; ?>
+                            <input type="number" name="salary_to" placeholder="To" value="<?php echo isset($jobData['salary_to']) ? htmlspecialchars($jobData['salary_to']) : ''; ?>">
+                        </div>		     
+                    </div>
+                    <div class="input-group in-3-col">
+                        <label>Minimum Experience(Years)<span style="color: #EF1D26;">*</span></label>
+                        <input type='number' min='0' class="form-control" name="experience">
+                    </div>
+                    <div class="input-group in-3-col">
+                        <label>Closing Date</label>
+                        <input type="date" placeholder="Enter Job Title" name="closingdate" value="<?php echo isset($jobData['closingdate']) ? htmlspecialchars($jobData['closingdate']) : ''; ?>">
+                     <?php if (isset($errors['closingdate'])): ?>
+                            <div class="error-message" style="color: #EF1D26;">
+                                <?php echo htmlspecialchars($errors['closingdate']); ?>
+                            </div>
+                        <?php endif; ?>
+					</div>
+					
+					
+                    <div class="check-box-heading">
+                        Questions for mandatory Answers
+                    </div>
+                    <div style='width:100%;margin-bottom:15px;'>
+                    <button type='button' class='btn btn-secondary btn-xs' data-bs-toggle="modal" data-bs-target="#myModal">Create Custom Question</button>
+                     </div>
+                    <!------------->
+                    <div class="modal" id="myModal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Create Custom Question</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    
+                                        <div class="mb-3 mt-3">
+                                            <label for="email" class="form-label">Type:</label>
+                                            <select class="form-control" id='custom_question_type'>
+                                                <option>Yes/No</option>
+                                                <option>Short Answer</option>
+                                                <option>Long Answer</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="pwd" class="form-label">Question :</label>
+                                            <input type="text" class="form-control" id="custom_question_title" placeholder="Type your question here" name="pswd" maxlength="100">
+                                            <small id="customQuestionCharCount">100 characters remaining</small>
+                                            <script>
+                                                document.getElementById('custom_question_title').addEventListener('input', function() {
+                                                    const maxChars = 100;
+                                                    const remaining = maxChars - this.value.length;
+                                                    document.getElementById('customQuestionCharCount').textContent = remaining + " characters remaining";
+                                                });
+                                            </script>
+                                        </div>
+                                   
+                                </div>
+
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" onclick='addCustomQuestion()'>Add Question</button>
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                     <!------------>
+                    <br>
+                    
+                    <ol class='custom_question_list w-100'>
+                        
+                     </ol>
+					<input type="hidden" id="spCountryName" name="spCountryName">
+					<input type="hidden" id="stateName" name="stateName">
+                    <div class="main-btn">
+                        <button>SAVE AS DRAFT</button>
+                        <button type="submit" class="prim">PREVIEW</button>
+                    </div>
+                </form>
+                <?php } ?>
+            </div>
+        </div>
+    </div>
+</div>
+                     </div>
+<?php include "../views/common/footer.php"; ?>
+<script src="<?php echo $BaseUrl; ?>/assets/quill/quill.js"></script>
+<script>
+    function addCustomQuestion(){
+        var type = $('#custom_question_type').val();
+        if(type=='Yes/No'){
+            $(".custom_question_list").append('<li><label>'+$('#custom_question_title').val()+'<input type="hidden" value="'+$('#custom_question_title').val()+'" form="post_a_job_form" name="custom_question_title[]"><input type="hidden" form="post_a_job_form" value="'+$('#custom_question_type').val()+'" name="custom_question_type[]"></labe><div class="form-check form-check-inline" style="margin-left:5px;"> <input class="form-check-input" type="radio" name="inlineRadioOptions"  value="Yes"><label class="form-check-label"> Yes</label></div><div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="inlineRadioOptions"  value="No"><label class="form-check-label">No</label></div><button class="btn btn-sm btn-danger custom_question_delete" type="button">x</button></li>');
+        }else if(type=='Short Answer'){
+            $(".custom_question_list").append('<li><div class="mb-3 mt-3"><label  class="form-label">'+$('#custom_question_title').val()+'<input type="hidden" form="post_a_job_form" value="'+$('#custom_question_title').val()+'" name="custom_question_title[]"><input type="hidden" form="post_a_job_form" value="'+$('#custom_question_type').val()+'" name="custom_question_type[]"></label><input type="text" class="form-control"  placeholder="Write your answer here" name="email"></div><button class="btn btn-sm btn-danger custom_question_delete" type="button">x</button></li>');
+        }else if(type=='Long Answer'){
+            $(".custom_question_list").append('<li><div class="mb-3 mt-3"><label  class="form-label">'+$('#custom_question_title').val()+'<input type="hidden" form="post_a_job_form" value="'+$('#custom_question_title').val()+'" name="custom_question_title[]"><input type="hidden" form="post_a_job_form" value="'+$('#custom_question_type').val()+'" name="custom_question_type[]"></label><textarea type="text" class="form-control"  placeholder="Write your answer here" name="email"></textarea></div><button class="btn btn-sm btn-danger custom_question_delete" type="button">x</button></li>');
+        }
+        $('#custom_question_title').val('');
+        $('#myModal').modal('hide');
+    }
+    $(document).ready(function() {
+        $(document).on('click', '.custom_question_delete' , function() {
+            $(this).closest('li').remove();
+        });
+    });
+//==========Handle the my address section of profile update module =======
+$("#spUserCountry_default_address").on("change", function() {
+    //alert("111111111111111111111");
+    var countryId = this.value;
+    $.post("loadUserState.php", {
+        countryId: countryId
+    }, function(r) {
+        //alert(r);
+        $(".loadUserState").html(r);
+        
+    });
+    var state = 0;
+    $.post("loadUserState.php", {
+        countryId: countryId
+    }).done(function(r) {
+        $(".loadUserState").html(r);
+        <?php if(isset($pre_data)){ ?>
+            $("#spProfilesState").val("<?= $pre_data['spPostingsState'] ?>");
+            $("#spProfilesState").trigger("change");
+        <?php } ?>
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+        console.error("Error: " + textStatus + ", " + errorThrown);
+    });
+});
+
+
+<?php if(isset($pre_data)){ ?>
+    $("#spUserCountry_default_address").val("<?= $pre_data['spPostingsCountry'] ?>");
+    $("#spUserCountry_default_address").trigger("change");
+
+<?php } ?>
+//==========ON CHANGE LOAD CITY==========
+$("#spUserState").on("change", function() {
+    var state = this.value;
+    $.post("loadUserCity.php", {
+        state: state
+    }).done(function(r) {
+        $(".loadCity").html(r);
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+        console.error("Error: " + textStatus + ", " + errorThrown);
+    });
+});
+</script>
+</script>
+<script src="https://dev.thesharepage.com/assets/css/country/js/intlTelInput.js"></script>
+<script type="text/javascript"
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPpH4FGQaj_JIJOViHAeHGAjl7RDeW8OQ&libraries=places"></script>
+<script>
+var input = document.querySelector("#companyPhoneNo_");
+window.intlTelInput(input, {
+    preferredCountries: ['us', 'ca'],
+    separateDialCode: true,
+    utilsScript: "https://dev.thesharepage.com/assets/css/country/js/utils.js",
+});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<script>
+$("#businesscategory_").select2({
+
+    placeholder: "Select a programming language",
+    allowClear: true
+});
+</script>
+<script src="<?php echo $BaseUrl; ?>/assets/quill/quill.js"></script>
+<script src="<?php echo $BaseUrl; ?>/assets/js/posting/timeline.js?v=<?php echo $versions;?>"></script>
+<script src="<?php echo $BaseUrl; ?>/job-board/assets/js/script.js?v=<?php echo $versions;?>"></script>
+
+
+<script>
+$(document).ready(function() {
+
+
+    
+
+   
+    <?php if(isset($pre_data)){ ?>
+        let selectedSkills = ["<?php echo implode('","',explode(",",$pre_data['spPostingSkill'])); ?>"];
+    <?php }else{ ?>
+        let selectedSkills = [];
+    <?php } ?>
+    // Add skill when pressing Enter key or after typing a comma
+    $('#skillInput').on('keypress', function(e) {
+        if (e.which === 13 || e.which === 44) { // 13 is Enter key, 44 is comma
+            e.preventDefault();
+            addSkill();
+        }
+    });
+
+    // Add skill function
+    function addSkill() {
+        let skill = $('#skillInput').val().trim(); // Get the entered skill
+        
+        // Add skill only if it's not empty and not already selected
+        if (skill && !selectedSkills.includes(skill)) {
+            selectedSkills.push(skill); // Add skill to the array
+            
+            // Update the hidden input field
+            $('#skillData').val(selectedSkills.join(','));
+
+            // Append the new skill to the skills-selected div
+            $('#selectedSkills').append(
+                `<div class="skill">
+                    ${skill} 
+                    <span class="remove-skill">
+                        <img src="./images/mini-cross.svg" alt="">
+                    </span>
+                </div>`
+            );
+
+            // Clear the input field
+            $('#skillInput').val('');
+            $('#charCount').text("20 characters remaining");
+        }
+
+        // Handle removal of skills
+        $('.remove-skill').off('click').on('click', function() {
+            let skillText = $(this).closest('.skill').text().trim();
+            selectedSkills = selectedSkills.filter(s => s !== skillText); // Remove from array
+            $('#skillData').val(selectedSkills.join(',')); // Update hidden input
+            $(this).closest('.skill').remove(); // Remove skill from the display
+        });
+    }
+
+    // Validation: Ensure at least 5 skills are selected
+    $('form').on('submit', function(e) {
+        if (selectedSkills.length < 5) {
+            e.preventDefault();
+            alert('Please select at least 5 skills.');
+        }
+    });
+});
+
+</script>
+
+
+  <script>
+        $(document).ready(function() {
+            // Your API key
+            const apiKey = 'YOUR_API_KEY'; 
+            
+            // API URL to fetch currencies
+            const apiUrl = `https://openexchangerates.org/api/currencies.json?app_id=${apiKey}`;
+            
+            // Fetch currencies via AJAX
+            $.ajax({
+                url: apiUrl,
+                method: 'GET',
+                success: function(data) {
+                    // Clear the existing options
+                    $('#currency').empty();
+                   
+                    // Populate dropdown with fetched currencies
+                    $.each(data, function(code, name) {
+                        $('#currency').append($('<option>', {
+                            value: code,
+                            text: `${name} (${code})`
+                        }));
+                        
+                    });
+                    <?php if(isset($pre_data)){ ?>
+                       $('#currency').val('<?= $pre_data['job_currency'] ?>');
+                    <?php } ?>
+                },
+                error: function(error) {
+                    console.log('Error fetching currency data:', error);
+                    $('#currency').html('<option value="">Failed to load currencies</option>');
+                }
+            });
+        });
+        
+    </script>
+	<script>
+       $(document).ready(function() {
+    // Initialize Quill Editor
+    
+
+
+
+        // Maximum character limit
+        const maxChars = 6500;
+
+        // Initialize Quill editor
+        const quill = new Quill('#editor-container', {
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    ['bold', 'italic', 'underline'],
+                    [{ 'header': 1 }, { 'header': 2 }],
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    [{ 'indent': '-1'}, { 'indent': '+1' }],
+                    [{ 'size': ['small', false, 'large', 'huge'] }],
+                    
+                    [{ 'color': [] }, { 'background': [] }],
+                    [{ 'font': [] }]
+                ]
+            }
+        });
+
+        // Function to update the character counter
+        function updateCharCounter() {
+            // Get text content from Quill editor
+            const text = quill.getText().trim();  // Trim to remove any extra spaces
+
+            // Calculate remaining characters
+            const remainingChars = maxChars - text.length;
+
+            // Update character counter display
+            const counterElement = document.getElementById('char-counter');
+            counterElement.textContent = `${remainingChars} characters remaining`;
+
+            // Check if character limit is exceeded
+            if (remainingChars < 0) {
+                counterElement.style.color = 'red';  // Change color to red if limit exceeded
+            } else {
+                counterElement.style.color = 'black';  // Reset color if within limit
+            }
+        }
+
+        // Listen for text-change event in Quill editor
+        quill.on('text-change', function () {
+            // Update the character counter each time the content changes
+            updateCharCounter();
+
+            // Prevent typing beyond the limit
+            const text = quill.getText().trim();
+            if (text.length > maxChars) {
+                // Remove extra characters if limit exceeded
+                quill.deleteText(maxChars, text.length - maxChars);
+            }
+        });
+
+        // Initial update of the character counter
+        updateCharCounter();
+
+
+
+
+
+
+
+    // Update the hidden textarea with Quill's content when the form is submitted
+   $('form').on('submit', function() {
+        const quillContent = quill.root.innerHTML; // Get Quill's content
+        $('#pdf-content').val(quillContent); // Update textarea with Quill's content
+        
+        // Alert to show the content
+      
+	  
+    });
+});
+
+
+      </script>
+	  <script>
+    // Listen to changes in the job category dropdown
+    document.getElementById('spCategoryId').addEventListener('change', function() {
+        // Get the selected option's text (category name)
+        var selectedCategoryName = this.options[this.selectedIndex].text;
+        // Set the hidden input field with the selected category name
+        document.getElementById('spCategoryName').value = selectedCategoryName;
+    });
+	
+	
+	// Listen to changes in the country dropdown
+document.getElementById('spUserCountry_default_address').addEventListener('change', function() {
+    // Get the selected option's text (country name)
+    var selectedCountryName = this.options[this.selectedIndex].text;
+    // Set the hidden input field with the selected country name
+    document.getElementById('spCountryName').value = selectedCountryName;
+});
+
+
+// Listen for changes in the state dropdown
+
+    // Listen for changes in the state dropdown
+    document.getElementById('spUserState').addEventListener('change', function() {
+        var selectedStateName = this.options[this.selectedIndex].text;
+        document.getElementById('stateName').value = selectedStateName;
+    });
+
+
+// Listen for changes in the city dropdown
+document.getElementById('spUserCity').addEventListener('change', function() {
+    var selectedCityName = this.options[this.selectedIndex].text;
+    document.getElementById('cityName').value = selectedCityName;
+});
+$(document).ready(function() {
+    const maxChars = 20;
+    
+    $('#skillInput').on('input', function() {
+        const remaining = maxChars - $(this).val().length;
+        
+        if (remaining < 0) {
+            $(this).val($(this).val().substring(0, maxChars));
+        }
+
+        $('#charCount').text((remaining >= 0 ? remaining : 0) + " characters remaining");
+    });
+});
+$(document).ready(function() {
+    const maxTitleChars = 100;
+    
+    $('input[name="title"]').on('input', function() {
+        const remaining = maxTitleChars - $(this).val().length;
+        
+        if (remaining < 0) {
+            $(this).val($(this).val().substring(0, maxTitleChars));
+        }
+
+        $('#titleCharCount').text((remaining >= 0 ? remaining : 0) + " characters remaining");
+    });
+});
+
+// Add this line where you want to display the remaining characters count
+// <div id="titleCharCount">1000 characters remaining</div>
+</script>
+</html>
+<?php } ?>

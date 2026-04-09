@@ -1,0 +1,362 @@
+<?php
+	
+    
+    $als = new _allSetting;
+    $query = $als->showBanner(20);
+    if ($query) {
+        $row = mysqli_fetch_assoc($query);
+        $home_banner = $row['spSettingBanner'];
+    }
+    // get color code of store
+    $query2 = $als->showBanner(1);
+    if ($query2) {
+        $row2 = mysqli_fetch_assoc($query2);
+        $store_clr = $row2['spSettingMainClr'];
+        $store_btn_clr = $row2['spSettingBtnClr'];
+    }
+    //FREELANCE COLOR
+    $query3 = $als->showBanner(5);
+    if ($query3) {
+        $row3 = mysqli_fetch_assoc($query3);
+        $freelance_clr = $row3['spSettingMainClr'];
+    }
+    //JOB BOARD COLOR
+    $query4 = $als->showBanner(2);
+    if ($query4) {
+        $row4 = mysqli_fetch_assoc($query4);
+        $jobboard_clr = $row4['spSettingMainClr'];
+    }
+     //REAL ESTATE COLOR
+    $query5 = $als->showBanner(3);
+    if ($query5) {
+        $row5 = mysqli_fetch_assoc($query5);
+        $realEstate_clr = $row5['spSettingMainClr'];
+    }
+    // EVENTS COLOR
+    $query6 = $als->showBanner(9);
+    if ($query6) {
+        $row6 = mysqli_fetch_assoc($query6);
+        $event_clr = $row6['spSettingMainClr'];
+    }
+    // ART GALLERY COLOR
+    $query7 = $als->showBanner(13);
+    if ($query7) {
+        $row7 = mysqli_fetch_assoc($query7);
+        $photo_clr = $row7['spSettingMainClr'];
+    }
+    // MUSIC COLOR
+    $query8 = $als->showBanner(14);
+    if ($query8) {
+        $row8 = mysqli_fetch_assoc($query8);
+        $music_clr = $row8['spSettingMainClr'];
+    }
+    // VIDEOS COLOR
+    $query9 = $als->showBanner(10);
+    if ($query9) {
+        $row9 = mysqli_fetch_assoc($query9);
+        $videos_clr = $row9['spSettingMainClr'];
+    }
+    // TRAININGS COLOR
+    $query10 = $als->showBanner(8);
+    if ($query10) {
+        $row10 = mysqli_fetch_assoc($query10);
+        $train_clr = $row10['spSettingMainClr'];
+    }
+    // CLASIFIED ADD COLOR
+    $query11 = $als->showBanner(7);
+    if ($query11) {
+        $row11 = mysqli_fetch_assoc($query11);
+        $clasifiedAdd_clr = $row11['spSettingMainClr'];
+    }
+    // BUSINESS DIRECTORY ADD COLOR
+    $query12 = $als->showBanner(19);
+    if ($query12) {
+        $row12 = mysqli_fetch_assoc($query12);
+        $busDirctry_clr = $row12['spSettingMainClr'];
+    }
+?>
+<style type="text/css">
+    /*================THIS IS COLOR CODE SETTING START===================*/
+    .headers{
+        background-image: url(<?php echo $BaseUrl.'/upload/banner/'.$home_banner; ?>);
+    }
+    /*store header Color */
+    .header_store{
+        background-color: <?php echo $store_clr; ?>;
+        padding: 0px 10px 5px;
+    }
+    /*FREELANCE HEADER COLOR*/
+    .header_freelancer{
+        background-color: <?php echo $freelance_clr; ?>;
+        padding: 0px 10px 5px;
+    }
+    /*JOB BOARD HEADER COLOR*/
+    .header_jobBoard{
+        background-color: <?php echo $jobboard_clr; ?>;
+        padding: 0px 10px 5px;
+    }
+    /*REAL ESTATE HEADER COLOR*/
+    .header_realEstate{
+        background-color: <?php echo $realEstate_clr; ?>;
+        padding: 0px 10px 5px;
+    }
+    /*EVENT HEADER COLOR*/
+    .header_events{
+        background-color: <?php echo $event_clr; ?>;
+        padding: 0px 10px 5px;
+    }
+    /*ART GALLERY COLOR*/
+    .header_photo{
+        background-color: <?php echo $photo_clr; ?>;
+        padding: 0px 10px 5px;
+    }
+    /*MUSIC COLOR*/
+    .header_entertain{
+        background-color: <?php echo $music_clr; ?>;
+        padding: 0px 10px 5px;
+    }
+    /*VIDEOS COLOR*/
+    .header_video{
+        background-color: <?php echo $videos_clr; ?>;
+        padding: 0px 10px 5px;
+    }
+    /*TRAINING COLOR*/
+    .header_train{
+        background-color: <?php echo $train_clr; ?>;
+        padding: 0px 10px 5px;
+    }
+    /*SERVICE HEADER*/
+    .header_servic{
+        background-color: <?php echo $clasifiedAdd_clr; ?>;
+        padding: 0px 10px 5px;
+    }
+    .header_directy{
+        background-color: <?php echo $busDirctry_clr; ?>;
+        padding: 0px 10px 5px;
+    }
+    /*================THIS IS COLOR CODE SETTING END===================*/
+    /*================STORE MODULE START===============================*/
+    .featured_box h4{
+        background-color: <?php echo $store_clr; ?>;
+    }
+    .grid_view_store h4, .grid_view_store h4 a, .grid_view_store h6, .ws_box h1 a, .pro_detail_box h2, .tbl_store_setting tbody td a {
+        color: <?php echo $store_clr; ?>;
+    }
+    .featured_box h6, .quote_box h2{
+        color: <?php echo $store_clr; ?>;
+    }
+    .store_left_cat ul li a:hover, .left_filter a:hover, .left_store ul.left_store_bar li a:hover,
+    .listingview  a i:hover{
+        color: <?php echo $store_clr; ?>;
+    }
+    .categorydrp ul li a:hover{
+        background-color: <?php echo $store_clr; ?>;
+    }
+   /* .retail_level_two{
+        background-color: <?php echo $store_clr; ?>;
+    }*/
+    .store_search_btn, .butn_rfq{
+      background-color: <?php echo $store_btn_clr; ?>;
+    }
+    .right_link a:hover{
+      background-color: <?php echo $store_btn_clr; ?>;
+      color: #FFF;
+    }
+    
+
+    /*================STORE MODULE END=================================*/
+    /*================FREELANCE MODULE START===========================*/
+    .freelancer_banner .find_freelancer span, .dashboardlink li a, .search-freelancer .top-freelancer span,
+    .search-freelancer .freelancers-ids .freelancer-content .freelancer-name, .search-freelancer .freelancers-ids .freelancer-content .skill-rating span,
+    .how-itworks h2 span, .our-clients .our-clients-heading span, .our-clients .freelancerdesignation, .browse-projects .browse-projects-heading span, .freelancer-name a,
+    .userprofile .profile-detail .freelancer-details .country .fa-map-marker, .category_tabs .resp-tabs-container .category-engineer .category-engineer-content .engineer-details .red,
+    .projectslist .freelancer-post .designation-haeding, .designation-haeding a, .projectslist .skills-tags, .projectslist .proposals, .projectslist .freelancer-post .readmore,
+    .projectdetails .freelancer-post-detail .skills-tags, .projectdetails .freelancer-post-detail .activities-on-job, .tbl_activebid tbody td a.red, .projectdetails .similar-job span a,
+    .left_Freelance_category ul li a:hover {
+        color: <?php echo $freelance_clr; ?>;
+    }
+    .search-freelancer .freelancers-ids .freelancer-content .avatar{
+        border: 2.07px solid <?php echo $freelance_clr; ?>;
+    }
+    .our-clients .carousel-indicators .active{
+        background-color: <?php echo $freelance_clr; ?>;
+        border-color: <?php echo $freelance_clr; ?>!important;
+    }
+    .our-clients #fade-quote-carousel .profile-circle img{
+        border: 5px solid <?php echo $freelance_clr; ?> !important;
+    }
+    .category_tabs .resp-tab-active, .category_tabs .resp-tabs-container .category-engineer .category-engineer-content .engineer-avatar img{
+        border-color: <?php echo $freelance_clr; ?> !important;
+    }
+    .projectdetails .back-to-projectlist .fa-chevron-left{
+        border: 2px solid <?php echo $freelance_clr; ?>;
+        color: <?php echo $freelance_clr; ?>;
+    }
+    .userprofile .profile-detail .freelancerImg{
+        border: 4px solid <?php echo $freelance_clr; ?>;
+    }
+    .bg_orange, .postJob .its-free-post-job .heading {
+        background-color: <?php echo $freelance_clr; ?>!important;
+    }
+    .category_selected_banner .get-started, .category_tabs .resp-tabs-container .category-engineer .category-engineer-content .engineer-details .engineer-view-profile{
+        background-color: <?php echo $freelance_clr; ?>;
+    }
+    #freelance_dash p{
+        background-color: <?php echo $freelance_clr; ?>;
+    }
+    /*================FREELANCE MODULE END=============================*/
+    /*================JOB BOARD MODULE START===========================*/
+    #jobboardDashHome li a, .right_main_top i, .right_main_top h3 a, .job_search h1 a, .trndpost p.titlejob a, .findCandidate h2 span,
+    #jobboard .freelancers-ids .freelancer-content .freelancer-name, #jobboard .freelancers-ids .freelancer-content .skill-rating span,
+    #jobboard .freelancers-ids .freelancer-content .job-success span, .myjobboaardBread li a.active, .leftactive a.active{
+         color: <?php echo $jobboard_clr; ?>;
+    }
+    .jobboardleft .panel-body ul li a:hover, .whitejobbox  a:hover, .leftPostCmpny a:hover, .myjobboaardBread li a:hover, .myjobboaardBread li a:focus,
+    .leftactive a:hover {
+        color: <?php echo $jobboard_clr; ?>;
+    }
+    .butn_jobboard{
+        background-color: <?php echo $jobboard_clr; ?>;
+    }
+    
+    /*================JOB BOARD MODULE END=============================*/
+    /*================REAL ESTATE MODULE START=========================*/
+    .topLink a, .realBox .boxHead{
+        background-color: <?php echo $realEstate_clr; ?>;
+    }
+    .realTitle2 h3 span, .boxFoot p.proType, .realTitle3 h3 span, .searchBoxReal h3 span, .realTitle4 h2 span, .RealEsmap p ,.agentbreadCrumb ol.breadcrumb li.active,
+    .featBoxReal p.price, .layerPrprtyTop ul li span, .rightProperty h2.leftH, .rightProperty h2.leftPostHead, .setupPropertysetleft h2, .realTitle h2 span, .setupPropertysetleft h3, .RealEsmap p span{
+        color: <?php echo $realEstate_clr; ?>;
+    }
+    /*================REAL ESTATE MODULE END===========================*/
+    /*================EVENTS MODULE START==============================*/
+    .eventExplrthefun h1 span, .titleEvent h2 span, .upEventBox .bodyEventBox a, .bodyEventBox span.datetop, .Eventmap p, .Eventmap p span, .hostedbyevent a.cohost, .red_clr, .featuringBox span.sendasms{
+        color: <?php echo $event_clr; ?>!important;
+    }
+    .board .nav-tabs > li.active, .transTopBtmFoot{
+        background-color: <?php echo $event_clr; ?>;
+    }
+    /*================EVENTS MODULE END================================*/
+    /*================ART GALLERY MODULE START=========================*/
+    .art_banner a, .innerArtSell a{
+        border: 1px solid <?php echo $photo_clr; ?>;
+        background-color: <?php echo $photo_clr; ?>;
+    }
+    .topartBox a.title:hover, .topartBox a.title:focus, .topartBox span.price, .section_event_art h2 span, .artEventBox a.title:hover, .titleTop h2 span, .cateHomeArt a:hover,
+    .leftArt a i, .leftArt a span, .leftArt a:hover, .art_banner a:hover, .art_banner a:focus, .innerArtSell a:hover,.innerArtSell a:focus, .topbread .breadcrumb li a, .innerArtBanner h1{
+        color: <?php echo $photo_clr; ?>;
+    }
+    .artEventBox p.date, .ui-widget-header{
+        background-color: <?php echo $photo_clr; ?>!important;
+    }
+    .descbOx h2, .descbOx h2 a{
+        color: <?php echo $photo_clr; ?>;
+    }
+    /*================ART GALLERY MODULE END===========================*/
+    /*================MUSIC MODULE START===============================*/
+    .left_Nirvana h3 a, .headingEnt h2, .musicVideoBox a h2, .latestAlbum h2 span, .boxLeftRecent h2.titleh, .boxRightRecent h3, .body_left_enter ul li label a:hover, .topMusciBread li i, .topMusciBread li a,
+    .rightDetailMusic h3, .allMusixBox .titleBox {
+        color: <?php echo $music_clr; ?>;
+    }
+    #musicKeyword a, #downBoxRelEntr{
+        background-color: <?php echo $music_clr; ?>;
+    }
+    .right_Nirvana{
+        background-color: #E2D0B8;
+        border: 1px solid #bca281;
+    }
+    .left_Entertain hr{
+        border-top-color: <?php echo $music_clr; ?>;
+    }
+    #navtabentr li.active a{
+        border-bottom: 3px solid <?php echo $music_clr; ?>!important;
+        color: <?php echo $music_clr; ?>!important;
+    }
+    /*============dashboard============*/
+    .musicDashboard .header_po{
+        background-color: <?php echo $music_clr; ?>;
+        color: #FFF;
+    }
+    .musicDashboard .header_po li a{
+      color: #FFF;
+    }
+    .musicDashboard .header_po li a:hover, .musicDashboard .header_po li a:focus{
+      background-color: <?php echo $music_clr; ?>;
+      color: #000;
+    }
+    .musicDashboard .header_po li.active a, .musicDashboard .header_po li.active button{
+      color: #000;
+    }
+    .musicDashboard .header_po li a.seprator{
+      padding: 8px 0px!important;
+    }
+    /*============dashboard============*/
+    /*================MUSIC MODULE END=================================*/
+    /*================VIDEO MOD,ULE START===============================*/
+    
+    #v_left_nirvana h3 a, #videoBox a h2, #recntUpload h2 span, #boxLeftVdoRect h2.titleh, #vdoLatesAlbm h2 span,#vdoBoxRight h3,#vdoMusicBox .titleBox, .rightDetailVideo h3,#videoHead h2,#vdoHavName h3 a,
+    #body_left_vdo ul li label a:hover , .topVdoBread li i, .topVdoBread li a{
+         color: <?php echo $videos_clr; ?>!important;
+    }
+     #videoKeyword a, #downBoxRelVdo, #alphaVdo ul li{
+        background-color: <?php echo $videos_clr; ?>!important;
+    }
+    .vdoBar{
+        border-top-color: <?php echo $videos_clr; ?>!important;
+    }
+    #navtabVdo li.active a{
+        border-bottom: 3px solid <?php echo $videos_clr; ?>!important;
+        color: <?php echo $videos_clr; ?>!important;
+    }
+    /*============dashboard============*/
+    .videoDashboard .header_po{
+        background-color: <?php echo $videos_clr; ?>;
+        color: #FFF;
+    }
+    .videoDashboard .header_po li a{
+      color: #FFF;
+    }
+    .videoDashboard .header_po li a:hover, .videoDashboard .header_po li a:focus{
+      background-color: <?php echo $videos_clr; ?>;
+      color: #000;
+    }
+    .videoDashboard .header_po li.active a, .videoDashboard .header_po li.active button{
+      color: #000;
+    }
+    .videoDashboard .header_po li a.seprator{
+      padding: 8px 0px!important;
+    }
+    /*============dashboard============*/
+    /*================VIDEO MODULE END=================================*/
+    /*================TRAINING MODULE START============================*/
+    .train_banner .find_freelancer span, .train_dash_link li a, .top-courses span, .course_Box a.title, #train_quote_box h2, #vdoWorks h2 span{
+        color: <?php echo $train_clr; ?>;
+    }
+    /*================TRAINING MODULE END==============================*/
+    /*================CLASSIFIED ADS MODULE START======================*/
+    #ser_ser_tab>li.active>a, #ser_ser_tab>li.active>a:focus, #ser_ser_tab>li.active>a:hover, .mainServiceSearch .tab-content, .service-sec h3{
+        background-color: <?php echo $clasifiedAdd_clr; ?>;
+    }
+    .ser_box_1 a.title, .box_service a:hover, .body_left_ser ul li label a:hover, .topServBread li i, .topServBread li a{
+        color: <?php echo $clasifiedAdd_clr; ?>;
+    }
+    .ser_box_1 a.btn{
+        border: 0.5px solid <?php echo $clasifiedAdd_clr; ?>;
+        background-color: <?php echo $clasifiedAdd_clr; ?>;
+    }
+    .body_left_ser hr{
+        border-top-color: <?php echo $clasifiedAdd_clr; ?>!important;
+    }
+    #navtabser li.active a{
+         border-bottom: 3px solid <?php echo $clasifiedAdd_clr; ?>!important;
+        color: <?php echo $clasifiedAdd_clr; ?>!important;
+    }
+    /*================CLASSIFIED ADS MODULE END========================*/
+    /*================BUSINESS DIRCTORY MODULE START===================*/
+    #bus_ser_tab>li.active>a, #bus_ser_tab>li.active>a:focus, #bus_ser_tab>li.active>a:hover, .mainBusinessSearch .tab-content{
+        background-color: <?php echo $busDirctry_clr; ?>;
+    }
+    /*================BUSINESS DIRCTORY MODULE END=====================*/
+</style>
+
+

@@ -1,0 +1,95 @@
+	body {
+  margin: 0;
+}
+
+td, 
+.groups p {
+  font-size: 13px;
+  color: #878787;
+}
+
+.unsubscribed-page h1, 
+.unsubscribed-page h2 {
+  color: black;
+}
+
+.unsubscribed-page h1 {
+  font-size: 25px;
+}
+
+.unsubscribed-page h2 {
+  font-size: 20px;
+}
+
+.unsubscribed-page a {
+  color: #2F82DE;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.unsubscribed-page {
+  background: #C7C7C7;
+  width: 100%;
+  padding: 20px 0;
+  font-family: 'Nunito', sans-serif;
+  line-height: 1.5;
+}
+
+.email-body {
+  max-width: 600px;
+  min-width: 320px;
+  margin: 0 auto;
+  background: white;
+  border-collapse: collapse;
+}
+.email-body img {
+  max-width: 100%;
+}
+
+.email-header {
+  background: #34ade38f;
+  padding: 30px;
+}
+
+.news-section {
+  padding: 20px 30px;
+}
+
+
+.groups ul {
+  margin: 0 0 10px 25px;
+  padding: 0;
+  display: block;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.groups li {
+  margin: 0 0 3px 0;
+}
+
+.required {
+  display: none;
+  width: 100%;
+  height: 150px;
+  color: #5d5d5d;
+  text-align: left;
+  font-size: 12px;
+  overflow: auto;
+}
+.formEmailButton {
+  color: #fff;
+  background-color: #34ade3;
+  padding: 10px 20px;
+  margin: 10px 0;
+  outline: none;
+  border: 1px solid #34ade3;
+  border-radius: 7px;
+}
+
+.footer {
+  background: #eee;
+  padding: 10px;
+  font-size: 10px;
+  text-align: center;
+}

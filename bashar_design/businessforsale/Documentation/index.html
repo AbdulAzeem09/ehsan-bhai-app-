@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="author" content="">
+<meta name="description" content="">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>:: RealFun - Real Estate Documentation ::</title>
+
+<link href="css/font-awesome.min.css" rel="stylesheet">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/main.css" rel="stylesheet">
+<link rel="icon" href="img/favicon.png">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<div id="wrapper"> 
+  <div id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+      <li class="sidebar-brand"><a href="index.html"><img src="img/logo.png"></a></li>      
+      <li><a href="#Overview">Page Overview</a></li>
+      <li><a href="#Css_Structure">CSS Structure</a></li>
+      <li><a href="#Html_Structure">HTML Structure</a></li>
+      <li><a href="#Google_Maps_API">Google Maps API</a></li>
+	  <li><a href="#Slick_Carousel">Logo Carousel</a></li>
+	  <li><a href="#Magnific_Popup">Modal Popup</a></li>
+	  <li><a href="#Footer_Structure">Footer Structure</a></li>  	
+      <li><a href="#JScript">Javascript Intialization</a></li>
+      <li><a href="#Source_Credits">Source Credits</a></li>      
+    </ul>
+    <div class="copy-rights"><span>Copyright © 2020 All Rights Reserved.</div>
+  </div>
+  
+  <div id="page-content-wrapper">
+    <div class="content-header"> <a id="menu-toggle" href="#" class="btn btn-default"> <span class="fa fa-bars"></span> </a></div>
+    <div class="page-content inset">      
+		<div class="col-md-12">
+		  <h3>RealFun Documentation</h3>		  
+		  <p class="page_description">
+			Thank you for your purchase! If you have any questions feel free to ask me through comment section on ThemeForest.<br>
+			For questions on basic HTML, JavaScript or CSS editing - please give your question a quick Google or visit W3Schools as theme issues get top priority. You will need some knowledge of HTML/CSS to edit this theme.
+		  </p><br>            
+		</div>              
+      
+      <div class="col-md-12" id="Overview">
+        <div class="margin-bottom-60">
+          <h3>Page Head :-</h3>
+          <p>Page head contains Title, Metadata, Favicon and CSS.</p><br>
+          <pre>
+&lt;head&gt;
+&lt;meta name="author" content=""&gt;
+&lt;meta name="description" content=""&gt;
+&lt;meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+&lt;title&gt;:: <span style='color: #e6033c;'>RealFun - Real Estate HTML Template</span> ::&lt;/title&gt;
+
+&lt;!--  Favicon --&gt;
+&lt;link rel="shortcut icon" href="<span style='color: #e6033c;'>images/favicon.png</span>"&gt;
+
+&lt;!-- CSS --&gt;
+&lt;link rel="stylesheet" href="<span style='color: #e6033c;'>css/stylesheet.css</span>"&gt;
+
+&lt;!-- Google Fonts --&gt;
+&lt;link href="<span style='color: #e6033c;'>https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800&display=swap</span>" rel="stylesheet"&gt;
+&lt;link href="<span style='color: #e6033c;'>https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800&display=swap</span>" rel="stylesheet"&gt;  
+&lt;/head&gt;</pre>
+        </div>
+      </div>       
+      
+<div class="col-md-12" id="Css_Structure">
+<div class="margin-bottom-60">
+  <h3>CSS Structure :-</h3>          
+  <p>You can change it to your <code>style.css</code> / <code>style.css</code> file favorite theme.</p><br>
+  <pre>
+&lt;link rel=<span style='color:#e6033c;'>"stylesheet"</span> href=<span style=' color: #e6033c;'>"css/style.css"</span> type="text/css"&gt;  
+</pre>
+</div>
+</div>
+      
+<div class="col-md-12" id="Html_Structure">
+<div class="margin-bottom-60">
+<h3>HTML Structure :-</h3>
+<p>RealFun - Real Estate HTML Template is based on Bootstrap Grid that can help you rapidly develop sites that look beautiful at any size, be it a 17" laptop screen or an iPhone.<br><br>
+   The syntax is simple and it's effective cross browser, but the awesome part is that it also has the flexibility to go mobile like a champ. You can really easily customize all part of site or build new.</p><br>
+<pre>
+&lt;!-- Content --&gt;
+  &lt;section class="fullwidth" data-background-color="#ffffff"&gt;
+	  &lt;div class="container"&gt;
+		&lt;div class="row"&gt;
+		  &lt;div class="col-md-12"&gt;	
+			&lt;div class="utf-section-headline-item centered margin-bottom-30 margin-top-0"&gt;
+			  &lt;h3 class="headline"&gt;&lt;span&gt;Most Featured Properties&lt;/span&gt; Featured Properties&lt;/h3&gt;
+			  &lt;div class="utf-headline-display-inner-item"&gt;Most Featured Properties&lt;/div&gt;
+			  &lt;p class="utf-slogan-text"&gt;Lorem Ipsum is simply dummy text printing and type setting industry Lorem Ipsum been industry standard dummy text ever since when unknown printer took a galley.&lt;/p&gt;
+			&lt;/div&gt;  
+		  &lt;/div&gt;
+		  &lt;div class="col-md-12"&gt;
+			&lt;div class="carousel"&gt; 
+			  &lt;div class="utf-carousel-item-area"&gt;
+				&lt;div class="utf-listing-item"&gt; 
+				  &lt;a href="single-property-page-1.html" class="utf-smt-listing-img-container"&gt;
+				  &lt;div class="utf-listing-badges-item"&gt; 
+					&lt;span class="featured"&gt;Featured&lt;/span&gt; 
+					&lt;span class="for-sale"&gt;For Sale&lt;/span&gt; 
+				  &lt;/div&gt;				  
+				  &lt;div class="utf-listing-img-content-item"&gt; 					
+					&lt;img class="utf-user-picture" src="images/user_1.jpg" alt="user_1" /&gt;
+					&lt;span class="like-icon with-tip" data-tip-content="Bookmark"&gt;&lt;/span&gt; 
+					&lt;span class="compare-button with-tip" data-tip-content="Add to Compare"&gt;&lt;/span&gt; 
+					&lt;span class="video-button with-tip" data-tip-content="Video"&gt;&lt;/span&gt;
+				  &lt;/div&gt;
+				  &lt;div class="utf-listing-carousel-item"&gt;
+					&lt;div&gt;&lt;img src="images/listing-01.jpg" alt=""&gt;&lt;/div&gt;
+					&lt;div&gt;&lt;img src="images/listing-01.jpg" alt=""&gt;&lt;/div&gt;
+					&lt;div&gt;&lt;img src="images/listing-01.jpg" alt=""&gt;&lt;/div&gt;
+				  &lt;/div&gt;
+				  &lt;/a&gt;
+				  &lt;div class="utf-listing-content"&gt;				
+					&lt;div class="utf-listing-title"&gt;
+					  &lt;span class="utf-listing-price"&gt;$18,000/mo&lt;/span&gt; 						  	
+					  &lt;h4&gt;&lt;a href="single-property-page-1.html"&gt;Renovated Luxury Apartment&lt;/a&gt;&lt;/h4&gt;
+					  &lt;span href="#" class="utf-listing-address"&gt;&lt;i class="icon-material-outline-location-on"&gt;&lt;/i&gt; 2021 San Pedro, Los Angeles 90015&lt;/span&gt; 											  
+					&lt;/div&gt;				
+					&lt;ul class="utf-listing-features"&gt;
+					  &lt;li&gt;&lt;i class="fa fa-bed"&gt;&lt;/i&gt; Beds&lt;span&gt;3&lt;/span&gt;&lt;/li&gt;
+					  &lt;li&gt;&lt;i class="icon-feather-codepen"&gt;&lt;/i&gt; Baths&lt;span&gt;2&lt;/span&gt;&lt;/li&gt;
+					  &lt;li&gt;&lt;i class="fa fa-car"&gt;&lt;/i&gt; Garages&lt;span&gt;2&lt;/span&gt;&lt;/li&gt;					  					 
+					  &lt;li&gt;&lt;i class="icon-line-awesome-arrows"&gt;&lt;/i&gt; Sq Ft&lt;span&gt;1530&lt;/span&gt;&lt;/li&gt;
+					&lt;/ul&gt;
+					&lt;div class="utf-listing-user-info"&gt;&lt;a href="agents-profile.html"&gt;&lt;i class="icon-line-awesome-user"&gt;&lt;/i&gt; John Williams&lt;/a&gt; &lt;span&gt;1 Days Ago&lt;/span&gt;&lt;/div&gt;	
+				  &lt;/div&gt;
+				&lt;/div&gt;
+			  &lt;/div&gt;
+			  
+			  &lt;div class="utf-carousel-item-area"&gt;
+				&lt;div class="utf-listing-item"&gt; &lt;a href="single-property-page-2.html" class="utf-smt-listing-img-container"&gt;
+				  &lt;div class="utf-listing-badges-item"&gt; 
+					&lt;span class="for-rent"&gt;For Rent&lt;/span&gt; 
+				  &lt;/div&gt;
+				  &lt;div class="utf-listing-img-content-item"&gt; 
+					&lt;img class="utf-user-picture" src="images/user_1.jpg" alt="user_1" /&gt;
+					&lt;span class="like-icon with-tip" data-tip-content="Bookmark"&gt;&lt;/span&gt; 
+					&lt;span class="compare-button with-tip" data-tip-content="Add to Compare"&gt;&lt;/span&gt; 
+					&lt;span class="video-button with-tip" data-tip-content="Video"&gt;&lt;/span&gt;
+				  &lt;/div&gt;
+				  &lt;img src="images/listing-02.jpg" alt=""&gt; &lt;/a&gt;
+				  &lt;div class="utf-listing-content"&gt;
+					&lt;div class="utf-listing-title"&gt;
+					  &lt;span class="utf-listing-price"&gt;$15,000/mo&lt;/span&gt;	
+					  &lt;h4&gt;&lt;a href="single-property-page-2.html"&gt;Renovated Luxury Apartment&lt;/a&gt;&lt;/h4&gt;
+					  &lt;span href="#" class="utf-listing-address"&gt;&lt;i class="icon-material-outline-location-on"&gt;&lt;/i&gt; 2021 San Pedro, Los Angeles 90015&lt;/span&gt; 
+					&lt;/div&gt;				
+					&lt;ul class="utf-listing-features"&gt;
+					  &lt;li&gt;&lt;i class="fa fa-bed"&gt;&lt;/i&gt; Beds&lt;span&gt;3&lt;/span&gt;&lt;/li&gt;
+					  &lt;li&gt;&lt;i class="icon-feather-codepen"&gt;&lt;/i&gt; Baths&lt;span&gt;2&lt;/span&gt;&lt;/li&gt;
+					  &lt;li&gt;&lt;i class="fa fa-car"&gt;&lt;/i&gt; Garages&lt;span&gt;2&lt;/span&gt;&lt;/li&gt;					  					 
+					  &lt;li&gt;&lt;i class="icon-line-awesome-arrows"&gt;&lt;/i&gt; Sq Ft&lt;span&gt;1530&lt;/span&gt;&lt;/li&gt;					  					 
+					&lt;/ul&gt;	
+					&lt;div class="utf-listing-user-info"&gt;&lt;a href="agents-profile.html"&gt;&lt;i class="icon-line-awesome-user"&gt;&lt;/i&gt; John Williams&lt;/a&gt; &lt;span&gt;1 Days Ago&lt;/span&gt;&lt;/div&gt;	
+				  &lt;/div&gt;
+				&lt;/div&gt;
+			  &lt;/div&gt;
+			  
+			  &lt;div class="utf-carousel-item-area"&gt;
+				&lt;div class="utf-listing-item"&gt; &lt;a href="single-property-page-1.html" class="utf-smt-listing-img-container"&gt;
+				  &lt;div class="utf-listing-badges-item"&gt; 
+					&lt;span class="featured"&gt;Featured&lt;/span&gt; 
+					&lt;span class="for-rent"&gt;For Rent&lt;/span&gt; 
+				  &lt;/div&gt;
+				  &lt;div class="utf-listing-img-content-item"&gt; 
+					&lt;img class="utf-user-picture" src="images/user_1.jpg" alt="user_1" /&gt;
+					&lt;span class="like-icon with-tip" data-tip-content="Bookmark"&gt;&lt;/span&gt; 
+					&lt;span class="compare-button with-tip" data-tip-content="Add to Compare"&gt;&lt;/span&gt; 
+					&lt;span class="video-button with-tip" data-tip-content="Video"&gt;&lt;/span&gt;
+				  &lt;/div&gt;
+				  &lt;img src="images/listing-03.jpg" alt=""&gt; &lt;/a&gt;
+				  &lt;div class="utf-listing-content"&gt;
+					&lt;div class="utf-listing-title"&gt;
+					  &lt;span class="utf-listing-price"&gt;$22,000/mo&lt;/span&gt;
+					  &lt;h4&gt;&lt;a href="single-property-page-1.html"&gt;Renovated Luxury Apartment&lt;/a&gt;&lt;/h4&gt;
+					  &lt;span href="#" class="utf-listing-address"&gt;&lt;i class="icon-material-outline-location-on"&gt;&lt;/i&gt; 2021 San Pedro, Los Angeles 90015&lt;/span&gt; 
+					&lt;/div&gt;				
+					&lt;ul class="utf-listing-features"&gt;
+					  &lt;li&gt;&lt;i class="fa fa-bed"&gt;&lt;/i&gt; Beds&lt;span&gt;3&lt;/span&gt;&lt;/li&gt;
+					  &lt;li&gt;&lt;i class="icon-feather-codepen"&gt;&lt;/i&gt; Baths&lt;span&gt;2&lt;/span&gt;&lt;/li&gt;
+					  &lt;li&gt;&lt;i class="fa fa-car"&gt;&lt;/i&gt; Garages&lt;span&gt;2&lt;/span&gt;&lt;/li&gt;					  					 
+					  &lt;li&gt;&lt;i class="icon-line-awesome-arrows"&gt;&lt;/i&gt; Sq Ft&lt;span&gt;1530&lt;/span&gt;&lt;/li&gt;				  					 
+					&lt;/ul&gt;				
+					&lt;div class="utf-listing-user-info"&gt;&lt;a href="agents-profile.html"&gt;&lt;i class="icon-line-awesome-user"&gt;&lt;/i&gt; John Williams&lt;/a&gt; &lt;span&gt;1 Days Ago&lt;/span&gt;&lt;/div&gt;	
+				  &lt;/div&gt;              
+				&lt;/div&gt;
+			  &lt;/div&gt;
+			  
+			  &lt;div class="utf-carousel-item-area"&gt;
+				&lt;div class="utf-listing-item"&gt; &lt;a href="single-property-page-1.html" class="utf-smt-listing-img-container"&gt;
+				  &lt;div class="utf-listing-badges-item"&gt; 
+					&lt;span class="for-sale"&gt;For Sale&lt;/span&gt; 
+				  &lt;/div&gt;
+				  &lt;div class="utf-listing-img-content-item"&gt; 
+				    &lt;img class="utf-user-picture" src="images/user_1.jpg" alt="user_1" /&gt;
+					&lt;span class="like-icon with-tip" data-tip-content="Bookmark"&gt;&lt;/span&gt; 
+					&lt;span class="compare-button with-tip" data-tip-content="Add to Compare"&gt;&lt;/span&gt; 
+					&lt;span class="video-button with-tip" data-tip-content="Video"&gt;&lt;/span&gt;
+				  &lt;/div&gt;
+				  &lt;div class="utf-listing-carousel-item"&gt;
+					&lt;div&gt;&lt;img src="images/listing-04.jpg" alt=""&gt;&lt;/div&gt;
+					&lt;div&gt;&lt;img src="images/listing-04.jpg" alt=""&gt;&lt;/div&gt;
+				  &lt;/div&gt;
+				  &lt;/a&gt;
+				  &lt;div class="utf-listing-content"&gt;
+					&lt;div class="utf-listing-title"&gt;
+					  &lt;span class="utf-listing-price"&gt;$25,000/mo&lt;/span&gt;
+					  &lt;h4&gt;&lt;a href="single-property-page-1.html"&gt;Renovated Luxury Apartment&lt;/a&gt;&lt;/h4&gt;
+					  &lt;span href="#" class="utf-listing-address"&gt;&lt;i class="icon-material-outline-location-on"&gt;&lt;/i&gt; 2021 San Pedro, Los Angeles 90015&lt;/span&gt; 
+					&lt;/div&gt;
+					&lt;ul class="utf-listing-features"&gt;
+					  &lt;li&gt;&lt;i class="fa fa-bed"&gt;&lt;/i&gt; Beds&lt;span&gt;3&lt;/span&gt;&lt;/li&gt;
+					  &lt;li&gt;&lt;i class="icon-feather-codepen"&gt;&lt;/i&gt; Baths&lt;span&gt;2&lt;/span&gt;&lt;/li&gt;
+					  &lt;li&gt;&lt;i class="fa fa-car"&gt;&lt;/i&gt; Garages&lt;span&gt;2&lt;/span&gt;&lt;/li&gt;					  					 
+					  &lt;li&gt;&lt;i class="icon-line-awesome-arrows"&gt;&lt;/i&gt; Sq Ft&lt;span&gt;1530&lt;/span&gt;&lt;/li&gt;					  					 
+					&lt;/ul&gt; 
+					&lt;div class="utf-listing-user-info"&gt;&lt;a href="agents-profile.html"&gt;&lt;i class="icon-line-awesome-user"&gt;&lt;/i&gt; John Williams&lt;/a&gt; &lt;span&gt;1 Days Ago&lt;/span&gt;&lt;/div&gt;	
+				  &lt;/div&gt;              
+				&lt;/div&gt;
+			  &lt;/div&gt;
+			  
+			  &lt;div class="utf-carousel-item-area"&gt;
+				&lt;div class="utf-listing-item"&gt; &lt;a href="single-property-page-1.html" class="utf-smt-listing-img-container"&gt;
+				  &lt;div class="utf-listing-badges-item"&gt; 
+					&lt;span class="for-sale"&gt;For Sale&lt;/span&gt; 
+				  &lt;/div&gt;
+				  &lt;div class="utf-listing-img-content-item"&gt; 
+					&lt;img class="utf-user-picture" src="images/user_1.jpg" alt="user_1" /&gt;
+					&lt;span class="like-icon with-tip" data-tip-content="Bookmark"&gt;&lt;/span&gt; 
+					&lt;span class="compare-button with-tip" data-tip-content="Add to Compare"&gt;&lt;/span&gt; 
+					&lt;span class="video-button with-tip" data-tip-content="Video"&gt;&lt;/span&gt;
+				  &lt;/div&gt;
+				  &lt;img src="images/listing-05.jpg" alt=""&gt; &lt;/a&gt;
+				  &lt;div class="utf-listing-content"&gt;
+					&lt;div class="utf-listing-title"&gt;
+					  &lt;span class="utf-listing-price"&gt;$14,000/mo&lt;/span&gt;
+					  &lt;h4&gt;&lt;a href="single-property-page-1.html"&gt;Renovated Luxury Apartment&lt;/a&gt;&lt;/h4&gt;
+					  &lt;span href="#" class="utf-listing-address"&gt;&lt;i class="icon-material-outline-location-on"&gt;&lt;/i&gt; 2021 San Pedro, Los Angeles 90015&lt;/span&gt; 
+					&lt;/div&gt;				
+					&lt;ul class="utf-listing-features"&gt;
+					  &lt;li&gt;&lt;i class="fa fa-bed"&gt;&lt;/i&gt; Beds&lt;span&gt;3&lt;/span&gt;&lt;/li&gt;
+					  &lt;li&gt;&lt;i class="icon-feather-codepen"&gt;&lt;/i&gt; Baths&lt;span&gt;2&lt;/span&gt;&lt;/li&gt;
+					  &lt;li&gt;&lt;i class="fa fa-car"&gt;&lt;/i&gt; Garages&lt;span&gt;2&lt;/span&gt;&lt;/li&gt;					  					 
+					  &lt;li&gt;&lt;i class="icon-line-awesome-arrows"&gt;&lt;/i&gt; Sq Ft&lt;span&gt;1530&lt;/span&gt;&lt;/li&gt;				  					 
+					&lt;/ul&gt; 	
+					&lt;div class="utf-listing-user-info"&gt;&lt;a href="agents-profile.html"&gt;&lt;i class="icon-line-awesome-user"&gt;&lt;/i&gt; John Williams&lt;/a&gt; &lt;span&gt;1 Days Ago&lt;/span&gt;&lt;/div&gt;	
+				  &lt;/div&gt;              
+				&lt;/div&gt;
+			  &lt;/div&gt;          
+			&lt;/div&gt;
+		  &lt;/div&gt;      
+		&lt;/div&gt;
+	  &lt;/div&gt;
+  &lt;/section&gt;
+&lt;!-- Content End --&gt;  
+</pre><br>
+<p>For more information, please visit <a href="https://getbootstrap.com/docs/3.4/css/" target="_blank">http://getbootstrap.com/css/#grid</a></p>
+</div>
+</div>
+
+<div class="col-md-12" id="Google_Maps_API">
+	<div class="margin-bottom-60">
+	  <h3>Google Maps API :-</h3>
+	  <p>To get started using the Google Maps click the button below, which guides you through the process of activating the Google Maps JavaScript API and any related services automatically.</p>
+	  <p><a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank" style="background-color:#e33324;color:#fff;box-shadow:0 2px 5px 0 rgba(0,0,0,.15);padding:10px 14px;border-radius:3px;margin:10px 0;display:inline-block;">Maps API Key</a></p>
+	  <p>Then paste your key to the Google API script at the bottom of HTML file:</p><br>
+	  <pre>&lt;script src="<span style='color:#e6033c;'>https://maps.googleapis.com/maps/api/js?key=<b>YOUR_API_KEY</b></span>"&gt;&lt;/script&gt; </pre>
+	</div>
+</div>
+
+<div class="col-md-12" id="Slick_Carousel">
+	<div class="margin-bottom-60">
+	  <h3>Logo Carousel :-</h3>
+	  <p>You don't need any special markup. All you need is to wrap your divs(owl works with any type element) inside the container<br>element &lt;div class="<span style="color: #e6033c;">utf-logo-carousel-item</span>"&gt; .Class "<span style="color: #e6033c;">utf-logo-carousel-item</span>" is mandatory to apply proper styles.</p><br>
+	  <pre>&lt;!-- Carousel --&gt;
+&lt;div class="col-md-12"&gt;
+  &lt;div class="utf-logo-carousel-item dot-navigation"&gt;
+	&lt;div class="item"&gt;&lt;a href="#"&gt;&lt;img src="images/brand_logo_01.png" alt=""&gt;&lt;/a&gt;&lt;/div&gt;
+	&lt;div class="item"&gt;&lt;a href="#"&gt;&lt;img src="images/brand_logo_02.png" alt=""&gt;&lt;/a&gt;&lt;/div&gt;
+	&lt;div class="item"&gt;&lt;a href="#"&gt;&lt;img src="images/brand_logo_03.png" alt=""&gt;&lt;/a&gt;&lt;/div&gt;
+	&lt;div class="item"&gt;&lt;a href="#"&gt;&lt;img src="images/brand_logo_04.png" alt=""&gt;&lt;/a&gt;&lt;/div&gt;
+	&lt;div class="item"&gt;&lt;a href="#"&gt;&lt;img src="images/brand_logo_05.png" alt=""&gt;&lt;/a&gt;&lt;/div&gt;
+	&lt;div class="item"&gt;&lt;a href="#"&gt;&lt;img src="images/brand_logo_06.png" alt=""&gt;&lt;/a&gt;&lt;/div&gt;
+	&lt;div class="item"&gt;&lt;a href="#"&gt;&lt;img src="images/brand_logo_07.png" alt=""&gt;&lt;/a&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- Carousel / End --&gt;  </pre><br>
+	<p>For more informations, please visit <a href="http://kenwheeler.github.io/slick/" target="_blank">http://kenwheeler.github.io/slick/</a></p>
+	</div>	
+</div>
+
+<div class="col-md-12" id="Magnific_Popup">
+	<div class="margin-bottom-60">
+	  <h3>Login Modal Popup :-</h3>
+	  <pre>&lt;!-- Sign In Popup --&gt;
+&lt;div id="utf-signin-dialog-block" class="zoom-anim-dialog mfp-hide dialog-with-tabs"&gt; 
+  &lt;div class="utf-signin-form-part"&gt;
+    &lt;ul class="utf-popup-tabs-nav-item"&gt;
+      &lt;li&gt;&lt;a href="#login"&gt;Log In&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="#register"&gt;Register&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;div class="utf-popup-container-part-tabs"&gt; 
+      &lt;!-- Login --&gt;
+      &lt;div class="utf-popup-tab-content-item" id="login"&gt; 
+        &lt;div class="utf-welcome-text-item"&gt;
+          &lt;h3&gt;Welcome Back Sign in to Continue&lt;/h3&gt;
+          &lt;span&gt;Don't Have an Account? &lt;a href="#" class="register-tab"&gt;Sign Up!&lt;/a&gt;&lt;/span&gt; 
+		&lt;/div&gt;
+        &lt;form method="post" id="login-form"&gt;
+          &lt;div class="utf-no-border"&gt;
+            &lt;input type="text" name="emailaddress" id="emailaddress" placeholder="Email Address" required/&gt;
+          &lt;/div&gt;
+          &lt;div class="utf-no-border"&gt;
+            &lt;input type="password" name="password" id="password" placeholder="Password" required/&gt;
+          &lt;/div&gt;
+		  &lt;div class="checkbox margin-top-0"&gt;
+			&lt;input type="checkbox" id="two-step"&gt;
+			&lt;label for="two-step"&gt;&lt;span class="checkbox-icon"&gt;&lt;/span&gt; Remember Me&lt;/label&gt;
+		  &lt;/div&gt;
+          &lt;a href="forgot_password.html" class="forgot-password"&gt;Forgot Password?&lt;/a&gt;
+        &lt;/form&gt;
+        &lt;button class="button full-width utf-button-sliding-icon ripple-effect" type="submit" form="login-form"&gt;Log In &lt;i class="icon-feather-chevrons-right"&gt;&lt;/i&gt;&lt;/button&gt;
+        &lt;div class="utf-social-login-separator-item"&gt;&lt;span&gt;or&lt;/span&gt;&lt;/div&gt;
+        &lt;div class="utf-social-login-buttons-block"&gt;
+          &lt;button class="facebook-login ripple-effect"&gt;&lt;i class="icon-brand-facebook-f"&gt;&lt;/i&gt; Facebook&lt;/button&gt;
+		  &lt;button class="google-login ripple-effect"&gt;&lt;i class="icon-brand-google-plus-g"&gt;&lt;/i&gt; Google+&lt;/button&gt;
+		  &lt;button class="twitter-login ripple-effect"&gt;&lt;i class="icon-brand-twitter"&gt;&lt;/i&gt; Twitter&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      
+      &lt;!-- Register --&gt;
+      &lt;div class="utf-popup-tab-content-item" id="register"&gt; 
+        &lt;div class="utf-welcome-text-item"&gt;
+          &lt;h3&gt;Create your Account!&lt;/h3&gt;
+		  &lt;span&gt;Don't Have an Account? &lt;a href="#" class="register-tab"&gt;Sign Up!&lt;/a&gt;&lt;/span&gt; 
+        &lt;/div&gt;        
+        &lt;form method="post" id="utf-register-account-form"&gt;
+          &lt;div class="utf-no-border margin-bottom-20"&gt;
+			&lt;select class="utf-chosen-select-single-item utf-with-border" title="Single User"&gt;
+				&lt;option&gt;Single User&lt;/option&gt;
+				&lt;option&gt;Agent&lt;/option&gt;
+				&lt;option&gt;Multi User&lt;/option&gt;				
+			&lt;/select&gt;
+		  &lt;/div&gt;
+		  &lt;div class="utf-no-border"&gt;
+            &lt;input type="text" name="name" id="name" placeholder="User Name" required/&gt;
+          &lt;/div&gt;
+		  &lt;div class="utf-no-border"&gt;
+            &lt;input type="text" name="emailaddress-register" id="emailaddress-register" placeholder="Email Address" required/&gt;
+          &lt;/div&gt;
+		  &lt;div class="utf-no-border"&gt;
+            &lt;input type="password" name="password-register" id="password-register" placeholder="Password" required/&gt;
+          &lt;/div&gt;
+          &lt;div class="utf-no-border"&gt;
+            &lt;input type="password" name="password-repeat-register" id="password-repeat-register" placeholder="Repeat Password" required/&gt;
+          &lt;/div&gt;
+		  &lt;div class="checkbox margin-top-0"&gt;
+			&lt;input type="checkbox" id="two-step0"&gt;
+			&lt;label for="two-step0"&gt;&lt;span class="checkbox-icon"&gt;&lt;/span&gt; By Registering You Confirm That You Accept &lt;a href="#"&gt;Terms & Conditions&lt;/a&gt; and &lt;a href="#"&gt;Privacy Policy&lt;/a&gt;&lt;/label&gt;
+		  &lt;/div&gt;
+        &lt;/form&gt;
+        &lt;button class="margin-top-10 button full-width utf-button-sliding-icon ripple-effect" type="submit" form="utf-register-account-form"&gt;Register &lt;i class="icon-feather-chevrons-right"&gt;&lt;/i&gt;&lt;/button&gt;
+        &lt;div class="utf-social-login-separator-item"&gt;&lt;span&gt;or&lt;/span&gt;&lt;/div&gt;
+        &lt;div class="utf-social-login-buttons-block"&gt;
+          &lt;button class="facebook-login ripple-effect"&gt;&lt;i class="icon-brand-facebook-f"&gt;&lt;/i&gt; Facebook&lt;/button&gt;
+		  &lt;button class="google-login ripple-effect"&gt;&lt;i class="icon-brand-google-plus-g"&gt;&lt;/i&gt; Google+&lt;/button&gt;
+		  &lt;button class="twitter-login ripple-effect"&gt;&lt;i class="icon-brand-twitter"&gt;&lt;/i&gt; Twitter&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- Sign In Popup / End --&gt;</pre>
+	</div>
+</div>
+      
+<div class="col-md-12" id="Footer_Structure">
+	<div class="margin-bottom-60">
+	<h3>Footer Structure :-</h3>
+<pre>
+&lt;!-- Footer --&gt;
+  &lt;div id="footer"&gt; 
+    &lt;div class="container"&gt;
+      &lt;div class="row"&gt;
+	    &lt;div class="col-md-4 col-sm-12 col-xs-12"&gt; 
+          &lt;a href="index-1.html"&gt;&lt;img class="footer-logo" src="images/footer_logo.png" alt=""&gt;&lt;/a&gt;
+          &lt;p&gt;Lorem Ipsum is simply dummy text of printing and type setting industry. Lorem Ipsum been industry standard dummy text ever since, when unknown printer took a galley type scrambled.&lt;/p&gt;          
+        &lt;/div&gt;
+        &lt;div class="col-md-2 col-sm-3 col-xs-6"&gt;
+          &lt;h4&gt;Useful Links&lt;/h4&gt;
+          &lt;ul class="utf-footer-links-item"&gt;
+            &lt;li&gt;&lt;a href="index-1.html"&gt;Home&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#"&gt;About Us&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#"&gt;Services&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#"&gt;Properties&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#"&gt;Contact&lt;/a&gt;&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/div&gt;
+        &lt;div class="col-md-2 col-sm-3 col-xs-6"&gt;
+          &lt;h4&gt;My Account&lt;/h4&gt;
+          &lt;ul class="utf-footer-links-item"&gt;
+            &lt;li&gt;&lt;a href="#"&gt;Dashboard&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#"&gt;My Profile&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#"&gt;Add Property&lt;/a&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;a href="#"&gt;My Listing&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#"&gt;Favorites&lt;/a&gt;&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/div&gt;
+        &lt;div class="col-md-2 col-sm-3 col-xs-6"&gt;
+          &lt;h4&gt;Resources&lt;/h4&gt;
+          &lt;ul class="utf-footer-links-item"&gt;
+            &lt;li&gt;&lt;a href="#"&gt;My Account&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#"&gt;Support&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#"&gt;How It Work&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#"&gt;Privacy Policy&lt;/a&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;a href="#"&gt;Term & Condition&lt;/a&gt;&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/div&gt;
+		&lt;div class="col-md-2 col-sm-3 col-xs-6"&gt;
+          &lt;h4&gt;Pages&lt;/h4&gt;
+          &lt;ul class="utf-footer-links-item"&gt;
+            &lt;li&gt;&lt;a href="#"&gt;Our Partners&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#"&gt;How It Work&lt;/a&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;a href="#"&gt;FAQ Page&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#"&gt;Privacy Policy&lt;/a&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;a href="#"&gt;Term & Condition&lt;/a&gt;&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/div&gt;	
+      &lt;/div&gt;
+      &lt;div class="row"&gt;
+        &lt;div class="col-md-12"&gt;
+          &lt;div class="copyrights"&gt;Copyright © 2020 All Rights Reserved.&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;!-- Footer / End --&gt;
+</pre>
+</div>
+</div>
+      <div class="col-md-12" id="JScript">
+        <div class="margin-bottom-60">
+          <h3>Javascript Intialization :-</h3>
+          <p>Core javascript initialization implemented in thorugh object as shown below. This approach enables an easy modular implementation to initialize jquery plugins and other application logics.</p>
+          <p>You can call any of the available functions by objects.</p><br>
+          <pre>
+&lt;!-- Scripts --&gt; 
+&lt;script src="<span style="color: #e6033c;">scripts/jquery-3.3.1.min.js</span>"&gt;&lt;/script&gt; 
+&lt;script src="<span style="color: #e6033c;">scripts/chosen.min.js</span>"&gt;&lt;/script&gt; 
+&lt;script src="<span style="color: #e6033c;">scripts/magnific-popup.min.js</span>"&gt;&lt;/script&gt; 
+&lt;script src="<span style="color: #e6033c;">scripts/owl.carousel.min.js</span>"&gt;&lt;/script&gt; 
+&lt;script src="<span style="color: #e6033c;">scripts/rangeSlider.js</span>"&gt;&lt;/script&gt; 
+&lt;script src="<span style="color: #e6033c;">scripts/sticky-kit.min.js</span>"&gt;&lt;/script&gt; 
+&lt;script src="<span style="color: #e6033c;">scripts/slick.min.js</span>"&gt;&lt;/script&gt; 
+&lt;script src="<span style="color: #e6033c;">scripts/masonry.min.js</span>"&gt;&lt;/script&gt; 
+&lt;script src="<span style="color: #e6033c;">scripts/mmenu.min.js</span>"&gt;&lt;/script&gt; 
+&lt;script src="<span style="color: #e6033c;">scripts/tooltips.min.js</span>"&gt;&lt;/script&gt; 
+&lt;script src="<span style="color: #e6033c;">scripts/typed.js</span>"&gt;&lt;/script&gt;
+&lt;script src="<span style="color: #e6033c;">scripts/custom_jquery.js</span>"&gt;&lt;/script&gt;
+</pre>
+        </div>
+      </div>
+	  
+	  <div class="col-md-12" id="Source_Credits">
+	<div class="margin-bottom-60">
+	  <h3>Source Credits :-</h3>
+	  <p>Once again, thank you so much for purchasing this theme. As I said at the beginning, I'd be glad to help you if you have any questions relating to this theme. No guarantees, but I'll do my best to assist.</p><br>
+	  <p>If you have a more general question relating to the themes on ThemeForest, basic HTML/CSS/JavaScript related questions, you might consider visiting the forums and asking your question in the "Item Discussion" section.</p>	  
+	  <p style="text-align:right">Best Regards<br>Real Fun</p>
+	</div>
+</div>
+      
+    </div>
+    <br />
+  </div>
+</div>
+</div>
+<!-- JavaScript --> 
+<script type='text/JavaScript' src="js/jquery-1.11.1.min.js"></script> 
+<script type='text/JavaScript' src="js/bootstrap.min.js"></script> 
+<script type='text/JavaScript' src="js/common.js"></script> 
+
+<!-- Custom JavaScript for the Menu Toggle --> 
+<script>
+    $(document).ready(function() {
+        DocMaster.treeMenu();
+        DocMaster.sideToggle();
+        DocMaster.scrollToElement();
+    });
+    </script>
+</body>
+</html>

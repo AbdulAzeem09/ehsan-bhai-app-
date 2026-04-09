@@ -1,0 +1,445 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="author" content="learnhunter">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style type="text/css">
+        .btn:focus, .btn:active, button:focus, button:active {
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+        #image-gallery .modal-footer{
+            display: block;
+        }
+
+        .thumb{
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+        .modal-body {
+            position: relative;
+            -webkit-box-flex: 1;
+            -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
+            padding: 0;
+        } 
+        .widget .panel-body { padding:0px; }
+        .widget .list-group { margin-bottom: 0; }
+        .widget .panel-title { display:inline }
+        .widget .label-info { float: right; }
+        .widget li.list-group-item {border-radius: 0;border: 0;border-top: 1px solid #ddd;}
+        .widget li.list-group-item:hover { background-color: rgba(86,61,124,.1); }
+        .widget .mic-info { color: #666666;font-size: 11px; }
+        .widget .action { margin-top:5px; }
+        .widget .comment-text { font-size: 12px; }
+        .widget .btn-block { border-top-left-radius:0px;border-top-right-radius:0px; }    
+        .modal-title {
+            margin-bottom: 0;
+            line-height: 1.5;
+            display: inline-flex;
+        }
+        .modal-title h4{
+            padding: 15px;
+        }       
+        @media (min-width: 992px)
+        .modal-lg {
+            max-width: 1440px;
+        }
+
+        element.style {
+        }
+        .thumb {
+            margin-top: 1px;
+            margin-bottom: 1px;
+            padding-right: 1px;
+            padding-left: 1px;
+        }
+    </style>
+    <!------ Include the above in your HEAD tag ---------->
+</head>
+
+<body>
+    <div class="container">   
+        <div class="row">
+            <div class="col-md-10"></div>
+            <div class="col-md-2">
+                <div class="dropdown">
+                  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Select Album
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <li><a href="#">A</a></li>
+                    <li><a href="#">B</a></li>
+                    <li><a href="#">C</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">D</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>    
+    <div class="row ">
+        <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+            <a
+            class="thumbnail"
+            href="#"
+            data-image-id=""
+            data-toggle="modal"
+            data-title=""
+            data-image="https://images.pexels.com/photos/853168/pexels-photo-853168.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+            data-target="#image-gallery"
+            >
+            <img class="img-thumbnail" src="https://images.pexels.com/photos/853168/pexels-photo-853168.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="Another alt text" />
+        </a>
+    </div>
+    <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+        <a
+        class="thumbnail"
+        href="#"
+        data-image-id=""
+        data-toggle="modal"
+        data-title=""
+        data-image="https://images.pexels.com/photos/158971/pexels-photo-158971.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+        data-target="#image-gallery"
+        >
+        <img class="img-thumbnail" src="https://images.pexels.com/photos/158971/pexels-photo-158971.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="Another alt text" />
+    </a>
+</div>
+<div class="col-lg-3 col-md-4 col-xs-6 thumb">
+    <a
+    class="thumbnail"
+    href="#"
+    data-image-id=""
+    data-toggle="modal"
+    data-title=""
+    data-image="https://images.pexels.com/photos/305070/pexels-photo-305070.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+    data-target="#image-gallery"
+    >
+    <img class="img-thumbnail" src="https://images.pexels.com/photos/305070/pexels-photo-305070.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="Another alt text" />
+</a>
+</div>
+<div class="col-lg-3 col-md-4 col-xs-6 thumb">
+    <a
+    class="thumbnail"
+    href="#"
+    data-image-id=""
+    data-toggle="modal"
+    data-title="Test1"
+    data-image="https://images.pexels.com/photos/853168/pexels-photo-853168.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+    data-target="#image-gallery"
+    >
+    <img class="img-thumbnail" src="https://images.pexels.com/photos/853168/pexels-photo-853168.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="Another alt text" />
+</a>
+</div>
+<div class="col-lg-3 col-md-4 col-xs-6 thumb">
+    <a
+    class="thumbnail"
+    href="#"
+    data-image-id=""
+    data-toggle="modal"
+    data-title="Im so nice"
+    data-image="https://images.pexels.com/photos/158971/pexels-photo-158971.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+    data-target="#image-gallery"
+    >
+    <img class="img-thumbnail" src="https://images.pexels.com/photos/158971/pexels-photo-158971.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="Another alt text" />
+</a>
+</div>
+<div class="col-lg-3 col-md-4 col-xs-6 thumb">
+    <a
+    class="thumbnail"
+    href="#"
+    data-image-id=""
+    data-toggle="modal"
+    data-title="Im so nice"
+    data-image="https://images.pexels.com/photos/305070/pexels-photo-305070.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+    data-target="#image-gallery"
+    >
+    <img class="img-thumbnail" src="https://images.pexels.com/photos/305070/pexels-photo-305070.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="Another alt text" />
+</a>
+</div>
+<div class="col-lg-3 col-md-4 col-xs-6 thumb">
+    <a
+    class="thumbnail"
+    href="#"
+    data-image-id=""
+    data-toggle="modal"
+    data-title="Im so nice"
+    data-image="https://images.pexels.com/photos/853168/pexels-photo-853168.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+    data-target="#image-gallery"
+    >
+    <img class="img-thumbnail" src="https://images.pexels.com/photos/853168/pexels-photo-853168.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="Another alt text" />
+</a>
+</div>
+<div class="col-lg-3 col-md-4 col-xs-6 thumb">
+    <a
+    class="thumbnail"
+    href="#"
+    data-image-id=""
+    data-toggle="modal"
+    data-title="Im so nice"
+    data-image="https://images.pexels.com/photos/158971/pexels-photo-158971.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+    data-target="#image-gallery"
+    >
+    <img class="img-thumbnail" src="https://images.pexels.com/photos/158971/pexels-photo-158971.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="Another alt text" />
+</a>
+</div>
+<div class="col-lg-3 col-md-4 col-xs-6 thumb">
+    <a
+    class="thumbnail"
+    href="#"
+    data-image-id=""
+    data-toggle="modal"
+    data-title="Im so nice"
+    data-image="https://images.pexels.com/photos/305070/pexels-photo-305070.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+    data-target="#image-gallery"
+    >
+    <img class="img-thumbnail" src="https://images.pexels.com/photos/305070/pexels-photo-305070.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="Another alt text" />
+</a>
+</div>
+<div class="col-lg-3 col-md-4 col-xs-6 thumb">
+    <a
+    class="thumbnail"
+    href="#"
+    data-image-id=""
+    data-toggle="modal"
+    data-title="Im so nice"
+    data-image="https://images.pexels.com/photos/853168/pexels-photo-853168.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+    data-target="#image-gallery"
+    >
+    <img class="img-thumbnail" src="https://images.pexels.com/photos/853168/pexels-photo-853168.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="Another alt text" />
+</a>
+</div>
+<div class="col-lg-3 col-md-4 col-xs-6 thumb">
+    <a
+    class="thumbnail"
+    href="#"
+    data-image-id=""
+    data-toggle="modal"
+    data-title="Im so nice"
+    data-image="https://images.pexels.com/photos/158971/pexels-photo-158971.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+    data-target="#image-gallery"
+    >
+    <img class="img-thumbnail" src="https://images.pexels.com/photos/158971/pexels-photo-158971.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="Another alt text" />
+</a>
+</div>
+</diSv>
+<div class="modal fade" id="image-gallery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="col-md-4 modal-title">
+                    <img src="https://dummyimage.com/50x50/000/fff" class="img-circle img-responsive" alt="" />
+                    <h4>Name here</h4>
+                </div>
+                <div class="col-md-4 text-center">
+                    <button type="button" class="btn btn-secondary" id="show-previous-image"><i class="fa fa-arrow-left"></i></button>
+                    <button type="button" id="show-next-image" class="btn btn-secondary"><i class="fa fa-arrow-right"></i></button>
+                </div>
+                <div class="col-md-4">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <img id="image-gallery-image" class="img-responsive" style="width: 100%; height: auto;" src="" />
+            </div>
+            <div class="modal-footer">
+                <div class="panel panel-default widget">
+                    <div class="panel-heading">
+                        <small>Posted: 01-03-2022 01:45PM</small>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        <span class="glyphicon glyphicon-comment"></span>
+                        <h3 class="panel-title">
+                            Recent Comments
+                        </h3>
+                        <span class="label label-info"> 78</span>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-xs-2 col-md-1">
+                                        <img src="https://dummyimage.com/50x50/000/fff" class="img-circle img-responsive" alt="" />
+                                    </div>
+                                    <div class="col-xs-10 col-md-11">
+                                        <div>
+                                            <div class="mic-info"><a href="#">Bhaumik Patel</a> on 2 Aug 2013</div>
+                                        </div>
+                                        <div class="comment-text">
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-xs-2 col-md-1">
+                                        <img src="https://dummyimage.com/50x50/000/fff" class="img-circle img-responsive" alt="" />
+                                    </div>
+                                    <div class="col-xs-10 col-md-11">
+                                        <div>
+                                            <div class="mic-info"><a href="#">Bhaumik Patel</a> on 2 Aug 2013</div>
+                                        </div>
+                                        <div class="comment-text">
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                                            nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                                            sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-xs-2 col-md-1">
+                                        <img src="https://dummyimage.com/50x50/000/fff" class="img-circle img-responsive" alt="" />
+                                    </div>
+                                    <div class="col-xs-10 col-md-11">
+                                        <div>
+                                            <div class="mic-info"><a href="#">Bhaumik Patel</a> on 11 Nov 2013</div>
+                                        </div>
+                                        <div class="comment-text">
+                                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-xs-2 col-md-1">
+                                        <img src="https://dummyimage.com/50x50/000/fff" class="img-circle img-responsive" alt="" />
+                                    </div>
+                                    <div class="col-xs-10 col-md-11">
+                                        <div>
+                                            <div class="mic-info">By: <a href="#">Bhaumik Patel</a> on 11 Nov 2013</div>
+                                        </div>
+                                        <div class="comment-text">
+                                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim
+                                        </div>                                                
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+<!-- ==================ALL SCRIPT ARE HERE======================= -->
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script type="text/javascript">
+    let modalId = $('#image-gallery');
+
+    $(document).ready(function () {
+
+        loadGallery(true, 'a.thumbnail');
+
+    //This function disables buttons when needed
+    function disableButtons(counter_max, counter_current) {
+      $('#show-previous-image, #show-next-image')
+      .show();
+      if (counter_max === counter_current) {
+        $('#show-next-image')
+        .hide();
+    } else if (counter_current === 1) {
+        $('#show-previous-image')
+        .hide();
+    }
+}
+
+    /**
+     *
+     * @param setIDs        Sets IDs when DOM is loaded. If using a PHP counter, set to false.
+     * @param setClickAttr  Sets the attribute for the click handler.
+     */
+
+     function loadGallery(setIDs, setClickAttr) {
+      let current_image,
+      selector,
+      counter = 0;
+
+      $('#show-next-image, #show-previous-image')
+      .click(function () {
+          if ($(this)
+            .attr('id') === 'show-previous-image') {
+            current_image--;
+    } else {
+        current_image++;
+    }
+
+    selector = $('[data-image-id="' + current_image + '"]');
+    updateGallery(selector);
+});
+
+      function updateGallery(selector) {
+        let $sel = selector;
+        current_image = $sel.data('image-id');
+        $('#image-gallery-title')
+        .text($sel.data('title'));
+        $('#image-gallery-image')
+        .attr('src', $sel.data('image'));
+        disableButtons(counter, $sel.data('image-id'));
+    }
+
+    if (setIDs == true) {
+        $('[data-image-id]')
+        .each(function () {
+            counter++;
+            $(this)
+            .attr('data-image-id', counter);
+        });
+    }
+    $(setClickAttr)
+    .on('click', function () {
+      updateGallery($(this));
+  });
+}
+});
+
+// build key actions
+$(document).keydown(function (e) {
+    switch (e.which) {
+      case 37: // left
+      if ((modalId.data('bs.modal') || {})._isShown && $('#show-previous-image').is(":visible")) {
+          $('#show-previous-image')
+          .click();
+      }
+      break;
+
+      case 39: // right
+      if ((modalId.data('bs.modal') || {})._isShown && $('#show-next-image').is(":visible")) {
+          $('#show-next-image')
+          .click();
+      }
+      break;
+
+      default:
+        return; // exit this handler for other keys
+    }
+    e.preventDefault(); // prevent the default action (scroll / move caret)
+});
+
+</script>
+
+</body>
+
+</html>

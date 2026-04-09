@@ -1,0 +1,2 @@
+name,address,email,zipcode,phone,customer_name,country,state,city,customer_type,sales_price,tax,discount,payment_1,payment_2,notes,email_news
+#newcust,lucknow,pp@gmail.com,123456,7894561239,vivan singh,113,2196,42525,1,55.65,78.63,20.36,cash,cod,we are execuating,yes

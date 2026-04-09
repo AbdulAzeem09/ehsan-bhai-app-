@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<link rel="stylesheet" href="css/bootstrap.min.css" >
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+
+	
+	<!-- <link rel="stylesheet" type="text/css" href="css/docs.theme.min.css"> -->
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<!-- <link rel="stylesheet" type="text/css" href="css/style.css"> -->
+	<link rel="stylesheet" type="text/css" href="css/realsetate.css">
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>	
+</head>
+
+<body cz-shortcut-listen="true"> 
+	<div class="container-fluid">
+		<div class="row topbar">
+			<div class="col-md-7">
+				<form class="searchReal" method="POST" action="#">
+					<div class="col-md-5">
+						<div class="form-group">
+							<input type="text" class="form-control" placeholder="Where do you want to go?" name="txtAddress">
+						</div>
+					</div>
+					<div class="col-md-2">
+						<input type="date" name="" class="form-control form-group">
+					</div>
+					<div class="col-md-2">
+						<input type="date" name="" class="form-control form-group">
+					</div>
+					<div class="col-md-1">
+						<select class="select optional guests form-control form-group" include_blank="false" name="guests" id="search_guests">
+							<option selected="selected" value="2">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="10">10</option>
+							<option value="11">11</option>
+							<option value="12">12</option>
+							<option value="13">13</option>
+							<option value="14">14</option>
+							<option value="15">15</option>
+							<option value="16">16</option>
+						</select>
+					</div>
+					<div class="col-md-1">
+						<input type="submit" class="btn form-group" name="btnAdresSearch" value="Search">
+					</div>
+				</form>
+			</div>
+			<div class="col-md-5">
+				<div class="col-md-4">
+					<nav class="navbar" role="navigation">
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+								<span class="sr-only">Toggle navigation</span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>        
+						</div>
+						<!--/.navbar-header-->
+
+						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+							<ul class="nav navbar-nav">	        
+								<li class="dropdown">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">Filter <b class="caret"></b></a>
+									<ul class="dropdown-menu multi-column columns-3">
+										<div class="row">
+											<div class="col-sm-4">
+												<ul class="multi-column-dropdown">
+													<li><a href="#">Action</a></li>
+													<li><a href="#">Another action</a></li>
+													<li><a href="#">Something else here</a></li>
+													<li class="divider"></li>
+													<li><a href="#">Separated link</a></li>
+													<li class="divider"></li>
+													<li><a href="#">One more sp link</a></li>
+												</ul>
+											</div>
+											<div class="col-sm-4">
+												<ul class="multi-column-dropdown">
+													<li><a href="#">Action</a></li>
+													<li><a href="#">Another action</a></li>
+													<li><a href="#">Something else here</a></li>
+													<li class="divider"></li>
+													<li><a href="#">Separated link</a></li>
+													<li class="divider"></li>
+													<li><a href="#">One more sp link</a></li>
+												</ul>
+											</div>
+											<div class="col-sm-4">
+												<ul class="multi-column-dropdown">
+													<li><a href="#">Action</a></li>
+													<li><a href="#">Another action</a></li>
+													<li><a href="#">Something else here</a></li>
+													<li class="divider"></li>
+													<li><a href="#">Separated link</a></li>
+													<li class="divider"></li>
+													<li><a href="#">One more sp link</a></li>
+												</ul>
+											</div>
+										</div>
+									</ul>
+								</li>
+								<li class="dropdown">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">Sorting <b class="caret"></b></a>
+									<ul class="dropdown-menu">
+										<li><a href="#">Action</a></li>
+										<li><a href="#">Another action</a></li>
+										<li><a href="#">Something else here</a></li>
+										<li class="divider"></li>
+										<li><a href="#">Separated link</a></li>
+										<li class="divider"></li>
+										<li><a href="#">One more sp link</a></li>
+									</ul>
+								</li>	        
+							</ul>
+						</div>
+						<!--/.navbar-collapse-->
+					</nav>
+					<!--/.navbar-->
+				</div>
+				<div class="col-md-3">
+					<input type="text" name="min" placeholder="Min" class="form-control form-group">
+				</div> 
+				<div class="col-md-3">
+					<input type="text" name="min" placeholder="Max" class="form-control form-group">
+				</div>
+				<div class="col-md-2">
+					<input type="submit" name="" class="btn btn-default">
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<h1 class="text-center">Search Result "Search Result Keyword"</h1>
+		<div class="d-flex justify-content-center row">			
+			<div class="col-md-6 p5">
+				<div class="boxbg">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="mainimg">
+								<img class="img-fluid img-responsive rounded product-image" src="https://i.imgur.com/QpjAiHq.jpg">
+								<div class="overimg">
+									<a href="#"><img src="img/uiface.jpg" class="img-circle"></a>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-8">
+							<h5>2 Bedrooms</h5>
+							<p>Location Address</p>
+							<div class="d-flex flex-row">
+								<div class="ratings mr-2"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div><small>310</small>
+							</div>						
+							<p class="text-justify text-truncate para mb-0">
+								There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.<br>
+							</p>
+						</div>
+						<div class="align-items-center align-content-center col-md-3 border-left ">
+							<div class="d-flex flex-row align-items-center">
+								<h4 class="mr-1">$13.99</h4><span class="strike-text">$20.99</span>
+							</div>
+							<h6 class="text-success">Per Day</h6>
+							<div class="d-flex flex-column mt-4"><button class="btn btn-primary btn-sm" type="button">Book Room</button><button class="btn btn-outline-primary btn-sm mt-2" type="button"><i class="fa fa-heart"></i></button></div>
+						</div>
+					</div>	
+				</div>
+			</div>
+			<div class="col-md-6 p5">
+				<div class="boxbg">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="mainimg">
+								<img class="img-fluid img-responsive rounded product-image" src="https://i.imgur.com/QpjAiHq.jpg">
+								<div class="overimg">
+									<a href="#"><img src="img/uiface.jpg" class="img-circle"></a>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-8">
+							<h5>2 Bedrooms</h5>
+							<p>Location Address</p>
+							<div class="d-flex flex-row">
+								<div class="ratings mr-2"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div><small>310</small>
+							</div>						
+							<p class="text-justify text-truncate para mb-0">
+								There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.<br>
+							</p>
+						</div>
+						<div class="align-items-center align-content-center col-md-3 border-left ">
+							<div class="d-flex flex-row align-items-center">
+								<h4 class="mr-1">$13.99</h4><span class="strike-text">$20.99</span>
+							</div>
+							<h6 class="text-success">Per Day</h6>
+							<div class="d-flex flex-column mt-4"><button class="btn btn-primary btn-sm" type="button">Book Room</button><button class="btn btn-outline-primary btn-sm mt-2" type="button"><i class="fa fa-heart"></i></button></div>
+						</div>
+					</div>	
+				</div>
+			</div>
+			<div class="col-md-6 p5">
+				<div class="boxbg">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="mainimg">
+								<img class="img-fluid img-responsive rounded product-image" src="https://i.imgur.com/QpjAiHq.jpg">
+								<div class="overimg">
+									<a href="#"><img src="img/uiface.jpg" class="img-circle"></a>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-8">
+							<h5>2 Bedrooms</h5>
+							<p>Location Address</p>
+							<div class="d-flex flex-row">
+								<div class="ratings mr-2"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div><small>310</small>
+							</div>						
+							<p class="text-justify text-truncate para mb-0">
+								There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.<br>
+							</p>
+						</div>
+						<div class="align-items-center align-content-center col-md-3 border-left ">
+							<div class="d-flex flex-row align-items-center">
+								<h4 class="mr-1">$13.99</h4><span class="strike-text">$20.99</span>
+							</div>
+							<h6 class="text-success">Per Day</h6>
+							<div class="d-flex flex-column mt-4"><button class="btn btn-primary btn-sm" type="button">Book Room</button><button class="btn btn-outline-primary btn-sm mt-2" type="button"><i class="fa fa-heart"></i></button></div>
+						</div>
+					</div>	
+				</div>
+			</div>
+			<div class="col-md-6 p5">
+				<div class="boxbg">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="mainimg">
+								<img class="img-fluid img-responsive rounded product-image" src="https://i.imgur.com/QpjAiHq.jpg">
+								<div class="overimg">
+									<a href="#"><img src="img/uiface.jpg" class="img-circle"></a>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-8">
+							<h5>2 Bedrooms</h5>
+							<p>Location Address</p>
+							<div class="d-flex flex-row">
+								<div class="ratings mr-2"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div><small>310</small>
+							</div>						
+							<p class="text-justify text-truncate para mb-0">
+								There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.<br>
+							</p>
+						</div>
+						<div class="align-items-center align-content-center col-md-3 border-left ">
+							<div class="d-flex flex-row align-items-center">
+								<h4 class="mr-1">$13.99</h4><span class="strike-text">$20.99</span>
+							</div>
+							<h6 class="text-success">Per Day</h6>
+							<div class="d-flex flex-column mt-4"><button class="btn btn-primary btn-sm" type="button">Book Room</button><button class="btn btn-outline-primary btn-sm mt-2" type="button"><i class="fa fa-heart"></i></button></div>
+						</div>
+					</div>	
+				</div>
+			</div>
+		</div>	
+
+		<!--================================================== -->
+
+		<script type="text/javascript" src="js/video.js"></script>	
+	</body>
+	</html>

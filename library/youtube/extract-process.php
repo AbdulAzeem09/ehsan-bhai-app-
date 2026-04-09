@@ -1,0 +1,48 @@
+<?php
+if(isset($_POST["url"]))
+{
+	$get_url = $_POST["url"]; 
+		
+		//Include PHP HTML DOM parser (requires PHP 5 +)
+		include_once("simple_html_dom.inc.php");
+		
+		//get URL content
+		$get_content = file_get_html($get_url); 
+		
+		//Get Page Title 
+		foreach($get_content->find('title') as $element) 
+		{
+			$page_title = $element->plaintext;
+		}
+		
+		//Get Body Text
+		foreach($get_content->find('body') as $element) 
+		{
+			$page_body = trim($element->plaintext);
+			$pos=strpos($page_body, ' ', 200); //Find the numeric position to substract
+			$page_body = substr($page_body,0,$pos ); //shorten text to 200 chars
+		}
+	
+		$image_urls = array();
+		
+		//get all images URLs in the content
+		foreach($get_content->find('img') as $element) 
+		{
+				/* check image URL is valid and name isn't blank.gif/blank.png etc..
+				you can also use other methods to check if image really exist */
+				if(!preg_match('/blank.(.*)/i', $element->src) && filter_var($element->src, FILTER_VALIDATE_URL))
+				{
+					$image_urls[] =  $element->src;
+				}
+		}
+		//===GET THE ID OF THE YOUTUBE VIDEO
+		//$url = "http://www.youtube.com/watch?v=C4kxS1ksqtw&feature=relate";
+		parse_str( parse_url( $get_url, PHP_URL_QUERY ), $my_array_of_vars );
+		//echo $my_array_of_vars['v'];  
+		//===END
+		
+		//prepare for JSON 
+		$output = array('title'=>$page_title, 'images'=>$image_urls, 'content'=> $page_body, 'id'=>$my_array_of_vars['v'] );
+		echo json_encode($output); //output JSON data
+}
+?>

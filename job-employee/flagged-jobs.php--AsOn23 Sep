@@ -1,0 +1,205 @@
+<?php
+//require_once('../common.php');
+include('../univ/baseurl.php');
+session_start();
+include "check_job_employee.php";
+if (!isset($_SESSION['uid'])) {
+$_SESSION['afterlogin'] = "job-employee/";
+include_once("../authentication/check.php");
+} else {
+function sp_autoloader($class)
+{
+include '../mlayer/'. $class .'.class.php';
+}
+spl_autoload_register("sp_autoloader");
+$_GET["categoryid"] = "2";
+$_GET["categoryName"] = "Job Board";
+$postId = isset($_REQUEST['postid']) ? (int)$_REQUEST['postid'] : 0;
+	$p = new _jobpostings;
+  
+	$res = $p->singletimelines($postId);
+     $uid = $_SESSION['uid'];
+     $pid = $_SESSION['pid'];
+     $page = "jobBoard";
+     $page = "jobBoard";
+	//echo "<pre>";
+    //var_dump($_SESSION);
+
+    // echo "</pre>";
+  //   exit;
+ if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $errors = [];
+    $jobData = $_POST;
+    // Validate each field individually
+    $requiredFields = [
+        'title' => 'Job Title',
+        'description' => 'Description',
+        'skill' => 'Skills',
+        'salary_from' => 'Salary From',
+        'salary_to' => 'Salary To',
+        'closingdate' => 'Closing Date',
+    ];
+    foreach ($requiredFields as $field => $label) {
+        if (empty($_POST[$field])) {
+            $errors[$field] = $label . ' is required.';
+        }
+    }
+    // Additional validations
+    if (isset($_POST['salary_from']) && isset($_POST['salary_to']) && ($_POST['salary_from'] > $_POST['salary_to'])) {
+        $errors['salary_from'] = 'Salary From must be less than or equal to Salary To.';
+    }
+    // Handle errors or proceed with form processing
+    if (empty($errors)) {
+        // Save data to session for preview
+        $_SESSION['jobData'] = $jobData;
+        // Redirect to preview.php
+		        header("Location: preview.php");
+        exit();
+    }
+}
+
+	
+	  // echo "<pre>";
+    //  var_dump($_SESSION);
+
+  //    echo "</pre>";
+ //   exit;
+    //position-relative
+    ?>
+<?php include_once("../views/common/header.php"); ?>
+<?php $job_seeker_nav = 'flagged-jobs'; ?>
+<link rel="stylesheet" href="./job-employee.css">
+    <div class="body-wrapper">
+        
+        <div class="job-wrapper">
+            <div class="job-body-wrapper">
+                <?php include "employee-nav.php"; ?>
+                <div class="main-body">
+                    <div class="main-heading">
+                        Flagged Jobs
+                    </div>
+                    <div class="draft-jobs">
+                        <div class="filters">
+                            <div class="search-box">
+                                <input type="text" placeholder="Search Job by keyword">
+                                <div class="search-icon">
+                                    <img src="./images/search-3.svg" alt="">
+                                </div>
+                            </div>
+                        </div> 
+						
+						
+                        <div class="list-wrapper">
+						   <?php 
+                                   $cl = new _flagpost;
+                                   $dsf = $cl->getflagjob($_SESSION['pid']);
+
+                                   if ($dsf && $dsf->num_rows > 0) {
+                                    while ($row = $dsf->fetch_assoc()) {
+										   $skills = explode(',', $row['spPostingSkill']);
+                                       ?>
+                            <div class="job border-red">
+							   
+                                <div class="salary">Salary $400 - 500 USD</div>
+                                <div class="title">
+                                    <?php echo htmlspecialchars($row['spPostingTitle']); ?>
+                                </div>
+                                <div class="description">
+                                    <?php echo htmlspecialchars($row['spPostingNotes']); ?>
+                                </div>
+                                <div class="skills red-skills ">
+                                    <div class="skill">Web Development</div>
+                                     <?php echo implode(', ', array_map('htmlspecialchars', $skills)); // Output skills comma-separated ?>
+                                </div>
+                                <div class="location">
+                                    <img src="./images/location.svg" alt="">
+                                    <span>
+                                        <?php echo htmlspecialchars($row['spPostingLocation']); ?>
+                                    </span>
+                                </div>
+                                <div class="date-created">
+                                    Date Flagged : 2024-01-12
+                                </div>
+
+                                <div class="actions">
+                                    <div class="icon-wrapper">
+                                        <div class="icon" onclick="threeDot()">
+                                            <img src="./images/thre-dot-2.svg" alt="">
+                                        </div>
+                                        <div class="more-options" id="three-dot">
+                                            <div class="li">
+                                                <span>
+                                                    <img src="./images/view.svg" alt="">
+                                                </span>
+                                                View Job
+                                            </div>
+
+                                            <div class="li">
+                                                <span>
+                                                    <img src="./images/edit.svg" alt="">
+                                                </span>
+                                                Edit Job
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+								 
+                            </div>
+                            <?php
+                                        }
+                                    } else {
+                                        echo '<tr><td colspan="5" style="text-align: center;">No Draft available</td></tr>';
+                                    }
+                                    ?>	
+                            <div class="pagination">
+                                <div class="items">
+                                    <div class="title">
+                                        Show
+                                    </div>
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option selected value="1">1</option>
+                                        <option value="1">2</option>
+                                        <option value="2">3</option>
+                                        <option value="3">4</option>
+                                    </select>
+                                    <div class="title">Items</div>
+                                </div>
+                                <div class="list">
+                                    <div class="box">
+                                        Previous
+                                    </div>
+                                    <div class="box exect active">
+                                        1
+                                    </div>
+                                    <div class="box exect">
+                                        2
+                                    </div>
+                                    <div class="exect">
+                                        ...
+                                    </div>
+                                    <div class="box exect">
+                                        4
+                                    </div>
+                                    <div class="box exect">
+                                        5
+                                    </div>
+                                    <div class="box">
+                                        Next
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                              
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="<?php echo $BaseUrl; ?>/assets/quill/quill.js"></script>
+    <script src="<?php echo $BaseUrl; ?>/assets/js/posting/timeline.js?v=<?php echo $versions;?>"></script>
+    <script src="<?php echo $BaseUrl; ?>/job-board/assets/js/script.js?v=<?php echo $versions;?>"></script>
+</body>
+
+</html>
+<?php } ?>

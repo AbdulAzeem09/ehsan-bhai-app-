@@ -1,0 +1,30 @@
+## Global files
+
+.idea*
+*.zip
+.svn
+.env
+.DS_Store
+thumbs.db
+
+# Codeigniter files
+
+*/user_guide
+*/system/logs/log-*.php
+/system/cache/
+*/system/cache/!index.html
+/wsdls/
+*mailing/
+upload/*
+videos/*
+video/*
+back/*
+error_log
+resume/*
+music
+ssl
+error_log
+uploadimage
+post-ad/uploadimage/*
+
+my-groups/index.php

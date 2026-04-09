@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="css/video.css">
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script type="text/javascript" src="js/video.js"></script>	
+</head>
+
+<body cz-shortcut-listen="true"> 
+
+	<div class="container-fluid">
+		<div class="row">			
+			<div class="col-sm-3 col-md-2 sidebar">
+				<div class="input-group">
+					<input type="text" class="form-control" placeholder="Search for...">
+					<span class="input-group-btn">
+						<button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+					</span>
+				</div><!-- /input-group -->
+				<div class="input-group">
+					<button type="button" class="btn btn-outline-secondary btn-block"><i class="fa fa-dashboard"></i> Dashboard</button>	
+				</div>
+				<div class="input-group">
+					<button type="button" class="btn btn-primary btn-block"><i class="fa fa-upload"></i> Upload</button>	
+				</div>		
+
+				<div>				    
+					<ul>
+						<li><a href="#" class="btn-block"><i class="fa fa-home"></i>Home</a></li>				            
+						<li><a href="#" class="btn-block"><i class="fa fa-video-camera"></i> My Videos </a></li>
+						<li><a href="#" class="btn-block"><i class="fa fa-list"></i> My Playlist </a></li>
+						<li><a href="#" class="btn-block"><i class="fa fa-file-video-o"></i> My Album </a></li>
+						<li><a href="#" class="btn-block"><i class="fa fa-heart"></i> My Favourites </a></li>
+						<li><a href="#" class="btn-block"><i class="fa fa-dollar"></i> My Earning </a></li>
+						<li><a href="#" class="btn-block"><i class="fa fa-file-video-o"></i> My Purchased Video </a></li>
+						<li><a href="#" class="btn-block"><i class="fa fa-handshake-o"></i> Contributions </a></li>
+						<li><a href="#" class="btn-block"><i class="fa fa-flag"></i> Flagged Videos </a></li>
+					</ul> 				        
+				</div>				
+				<div>					
+					<h4>Top Channels</h4>
+					<a href="#">
+						<div class="top_channels">
+							<div class="col-md-4">
+								<img src="https://dummyimage.com/70x70/000/fff" class="img-rounded img-responsive">
+							</div>
+							<div class="col-md-8">
+								<h4>I see you...</h4>
+								<p class="card-text">8 videos</p>
+								<p><i class="fa fa-eye"></i> 8469 views</p>								
+							</div>	
+						</div>	<hr>					
+					</a>
+					
+					<a href="#">
+						<div class="top_channels">
+							<div class="col-md-4">
+								<img src="https://dummyimage.com/70x70/000/fff" class="img-rounded img-responsive">
+							</div>
+							<div class="col-md-8">
+								<h4>I see you...</h4>
+								<p class="card-text">8 videos</p>
+								<p><i class="fa fa-eye"></i> 8469 views</p>								
+							</div>	
+						</div>	<hr>					
+					</a>								
+				</div>
+				<div >					
+					<h4>Top Categories</h4>
+					<ul>
+						<li>Comedy (13)</li>
+						<li>Crime (8)</li>
+						<li>Horror (15)</li>
+						<li>Sci-Fi (14)</li>
+						<li>Sport (20)</li>
+						<li>Romance (10)</li>
+						<li>TECH (10)</li>
+						<li>TV SHOW (9)</li>
+					</ul>
+					
+				</div>				
+			</div>
+			<div class="col-sm-9 col-md-8 main">
+				<ol class="breadcrumb">
+					<li><a href="#">Home</a></li>  
+					<li><a href="#">Videos</a></li>          
+				</ol>
+				<!-- 16:9 aspect ratio -->
+				<div class="embed-responsive embed-responsive-16by9">
+					<!--Video source-->
+			        <video class="video-fluid" autoplay loop>
+			          <source src="https://youtu.be/n54jsN_7VTY" type="video/mp4" />
+			        </video>
+				</div>			
+			</div>	
+			<div class="col-sm-3 col-md-2 sidebar">
+				abc
+			</div>		
+		</div>
+	</div>
+
+    <!-- Bootstrap core JavaScript
+    	================================================== -->
+    	<!-- Placed at the end of the document so the pages load faster -->
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    	<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    		<script src="../../dist/js/bootstrap.min.js"></script>
+    		<!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    		<script src="../../assets/js/vendor/holder.min.js"></script>
+    		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    		<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>   
+
+    	</body>
+    	</html>

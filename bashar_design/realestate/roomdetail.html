@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<link rel="stylesheet" href="css/bootstrap.min.css" >
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+
+	
+	<!-- <link rel="stylesheet" type="text/css" href="css/docs.theme.min.css"> -->
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<!-- <link rel="stylesheet" type="text/css" href="css/style.css"> -->
+	<link rel="stylesheet" type="text/css" href="css/realsetate.css">
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>	
+</head>
+
+<body cz-shortcut-listen="true">  
+	<section class="realTopBread no-padding">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="text-right">
+						<a href="https://dev.thesharepage.com/real-estate/all-room.php" class="btn dashboard-btn butn_find_room">Back to result</a>
+						<a href="https://dev.thesharepage.com/real-estate/dashboard/" class="btn dashboard-btn butn_dash_real"><i class="fa fa-dashboard"></i> Dashboard</a>
+						<a href="https://dev.thesharepage.com/post-ad/real-estate/?post" class="btn dashboard-btn butn_save m_top_20">Submit an Ad</a>
+						<a href="https://dev.thesharepage.com/real-estate/find-a-room.php" class="btn dashboard-btn butn_find_room">Find A Room</a>
+					</div>
+				</div>				
+				<div class="col-md-6">
+					<div class="agentbreadCrumb text-center">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="https://dev.thesharepage.com/real-estate">Home</a></li>
+							<li class="breadcrumb-item"><a href="https://dev.thesharepage.com/real-estate/all-room.php">Room</a></li>
+							<li class="breadcrumb-item active">Furnished one bedroom available from Nov 1 2021</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>		
+	</section>
+	<div class="container">
+		<div class="row top_pro_detail">
+			<div class="col-md-8 m_top_15">
+				<h2>Furnished One Bedroom Available From Nov 1 2021</h2>
+				<p>Surrey, Canada</p>
+
+			</div>
+			<div class="col-md-4 text-right flagListing">
+				<a href="javascript:void(0)" id="addtofavouriteevent" data-postid="4767" data-pid="2354">
+					<span id="addtofavouriteeve"><i class="fa fa-heart-o"></i></span>
+					this listing
+				</a>
+			</div>
+		</div>
+	</div>
+	<section class="" style="padding: 0px 30px 30px;">
+		<div class="container">
+
+			<div class="bg_white setupProperty">
+				<div class="row">
+					<div class="col-md-8">
+						<div class="product_slider_box social" style="height: 435px;">
+							<div id="carousel-bounding-box">
+								<div class="carousel slide" id="myCarousel">
+									<!-- Carousel items -->
+									<div class="carousel-inner productslider" id="RealestateSlidr">
+										<div class="item active" data-slide-number="0" style="height: 350px!important;">
+											<img style="margin: 0 auto; height: 100%;" src="https://dev.thesharepage.com/img/no.png" alt="Posting Pic" class="img-responsive">                                                     </div>                                                     <div class="item" data-slide-number="1" style="height: 350px!important;">
+												<img style="margin: 0 auto; height: 100%;" src="https://dev.thesharepage.com/img/no.png" alt="Posting Pic" class="img-responsive">                                                     </div>                                                     <div class="item" data-slide-number="2" style="height: 350px!important;">
+													<img style="margin: 0 auto; height: 100%;" src="https://dev.thesharepage.com/img/no.png" alt="Posting Pic" class="img-responsive">                                                     </div>                                         </div><!-- Carousel nav -->
+												</div>
+											</div>
+											<div class="hidden-xs" id="slider-thumbs">
+												<!-- Bottom switcher of slider -->
+												<ul class="row hide-bullets propertyImgAll">
+													<li class="col-sm-2 padding_5 thumb_box">
+														<a class="thumbnail" id="carousel-selector-0">
+															<img style="margin: 0 auto;" src="https://dev.thesharepage.com/img/no.png" alt="Posting Pic" class="img-responsive">                                                     </a>
+														</li>                                                 <li class="col-sm-2 padding_5 thumb_box">
+															<a class="thumbnail" id="carousel-selector-1">
+																<img style="margin: 0 auto;" src="https://dev.thesharepage.com/img/no.png" alt="Posting Pic" class="img-responsive">                                                     </a>
+															</li>                                                 <li class="col-sm-2 padding_5 thumb_box">
+																<a class="thumbnail" id="carousel-selector-2">
+																	<img style="margin: 0 auto;" src="https://dev.thesharepage.com/img/no.png" alt="Posting Pic" class="img-responsive">                                                     </a>
+																</li>                                     </ul>                 
+															</div>
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="rightProperty">
+															<div class="row">
+																<div class="col-md-6 hidden">
+                                        <!-- <h2 class="leftH">Contact Agent for this property</h2>
+                                        <form method="post" action="sendEnquiry.php" class="enqRealForm editPostTimeline">
+                                            <input type="hidden" name="spPosting_idspPosting" value="4767">
+                                            <input type="hidden" name="spProfile_idspProfile" value="2354">
+                                            <input type="hidden" name="sprealType" value="1">
+                                            <input type="text" name="sprealName" class="form-control" placeholder="Full Name" required="">
+                                            <input type="email" name="sprealEmail" class="form-control" placeholder="Email" required="">
+                                            <input type="text" name="sprealPhone" class="form-control" placeholder="Phone" required="">
+                                            <textarea class="form-control" name="sprealMessage" placeholder="I'm Intrested in this...."></textarea>
+                                            <input type="submit" value="Send Enquiry" class="btn  " >
+                                        </form> -->
+                                        
+                                        <div class="space-md"></div>
+                                        
+
+                                    </div>
+                                    <div class="col-md-12">
+                                    	<div class="rightBoxpro">
+                                    		<h2 class="rightH"><i class="fa fa-calculator"></i> Calculate Price</h2>
+                                    		<form method="post" action="bookNow.php">
+                                    			<input type="hidden" name="spProfile_idspProfile" value="2354">
+                                    			<input type="hidden" name="spPosting_idspPosting" value="4767">
+                                    			<input type="hidden" name="spMonth" id="bookMonth" value="Night">
+                                    			<input type="hidden" name="spCheckInDate" id="spCheckInDate" value="">
+                                    			<input type="hidden" name="spCheckOutDate" id="spCheckOutDate" value="">
+
+                                    			<div class="row">
+                                    				<div class="col-md-12">
+                                    					<label>Check In Date </label>
+                                    					<input type="text" class="form-control" id="config-demo" value="">
+                                    				</div>
+                                                            <!-- <div class="col-md-12">
+                                                                <label>Check Out Date</label>
+                                                                <input type="date" class="form-control" name="spCheckOutDate" id="spCheckOutDate" value="2022-01-08" >
+                                                            </div>
+                                                        -->
+
+                                                        <div class="col-md-6" style="padding-right: 0px;">
+                                                        	<label>Adults</label>
+                                                        	<input type="text" class="form-control" name="spAdult" id="spAdult">
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                        	<label>Children</label>
+                                                        	<input type="text" class="form-control" name="spChildren" id="spChildren">
+                                                        </div>
+
+                                                        <div class="col-md-6" style="padding-right: 0px;">
+                                                        	<label>Cleaning Charges</label>
+                                                        	<input type="text" name="spCleaningChrg" id="txtCleaningChrg" class="form-control" placeholder="Cleaning Charges" readonly="" value="50">
+
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                        	<label>Service Charges</label>
+                                                        	<input type="text" name="spServiceChrg" id="txtServiceChrg" class="form-control" placeholder="Service Charges" readonly="" value="50">
+
+                                                        </div>
+                                                        <div class="col-md-6" style="padding-right: 0px;">
+                                                        	<label>Total Days</label>
+                                                        	<input type="text" class="form-control" name="spDays" id="spDays">
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                        	<label>Price * <span id="daysCount">1</span> Days</label>
+                                                        	<input type="text" name="spPrice" id="spPrice" data-price="120" class="form-control" readonly="" placeholder="Price" value="120" required="">
+
+                                                        </div>
+                                                    </div>
+                                                        <!-- <select class="form-control" name="" id="txtPriceChk">
+                                                            <option value="1200" data-month="Month">Month</option>
+                                                            <option value="750" data-month="Week">Week</option>
+                                                            <option value="120" data-month="Night">Night</option>                                                         </select> -->
+                                                            <span class="romCalPrice">Total:   <span id="updatePrice">220</span></span>
+                                                            <!-- <input type="text" name="" class="form-control" placeholder="Interest Rate"> -->
+                                                            <input type="submit" name="" value="Book Now">                                                    </form>
+
+
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Modal -->
+                                <div id="contactHost" class="modal fade" role="dialog">
+                                	<div class="modal-dialog">
+                                		<!-- Modal content-->
+                                		<div class="modal-content no-radius sharestorepos">
+                                			<div class="modal-header">
+                                				<button type="button" class="close" data-dismiss="modal">×</button>
+                                				<h4 class="modal-title">Contact Host</h4>
+                                			</div>
+                                			<div class="modal-body">
+                                				<form method="post" action="sendEnquiry.php" class="enqRealForm editPostTimeline">
+                                					<input type="hidden" name="spPosting_idspPosting" value="4767">
+                                					<input type="hidden" name="spProfile_idspProfile" value="2354">
+                                					<input type="hidden" name="sprealType" value="1">
+                                					<input type="text" name="sprealName" class="form-control" placeholder="Full Name" required="">
+                                					<input type="email" name="sprealEmail" class="form-control" placeholder="Email" required="">
+                                					<input type="text" name="sprealPhone" class="form-control" placeholder="Phone" required="">
+                                					<textarea class="form-control" name="sprealMessage" placeholder="I'm Intrested in this...."></textarea>
+                                					<input type="submit" value="Send Enquiry" class="btn  ">
+                                				</form>
+                                			</div>
+                                			<div class="modal-footer">
+                                				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                			</div>
+                                		</div>
+                                	</div>
+                                </div>
+                                <!-- Modal -->
+                                <div id="EmailFrnd" class="modal fade" role="dialog">
+                                	<div class="modal-dialog">
+                                		<!-- Modal content-->
+                                		<div class="modal-content no-radius sharestorepos">
+                                			<form method="post" action="sendEmail.php">
+                                				<input type="hidden" value="https://dev.thesharepage.com/real-estate/room-detail.php?postid=4767" name="txtlink">
+                                				<div class="modal-header">
+                                					<button type="button" class="close" data-dismiss="modal">×</button>
+                                					<h4 class="modal-title">Job Forward</h4>
+                                				</div>
+                                				<div class="modal-body">
+                                					<div class="form-group">
+                                						<label>Enter Email</label>
+                                						<input type="email" name="txtemail" class="form-control" required="">
+                                					</div>
+                                				</div>
+                                				<div class="modal-footer">
+                                					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                					<button type="submit" class="btn btn-info">Forward</button>
+                                				</div>
+                                			</form>
+                                		</div>
+                                	</div>
+                                </div>
+
+                                <div class="row m_top_15 rightProperty">
+                                	<div class="col-md-12">
+                                		<h2 class="leftPostHead">At A Glance</h2>
+                                	</div>
+                                	<div class="col-md-8">
+                                		<div class="bg_white" style="padding: 15px;">
+                                			<div class="row">
+
+
+
+                                				<div class="col-md-3">
+                                					<p style="font-weight: 700;">Price Per Month</p>
+                                				</div>
+                                				<div class="col-md-3">
+                                					<p>  1200</p>
+                                				</div> 
+
+
+                                				<div class="col-md-3">
+                                					<p style="font-weight: 700;">Price Per Week</p>
+                                				</div>
+                                				<div class="col-md-3">
+                                					<p>  750</p>
+                                				</div> 
+
+
+                                				<div class="col-md-3">
+                                					<p style="font-weight: 700;">Price Per Night</p>
+                                				</div>
+                                				<div class="col-md-3">
+                                					<p>  120</p>
+                                				</div>
+
+                                				<div class="col-md-3">
+                                					<p style="font-weight: 700;">Availability Date</p>
+                                				</div>
+                                				<div class="col-md-3">
+                                					<p>2021-11-15</p>
+                                				</div>
+
+                                				<div class="col-md-3">
+                                					<p style="font-weight: 700;">Room Type</p>
+                                				</div>
+                                				<div class="col-md-3">
+                                					<p>Private</p>
+                                				</div>
+
+
+                                			</div>
+                                		</div>
+                                	</div>
+                                	<div class="col-md-4 text-right">
+                                		<a href="javascript:void(0)" class="btn butn_draf" data-toggle="modal" data-target="#contactHost"><i class="fa fa-envelope"></i> Contact Host</a>
+                                		<a href="javascript:void(0)" class="btn butn_draf" data-toggle="modal" data-target="#EmailFrnd"><i class="fa fa-user"></i> Farward To Friend</a>
+
+                                	</div>
+
+                                </div>
+                            </div>
+
+                        </section>
+
+                        <div class="container">
+                        	<div class="propertyTab">
+                        		<ul class="nav nav-tabs" id="proNavTab">
+                        			<li><a data-toggle="tab" href="#home">About Host</a></li>
+                        			<li><a data-toggle="tab" href="#home2">Description</a></li>
+                        			<li><a data-toggle="tab" href="#home3">Address MAp</a></li>
+                        			<li class="active"><a data-toggle="tab" href="#home4">Details</a></li>
+                        			<li><a data-toggle="tab" href="#home5">Room Style</a></li>
+                        			<li><a data-toggle="tab" href="#home6">Availability</a></li>
+
+                        			<!--  <li><a data-toggle="tab" href="#home8">Video</a></li> -->
+                        		</ul>
+
+                        		<div class="tab-content bg_white ">
+                        			<div id="home" class="tab-pane fade in">
+                        				<div class="RoomAgent">
+                        					<div class="row">
+                        						<div class="col-md-2">
+                        							<img alt="Posting Pic" class="img-responsive" src=" https://profile11.s3.ca-central-1.amazonaws.com/4937921071">                                </div>
+                        							<div class="col-md-10">
+                        								<h3><a href="https://dev.thesharepage.com/friends/?profileid=997">Marina Hossain</a></h3>
+                        								<p class="detail"><span><i class="fa fa-phone"></i> </span><span><i class="fa fa-envelope"></i> marinahossain59@gmail.com</span> </p>
+                        								<p class="text-justify">Test1</p>
+                        							</div>
+                        						</div>
+                        					</div>
+                        				</div>
+                        				<div id="home2" class="tab-pane fade in">
+                        					<div class="roomBoxMain">
+                        						<h3>Room Description</h3>
+                        						<p class="text-justify">this is a new house in a very clean neighbourhood</p>
+                        					</div>
+                        				</div>
+                        				<div id="home3" class="tab-pane fade in">
+                        					<div class="roomBoxMain">
+                        						<h3>Adress Map</h3>
+                        						<div class="btmMappro">
+                        							<div class="map_canvas"></div>
+                        						</div>
+                        					</div>
+                        				</div>
+                        				<div id="home4" class="tab-pane fade in active">
+                        					<div class="roomBoxMain">
+
+                        						<div class="row">
+                        							<div class="col-md-6">
+                        								<h4>Detail</h4>
+                        								<div class="table-responsive">
+                        									<table class="table table-striped ">
+                        										<tbody>
+                        											<tr>
+                        												<td>Property Type</td>
+                        												<td>Detached House</td>
+                        											</tr>
+                        											<tr>
+                        												<td>Square Foot</td>
+                        												<td>300</td>
+                        											</tr>
+                        											<tr>
+                        												<td>Bed Rooms</td>
+                        												<td>1</td>
+                        											</tr>
+                        											<tr>
+                        												<td>Bath Rooms</td>
+                        												<td>1</td>
+                        											</tr>
+                        											<tr>
+                        												<td>Furnishing</td>
+                        												<td>Furnished</td>
+                        											</tr>
+                        											<tr>
+                        												<td>Rent By</td>
+                        												<td>Marina Hossain</td>
+                        											</tr>
+                        											<tr>
+                        												<td>Status</td>
+                        												<td>Active</td>
+                        											</tr>
+                        											<tr>
+                        												<td>Agency Fee</td>
+                        												<td>0</td>
+                        											</tr>
+                        										</tbody>
+                        									</table>
+                        								</div>
+                        								<div class="space-"></div>
+                        								<h4>UTILITIES INCLUDED</h4>
+                        								<div class="table-responsive">
+                        									<table class="table table-striped ">
+                        										<tbody>
+                        											<tr>
+                        												<td>Heat</td>
+                        												<td>Yes</td>
+                        											</tr>
+                        											<tr>
+                        												<td>Water</td>
+                        												<td>Yes</td>
+                        											</tr>
+                        											<tr>
+                        												<td>Electricity</td>
+                        												<td>Yes</td>
+                        											</tr>
+                        											<tr>
+                        												<td>Cable Tv</td>
+                        												<td>Yes</td>
+                        											</tr>
+                        											<tr>
+                        												<td>Internet</td>
+                        												<td>Yes</td>
+                        											</tr>
+                        											<tr>
+                        												<td>Parking</td>
+                        												<td>Garage Single</td>
+                        											</tr>
+                        											<tr>
+                        												<td>Security Camera</td>
+                        												<td>Yes</td>
+                        											</tr>
+                        											<tr>
+                        												<td>Controlled-Access Lobby</td>
+                        												<td>Yes</td>
+                        											</tr>
+                        											<tr>
+                        												<td>Fitness: Fully Equipped Gym</td>
+                        												<td>Yes</td>
+                        											</tr>
+                        											<tr>
+                        												<td>Concierge</td>
+                        												<td>Yes</td>
+                        											</tr>
+                        											<tr>
+                        												<td>Elevator</td>
+                        												<td>Yes</td>
+                        											</tr>
+                        											<tr>
+                        												<td>On-Site Convenience Store</td>
+                        												<td>Yes</td>
+                        											</tr>
+
+                        										</tbody>
+                        									</table>
+                        								</div>
+
+
+
+                        							</div>
+                        							<div class="col-md-6">
+                        								<h4>Condations</h4>
+                        								<div class="table-responsive">
+                        									<table class="table table-striped ">
+                        										<tbody>
+                        											<tr>
+                        												<td>Dogs</td>
+                        												<td>Yes</td>
+                        											</tr>
+                        											<tr>
+                        												<td>Cats</td>
+                        												<td>Yes</td>
+                        											</tr>
+                        											<tr>
+                        												<td>Smoking</td>
+                        												<td>Yes</td>
+                        											</tr>
+                                                <!-- <tr>
+                                                    <td>Lease Term</td>
+                                                    <td></td>
+                                                </tr> -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <h4>CHARGES</h4>
+                                    <div class="table-responsive">
+                                    	<table class="table table-striped ">
+                                    		<tbody>
+                                    			<tr>
+                                    				<td>Agency Fee</td>
+                                    				<td>  0</td>
+                                    			</tr>
+                                    			<tr>
+                                    				<td>Service Charges</td>
+                                    				<td>  50</td>
+                                    			</tr>
+                                    			<tr>
+                                    				<td>Cleaning Charges</td>
+                                    				<td>  50</td>
+                                    			</tr>
+                                    		</tbody>
+                                    	</table>
+                                    </div>
+                                    <h4>FEATURES</h4>
+                                    <div class="table-responsive">
+                                    	<table class="table table-striped ">
+                                    		<tbody>
+                                    			<tr>
+                                    				<td>Stainless Steel Appliances</td>
+                                    				<td>Yes</td>
+                                    			</tr>
+                                    			<tr>
+                                    				<td>Central Air Conditioning</td>
+                                    				<td>Yes</td>
+                                    			</tr>
+                                    			<tr>
+                                    				<td>Lots of Closet Space</td>
+                                    				<td>Yes</td>
+                                    			</tr>
+                                    			<tr>
+                                    				<td>Open Floor Plan</td>
+                                    				<td>Yes</td>
+                                    			</tr>
+                                    			<tr>
+                                    				<td>Building Amenities</td>
+                                    				<td>Yes</td>
+                                    			</tr>
+                                    			<tr>
+                                    				<td>Washer/Dryer</td>
+                                    				<td>Yes</td>
+                                    			</tr>
+                                    			<tr>
+                                    				<td>Spacious Backyard</td>
+                                    				<td>Yes</td>
+                                    			</tr>
+                                    			<tr>
+                                    				<td>Garage Parking</td>
+                                    				<td>Yes</td>
+                                    			</tr>
+                                    			<tr>
+                                    				<td>JETTED tub/acuzzi</td>
+                                    				<td>Yes</td>
+                                    			</tr>
+                                    			<tr>
+                                    				<td>Swimming Pool</td>
+                                    				<td>Yes</td>
+                                    			</tr>
+
+                                    			<tr>
+                                    				<td>Fireplace</td>
+                                    				<td>Yes</td>
+                                    			</tr>
+                                    			<tr>
+                                    				<td>Balcony</td>
+                                    				<td>Yes</td>
+                                    			</tr>
+                                    			<tr>
+                                    				<td>Fenced Backyard</td>
+                                    				<td>Yes</td>
+                                    			</tr>
+                                    			<tr>
+                                    				<td>Fitness Area</td>
+                                    				<td>Yes</td>
+                                    			</tr>
+                                    			<tr>
+                                    				<td>Storage</td>
+                                    				<td>Yes</td>
+                                    			</tr>
+                                    			<tr>
+                                    				<td>Close to Public Transportation</td>
+                                    				<td>Yes</td>
+                                    			</tr>
+                                    		</tbody>
+                                    	</table>
+                                    </div>
+
+
+
+
+                                </div>
+                            </div>
+
+                            
+
+
+                            
+
+
+
+                        </div>
+                    </div>
+                    <div id="home5" class="tab-pane fade in">
+                    	<div class="roomBoxMain">
+                    		<h3>Room Style</h3>
+                    		<p class="text-justify">modern new house</p>
+                    	</div>
+                    </div>
+                    <div id="home6" class="tab-pane fade in">
+                    	<div class="row roomBoxMain">
+                    		<div class="col-md-7">
+                    			<script type="text/javascript">                                
+                    				var date1 = new Date(2021, 11, 15);
+                    				var date2 = new Date(2022, 04, 30);
+                    				$(document).ready(function () {
+                    					$('#available').datepicker({
+                    						beforeShowDay: function (date) {
+                    							if (date >= date1 && date <= date2) {
+                    								return [true, 'ui-state-error', 'tooltipText'];
+                    							}
+                    							return [true, '', ''];
+                    						}
+                    					});
+                    				});
+                    			</script>
+                    			<div id="available" class="hasDatepicker"><div class="ui-datepicker-inline ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" style="display: block;"><div class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all"><a class="ui-datepicker-prev ui-corner-all" data-handler="prev" data-event="click" title="Prev"><span class="ui-icon ui-icon-circle-triangle-w">Prev</span></a><a class="ui-datepicker-next ui-corner-all" data-handler="next" data-event="click" title="Next"><span class="ui-icon ui-icon-circle-triangle-e">Next</span></a><div class="ui-datepicker-title"><span class="ui-datepicker-month">January</span>&nbsp;<span class="ui-datepicker-year">2022</span></div></div><table class="ui-datepicker-calendar"><thead><tr><th scope="col" class="ui-datepicker-week-end"><span title="Sunday">Su</span></th><th scope="col"><span title="Monday">Mo</span></th><th scope="col"><span title="Tuesday">Tu</span></th><th scope="col"><span title="Wednesday">We</span></th><th scope="col"><span title="Thursday">Th</span></th><th scope="col"><span title="Friday">Fr</span></th><th scope="col" class="ui-datepicker-week-end"><span title="Saturday">Sa</span></th></tr></thead><tbody><tr><td class=" ui-datepicker-week-end ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-week-end ui-state-error" title="tooltipText" data-handler="selectDay" data-event="click" data-month="0" data-year="2022"><a class="ui-state-default" href="#">1</a></td></tr><tr><td class=" ui-datepicker-week-end ui-state-error" title="tooltipText" data-handler="selectDay" data-event="click" data-month="0" data-year="2022"><a class="ui-state-default" href="#">2</a></td><td class=" ui-state-error" title="tooltipText" data-handler="selectDay" data-event="click" data-month="0" data-year="2022"><a class="ui-state-default" href="#">3</a></td><td class=" ui-state-error" title="tooltipText" data-handler="selectDay" data-event="click" data-month="0" data-year="2022"><a class="ui-state-default" href="#">4</a></td><td class=" ui-state-error" title="tooltipText" data-handler="selectDay" data-event="click" data-month="0" data-year="2022"><a class="ui-state-default" href="#">5</a></td><td class=" ui-state-error" title="tooltipText" data-handler="selectDay" data-event="click" data-month="0" data-year="2022"><a class="ui-state-default" href="#">6</a></td><td class=" ui-state-error" title="tooltipText" data-handler="selectDay" data-event="click" data-month="0" data-year="2022"><a class="ui-state-default" href="#">7</a></td><td class=" ui-datepicker-week-end ui-datepicker-days-cell-over ui-state-error ui-datepicker-current-day ui-datepicker-today" title="tooltipText" data-handler="selectDay" data-event="click" data-month="0" data-year="2022"><a class="ui-state-default ui-state-highlight ui-state-active ui-state-hover" href="#">8</a></td></tr><tr><td class=" ui-datepicker-week-end ui-state-error" title="tooltipText" data-handler="selectDay" data-event="click" data-month="0" data-year="2022"><a class="ui-state-default" href="#">9</a></td><td class=" ui-state-error" title="tooltipText" data-handler="selectDay" data-event="click" data-month="0" data-year="2022"><a class="ui-state-default" href="#">10</a></td><td class=" ui-state-error" title="tooltipText" data-handler="selectDay" data-event="click" data-month="0" data-year="2022"><a class="ui-state-default" href="#">11</a></td><td class=" ui-state-error" title="tooltipText" data-handler="selectDay" data-event="click" data-month="0" data-year="2022"><a class="ui-state-default" href="#">12</a></td><td class=" ui-state-error" title="tooltipText" data-handler="selectDay" data-event="click" data-month="0" data-year="2022"><a class="ui-state-default" href="#">13</a></td><td class=" ui-state-error" title="tooltipText" data-handler="selectDay" data-event="click" data-month="0" data-year="2022"><a class="ui-state-default" href="#">14</a></td><td class=" ui-datepicker-week-end ui-state-error" title="tooltipText" data-handler="selectDay" data-event="click" data-month="0" data-year="2022"><a class="ui-state-default" href="#">15</a></td></tr><tr><td class=" ui-datepicker-week-end ui-state-error" title="tooltipText" data-handler="selectDay" data-event="click" data-month="0" data-year="2022"><a class="ui-state-default" href="#">16</a></td><td class=" ui-state-error" title="tooltipText" data-handler="selectDay" data-event="click" data-month="0" data-year="2022"><a class="ui-state-default" href="#">17</a></td><td class=" ui-state-error" title="tooltipText" data-handler="selectDay" data-event="click" data-month="0" data-year="2022"><a class="ui-state-default" href="#">18</a></td><td class=" ui-state-error" title="tooltipText" data-handler="selectDay" data-event="click" data-month="0" data-year="2022"><a class="ui-state-default" href="#">19</a></td><td class=" ui-state-error" title="tooltipText" data-handler="selectDay" data-event="click" data-month="0" data-year="2022"><a class="ui-state-default" href="#">20</a></td><td class=" ui-state-error" title="tooltipText" data-handler="selectDay" data-event="click" data-month="0" data-year="2022"><a class="ui-state-default" href="#">21</a></td><td class=" ui-datepicker-week-end ui-state-error" title="tooltipText" data-handler="selectDay" data-event="click" data-month="0" data-year="2022"><a class="ui-state-default" href="#">22</a></td></tr><tr><td class=" ui-datepicker-week-end ui-state-error" title="tooltipText" data-handler="selectDay" data-event="click" data-month="0" data-year="2022"><a class="ui-state-default" href="#">23</a></td><td class=" ui-state-error" title="tooltipText" data-handler="selectDay" data-event="click" data-month="0" data-year="2022"><a class="ui-state-default" href="#">24</a></td><td class=" ui-state-error" title="tooltipText" data-handler="selectDay" data-event="click" data-month="0" data-year="2022"><a class="ui-state-default" href="#">25</a></td><td class=" ui-state-error" title="tooltipText" data-handler="selectDay" data-event="click" data-month="0" data-year="2022"><a class="ui-state-default" href="#">26</a></td><td class=" ui-state-error" title="tooltipText" data-handler="selectDay" data-event="click" data-month="0" data-year="2022"><a class="ui-state-default" href="#">27</a></td><td class=" ui-state-error" title="tooltipText" data-handler="selectDay" data-event="click" data-month="0" data-year="2022"><a class="ui-state-default" href="#">28</a></td><td class=" ui-datepicker-week-end ui-state-error" title="tooltipText" data-handler="selectDay" data-event="click" data-month="0" data-year="2022"><a class="ui-state-default" href="#">29</a></td></tr><tr><td class=" ui-datepicker-week-end ui-state-error" title="tooltipText" data-handler="selectDay" data-event="click" data-month="0" data-year="2022"><a class="ui-state-default" href="#">30</a></td><td class=" ui-state-error" title="tooltipText" data-handler="selectDay" data-event="click" data-month="0" data-year="2022"><a class="ui-state-default" href="#">31</a></td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-week-end ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td></tr></tbody></table></div></div>
+                    		</div>
+                    		<div class="col-md-5">
+                    			<h3>Availability</h3>
+                    			<br>
+                    			<p class="no-margin"><strong>Available From:</strong> 2021, 11, 15</p>
+                    			<p><strong>Available To:</strong> 2022, 04, 30</p>
+                    		</div>
+                    	</div>
+                    </div>
+                    <div id="home7" class="tab-pane fade in">
+                    </div>
+                    <div id="home8" class="tab-pane fade in">
+                    </div>
+                </div>
+            </div>
+            <div class="space-md"></div>
+            <div class="hidden">
+            	<input id="geocomplete" type="text" placeholder="Type in an address" size="90">
+            </div>
+        </div>
+        <script type="text/javascript">
+        	$("#checkout_property").on("click", function () {
+        		var btn = this;
+        		var postid = $(btn).attr("data-postid");
+        		var profileid = $(btn).attr("data-profileid");
+        		debugger;
+        		$.post("/cart/checkout.php", {postid: postid, profileid: profileid}, function (r) {
+        			alert("Transaction Successfully done !");
+        		});
+
+
+        	});
+        </script>
+        
+
+
+        <footer>
+        	<div class="foot">
+        		<div class="container">
+        			<div class="row">
+        				<div class="col-md-4">
+        					<h2>The SharePage</h2>
+        					<p>Welcome to The SharePage! Explore the opportunities that are waiting for you here and find out the hidden treasures within you...</p>                        
+        					<div class="sociallinks">
+        						<a href="https://twitter.com/" target="_blank"><i class="fa fa-twitter"></i></a>
+        						<a href="https://www.instagram.com" target="_blank"><i class="fa fa-instagram"></i></a>
+
+        					</div>
+        				</div>
+        				<div class="col-md-2">
+        					<h2>Objective</h2>
+        					<p><a href="https://dev.thesharepage.com/contact.php">Contact Us</a></p>
+        					<p><a href="https://dev.thesharepage.com/page/?page=company_info">Company Info</a></p>
+
+        				</div>
+        				<div class="col-md-2">
+        					<h2>Guide</h2>
+        					<p><a href="https://dev.thesharepage.com/page/?page=navigation">Navigation</a></p>
+
+        				</div>
+        				<div class="col-md-2">
+        					<h2>Our Policies</h2>
+        					<p><a href="https://dev.thesharepage.com/page/?page=copyrights">Copyrights</a></p>
+        					<p><a href="https://dev.thesharepage.com/page/?page=privacy_policy">Privacy Policy</a></p>
+
+        				</div>
+        				<div class="col-md-2">
+        					<h2>More Resources</h2>
+        					<p><a href="https://dev.thesharepage.com/page/?page=investment_opportunities">Investment Opportunities</a></p>
+
+        				</div>
+
+
+        			</div>
+        		</div>
+        	</div>
+        	<div class="btm_foot text-center">
+        		<p>© TheSharePage, 2022 All rights reserved</p>
+        	</div>
+        </footer>
+
+
+
+        <script type="text/javascript">
+        	$(function(){
+        		$('#carousel-example-generic').carousel({
+        			interval: 3000
+        		});
+
+        		$('#carousel-example-Newsfees').carousel({
+        			interval: 4000
+        		});
+
+        		$('#carousel-example-group').carousel({
+        			interval: 4000
+        		});
+
+        		$('#carousel-example-event').carousel({
+        			interval: 4000
+        		});
+
+        	});
+        </script>
+        <script>
+        	$(document).ready(function(){
+        		$('[data-toggle="tooltip"]').tooltip();   
+        	});
+        </script>
+        <script src="https://dev.thesharepage.com/assets/js/bootstrap.js"></script>
+        <script src="https://dev.thesharepage.com/assets/css/owl-carousel/owl.carousel.js"></script>
+        <script>
+        	$(document).ready(function () {
+        		$("#owl-demo").owlCarousel({
+        			items: 4,
+        			lazyLoad: true,
+        			navigation: true
+        		});
+
+        	});
+        </script>
+
+        <!-- PAGE SCRIPT END -->
+        
+        <!-- data range script -->
+        <script type="text/javascript">
+        	$(document).ready(function() {
+               //console.log(11);
+                // startdate
+                var strtYear = 2021;
+                var strtMonth = 11-1;
+                var strtDay = 15;
+                var startDate = new Date(strtYear, strtMonth, strtDay);
+                // END DATE
+                var endYear = 2022;
+                var endMonth = 04-1;
+                var endDay = 30;
+                var endDate = new Date(endYear, endMonth, endDay);
+
+                $('#config-demo').daterangepicker({
+
+                	"minDate" : startDate,
+                	"maxDate" : endDate,
+
+                	"linkedCalendars"   : false,
+                	"autoUpdateInput"   : true,
+                	"startDate"         : startDate,
+                	"endDate"           : endDate
+                }, function(start, end, label) {
+
+                	$("#spCheckInDate").val(start.format('YYYY-MM-DD'));
+                	$("#spCheckOutDate").val(end.format('YYYY-MM-DD'));
+
+                    //CALCULATE THE TOTAL NUMBER OF DAYS
+                    var days = end.diff(start, 'days');
+                    console.log(days);
+                    $("#spDays").val(days);
+                    // CALCULATE THE PRICE IN CALCULATOR
+                    if(days < 1){
+                    	day = 1;
+                    }else{
+                    	day = days;
+                    }
+
+                    $("#daysCount").html(days);
+                    var spPrice = $('#spPrice').attr("data-price");
+                    //var spPrice = document.getElementById("spPrice").value;
+                    var txtCleaningChrg     = document.getElementById("txtCleaningChrg").value;
+                    var txtServiceChrg      = document.getElementById("txtServiceChrg").value;
+                    var total               = parseInt(spPrice) * parseInt(day) + parseInt(txtCleaningChrg) + parseInt(txtServiceChrg);
+                    $("#updatePrice").html(total);
+                    var totalPrice = parseInt(spPrice) * parseInt(day);
+                    $("#spPrice").val(totalPrice);
+
+
+                });
+            });
+        </script>
+
+
+        <div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"></div><div class="daterangepicker ltr show-calendar opensright"><div class="ranges"></div><div class="drp-calendar left"><div class="calendar-table"></div><div class="calendar-time" style="display: none;"></div></div><div class="drp-calendar right"><div class="calendar-table"></div><div class="calendar-time" style="display: none;"></div></div><div class="drp-buttons"><span class="drp-selected"></span><button class="cancelBtn btn btn-sm btn-default" type="button">Cancel</button><button class="applyBtn btn btn-sm btn-primary" disabled="disabled" type="button">Apply</button> </div></div>
+        <!--================================================== -->
+
+        <script type="text/javascript" src="js/video.js"></script>	
+    </body>
+    </html>

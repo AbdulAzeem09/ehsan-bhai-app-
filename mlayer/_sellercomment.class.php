@@ -1,0 +1,61 @@
+<?php 
+class _sellercomment
+
+{
+    public $dbclose = false;
+	private $conn;
+	public $ta;
+	
+	function __construct() { 
+		$this->taa = new _tableadapter("spcustomers_basket");
+		
+		$this->ta = new _tableadapter("store_sellercomment");
+		$this->ta->dbclose = false;
+	}
+	
+	function create($data)
+	{
+		$id = $this->ta->create($data);
+	}
+
+//sellernew select
+ function getsellernewdata($postid)
+    {
+    	return $this->taa->read("WHERE idspOrder  = $postid");
+    }
+//sellernew select end
+
+    function getsellercomment($comid)
+    {
+    	return $this->ta->read("WHERE comment_id = $comid");
+    }
+
+/*
+	function getbuyerproduct($pid){
+		return $this->ta->read("WHERE spByuerProfileId = $pid ORDER BY id DESC");
+	}
+
+	
+    function getMysellerproduct($sellerid)
+    {
+    	return $this->ta->read("WHERE spSellerProfileId = $sellerid ORDER BY id DESC");
+    }
+
+
+    function updatereqstatus($data,$reqid)
+	{
+		 $did = $this->ta->update($data, $reqid);
+	}
+*/
+	
+  
+/*
+function addsellercomment($data)
+	{
+		$id = $this->ta->create($data);
+	}*/
+
+	
+
+}
+?>

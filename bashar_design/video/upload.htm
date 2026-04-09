@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<link rel="stylesheet" href="css/bootstrap.min.css" >
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+
+	
+	<!-- <link rel="stylesheet" type="text/css" href="css/docs.theme.min.css"> -->
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/video.css">
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>	
+	</head>
+
+	<body cz-shortcut-listen="true"> 
+
+		<div class="container-fluid">
+			<div class="row">
+				<div class="wrapper">
+					<!-- Sidebar Holder -->
+					<div id="sidebar">
+						<nav class="">
+							<div class="sidebar-header">
+								<div class="profile" style="margin: 0 27%; text-align: center;">
+									<img src="https://dummyimage.com/100x100/000/fff" class="img-circle">
+									<h4>Kim Jhone</h4>
+									<p>Vloger</p>
+								</div>
+
+								<div class="input-group">
+									<input type="text" class="form-control" placeholder="Search for...">
+									<span class="input-group-btn">
+										<button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+									</span>
+								</div><!-- /input-group -->
+								<div class="input-group">
+									<button type="button" onclick="window.location.href='dashboard.htm'" class="btn btn-success btn-block"><i class="fa fa-dashboard"></i> Dashboard</button>	
+								</div>
+								<div class="input-group">
+									<button type="button" onclick="window.location.href='upload.htm'" class="btn btn-primary btn-block"><i class="fa fa-upload"></i> Upload</button>	
+								</div>
+							</div>
+							<ul>
+								<li><a href="index.htm"><i class="fa fa-home"></i> Home</a></li>				            
+								<li><a href="myuploads.htm"><i class="fa fa-video-camera"></i> My Videos </a></li>
+								<li><a href="myvideos.htm"><i class="fa fa-list"></i> My Playlist </a></li>
+								<li><a href="myvideos.htm"><i class="fa fa-file-video-o"></i> My Album </a></li>
+								<li><a href="myvideos.htm"><i class="fa fa-heart"></i> My Favourites </a></li>
+								<li><a href="myearning.htm"><i class="fa fa-dollar"></i> My Earning </a></li>
+								<li><a href="myvideos.htm"><i class="fa fa-file-video-o"></i> My Purchased Video </a></li>
+								<li><a href="myvideos.htm"><i class="fa fa-handshake-o"></i> Contributions </a></li>
+								<li><a href="myvideos.htm"><i class="fa fa-flag"></i> Flagged Videos </a></li>
+								<li><a href="history.htm"><i class="fa fa-history"></i> History </a></li>
+							</ul>  						
+						</nav>
+					</div>
+					
+
+					<div class="col-sm-12 col-md-12 main">
+						<!-- Page Content Holder -->
+					<div id="content">
+						<button type="button" id="sidebarCollapse" class="btn btn-primary navbar-btn"><i class="fa fa-bars"></i></button>						
+					</div>
+						<ol class="breadcrumb">
+							<li><a href="#">Video Home</a></li>  
+							<li><a href="#">Dashboard</a></li>          
+						</ol>
+					
+						<div class="well">
+							<div class="upload">								
+								<button class="btn btn-lg btn-primary" onclick="window.location.href='uploadform.htm'"><i class="fa fa-upload"></i> Upload File</button>
+								<p>Drag and drop video files to upload</p>
+								<p>Your videos will be private until you publish them.</p>
+							</div>
+							<p style="text-align: center;">
+								By submitting your videos to TheSharePage, you acknowledge that you agree to TheSharePage <a href="#">Term & Condistion</a>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+  <!--================================================== -->
+ 
+  	<script type="text/javascript" src="js/video.js"></script>	
+  </body>
+  </html>

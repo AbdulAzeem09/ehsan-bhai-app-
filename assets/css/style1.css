@@ -1,0 +1,596 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Poppins", sans-serif !important;
+    background-color: #f7f8fc !important;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+.buss_pln,
+.buss_pro,
+.buss_summ {
+    background-color: #fff;
+    box-shadow: 1px 1px 7px 0px #0000001A;
+
+}
+.buss_pro{
+    padding: 12px 20px;
+}
+.buss_pro .pro_img>img{
+    width: 40%;
+    border-radius: 50%;
+}
+.ref_cde h5{
+    font-size: 14px;
+    line-height: 20px;
+}
+i.fa-regular.fa-copy , i.fa-solid.fa-plus {
+    background-color: #7649B3;
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+}
+.pro_dwn .form-group{
+    width: 84%;
+}
+.pro_dwn .inpt_tg{
+padding: 2px 5px !important;
+font-size: 12px;
+}
+.pro_btn{
+    background-color: #df6f00 !important;
+    color: #fff !important;
+    font-size: 13px !important;
+}
+.pro_sub{
+    display: grid;
+    row-gap: 13px;
+}
+i.fa-solid.fa-heart, .fa-solid.fa-envelope, .fa-solid.fa-users-line{
+    color: #df6f00;
+    font-size: 15px;
+}
+.soc_icn span{
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+}
+.ref_cde_sub span{
+font-size: 14px;
+font-weight: 600;
+line-height: 20px;
+}
+
+.buss_pln h2 {
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 24px;
+
+}
+
+.buss_pln h3.head {
+    font-size: 50px;
+    font-weight: 400;
+    color: #FB8308;
+    font-family: "Rancho", sans-serif !important;
+}
+
+.card-header {
+    background-color: #3E2048 !important;
+}
+
+.card-header h4.head_title {
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 36px;
+}
+
+.card-header.d-grid.py-3 {
+    position: relative;
+    height: 130px;
+    border-radius: 15px 15px 0 0;
+}
+
+.pln_img {
+    bottom: -43px;
+    background-color: #FFBE00;
+    width: 100px;
+    height: 100px;
+    padding: 20px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0px 0px 20px 0px #00000033;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.card-body {
+    background-color: #F7F8FC;
+    border-radius: 0 0 15px 15px;
+}
+
+.card-body .pricing-card-title {
+    font-size: 50px;
+    font-weight: 500;
+    line-height: 36px;
+    color: #08B564;
+    padding-top: 70px;
+}
+
+.buss_pln_bx p.sub_cnt {
+    font-size: 24px;
+    line-height: 26px;
+    font-weight: 400;
+}
+
+.card-body .sub_btn {
+    background-color: #7649B3;
+    padding: 10px 45px;
+    border-radius: 100px;
+}
+
+.card-body .sub_btn:hover {
+    background-color: #7649B3;
+}
+
+.alrt_img {
+    height: 60px;
+    width: 70px;
+    background-color: white;
+    border-radius: 50%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.alrt_sec .alrt_box {
+    background-color: #FFEBDD;
+}
+
+.alrt_sec h4 {
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 600;
+}
+
+.alrt_sec p {
+    font-size: 15px;
+    line-height: 22px;
+    font-weight: 500;
+}
+
+.buss_pln .buss_pln_bck>button {
+    padding: 3px 63px;
+    border-radius: 30px;
+    font-size: 22px;
+    line-height: 32px;
+    font-weight: 600;
+    border: 2px solid #3E2048;
+    background-color: white;
+    color: #3E2048;
+
+}
+
+.buss_pln .buss_pln_lst_sec .h3_head {
+    font-size: 28px;
+    line-height: 36px;
+    font-weight: 600;
+}
+
+.buss_pln .buss_pln_lst_sec .pln_rte .rte {
+    color: #08B564;
+    font-size: 50px;
+    font-weight: 500;
+    line-height: 36px;
+}
+
+.buss_pln .buss_pln_lst_sec .p_cnt {
+    font-size: 24px;
+    line-height: 40px;
+    font-weight: 400;
+}
+
+.hr_tag {
+    width: 6%;
+    height: 6px;
+    background-color: #ff8100;
+    border: none;
+    opacity: 1;
+}
+
+.chk_pay_img {
+    border: 1px solid #EEEEEE;
+    padding: 7px;
+    border-radius: 5px;
+}
+
+.scnd_sec .h2_head {
+    font-size: 50px;
+    font-weight: 600;
+    line-height: 75px;
+}
+
+.chk_sec_head {
+    font-size: 26px;
+    line-height: 36px;
+    font-weight: 500;
+}
+
+.chk_lbl>label,
+.bill_box>label,
+.buss_summ form label {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+label>span {
+    color: red;
+}
+
+.bill_clm_box {
+    display: grid;
+    column-gap: 17px;
+    row-gap: 10px;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.cntry_clm_2 {
+    display: grid;
+    column-gap: 17px;
+    row-gap: 10px;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.chk_sec_head1 {
+    font-size: 28px;
+    line-height: 36px;
+    font-weight: 500;
+}
+
+.sav_crd>li>label {
+    line-height: 35px;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+
+input[type="checkbox" i]:focus-visible {
+    outline-offset: unset !important;
+    outline: unset !important;
+}
+
+/*radio button custom design*/
+.radio_btn {
+    width: 27px !important;
+    height: 27px !important;
+}
+
+.chk_bx {
+    border-radius: 50% !important;
+}
+
+.rd_btn {
+    position: relative;
+}
+
+.tick_mark {
+    position: absolute;
+}
+
+.tick_mark::before {
+    position: absolute;
+    left: -19px;
+    top: -47px;
+    width: 20px;
+    height: 20px;
+    content: "\f00c";
+    font-size: 18px;
+    font-weight: 700;
+    font-family: 'FontAwesome';
+    color: #fff;
+    display: none;
+}
+
+.form-check-input:checked[type=radio] {
+    background-image: unset !important;
+}
+
+.form-check-input:checked {
+    background-color: #08B564 !important;
+    border: unset !important;
+}
+
+.form-check-input:focus {
+    border-color: unset !important;
+    box-shadow: unset !important;
+}
+
+.form-check-input:checked~.tick_mark::before {
+    display: block;
+}
+
+.buss_summ h4 {
+    /* padding: 10px 0; */
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 36px;
+    background-color: #3E2048;
+    color: white;
+}
+
+.buss_summ .code_cpn>button {
+    border-radius: 5px !important;
+    background-color: #7649B3;
+    color: #fff;
+    font-size: 18px;
+    line-height: 32px;
+    font-weight: 600;
+    z-index: 0;
+}
+.buss_summ .code_cpn>input{
+    border-radius: 5px !important;
+}
+
+.tl_amt h5 {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 36px;
+}
+
+.tl_amt p {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 36px;
+    color: #08B564;
+}
+
+.ply_btn>button {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 32px;
+    letter-spacing: 0.01em;
+    border: unset !important;
+    background-color: #FB8308;
+    color: #fff;
+    padding: 10px 44px;
+}
+.ply_btn>a{
+    text-decoration: underline !important;
+}
+.three_btn .skip{
+    background-color: #3E2048;
+    color: #fff;
+}
+.three_btn .skip:hover{
+    background-color: #3c1e46;
+    color: #fff;
+}
+.three_btn .save{
+    background-color: #08B564;
+    color: #fff;
+}
+.three_btn .save:hover{
+    background-color: #069a55;
+    color: #fff;
+}
+.three_btn .drft{
+    background-color: #FB8308;
+    color: #fff;
+}
+.three_btn .drft:hover{
+    background-color: #df6f00;
+    color: #fff;
+}
+/*popup*/
+.overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    transition: opacity 500ms;
+    visibility: hidden;
+    opacity: 0;
+  }
+  .overlay:target {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  .popup {
+    margin: 70px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 5px;
+    width: 30%;
+    position: relative;
+    transition: all 5s ease-in-out;
+  }
+  
+  .popup h2 {
+    margin-top: 0;
+    color: #333;
+    font-family: Tahoma, Arial, sans-serif;
+  }
+  .popup .close {
+    position: absolute;
+    top: -4px;
+    right: 13px;
+    transition: all 200ms;
+    font-size: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+  }
+  .popup .close:hover {
+    color: #06D85F;
+  }
+  .popup .content {
+    max-height: 30%;
+    overflow: auto;
+  }
+  .pop_btn_ok{
+    background-color: #3c1e46 !important;
+    border: unset !important;
+  }
+  .pop_btn_cnl{
+    background-color: #df6f00 !important; 
+    border: unset !important;
+  }
+  .inpt_tg{
+    background-color: #F9FAFB !important;
+  }
+@media screen and (max-width: 1440px){
+    .pro_dwn .form-group{
+        width: 80%;
+    }
+    .buss_pro {
+        padding: 12px 6px;
+    }
+    .buss_pln h3.head, .buss_pln .buss_pln_lst_sec .pln_rte .rte , .scnd_sec .h2_head{
+        font-size: 37px;
+    }
+    .card-header h4.head_title, .buss_pln .buss_pln_lst_sec .h3_head, .chk_sec_head, .chk_sec_head1{
+        font-size: 22px;
+    }
+    .card-header.d-grid.py-3{
+        height: 100px;
+    }
+    .card-body .pricing-card-title {
+        font-size: 34px;
+        padding-top: 53px;
+    }
+    .alrt_img{
+        height: 48px;
+    }
+    .alrt_sec p{
+        font-size: 13px;
+    }
+    .card-body .sub_btn{
+        padding: 7px 30px;
+    }
+    .pln_img{
+        width: 80px;
+        height: 80px;
+    }
+.buss_pln_bx p.sub_cnt , .alrt_sec h4 ,.chk_lbl>label, .bill_box>label {
+    font-size: 17px;
+}
+.buss_pln_bx p.sub_cnt{
+    padding-top: 0 !important;
+}
+.buss_pln .buss_pln_lst_sec .p_cnt, .buss_summ h4{
+    font-size: 19px;
+}
+.buss_summ form label{
+    font-size: 14px;
+}
+.tl_amt h5, .tl_amt p{
+    font-size: 16px;
+    line-height: 25px;
+}
+.buss_summ .code_cpn>button , .buss_summ .code_cpn>input{
+    font-size: 12px;
+    line-height: 18px;
+}
+.ply_btn>button{
+    font-size: 10px;
+    padding: 4px 20px;
+}
+.buss_pln_bx {
+    margin: 20px 0;
+}
+}
+@media screen and (max-width: 768px){
+
+    .buss_pro {
+        padding: 12px 25px;
+    }
+section.col-12.buss_pln ,.buss_summ form {
+    padding: 10px 40px !important;
+    margin: 10px 0 !important;
+}
+.buss_pln h3.head, .buss_pln .buss_pln_lst_sec .pln_rte .rte, .scnd_sec .h2_head {
+    font-size: 26px;
+}
+.buss_pln h3.head{
+    margin: 0 !important;
+}
+.alrt_sec p {
+    font-size: 11px;
+    line-height: 16px;
+}
+.alrt_sec .alrt_box{
+    padding: 10px 5px !important;
+}
+.alrt_img {
+    height: 30px;
+    width: 86px;
+    padding: 6px;
+}
+.hr_tag{
+    width: 17%;
+}
+.card-header h4.head_title, .buss_pln .buss_pln_lst_sec .h3_head, .chk_sec_head, .chk_sec_head1 {
+    font-size: 17px;
+}
+.buss_pln_lst_sec .pln_rte .rte{
+    font-size: 23px;
+}
+.buss_pln .buss_pln_lst_sec .p_cnt{
+    font-size: 13px;
+}
+.buss_pln h3.head, .buss_pln .buss_pln_lst_sec .pln_rte .rte, .scnd_sec .h2_head {
+    font-size: 26px;
+    line-height: 35px;
+}
+.radio_btn {
+    width: 23px !important;
+    height: 23px !important;
+}
+.tick_mark::before {
+    position: absolute;
+    left: -19px;
+    top: -48px;
+    font-size: 15px;
+}
+.chk_lbl {
+    padding: 8px 0 !important;
+}
+}
+@media screen and (max-width: 480px) {
+    .cntry_clm_2, .bill_clm_box{
+        grid-template-columns: repeat(1, 1fr);
+        row-gap: 0px;
+    }
+    .buss_pln_bx p.sub_cnt, .alrt_sec h4, .chk_lbl>label, .bill_box>label ,.sav_crd>li>label{
+        font-size: 16px;
+    }
+    .buss_pln .buss_pln_lst_sec .h3_head{
+        font-size: 14px;
+        line-height: 20px;
+    }
+    .buss_pln .buss_pln_lst_sec .p_cnt {
+        font-size: 11px;
+    }
+   .buss_pln .buss_pln_lst_sec .pln_rte .rte, .scnd_sec .h2_head {
+        font-size: 21px;
+    }
+    .inpt_tg {
+        font-size: 13px !important;
+    }
+  }
+ 
+ 

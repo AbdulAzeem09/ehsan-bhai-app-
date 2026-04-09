@@ -1,0 +1,295 @@
+/*--------FONTS-------*/
+@font-face {
+  font-family: lucidaSans;
+  src: url(../fonts/LucidaSansTypewriterStdRegular.otf);
+}
+@font-face {
+  font-family: Marksimon;
+  src: url(../fonts/MarkSimonson-ProximaNovaSemibold.otf);
+}
+@font-face {
+  font-family: MarksimonLight;
+  src: url(../fonts/MarkSimonson-ProximaNovaLight.otf);
+}
+@font-face {
+  font-family: MarksimonThin;
+  src: url(../fonts/MarkSimonson-ProximaNovaThin.otf);
+}
+@font-face {
+  font-family: MarksimonRegular;
+  src: url(../fonts/MarkSimonson-ProximaNovaRegular.otf);
+}
+@font-face {
+  font-family: openSansLight;
+  src: url(../fonts/OpenSans-Light.ttf);
+}
+@font-face {
+  font-family: openSansBold;
+  src: url(../fonts/OpenSans-Bold.ttf);
+}
+
+
+
+@media (min-width: 768px) and (max-width: 1199px){
+  .category_tabs .resp-tabs-container .category-engineer{
+    width: calc(100% / 4);
+  }
+  .postJob .choose-file {
+      margin-right: 0px;
+      margin-top: 27px;
+  }
+  .postJob .best-matches{
+    width: calc(100% / 4);
+  }
+  .postJob .best-matches .best-matches-content {
+      min-height: 120px;
+  }
+}
+@media (min-width: 241px) and (max-width: 767px){
+  .headers{
+    padding-bottom: 25px;
+  }
+  /*---sign in---*/
+  .bg_login{
+    background-image: none;
+    background-color: #2CCBE0;
+  }
+  .bg_signup{
+    background-image: none;
+    background-color: #6F7CB2;
+  }
+  .bg_forgot{
+    background-image: none;
+    background-color: #B9A28A;
+  }
+  .sign_widget{
+    margin-top: 80px;
+  }
+  .signupPage {
+      padding: 0px 15px 30px;
+  }
+  .signupForm {
+      padding: 0px 25px;
+  }
+  .logo_login a, .logo_signup a, .logo_forgot a{
+    left: 35%;
+  }
+  
+  .signup_widget{
+    margin-top: 70px
+  }
+  .forgot_widget{
+    margin-top: 70px;
+  }
+  .forgotForm{
+    padding: 0 15px;
+  }
+  .loginForm{
+    padding: 0px 30px;
+  }
+  /*end*/
+  .category_tabs .resp-tabs-container .category-engineer{
+    width: 100% !important;
+    float: left;
+  }
+  .postJob .bestmatchjobs{
+    padding: 0px 15px;
+  }
+  .postJob .best-matches{
+    width: 100%;
+  }
+  .postJob .choose-file {
+      margin-right: 0px;
+      margin-top: 27px;
+  }
+  /*SEARCHING TIMELINE*/
+  .alluserserch{
+    margin: 25px 10px;
+  }
+  .alluserserch .allUserImgBox{
+    max-height: 230px;
+  }
+  .alluserserch img{
+    width: 100%;
+    height: 230px;
+  }
+  .left_head_top img{
+    margin-right: 10px;
+  }
+  .innertextProfile{
+    padding-top: 15px;
+  }
+  .sp-profile-det{
+    padding: 5px 0px;
+  }
+  .addcustomsell, .profilecentr {
+    float: left!important;
+  }
+  #btnmobSet{
+    margin-top: 15px;
+  }
+  #btnmobSet .btn{
+    width: 100px;
+    min-width: 100px;
+    float: left;
+    margin-right: 5px;
+  }
+  .postingPage{
+    padding: 10px 0px;
+  }
+  .storeBoxThree{
+    margin-bottom: 25px;
+  }
+  /*=======STORE MODULE========*/
+  .landing_page, .main_box{
+    padding: 20px 0px;
+  }
+  .store_searchbox input[type=text]{
+    width: 70%;
+  }
+  .store_search_btn{
+    float: none;
+    padding:  7px 15px;
+    width: 27%;
+  }
+  #storenavbar_{
+    width: 100%;
+  }
+  #storenavbar_ ul{
+    padding-left: 15px;
+  }
+  #storenavbar_ ul li a:hover, #storenavbar_ ul li a:focus{
+    background-color: #56966F;
+    color: #FFF;
+  }
+  .col-xs-5ths{
+    width: 100%;
+  }
+  .featured_box img, .img_new_arriv a img{
+    min-height: 250px;
+  }
+  #slider-control a.left{
+    left: 0px;
+    
+  }
+  #slider-control a.right{
+    right: 0px;
+    
+  }
+  .slideNewContrl a.left, .slideNewContrl a.right{
+    top: 40%!important;
+  }
+  .right_link a.btn{
+    margin-bottom: 15px;
+  }
+  .breadcrumb_box, .right_link {
+    text-align: center;
+  }
+  .breadcrumb{
+    margin-bottom: 15px;
+  }
+  .product_detail_right{
+    padding-top: 15px;
+  }
+  .product_desc ul li a, .product_desc ul li.active a{
+    font-size: 14px;
+  }
+  .product_box{
+    margin: 20px 5px;
+  }
+  .wrapper-sticky{
+    left: 7px!important;
+  }
+  #sidebar_right{
+    z-index: -999;
+  }
+  .grid_view_store img{
+    max-height: 220px;
+    margin-bottom: 15px;
+  }
+  /*===LEFT BUTTON SIDEBAR===*/
+  .openbtn{
+    display: block;
+  }
+  .leftsidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #262626;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+  }
+  .leftsidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+    display: block;
+    color: #FFF;
+  }
+  #main{
+    margin-bottom: 15px;
+  }
+  /*===========================*/
+}
+
+/*--------SLIDER-------*/
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  .topsearch h2{
+    font-size: 30px;
+  }
+  .topsearch h3 {
+      font-size: 20px;
+  }
+  #searchform button {
+    right: 5px;
+    top: 0px;
+  }
+  .home_explore{
+    border: 1px solid #959595;
+    margin-bottom: 10px;
+  }
+  /*----------MARKETING--------------*/
+  .email_marketing{
+    background-image: none;
+    background-color: #55A747;
+    padding: 20px;
+    margin-bottom: 10px;
+    min-height: auto;
+  }
+  .sms_marketing{
+    background-image: none;
+    background-color: #0088FF;
+    padding: 20px;
+    min-height: auto;
+  }
+  .email_marketing h4, .sms_marketing h4{
+    margin-top: 0px;
+  }
+  .homepage {
+    padding: 15px;
+  }
+
+  /*-------TRENDING POST----------*/
+  .box_feat_1 img{
+    width: 140px;
+    margin-left: 25px;
+  }
+  .box_feat_2 img, .box_feat_3 img{
+    margin-left: 43px;
+    width: 100px;
+  }
+
+
+
+
+
+
+
+
+}

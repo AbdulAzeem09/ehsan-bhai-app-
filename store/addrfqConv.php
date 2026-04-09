@@ -1,0 +1,14 @@
+<?php
+	include('../univ/baseurl.php');
+
+	function sp_autoloader($class){
+		include '../mlayer/' . $class . '.class.php';
+	}
+	spl_autoload_register("sp_autoloader");
+
+	$r = new _rfq;
+	$r->createRfqConv($_POST);
+	
+	$re = new _redirect;
+   	$re->redirect($BaseUrl.'/store/dashboard/my-send-rfq.php');
+?>

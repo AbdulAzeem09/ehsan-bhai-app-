@@ -1,0 +1,316 @@
+<?php
+include('../univ/baseurl.php');
+session_start();
+if (!isset($_SESSION['pid'])) {
+$_SESSION['afterlogin'] = "business-directory/";
+include_once ("../authentication/check.php");
+
+}else{
+function sp_autoloader($class) {
+include '../mlayer/' . $class . '.class.php';
+}
+spl_autoload_register("sp_autoloader");
+
+$header_directy = "header_directy";
+?>
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+<?php include('../component/f_links.php');?>
+<!-- owl carousel -->
+<link href="<?php echo $BaseUrl;?>/assets/css/owl.carousel.min.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo $BaseUrl;?>/assets/css/owl.theme.default.min.css" rel="stylesheet" type="text/css" />
+
+<script src="<?php echo $BaseUrl;?>/assets/js/owl.carousel.min.js"></script>
+<!--NOTIFICATION-->
+<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.3/animate.min.css'>
+<!-- this script for slider art -->
+<script>
+$(document).ready(function() {
+$('.owl-carousel').owlCarousel({
+loop: true,
+autoPlay: true,
+responsiveClass: true,
+responsive: {
+0: {
+items: 1,
+nav: false
+},
+600: {
+items: 3,
+nav: false
+},
+1000: {
+items: 4,
+nav: false
+}
+}
+});
+});    
+</script>
+<script type="text/javascript">
+function geocodeAddress(geocoder, resultsMap, address) {
+//alert(address);
+geocoder.geocode({'address': address}, function(results, status) {
+if (status === 'OK') {
+resultsMap.setCenter(results[0].geometry.location);
+var marker = new google.maps.Marker({
+map: resultsMap,
+position: results[0].geometry.location
+});
+} else {
+//alert('Geocode was not successful for the following reason: ' + status);
+}
+});
+}
+</script>
+
+</head>
+
+<body class="bg_gray">
+<?php
+include_once("../header.php");
+
+?>
+
+<section>
+<div class="row no-margin">
+<div class="col-md-3 no-padding">
+<?php 
+include('../component/left-business.php');
+?>
+</div>
+<div class="col-md-9 no-padding">
+<div class="head_right_enter">
+<div class="row no-margin">
+<?php
+include('top-head-inner.php');
+?>
+<div class="col-md-12 no-padding">
+<div class="tab-content no-radius otherTimleineBody m_top_20" style="padding: 0px 20px;">
+<!--PopularArt-->
+<div role="tabpanel" class="tab-pane active" id="video1">
+<div class="row">
+<div class="col-md-12 topVdoBread">
+<nav aria-label="breadcrumb">
+<ol class="breadcrumb">
+<li class="breadcrumb-item"><a href="<?php echo $BaseUrl.'/business_directory';?>"><i class="fa fa-home"></i></a></li>
+<?php
+$ac = new _artCategory;
+if(isset($_GET['business'])){
+?>
+<li class="breadcrumb-item active" aria-current="page"><?php echo ucwords(str_replace('_', ' ', $_GET['business']));?></li><?php
+
+}else{ ?>
+<li class="breadcrumb-item active" aria-current="page">All Business</li> <?php
+}
+?>
+</ol>
+</nav>
+</div>
+</div>
+<?php //include('search-form.php');?>
+
+
+<div class="row ">
+
+<?php
+$p = new _spprofiles;
+$limit = 10;
+if (isset($_GET['business']) && $_GET['business'] != '') {
+$busCategory = str_replace('_', ' ', $_GET['business']);
+$res= $p->readBusDirProfile($busCategory, $limit);
+}else{
+$res = $p->readBusDirPro($limit);
+}
+//echo $p->ta->sql;
+$googleMap = [];
+
+if ($res != false) {
+$i = 1;
+
+while ($row = mysqli_fetch_assoc($res)) {
+$name       = $row["spProfileName"];
+$picture    = $row['spProfilePic'];
+$about      = $row["spProfileAbout"];
+$phone      = $row["spProfilePhone"];
+$country    = $row["spProfilesCountry"];
+$state      = $row["spProfilesState"];
+$city       = $row["spProfilesCity"];
+$profiletype        = $row["spProfileType_idspProfileType"];
+$profileTypeName    = $row['spProfileTypeName'];
+$icon       = $row["spprofiletypeicon"];
+$ptypeid    = $row["idspProfileType"];
+$email      = $row["spProfileEmail"];
+$location   = $row["spprofilesLocation"];
+$language   = $row["spprofilesLanguage"];
+
+$pf = new _profilefield;
+$query = $pf->read($row["idspProfiles"]);
+if ($query != false) {
+$cmpnyName = "";
+$cmpnyAddress = "";
+$cmpnyTagline = "";
+
+while ($row2 = mysqli_fetch_assoc($query)) {
+if($cmpnyName == ''){
+if($row2['spProfileFieldName'] == 'companyname_'){
+$cmpnyName = $row2['spProfileFieldValue'];
+}
+}
+if($cmpnyAddress == ''){
+if($row2['spProfileFieldName'] == 'companyaddress_'){
+$cmpnyAddress = $row2['spProfileFieldValue'];
+}
+}
+if($cmpnyTagline == ''){
+if($row2['spProfileFieldName'] == 'companytagline_'){
+$cmpnyTagline = $row2['spProfileFieldValue'];
+}
+}
+}
+}
+
+// SHOW ALL COUNTRY , STATE, CITY
+$st  = new _state;
+$c   = new _country;
+$ci  = new _city;
+// county name
+$result3 = $c->readCountryName($country);
+if($result3 != false){
+$row3 = mysqli_fetch_assoc($result3);
+}
+// provision name
+$result2 = $st->readStateName($state);
+if($result2 != false){
+$row5 = mysqli_fetch_assoc($result2);
+}
+// city name
+$result4 = $ci->readCityName($city);
+if($result4 != false){
+$row4 = mysqli_fetch_assoc($result4);
+}
+$addr = $row4['city_title'].' '.$row3['country_title'];
+array_push($googleMap, $addr)
+
+?>
+<div class="col-md-12">
+<div class="bg_white dirctrylist m_btm_20">
+<div class="row">
+<div class="col-md-2">
+<img alt="Profile Pic" class="img-responsive" src="<?php echo ((isset($picture))?" ". ($picture)."":"../img/default-profile.png");?>">
+
+</div>
+<div class="col-md-8">
+<div class="" style="padding: 10px 0px;">
+<a href="javascript:void(0)" class="title"><?php echo $cmpnyName; ?></a>
+<span class="addres"><i class="fa fa-home"></i> <?php echo $cmpnyAddress; ?></span>
+<p class="detail">
+<?php 
+if(strlen($cmpnyTagline) < 200){
+echo $cmpnyTagline;
+}else{
+echo substr($cmpnyTagline, 0,200)."...";
+} 
+?>   
+</p>
+<div class="btn_Fav_res" >
+<?php
+$fd = new _favouriteBusiness;
+$result_fav = $fd->chkFavAlready($row['idspProfiles'], $_SESSION['pid'], 1);
+if($result_fav){
+?>
+<i class="fa fa-star green"></i>
+<?php
+}else{
+?>
+<i class="fa fa-star-o green"></i>
+<?php
+}
+
+$result_fav = $fd->chkFavAlready($row['idspProfiles'], $_SESSION['pid'], 2);
+if($result_fav){
+?>
+<i class="fa fa-heart red"></i>
+<?php
+}else{
+?>
+<i class="fa fa-heart-o red"></i>
+<?php
+}
+?>                                                                            
+</div>
+<!-- <p class="detail">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, </p> -->
+<div class="detail_btn">
+<a href="<?php echo $BaseUrl.'/business-directory/detail.php?business='.$row['idspProfiles'];?>" class="btn " >View Business Detail</a>
+<a href="<?php echo $BaseUrl.'/friends/?profileid='.$row['idspProfiles'];?>" class="btn " >View Profile</a>
+</div>
+</div>
+</div>
+<div class="col-md-2">
+<script>
+function initMap() {
+var geocoder = new google.maps.Geocoder();
+
+<?php
+$count = 1;
+if(count($googleMap) > 0){
+foreach ($googleMap as $key => $value) { ?>
+
+var map<?php echo $count;?> = new google.maps.Map(document.getElementById('map<?php echo $count;?>'), {
+zoom: 5,
+center: {lat: -34.397, lng: 150.644}
+});
+var add<?php echo $count;?> = "<?php echo $value; ?>"; 
+geocodeAddress(geocoder, map<?php echo $count;?>, add<?php echo $count;?>);
+<?php
+$count++;
+}
+}
+?>
+// =======
+}
+</script>
+<div class="mapbox">
+<div id="map<?php echo $i;?>" style="width: 100%;height: 100%;"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<?php
+$i++;
+}
+}
+?>
+
+
+
+
+
+
+
+</div>
+</div>
+</div>
+
+
+</div>
+</div>
+
+</div>
+</div>
+</section>
+<div class="space-lg"></div>
+
+<?php 
+include('../component/f_footer.php');
+include('../component/f_btm_script.php'); 
+?>
+<!-- notification js -->
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAPpH4FGQaj_JIJOViHAeHGAjl7RDeW8OQ&callback=initMap"></script>
+</body>
+</html>
+<?php
+} ?>

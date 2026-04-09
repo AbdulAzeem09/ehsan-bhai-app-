@@ -1,0 +1,240 @@
+<?php
+    include('../univ/baseurl.php');
+    session_start();
+if (!isset($_SESSION['pid'])) {
+    $_SESSION['afterlogin'] = "business-directory/";
+    include_once ("../authentication/check.php");
+    
+}else{
+    function sp_autoloader($class) {
+        include '../mlayer/' . $class . '.class.php';
+    }
+    spl_autoload_register("sp_autoloader");
+
+    $header_directy = "header_directy";
+?>
+<!DOCTYPE html>
+<html lang="en-US">
+    
+    <head>
+        <?php include('../component/f_links.php');?>
+    </head>
+
+    <body class="bg_gray">
+        <?php
+        include_once("../header.php");
+        ?>
+        <div class="loadbox">
+            <div class="loader"></div>
+        </div>
+        <section class="main_box no-padding" id="service-page">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="text-center">
+                            <h2>Business Dirctory</h2>
+                            <!-- <p>Discover and share a constantly expanding mix of music and videos from emerging and major artists around the world.</p> -->
+                            <div class="mainBusinessSearch">
+                                <ul class="nav nav-pills" id="bus_ser_tab">
+                                    <li class="active"><a data-toggle="pill" href="#home">Search a Business</a></li>
+                                    <li><a data-toggle="pill" href="#menu1">Search a Profile</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div id="home" class="tab-pane fade in active">
+                                        <div class="in_ser_serch">
+                                            <form class="" action="search.php" method="post">
+                                                <input type="hidden" name="txtForm" value="1">
+                                                <div class="form-group no-margin">
+                                                    <input type="text" class="form-control" name="txtSearchBox" placeholder="Type a Business name here">
+                                                </div>
+                                                <button type="submit" name="btnSearch" class="btn btn-default">Search</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div id="menu1" class="tab-pane fade">
+                                        <div class="in_ser_serch">
+                                            <form class="" action="search.php" method="post">
+                                                <input type="hidden" name="txtForm" value="2">
+                                                <div class="form-group no-margin">
+                                                    <input type="text" class="form-control" name="txtSearchBox" placeholder="Search By Profile">
+                                                </div>
+                                                <button type="submit" name="btnSearch" class="btn btn-default">Search</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    
+                                </div>  
+                            </div>
+                            <a href="<?php echo $BaseUrl.'/my-profile/';?>" class="btn btn_bus_dircty">List your business / update</a>
+                            <a href="<?php echo $BaseUrl.'/business-directory/dashboard.php';?>" class="btn btn_bus_dircty" style="background-color: darkblue;">Dashboard</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="bg_white">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="heading-home text-center">
+                            <h2>Explore</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row m_btm_40 explore_link">
+                    <div class="col-md-5ths">
+                        <a href="">
+                            <div class="home_explore box_1 text-center">
+                                <img src="<?php echo $BaseUrl;?>/assets/images/directory/icon-1.png" class="img-responsive" alt="" />
+                                <h3>Automotive</h3>
+                                
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-5ths explore_link">
+                        <a href="">
+                            <div class="home_explore box_2 text-center">
+                                <img src="<?php echo $BaseUrl;?>/assets/images/directory/icon-2.png" class="img-responsive" alt="" />
+                                <h3>Business & Professional</h3>
+                                
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-5ths explore_link">
+                        <a href="<?php echo $BaseUrl.'/business-directory/business.php?business=Computer_services';?>">
+                            <div class="home_explore box_3 text-center">
+                                <img src="<?php echo $BaseUrl;?>/assets/images/directory/icon-3.png" class="img-responsive" alt="" />
+                                <h3>Computer Services</h3>
+                                
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-5ths explore_link">
+                        <a href="">
+                            <div class="home_explore box_4 text-center">
+                                <img src="<?php echo $BaseUrl;?>/assets/images/directory/icon-4.png" class="img-responsive" alt="" />
+                                <h3>Events & Entertainment</h3>
+                                
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-5ths explore_link">
+                        <a href="">
+                            <div class="home_explore box_5 text-center border_right">
+                                <img src="<?php echo $BaseUrl;?>/assets/images/directory/icon-5.png" class="img-responsive" alt="" />
+                                <h3>Family & Community</h3>
+                               
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-5ths explore_link">
+                        <a href="">
+                            <div class="home_explore box_6 text-center">
+                                <img src="<?php echo $BaseUrl;?>/assets/images/directory/icon-6.png" class="img-responsive" alt="" />
+                                <h3>Food & Resturants</h3>
+                                
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-5ths explore_link">
+                        <a href="">
+                            <div class="home_explore box_7 text-center">
+                                <img src="<?php echo $BaseUrl;?>/assets/images/directory/icon-7.png" class="img-responsive" alt="" />
+                                <h3>Health & Medical</h3>
+                                
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-5ths explore_link">
+                        <a href="">
+                            <div class="home_explore box_8 text-center">
+                                <img src="<?php echo $BaseUrl;?>/assets/images/directory/icon-8.png" class="img-responsive" alt="" />
+                                <h3>Home & Construction</h3>
+                               
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-5ths explore_link">
+                        <a href="">
+                            <div class="home_explore box_9 text-center ">
+                                <img src="<?php echo $BaseUrl;?>/assets/images/directory/icon-9.png" class="img-responsive" alt="" />
+                                <h3>Legal & Financial</h3>
+                                
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-5ths explore_link">
+                        <a href="">
+                            <div class="home_explore box_10 text-center border_right">
+                                <img src="<?php echo $BaseUrl;?>/assets/images/directory/icon-10.png" class="img-responsive" alt="" />
+                                <h3>Local Shopping</h3>
+                               
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-5ths explore_link">
+                        <a href="">
+                            <div class="home_explore box_11 text-center border_bottom">
+                                <img src="<?php echo $BaseUrl;?>/assets/images/directory/icon-11.png" class="img-responsive" alt="" />
+                                <h3>Sports & Recreation</h3>
+                               
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-5ths explore_link">
+                        <a href="">
+                            <div class="home_explore box_12 text-center border_bottom">
+                                <img src="<?php echo $BaseUrl;?>/assets/images/directory/icon-12.png" class="img-responsive" alt="" />
+                                <h3>Travel & Transportation</h3>
+                               
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-5ths explore_link">
+                        <a href="">
+                            <div class="home_explore box_13 text-center border_bottom">
+                                <img src="<?php echo $BaseUrl;?>/assets/images/directory/icon-13.png" class="img-responsive" alt="" />
+                                <h3>Online Advertising</h3>
+                              
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-5ths explore_link">
+                        <a href="">
+                            <div class="home_explore box_14 text-center border_bottom">
+                                <img src="<?php echo $BaseUrl;?>/assets/images/directory/icon-14.png" class="img-responsive" alt="" />
+                                <h3>It Training</h3>
+                               
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-5ths explore_link">
+                        <a href="">
+                            <div class="home_explore box_15 text-center border_right border_bottom">
+                                <img src="<?php echo $BaseUrl;?>/assets/images/directory/icon-15.png" class="img-responsive" alt="" />
+                                <h3>Grocery</h3>
+                               
+                            </div>
+                        </a>
+                    </div>
+                </div>
+             <!--    <div class="row">
+                    <div class="col-md-12 text-center">
+                        <a href="javascript:void(0)" class="btn butn_bus_serch">Show All Category</a>
+                    </div>
+                </div> -->
+               
+            </div>
+        </section>
+
+        <?php 
+        include('../component/f_footer.php');
+        include('../component/f_btm_script.php'); 
+        ?>
+	</body>
+</html>
+<?php
+}
+?>

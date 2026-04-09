@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <title>Messages | The SHAREPAGE</title>
+   <link rel="stylesheet" href="css/bootstrap.min.css" >
+   <!-- Optional theme -->
+   <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+   <!-- <link rel="stylesheet" type="text/css" href="css/docs.theme.min.css"> -->
+   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <link rel="stylesheet" type="text/css" href="css/chat.css">
+   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+   <!-- Latest compiled and minified JavaScript -->
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>	
+   
+</head>
+<body cz-shortcut-listen="true">
+
+<div class="container">
+    <div class="row">
+        <div class="panel messages-panel">
+            <div class="contacts-list">
+                <div class="inbox-categories">
+                    <div data-toggle="tab" data-target="#inbox" class="active">Inbox</div>
+                    <div data-toggle="tab" data-target="#groups">Groups</div>
+                </div>
+                <div class="tab-content">
+                    <div id="inbox" class="contacts-outter-wrapper tab-pane active">
+                        <div></div>
+                        <form class="panel-search-form info form-group has-feedback no-margin-bottom" style="display: inline-flex; padding: 5px 20px;">
+                            <input type="text" class="form-control" name="search" placeholder="Search" />
+                            <span class="fa fa-search" style="padding: 11px;"></span>
+                        </form>
+                        <div class="contacts-outter">
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">Filter <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Read</a></li>
+                                    <li><a href="#">Unread</a></li>
+                                    <li><a href="#">Sent</a></li>
+                                    <li><a href="#">Draft</a></li>
+                                </ul>
+                            </div>
+
+                            <ul class="list-unstyled contacts">
+                                <li data-toggle="tab" data-target="#inbox-message-1" class="active">
+                                    <div class="message-count">1</div>
+                                    <div class="offline"></div>
+                                    <img alt="" class="img-circle medium-image" src="https://bootdey.com/img/Content/avatar/avatar1.png" />
+
+                                    <div class="vcentered info-combo">
+                                        <h3 class="no-margin-bottom name">John Doe</h3>
+                                        <h5>Hah, too late, I already bought it and my team is impleting the new design right now.</h5>
+                                    </div>
+                                    <div class="contacts-add">
+                                        <span class="message-time"> 2:32 <sup>AM</sup></span>
+                                        <i class="fa fa-trash-o"></i>
+                                        <i class="fa fa-paperclip"></i>
+                                    </div>
+                                </li>
+                                <li data-toggle="tab" data-target="#inbox-message-2">
+                                    <div class="online"></div>
+                                    <img alt="" class="img-circle medium-image" src="https://bootdey.com/img/Content/avatar/avatar1.png" />
+
+                                    <div class="vcentered info-combo">
+                                        <h3 class="no-margin-bottom name">John Doe</h3>
+                                        <h5>Of course, just call me before that, in case I forget.</h5>
+                                    </div>
+                                    <div class="contacts-add">
+                                        <span class="message-time"> 3:56 <sup>AM</sup></span>
+                                        <i class="fa fa-trash-o"></i>
+                                        <i class="fa fa-paperclip"></i>
+                                    </div>
+                                </li>
+                                <li data-toggle="tab" data-target="#inbox-message-3">
+                                    <div class="message-count">1</div>
+                                    <div class="offline"></div>
+                                    <img alt="" class="img-circle medium-image" src="https://bootdey.com/img/Content/avatar/avatar1.png" />
+
+                                    <div class="vcentered info-combo">
+                                        <h3 class="no-margin-bottom name">John Doe</h3>
+                                        <h5>Hey, you asked for my feedback, it's brilliant. Damn, I</h5>
+                                    </div>
+                                    <div class="contacts-add">
+                                        <span class="message-time"> 5:21 <sup>AM</sup></span>
+                                        <i class="fa fa-trash-o"></i>
+                                        <i class="fa fa-paperclip"></i>
+                                    </div>
+                                </li>
+                                <li data-toggle="tab" data-target="#inbox-message-4">
+                                    <div class="message-count">2</div>
+                                    <div class="offline"></div>
+                                    <img alt="" class="img-circle medium-image" src="https://bootdey.com/img/Content/avatar/avatar1.png" />
+
+                                    <div class="vcentered info-combo">
+                                        <h3 class="no-margin-bottom name">John Doe</h3>
+                                        <h5>And invite Daniel too, please</h5>
+                                    </div>
+                                    <div class="contacts-add">
+                                        <span class="message-time"> 6:13 <sup>AM</sup></span>
+                                        <i class="fa fa-trash-o"></i>
+                                        <i class="fa fa-paperclip"></i>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="groups" class="contacts-outter-wrapper tab-pane">
+                        <form class="panel-search-form info form-group has-feedback no-margin-bottom" style="display: inline-flex; padding: 5px 20px;">
+                            <input type="text" class="form-control" name="search" placeholder="Search" />
+                            <span class="fa fa-search" style="padding: 11px;"></span>
+                        </form>
+                        <div class="contacts-outter">
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">Filter <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Archive</a></li>
+                                    <li><a href="#">Personal</a></li>
+                                    <li><a href="#">Other</a></li>
+                                </ul>
+                            </div>
+                            <ul class="list-unstyled contacts success">
+                                <li data-toggle="tab" data-target="#sent-message-1">
+                                    <img alt="" class="img-circle medium-image" src="https://www.iconpacks.net/icons/1/free-user-group-icon-296-thumb.png" />
+
+                                    <div class="vcentered info-combo">
+                                        <h3 class="no-margin-bottom name">Happy Group</h3>
+                                        <h5>Entertainment, Funny, Fun, Masti</h5>
+                                    </div>
+                                    <div class="contacts-add">
+                                        <span class="message-time"> 44 <sup>Users</sup></span>
+                                        <i class="fa fa-trash-o"></i>
+                                    </div>
+                                </li>
+                                <li data-toggle="tab" data-target="#sent-message-2">
+                                    <div class="message-count">7</div>
+                                    <img alt="" class="img-circle medium-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2v2q0Bt3eTqfgF2-xwPwA_Ywyl2BAakwo7w&usqp=CAU" />
+
+                                    <div class="vcentered info-combo">
+                                        <h3 class="no-margin-bottom name">News Group</h3>
+                                        <h5>Newspaper, Lates updates, Views, Media</h5>
+                                    </div>
+                                    <div class="contacts-add">
+                                        <span class="message-time"> 804 <sup>Users</sup></span>
+                                        <i class="fa fa-trash-o"></i>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <a href="#"><i class="fa fa-user footer_item"></i></a>
+                <a href="#"><i class="fa fa-gear footer_item"></i></a>
+            </div>
+
+            <div class="tab-content">
+                <div class="tab-pane message-body active" id="inbox-message-1">
+                    <div class="message-top">
+                        <span class="name_title">Elon Musk <sup>Offline</sup></span>
+                        <div class="dropdown name_report new-message">
+                            <a class="btn dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i> </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Block</a></li>
+                                <li><a href="#">Report</a></li>
+                                <li><a href="#">Help</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="message-chat">
+                        <div class="chat-body">
+                            <div class="message info">
+                                <img alt="" class="img-circle medium-image" src="https://bootdey.com/img/Content/avatar/avatar1.png" />
+
+                                <div class="message-body">
+                                    <div class="message-info">
+                                        <h4>Elon Musk</h4>
+                                        <h5><i class="fa fa-clock-o"></i> 2:25 PM</h5>
+                                    </div>
+                                    <hr />
+                                    <div class="message-text">
+                                        I've seen your new template, Dauphin, it's amazing !
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+
+                            <div class="message my-message">
+                                <img alt="" class="img-circle medium-image" src="https://bootdey.com/img/Content/avatar/avatar1.png" />
+
+                                <div class="message-body">
+                                    <div class="message-body-inner">
+                                        <div class="message-info">
+                                            <h4>Dennis Novac</h4>
+                                            <h5><i class="fa fa-clock-o"></i> 2:28 PM</h5>
+                                        </div>
+                                        <hr />
+                                        <div class="message-text">
+                                            Thanks, I think I will use this for my next dashboard system.
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+
+                            <div class="message info">
+                                <img alt="" class="img-circle medium-image" src="https://bootdey.com/img/Content/avatar/avatar1.png" />
+
+                                <div class="message-body">
+                                    <div class="message-info">
+                                        <h4>Elon Musk</h4>
+                                        <h5><i class="fa fa-clock-o"></i> 2:32 PM</h5>
+                                    </div>
+                                    <hr />
+                                    <div class="message-text">
+                                        Hah, too late, I already bought it and my team is impleting the new design right now.
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="chat-footer">
+                            <textarea class="send-message-text"></textarea>
+                            <label class="upload-file">
+                                <input type="file" required="" />
+                                <i class="fa fa-paperclip"></i>
+                            </label>
+                            <button type="button" class="send-message-button btn-info"><i class="fa fa-paper-plane"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane message-body" id="inbox-message-2">
+                    <div class="message-top">
+                        <span class="name_title">Mark Zuckerberg<sup>Online</sup></span>
+                        <div class="dropdown name_report new-message">
+                            <a class="btn dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i> </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Block</a></li>
+                                <li><a href="#">Report</a></li>
+                                <li><a href="#">Help</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="message-chat">
+                        <div class="chat-body">
+                            <div class="message info">
+                                <img alt="" class="img-circle medium-image" src="https://bootdey.com/img/Content/avatar/avatar1.png" />
+
+                                <div class="message-body">
+                                    <div class="message-info">
+                                        <h4>Mark Zuckerberg</h4>
+                                        <h5><i class="fa fa-clock-o"></i> 3:45 PM</h5>
+                                    </div>
+                                    <hr />
+                                    <div class="message-text">
+                                        Hi, Dennis. How's it going with your latest project?
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+
+                            <div class="message my-message">
+                                <img alt="" class="img-circle medium-image" src="https://bootdey.com/img/Content/avatar/avatar1.png" />
+
+                                <div class="message-body">
+                                    <div class="message-body-inner">
+                                        <div class="message-info">
+                                            <h4>Dennis Novac</h4>
+                                            <h5><i class="fa fa-clock-o"></i> 3:52 PM</h5>
+                                        </div>
+                                        <hr />
+                                        <div class="message-text">
+                                            Hello. It's going well, thanks, but I may need your help tomorrow evening. Will you be available ?
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+
+                            <div class="message info">
+                                <img alt="" class="img-circle medium-image" src="https://bootdey.com/img/Content/avatar/avatar1.png" />
+
+                                <div class="message-body">
+                                    <div class="message-info">
+                                        <h4>Mark Zuckerberg</h4>
+                                        <h5><i class="fa fa-clock-o"></i> 3:56 PM</h5>
+                                    </div>
+                                    <hr />
+                                    <div class="message-text">
+                                        Of course, just call me before that, in case I forget.
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+
+                            <div class="message my-message">
+                                <img alt="" class="img-circle medium-image" src="https://bootdey.com/img/Content/avatar/avatar1.png" />
+
+                                <div class="message-body">
+                                    <div class="message-body-inner">
+                                        <div class="message-info">
+                                            <h4>Dennis Novac</h4>
+                                            <h5><i class="fa fa-clock-o"></i> 4:01 PM</h5>
+                                        </div>
+                                        <hr />
+                                        <div class="message-text">
+                                            Great, thank you.
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="chat-footer">
+                            <textarea class="send-message-text"></textarea>
+                            <label class="upload-file">
+                                <input type="file" required="" />
+                                <i class="fa fa-paperclip"></i>
+                            </label>
+                            <button type="button" class="send-message-button btn-info"><i class="fa fa-paper-plane"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane message-body" id="inbox-message-3">
+                    <div class="message-top">
+                        <span class="name_title">Evan Williams<sup>Offline</sup></span>
+                        <div class="dropdown name_report new-message">
+                            <a class="btn dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i> </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Block</a></li>
+                                <li><a href="#">Report</a></li>
+                                <li><a href="#">Help</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="message-chat">
+                        <div class="chat-body">
+                            <div class="message info">
+                                <img alt="" class="img-circle medium-image" src="https://bootdey.com/img/Content/avatar/avatar1.png" />
+
+                                <div class="message-body">
+                                    <div class="message-info">
+                                        <h4>Evan Williams</h4>
+                                        <h5><i class="fa fa-clock-o"></i> 5:07 PM</h5>
+                                    </div>
+                                    <hr />
+                                    <div class="message-text">
+                                        Hey, you asked for my feedback, it's brilliant. Damn, I envy you I didn't come up with something this good :D Keep it up, man, it's going to be very popular. Trust me !
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+
+                            <div class="message my-message">
+                                <img alt="" class="img-circle medium-image" src="https://bootdey.com/img/Content/avatar/avatar1.png" />
+
+                                <div class="message-body">
+                                    <div class="message-body-inner">
+                                        <div class="message-info">
+                                            <h4>Dennis Novac</h4>
+                                            <h5><i class="fa fa-clock-o"></i> 5:16 PM</h5>
+                                        </div>
+                                        <hr />
+                                        <div class="message-text">
+                                            Wow, thanks. You'll be my main template tester from now on :)
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+
+                            <div class="message info">
+                                <img alt="" class="img-circle medium-image" src="https://bootdey.com/img/Content/avatar/avatar1.png" />
+
+                                <div class="message-body">
+                                    <div class="message-info">
+                                        <h4>Evan Williams</h4>
+                                        <h5><i class="fa fa-clock-o"></i> 5:21 PM</h5>
+                                    </div>
+                                    <hr />
+                                    <div class="message-text">
+                                        I'm all in, as long as you continue to make such great templates.
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="chat-footer">
+                            <textarea class="send-message-text"></textarea>
+                            <label class="upload-file">
+                                <input type="file" required="" />
+                                <i class="fa fa-paperclip"></i>
+                            </label>
+                            <button type="button" class="send-message-button btn-info"><i class="fa fa-paper-plane"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane message-body" id="inbox-message-4">
+                    <div class="message-top">
+                        <span class="name_title">Jonahtan Ive<sup>Offline</sup></span>
+                        <div class="dropdown name_report new-message">
+                            <a class="btn dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i> </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Block</a></li>
+                                <li><a href="#">Report</a></li>
+                                <li><a href="#">Help</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="message-chat">
+                        <div class="chat-body">
+                            <div class="message info">
+                                <img alt="" class="img-circle medium-image" src="https://bootdey.com/img/Content/avatar/avatar1.png" />
+
+                                <div class="message-body">
+                                    <div class="message-info">
+                                        <h4>Jonahtan Ive</h4>
+                                        <h5><i class="fa fa-clock-o"></i> 6:12 PM</h5>
+                                    </div>
+                                    <hr />
+                                    <div class="message-text">
+                                        I'm coming to your place at 9 pm and I hope you'll have those tasty brownies again :)
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+
+                            <div class="message my-message">
+                                <img alt="" class="img-circle medium-image" src="https://bootdey.com/img/Content/avatar/avatar1.png" />
+
+                                <div class="message-body">
+                                    <div class="message-body-inner">
+                                        <div class="message-info">
+                                            <h4>Dennis Novac</h4>
+                                            <h5><i class="fa fa-clock-o"></i> 6:16 PM</h5>
+                                        </div>
+                                        <hr />
+                                        <div class="message-text">
+                                            Ye, I still have a bag full of them.
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+
+                            <div class="message info">
+                                <img alt="" class="img-circle medium-image" src="https://bootdey.com/img/Content/avatar/avatar1.png" />
+
+                                <div class="message-body">
+                                    <div class="message-info">
+                                        <h4>Jonahtan Ive</h4>
+                                        <h5><i class="fa fa-clock-o"></i> 6:12 PM</h5>
+                                    </div>
+                                    <hr />
+                                    <div class="message-text">
+                                        Great, we have a lot of work to do and we need fuel :D
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+                            <div class="message info">
+                                <img alt="" class="img-circle medium-image" src="https://bootdey.com/img/Content/avatar/avatar1.png" />
+
+                                <div class="message-body">
+                                    <div class="message-info">
+                                        <h4>Jonahtan Ive</h4>
+                                        <h5><i class="fa fa-clock-o"></i> 6:13 PM</h5>
+                                    </div>
+                                    <hr />
+                                    <div class="message-text">
+                                        And invite Daniel too, please.
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="chat-footer">
+                            <textarea class="send-message-text"></textarea>
+                            <label class="upload-file">
+                                <input type="file" required="" />
+                                <i class="fa fa-paperclip"></i>
+                            </label>
+                            <button type="button" class="send-message-button btn-info"><i class="fa fa-paper-plane"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane message-body" id="sent-message-1">
+                    <div class="message-top">
+                        <span class="name_title">
+                            Happy Group<a type="button" data-toggle="modal" data-target="#userlist"><sup>44 Users</sup></a>
+                        </span>
+                        <div class="dropdown name_report new-message">
+                            <a class="btn dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i> </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Block</a></li>
+                                <li><a href="#">Report</a></li>
+                                <li><a href="#">Help</a></li>
+                            </ul>
+                        </div>
+                        <a class="btn btn btn-primary new-message" data-toggle="modal" data-target="#myModal"> <i class="fa fa-plus"></i> Add Users </a>
+
+                        <div class="new-message-wrapper">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Send message to..." />
+                                <a class="btn btn-danger close-new-message" href="#"><i class="fa fa-times"></i></a>
+                            </div>
+
+                            <div class="chat-footer new-message-textarea">
+                                <textarea class="send-message-text"></textarea>
+                                <label class="upload-file">
+                                    <input type="file" required="" />
+                                    <i class="fa fa-paperclip"></i>
+                                </label>
+                                <button type="button" class="send-message-button btn-info"><i class="fa fa-paper-plane"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="message-chat">
+                        <div class="chat-body">
+                            <div class="message my-message">
+                                <img alt="" class="img-circle medium-image" src="https://bootdey.com/img/Content/avatar/avatar1.png" />
+
+                                <div class="message-body">
+                                    <div class="message-body-inner">
+                                        <div class="message-info">
+                                            <h4>Dennis Novac</h4>
+                                            <h5><i class="fa fa-clock-o"></i> 2:05 PM</h5>
+                                        </div>
+                                        <hr />
+                                        <div class="message-text">
+                                            Hi, I've just finished the stickers you wanted. I'll send them to you in an archive in 10 minutes.
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+
+                            <div class="message success">
+                                <img alt="" class="img-circle medium-image" src="https://bootdey.com/img/Content/avatar/avatar1.png" />
+
+                                <div class="message-body">
+                                    <div class="message-info">
+                                        <h4>David Beckham</h4>
+                                        <h5><i class="fa fa-clock-o"></i> 2:11 PM</h5>
+                                    </div>
+                                    <hr />
+                                    <div class="message-text">
+                                        Hello, Dennis. Thanks. Also how's it going with our latest football website. Do you need any additional help or information?
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+
+                            <div class="message success">
+                                <img alt="" class="img-circle medium-image" src="https://bootdey.com/img/Content/avatar/avatar1.png" />
+
+                                <div class="message-body">
+                                    <div class="message-info">
+                                        <h4>David Beckham</h4>
+                                        <h5><i class="fa fa-clock-o"></i> 2:24 PM</h5>
+                                    </div>
+                                    <hr />
+                                    <div class="message-text">
+                                        I would like to take a look at it this evening, is it possible ?
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+
+                            <div class="message my-message">
+                                <img alt="" class="img-circle medium-image" src="https://bootdey.com/img/Content/avatar/avatar1.png" />
+
+                                <div class="message-body">
+                                    <div class="message-body-inner">
+                                        <div class="message-info">
+                                            <h4>Dennis Novac</h4>
+                                            <h5><i class="fa fa-clock-o"></i> 2:25 PM</h5>
+                                        </div>
+                                        <hr />
+                                        <div class="message-text">
+                                            It's going well, no need for any other help, thanks. Sure, send me a message when you'll be ready.
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="chat-footer">
+                            <textarea class="send-message-text"></textarea>
+                            <label class="upload-file">
+                                <input type="file" required="" />
+                                <i class="fa fa-paperclip"></i>
+                            </label>
+                            <button type="button" class="send-message-button btn-info"><i class="fa fa-paper-plane"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane message-body" id="sent-message-2">
+                    <div class="message-top">
+                        <span class="name_title">
+                            News Group<a type="button" data-toggle="modal" data-target="#userlist"><sup>804 Users</sup></a>
+                        </span>
+                        <div class="dropdown name_report new-message">
+                            <a class="btn dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i> </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Block</a></li>
+                                <li><a href="#">Report</a></li>
+                                <li><a href="#">Help</a></li>
+                            </ul>
+                        </div>
+                        <a class="btn btn btn-primary new-message" data-toggle="modal" data-target="#myModal"> <i class="fa fa-plus"></i> Add Users </a>
+
+                        <div class="new-message-wrapper">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Send message to..." />
+                                <a class="btn btn-danger close-new-message" href="#"><i class="fa fa-times"></i></a>
+                            </div>
+
+                            <div class="chat-footer new-message-textarea">
+                                <textarea class="send-message-text"></textarea>
+                                <label class="upload-file">
+                                    <input type="file" required="" />
+                                    <i class="fa fa-paperclip"></i>
+                                </label>
+                                <button type="button" class="send-message-button btn-info"><i class="fa fa-paper-plane"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="message-chat">
+                        <div class="chat-body">
+                            <div class="message my-message">
+                                <img alt="" class="img-circle medium-image" src="https://bootdey.com/img/Content/avatar/avatar1.png" />
+
+                                <div class="message-body">
+                                    <div class="message-body-inner">
+                                        <div class="message-info">
+                                            <h4>Dennis Novac</h4>
+                                            <h5><i class="fa fa-clock-o"></i> 12:36 PM</h5>
+                                        </div>
+                                        <hr />
+                                        <div class="message-text">
+                                            Hi, can you please test my new template Dauphin and tell me if you like it ?
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+
+                            <div class="message success">
+                                <img alt="" class="img-circle medium-image" src="https://bootdey.com/img/Content/avatar/avatar1.png" />
+
+                                <div class="message-body">
+                                    <div class="message-info">
+                                        <h4>Jeff Williams</h4>
+                                        <h5><i class="fa fa-clock-o"></i> 12:41 PM</h5>
+                                    </div>
+                                    <hr />
+                                    <div class="message-text">
+                                        Hello, Dennis. I will take a look at it tomorrow, because I'm already fed up with the current project.
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+
+                            <div class="message my-message">
+                                <img alt="" class="img-circle medium-image" src="https://bootdey.com/img/Content/avatar/avatar1.png" />
+
+                                <div class="message-body">
+                                    <div class="message-body-inner">
+                                        <div class="message-info">
+                                            <h4>Dennis Novac</h4>
+                                            <h5><i class="fa fa-clock-o"></i> 12:46 PM</h5>
+                                        </div>
+                                        <hr />
+                                        <div class="message-text">
+                                            Thanks :)
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="chat-footer">
+                            <textarea class="send-message-text"></textarea>
+                            <label class="upload-file">
+                                <input type="file" required="" />
+                                <i class="fa fa-paperclip"></i>
+                            </label>
+                            <button type="button" class="send-message-button btn-info"><i class="fa fa-paper-plane"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Add User -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">User List</h4>
+            </div>
+            <div class="modal-body">
+                <div class="input-group input-group-sm">
+                    <span class="input-group-addon" id="sizing-addon3">@</span>
+                    <input type="text" class="form-control" placeholder="Username" aria-describedby="sizing-addon3" />
+                </div>
+                <div class="main-box no-header clearfix">
+                    <div class="main-box-body clearfix">
+                        <div class="table-responsive">
+                            <table class="table user-list">
+                                <thead>
+                                    <tr>
+                                        <th><span>User</span></th>
+                                        <th class="text-center"><span>Status</span></th>
+                                        <th><span>Email</span></th>
+                                        <th>Add Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" />
+                                            <a href="#" class="user-link">Dave</a>
+                                            <span class="user-subhead">Member</span>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="label label-default">pending</span>
+                                        </td>
+                                        <td>
+                                            <a href="#">marlon@brando.com</a>
+                                        </td>
+                                        <td style="width: 20%;">
+                                            <a href="#" class="table-link text-info">
+                                                <span class="fa-stack">
+                                                    <i class="fa fa-square fa-stack-2x"></i>
+                                                    <i class="fa fa-plus fa-stack-1x fa-inverse"></i>
+                                                </span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <img src="https://bootdey.com/img/Content/user_3.jpg" alt="" />
+                                            <a href="#" class="user-link">Syed</a>
+                                            <span class="user-subhead">Admin</span>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="label label-success">Active</span>
+                                        </td>
+                                        <td>
+                                            <a href="#">marlon@brando.com</a>
+                                        </td>
+                                        <td style="width: 20%;">
+                                            <a href="#" class="table-link text-info">
+                                                <span class="fa-stack">
+                                                    <i class="fa fa-square fa-stack-2x"></i>
+                                                    <i class="fa fa-plus fa-stack-1x fa-inverse"></i>
+                                                </span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <img src="https://bootdey.com/img/Content/user_2.jpg" alt="" />
+                                            <a href="#" class="user-link">Maria</a>
+                                            <span class="user-subhead">Member</span>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="label label-danger">inactive</span>
+                                        </td>
+                                        <td>
+                                            <a href="#">marlon@brando.com</a>
+                                        </td>
+                                        <td style="width: 20%;">
+                                            <a href="#" class="table-link text-info">
+                                                <span class="fa-stack">
+                                                    <i class="fa fa-square fa-stack-2x"></i>
+                                                    <i class="fa fa-plus fa-stack-1x fa-inverse"></i>
+                                                </span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Group User Lsit -->
+<div class="modal fade" id="userlist" tabindex="-1" role="dialog" aria-labelledby="userlist">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">User List</h4>
+            </div>
+            <div class="modal-body">
+               <div class="input-group input-group-sm">
+                  <span class="input-group-addon" id="sizing-addon3">@</span>
+                  <input type="text" class="form-control" placeholder="Username" aria-describedby="sizing-addon3" />
+               </div>
+               <div class="main-box-body clearfix">
+                  <div class="main-box clearfix">
+                         <div class="table-responsive">
+                             <table class="table user-list">
+                                 <thead>
+                                     <tr>
+                                         <th><span>User</span></th>
+                                         <th><span>Created</span></th>
+                                         <th class="text-center"><span>Status</span></th>
+                                         <th><span>Email</span></th>
+                                         <th>&nbsp;</th>
+                                     </tr>
+                                 </thead>
+                                 <tbody>
+                                     <tr>
+                                         <td>
+                                             <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" />
+                                             <a href="#" class="user-link">Mila Kunis</a>
+                                             <span class="user-subhead">Admin</span>
+                                         </td>
+                                         <td>
+                                             2013/08/08
+                                         </td>
+                                         <td class="text-center">
+                                             <span class="label label-default">Inactive</span>
+                                         </td>
+                                         <td>
+                                             <a href="#">mila@kunis.com</a>
+                                         </td>
+                                         <td style="width: 20%;">
+                                             <a href="#" class="table-link">
+                                                 <span class="fa-stack">
+                                                     <i class="fa fa-square fa-stack-2x"></i>
+                                                     <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                                 </span>
+                                             </a>
+                                             <a href="#" class="table-link danger">
+                                                 <span class="fa-stack">
+                                                     <i class="fa fa-square fa-stack-2x"></i>
+                                                     <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                                 </span>
+                                             </a>
+                                         </td>
+                                     </tr>
+                                     <tr>
+                                         <td>
+                                             <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" />
+                                             <a href="#" class="user-link">George Clooney</a>
+                                             <span class="user-subhead">Member</span>
+                                         </td>
+                                         <td>
+                                             2013/08/12
+                                         </td>
+                                         <td class="text-center">
+                                             <span class="label label-success">Active</span>
+                                         </td>
+                                         <td>
+                                             <a href="#">marlon@brando.com</a>
+                                         </td>
+                                         <td style="width: 20%;">
+                                             <a href="#" class="table-link">
+                                                 <span class="fa-stack">
+                                                     <i class="fa fa-square fa-stack-2x"></i>
+                                                     <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                                 </span>
+                                             </a>
+                                             <a href="#" class="table-link danger">
+                                                 <span class="fa-stack">
+                                                     <i class="fa fa-square fa-stack-2x"></i>
+                                                     <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                                 </span>
+                                             </a>
+                                         </td>
+                                     </tr>
+                                     <tr>
+                                         <td>
+                                             <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="" />
+                                             <a href="#" class="user-link">Ryan Gossling</a>
+                                             <span class="user-subhead">Registered</span>
+                                         </td>
+                                         <td>
+                                             2013/03/03
+                                         </td>
+                                         <td class="text-center">
+                                             <span class="label label-danger">Banned</span>
+                                         </td>
+                                         <td>
+                                             <a href="#">jack@nicholson</a>
+                                         </td>
+                                         <td style="width: 20%;">
+                                            <a href="#" class="table-link">
+                                                 <span class="fa-stack">
+                                                     <i class="fa fa-square fa-stack-2x"></i>
+                                                     <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                                 </span>
+                                             </a>
+                                             <a href="#" class="table-link danger">
+                                                 <span class="fa-stack">
+                                                     <i class="fa fa-square fa-stack-2x"></i>
+                                                     <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                                                 </span>
+                                             </a>
+                                         </td>
+                                     </tr>
+                                 </tbody>
+                             </table>
+                         </div>
+                         <ul class="pagination pull-right">
+                             <li>
+                                 <a href="#"><i class="fa fa-chevron-left"></i></a>
+                             </li>
+                             <li><a href="#">1</a></li>
+                             <li><a href="#">2</a></li>
+                             <li><a href="#">3</a></li>
+                             <li><a href="#">4</a></li>
+                             <li><a href="#">5</a></li>
+                             <li>
+                                 <a href="#"><i class="fa fa-chevron-right"></i></a>
+                             </li>
+                         </ul>
+                  </div>
+               </div>                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+  
+  
+</body>
+</html>

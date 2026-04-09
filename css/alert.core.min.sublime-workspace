@@ -1,0 +1,213 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"print",
+				"print_r"
+			],
+			[
+				"wi",
+				"width\tproperty"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/index.php",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/mlayer/_spcontent.class.php",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/bashar_design/main/index.html",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/album/index.php",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/publicpost/-index.php",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/bashar_design/main/main.html",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/component/left-landing.php",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/assets/images/heart.jpg",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/dashboard/moduleshow/index.php",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/my-posts/poststable.php",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/store/storeindex.php",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/mlayer/_productpic.class.php",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/mlayer/_productposting.class.php",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/left-store.php",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/component/left-store-auction.php",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/component/left-store.php",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/post-ad/freelancer.php",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/post-ad/freelancer/index.php",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/post-ad/dopostfreelancer.php",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/mlayer/_freelancerposting.class.php",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/publicpost/commentform.php",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/social/post_comment_details.php",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/mlayer/post_comment_details.php",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/friends/commentform.php",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/timeline/commentform.php",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/publicpost/addcomment.php.bak",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/publicpost/addcomment.php",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/friends/profilecommentform.php",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/friends/index_new.php",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/.idea/workspace.xml",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/publicpost/public-timeline.php",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/profile/gallery.php",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/timeline/index.php",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/publicpost/deletefavorites.php",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/real-estate/property-detail.php",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/real-estate/sendEnquiry.php",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/post-ad/addgroup.php",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/my-groups/create-group.php",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/mlayer/_spgroup.class.php",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/my-groups/create-group.php~",
+		"/C/wamp64/www/sp/SHAREPAGE_CODES/post-ad/addgroup_04_02_2020.php"
+	],
+	"find":
+	{
+		"height": 41.0
+	},
+	"find_in_files":
+	{
+		"height": 107.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 29.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "alert.core.min.sublime-project",
+	"replace":
+	{
+		"height": 54.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 260.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

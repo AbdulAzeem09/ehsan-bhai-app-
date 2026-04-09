@@ -1,0 +1,1 @@
+ALTER TABLE `spuser` ADD `time_zone` TEXT NULL AFTER 'upload_spfile';

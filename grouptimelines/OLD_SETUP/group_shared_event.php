@@ -1,0 +1,324 @@
+
+
+<?php
+
+
+$group_id = isset($_GET['groupid']) ? (int) $_GET['groupid'] : 0;
+$p      = new _spgroup_event;
+$r1    = $p->readsharePost($group_id);
+
+
+
+if($r1 != false){
+
+
+
+
+
+/*  while ($row_1 = mysqli_fetch_assoc($r1)) {
+print_r($row_1);
+$gpid = $row_1['spPostings_idspPostings'];
+
+
+
+
+} */
+
+while ($row_1 = mysqli_fetch_assoc($r1)) {
+// echo '<pre>';
+// print_r($row_1); 
+
+$groupid = $row_1['spgroupid'];
+$groupname = $row_1['spgroupname'];
+$venu = $row_1['spPostingEventVenue'];
+$startDate = $row_1['spPostingStartDate'];
+$startTime = $row_1['spPostingStartTime'];
+$endTime = $row_1['spPostingEndTime'];
+
+$dtstrtTime = strtotime($startTime);
+$dtendTime = strtotime($endTime);
+
+?>
+<div class="col-md-4">
+<div class="upEventBox upcomingbox <?php echo ($count > 6)?'seeproduct':'';?>" style="height: 430px;width: 90%; margin-left: 22px; background-color: #f7f7f7!important;border: 1px solid darkgrey;">
+
+<?php if($_SESSION['ptid'] == 3 || $_SESSION['ptid'] == 1 || $_SESSION['ptid'] == 4 || $_SESSION['ptid'] == 6){ ?>
+
+<a href="<?php echo $BaseUrl.'/events/event-detail.php?postid='.$row_1['idspPostings'].'&groupid='.$group_id;?>" class="eventcapitalize">
+
+<?php }else{ ?>
+
+<a href="javascript:void(0)" data-toggle='modal' data-target='#alertNotEmpProfile' class="eventcapitalize">
+
+<?php } ?>
+
+<?php
+$pic = new _groupeventpic;
+
+$res2 = $pic->readFeature($row_1['idspPostings']);
+if($res2 != false){
+if($res2->num_rows > 0){
+if ($res2 != false) { echo 1;
+$rp = mysqli_fetch_assoc($res2);
+$pic2 = $rp['spPostingPic'];
+echo "<img alt='Posting Pic' class='img-responsive upcomingimg eventimg' src=' " . ($pic2) . "'  style='height:  180px !important;'>"; 
+} else{ echo 2;
+echo "<img alt='Posting Pic' src='../img/noevent.jpg' class='img-responsive upcomingimg eventimg' style='height:  180px !important;'>"; 
+}
+}else{ echo 3;
+$res2 = $pic->read($row_1['idspPostings']);
+if ($res2 != false) {
+$rp = mysqli_fetch_assoc($res2);
+$pic2 = $rp['spPostingPic'];
+echo "<img alt='Posting Pic' class='img-responsive upcomingimg eventimg' style='height:  180px !important;' src=' " . ($pic2) . "' >"; 
+} else{
+echo "<img alt='Posting Pic' src='../img/noevent.jpg' class='img-responsive upcomingimg eventimg' style='height:  180px !important;'>"; 
+}
+}
+}else{ 
+
+$pic1 = new _eventpic;
+$res2 = $pic1->readFeature($row_1['idspPostings']);
+
+if ($res2 != false) {
+$rp = mysqli_fetch_assoc($res2);
+$pic2 = $rp['spPostingPic'];
+echo "<img alt='Posting Pic' class='img-responsive upcomingimg eventimg' style='height:  180px !important;' src=' " . ($pic2) . "' >"; 
+} else{
+echo "<img alt='Posting Pic' src='../img/noevent.jpg' class='img-responsive upcomingimg eventimg' style='height:  180px !important;'>"; 
+}
+}
+?>
+</a>
+<div class="bodyEventBox">
+<?php
+if(!empty($startDate)){
+echo $start_date;
+$dy = new DateTime($startDate);
+$day = $dy->format('d');
+$month = $dy->format('M');
+$weak = $dy->format('D');
+}else{
+$day = 0;
+$month = "&nbsp;";
+$weak = "&nbsp;";
+}
+?>
+<!---<span class="datetop pull-right" >$month.' '.$day;' '.$weak;?></span> --->
+<?php if($_SESSION['ptid'] == 3 || $_SESSION['ptid'] == 1 || $_SESSION['ptid'] == 4 || $_SESSION['ptid'] == 6){ ?>
+
+<a href="<?php echo $BaseUrl.'/events/event-detail.php?postid='.$row_1['idspPostings'].'&groupid='.$group_id;?>" class="eventcapitalize" > 
+
+<?php }else{ ?>
+
+<a href="javascript:void(0)" data-toggle='modal' data-target='#alertNotEmpProfile' class="eventcapitalize">
+
+<?php } ?>
+<a href="<?php echo $BaseUrl.'/events/event-detail.php?postid='.$row_1['idspPostings'].'&groupid='.$group_id;?>" class="eventcapitalize" style="height: 38px;font-size:16px;"> 
+
+<?php 
+if(strlen($row_1['spPostingTitle']) < 40){
+
+echo $row_1['spPostingTitle'];
+
+}else{
+
+echo substr($row_1['spPostingTitle'], 0,40)."...";
+
+} ?>
+</a>
+<div class="event-descrip-section">
+<span  class="eventcapitalize" style="margin-left: 0px;min-height: 20px!important;font-size:15px!important;"><i class="fa fa-map-marker"></i> <?php echo $venu;?></span>
+<p class="eventcapitalize" style="min-height: 18px!important;word-break:break-all;">
+<?php
+if(strlen($row_1['spPostingNotes']) < 80){
+
+echo $row_1['spPostingNotes'];
+
+}else{
+
+echo substr($row_1['spPostingNotes'], 0,80)."...";
+
+} ?>
+</p>
+</div>
+<!--    <?php
+$area2 = "";
+$area1 = "";
+$area0 = "";
+$title = "";
+$ei = new _eventIntrest;
+$result = $ei->chekAlready($row_1['idspPostings'], $_SESSION['pid']);
+if($result != false){
+$row3 = mysqli_fetch_assoc($result);
+$area = $row3['intrestArea'];
+
+if($area == 2){
+$area2 = "<i class='fa fa-check'></i>";
+
+
+
+$title = "Going";
+}else if($area == 1){
+
+
+
+$area1 = "<i class='fa fa-check'></i>";
+$title = "Interested";                                
+}else if($area == 0){
+
+$area0 = "<i class='fa fa-check'></i>";
+$title = "May Be";
+}
+}
+
+$ie = new _eventIntrest;
+$resulti1 = $ie->chekGoing($row_1['idspPostings'], 2);
+// echo $ie->ta->sql;
+if($resulti1 != false && $resulti1->num_rows >0){
+$going = $resulti1->num_rows;
+}else{
+$going =  0;
+}
+
+$resulti2 = $ie->chekGoing($row_1['idspPostings'], 1);
+// echo $ie->ta->sql;
+if($resulti2 != false && $resulti2->num_rows >0){
+$interested = $resulti2->num_rows;
+}else{
+$interested =  0;
+}
+
+
+$resulti3 = $ie->chekGoing($row_1['idspPostings'], 0);
+// echo $ie->ta->sql;
+if($resulti3 != false && $resulti3->num_rows >0){
+$MayBe = $resulti3->num_rows;
+}else{
+$MayBe =  0;
+}
+?>
+<div class="ie_<?php echo $row['idspPostings'];?>">
+<div class="dropdown intrestEvent" style="display: inline">
+
+<?php if($_SESSION['ptid'] == 3 || $_SESSION['ptid'] == 1 || $_SESSION['ptid'] == 4 || $_SESSION['ptid'] == 6){ ?>
+<button class="btn btn_group_join dropdown-toggle eventiconbtn " type="button" data-toggle="dropdown" aria-expanded="true"><i class="fa fa-star" aria-hidden="true" style="margin: 0px;"></i> <?php echo $title;?></button>
+
+<?php  }else{ ?>
+
+<button class="btn btn_group_join dropdown-toggle eventiconbtn " type="button" data-toggle='modal' data-target='#alertNotEmpProfile' aria-expanded="true"><i class="fa fa-star" aria-hidden="true" style="margin: 0px;"></i> <?php echo $title;?></button>
+<?php
+}
+?>
+
+
+<ul class="dropdown-menu ">
+<li><a href="javascript:void(0)" class="intestDetail" data-pid="<?php echo $_SESSION['pid'];?>" data-postid="<?php echo $row['idspPostings'];?>" data-area="2"><?php echo $area2;?> Going (<?php echo $going; ?>)</a></li>
+<li><a href="javascript:void(0)" class="intestDetail" data-pid="<?php echo $_SESSION['pid'];?>" data-postid="<?php echo $row['idspPostings'];?>" data-area="1"><?php echo $area1;?> Interested (<?php echo $interested; ?>)</a></li>
+<li><a href="javascript:void(0)" class="intestDetail" data-pid="<?php echo $_SESSION['pid'];?>" data-postid="<?php echo $row['idspPostings'];?>" data-area="0"><?php echo $area0;?> May Be (<?php echo $MayBe; ?>)</a></li>
+</ul>
+</div>
+</div> -->
+</div>
+
+<div class="footEventBox footupcoming">
+<p style="font-size: 11px;">
+<!-- <a href="<?php echo $BaseUrl.'/post-ad/events/group-form.php?groupid='.$row['spgroupid'].'&groupname=member testing&event&back=back&groupflag=gflag&postid='.$row['idspPostings']; ?>" class="" data-postid="<?php echo $row['idspPostings'];?>"><i class="fa fa-edit" style="font-size: 16px;">&nbsp;
+Edit</i>
+</a> -->
+
+
+<!--------------------------------------------------------->
+<?php
+$cancel_return = $BaseUrl."/paymentstatus/payment_cancel.php";
+$success_return = $BaseUrl."/paymentstatus/groupevent_payment_success.php?postid=".$row['idspPostings']."&sellid=".$row['spProfiles_idspProfiles']."&groupid=".$row['spgroupid'];
+$paypal_url 	= 'https://www.sandbox.paypal.com/cgi-bin/webscr';
+$merchant_email = 'developer-facilitator@thesharepage.com';
+
+?>
+
+<form action="<?php echo $paypal_url; ?>" method="post" class="form-inline text-right">
+<input type="hidden" name="business" value="<?php echo $merchant_email; ?>">
+<!-- <input type='hidden' name='notify_url' value='http://shoptodoor.pk/demo/paypal-ipn-php/ipn.php'> -->
+<input type="hidden" name="cancel_return" value="<?php echo $cancel_return; ?>"/>
+<input type="hidden" name="return" value="<?php echo $success_return; ?>">
+<input type="hidden" name="rm" value="2" />
+<input type="hidden" name="lc" value="" />
+<input type="hidden" name="no_shipping" value="1" />
+<input type="hidden" name="no_note" value="1" />
+<input type="hidden" name="currency_code" value="USD">
+<input type="hidden" name="page_style" value="paypal" />
+<input type="hidden" name="charset" value="utf-8" />
+<input type="hidden" name="cbt" value="Back to FormGet" />
+
+<!-- Redirect direct to card detail Page -->
+
+<input type="hidden" name="landing_page" value="billing">
+
+<!-- Redirect direct to card detail Page End -->
+
+
+<!-- Specify a Buy Now button. -->
+<input type="hidden" name="cmd" value="_cart">
+<input type="hidden" name="upload" value="1">
+<?php
+
+
+
+echo "<input type='hidden' name='item_name_1' value='".$row['spPostingTitle']."'>";
+echo "<input type='hidden' name='item_number' value='143' >";
+echo "<input type='hidden' class='".$row['idspPostings']."' name='amount_1' value='".$row['spPostingPrice']."'>";
+
+echo "<input type='hidden' id='payqty' class='payqty' name='quantity_1' value='1'>";
+?>
+<!-- <button type="submit" class="btn butn_cancel pull-right " id="Buynow" style="border-radius: 25px;float:right;margin-top: -45px;width: 110px;"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>Buy Ticket</button>-->
+
+<a href="<?php echo $BaseUrl.'/events/event-detail.php?postid='.$row_1['idspPostings'].'&groupid='.$group_id.'&groupname='.$_GET['groupname'];?>" class="btn butn_cancel pull-right btn-border-radius  btn-border-radius" id="Buynow" style="float:right;margin-top: -45px;width: 110px;" ><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>Buy Ticket </a>
+</form>
+<!----------------------------------------------------------------->
+<p style="font-size: 11px;"><span class="date"  style="margin-left: 10px;"><i class="fa fa-calendar" style="font-size: 15px;"></i> <?php echo $startDate;?>  | 
+<?php echo date("h:i A", $dtstrtTime); ?> - <?php echo date("h:i A", $dtendTime);?></span></p>
+</p>
+</div>
+</div>
+</div> <?php
+$count++;
+
+} 
+
+
+
+
+
+
+
+
+if($group_event > 6){ ?>
+<center>
+<div class="loadingseemore"><a class="loadpost" id="fold_p">SEE MORE</a></div></center>
+<?php }
+
+}
+?>
+
+
+
+
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+// Load more data
+$('.loadpost').click(function(){
+//  alert();
+
+$(".seeproduct").show();
+$(".loadpost").hide();
+
+
+
+});
+});
+
+</script>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<link rel="stylesheet" href="css/bootstrap.min.css" >
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap.min.css">
+
+	
+	<!-- <link rel="stylesheet" type="text/css" href="css/docs.theme.min.css"> -->
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/video.css">
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>	
+	<script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#example').DataTable();
+		} )
+	</script>
+</head>
+
+<body cz-shortcut-listen="true"> 
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="wrapper">
+				<!-- Sidebar Holder -->
+				<div id="sidebar">
+                    <nav class="">
+                        <div class="sidebar-header">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search for...">
+                                <span class="input-group-btn">
+                                    <button class="btn  btn-default" type="button"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div><!-- /input-group -->
+                            <div class="input-group">
+                                <button type="button" onclick="window.location.href='dashboard.htm'" class="btn btn-success btn-block"><i class="fa fa-dashboard"></i> Dashboard</button> 
+                            </div>
+                            <div class="input-group">
+                                <button type="button" onclick="window.location.href='upload.htm'" class="btn btn-primary btn-lg btn-block"><i class="fa fa-upload"></i> Upload</button>    
+                            </div>
+                        </div>
+
+                        <ul>
+                            <li><a href="index.htm"><i class="fa fa-home"></i> Home</a></li>                            
+                            <li><a href="myuploads.htm"><i class="fa fa-video-camera"></i> My Videos </a></li>
+                            <li><a href="myvideos.htm"><i class="fa fa-list"></i> My Playlist </a></li>
+                            <li><a href="myvideos.htm"><i class="fa fa-file-video-o"></i> My Album </a></li>
+                            <li><a href="myvideos.htm"><i class="fa fa-heart"></i> My Favourites </a></li>
+                            <li><a href="myearning.htm"><i class="fa fa-dollar"></i> My Earning </a></li>
+                            <li><a href="myvideos.htm"><i class="fa fa-file-video-o"></i> My Purchased Video </a></li>
+                            <li><a href="myvideos.htm"><i class="fa fa-handshake-o"></i> Contributions </a></li>
+                            <li><a href="myvideos.htm"><i class="fa fa-flag"></i> Flagged Videos </a></li>
+                        </ul>
+                        <hr>
+                        <div class="cactus-sidebar-content">
+                        <aside id="top-channel-2" class=" style-5  widget widget_top_channels">
+                            <style>#top-channel-2 .ct-sub-w-title{color:FFFFFF !important; background:FF0000 !important}</style>
+                            <div class="widget-inner">
+                                <h2 class="widget-title h4">Top Channels</h2>
+                                <div class="widget_top_channel_content">
+                                    <div class="post-metadata sp-style">
+                                        <div class="channel-subscribe">
+                                            <div class="channel-picture">
+                                                <a href="#" title="Music Channel">
+                                                    <img data-src="https://dummyimage.com/70x70/000/fff" data-srcset="https://dummyimage.com/70x70/000/fff 50w, https://dummyimage.com/70x70/000/fff 150w, https://dummyimage.com/70x70/000/fff 298w" data-sizes="(max-width: 50px) 100vw, 50px" class="effect-fade lazyloaded" src="https://dummyimage.com/70x70/000/fff" style="padding-top:100%;" alt="vp-ms07" sizes="(max-width: 50px) 100vw, 50px" srcset="https://dummyimage.com/70x70/000/fff 50w, https://dummyimage.com/70x70/000/fff 150w, https://dummyimage.com/70x70/000/fff 298w">
+                                                </a>
+                                            </div>
+                                            <div class="channel-content">
+                                                <h4 class="channel-title h6">
+                                                    <a href="#" title="Music Channel">
+                                                        Music Channel
+                                                    </a>
+                                                </h4><div class="posted-on metadata-font">
+                                                    <span class="cactus-info font-size-1"><span> 8 videos</span></span>
+                                                    <div class="cactus-info font-size-1"><i class="fa fa-eye"></i> 25356 views</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="channel-subscribe">
+                                            <div class="channel-picture">
+                                                <a href="#" title="TV Channel">
+                                                    <img data-src="https://dummyimage.com/70x70/000/fff" data-srcset="https://dummyimage.com/70x70/000/fff 50w, https://dummyimage.com/70x70/000/fff 150w, https://dummyimage.com/70x70/000/fff 298w" data-sizes="(max-width: 50px) 100vw, 50px" class="effect-fade lazyloaded" src="https://dummyimage.com/70x70/000/fff" style="padding-top:100%;" alt="vp-ms07" sizes="(max-width: 50px) 100vw, 50px" srcset="https://dummyimage.com/70x70/000/fff 50w, https://dummyimage.com/70x70/000/fff 150w, https://dummyimage.com/70x70/000/fff 298w">
+                                                </a>
+                                            </div>
+                                            <div class="channel-content">
+                                                <h4 class="channel-title h6">
+                                                    <a href="#" title="TV Channel">
+                                                        TV Channel
+                                                    </a>
+                                                </h4>
+                                                <div class="posted-on metadata-font">
+                                                    <span class="cactus-info font-size-1">
+                                                        <span> 8 videos</span>
+                                                    </span>
+                                                    <div class="cactus-info font-size-1"><i class="fa fa-eye"></i> 7485 views</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="channel-subscribe">
+                                            <div class="channel-picture">
+                                                <a href="#" title="Movie Channel">
+                                                    <img data-src="https://dummyimage.com/70x70/000/fff" data-srcset="https://dummyimage.com/70x70/000/fff 50w, https://dummyimage.com/70x70/000/fff 150w, https://dummyimage.com/70x70/000/fff 298w" data-sizes="(max-width: 50px) 100vw, 50px" class="effect-fade lazyloaded" src="https://dummyimage.com/70x70/000/fff" style="padding-top:100%;" alt="vp-ms07" sizes="(max-width: 50px) 100vw, 50px" srcset="https://dummyimage.com/70x70/000/fff 50w, https://dummyimage.com/70x70/000/fff 150w, https://dummyimage.com/70x70/000/fff 298w">
+                                                </a>
+                                            </div>
+                                            <div class="channel-content">
+                                                <h4 class="channel-title h6">
+                                                    <a href="#" title="Movie Channel">
+                                                        Movie Channel
+                                                    </a>
+                                                </h4><div class="posted-on metadata-font">
+                                                    <span class="cactus-info font-size-1"><span> 8 videos</span></span><div class="cactus-info font-size-1"><i class="fa fa-eye"></i> 3630 views</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="channel-subscribe">
+                                            <div class="channel-picture">
+                                                <a href="#" title="Tech Channel">
+                                                    <img data-src="https://dummyimage.com/70x70/000/fff" data-srcset="https://dummyimage.com/70x70/000/fff 50w, https://dummyimage.com/70x70/000/fff 150w, https://dummyimage.com/70x70/000/fff 298w" data-sizes="(max-width: 50px) 100vw, 50px" class="effect-fade lazyloaded" src="https://dummyimage.com/70x70/000/fff" style="padding-top:100%;" alt="vp-ms07" sizes="(max-width: 50px) 100vw, 50px" srcset="https://dummyimage.com/70x70/000/fff 50w, https://dummyimage.com/70x70/000/fff 150w, https://dummyimage.com/70x70/000/fff 298w">
+                                                </a>
+                                            </div>
+                                            <div class="channel-content">
+                                                <h4 class="channel-title h6">
+                                                    <a href="#" title="Tech Channel">
+                                                        Tech Channel
+                                                    </a>
+                                                </h4><div class="posted-on metadata-font">
+                                                    <span class="cactus-info font-size-1"><span> 8 videos</span></span><div class="cactus-info font-size-1"><i class="fa fa-eye"></i> 2905 views</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="channel-subscribe">
+                                            <div class="channel-picture">
+                                                <a href="#" title="Sport Channel">
+                                                    <img data-src="https://dummyimage.com/70x70/000/fff" data-srcset="https://dummyimage.com/70x70/000/fff 50w, https://dummyimage.com/70x70/000/fff 150w, https://dummyimage.com/70x70/000/fff 298w" data-sizes="(max-width: 50px) 100vw, 50px" class="effect-fade lazyloaded" src="https://dummyimage.com/70x70/000/fff" style="padding-top:100%;" alt="vp-ms07" sizes="(max-width: 50px) 100vw, 50px" srcset="https://dummyimage.com/70x70/000/fff 50w, https://dummyimage.com/70x70/000/fff 150w, https://dummyimage.com/70x70/000/fff 298w">
+                                                </a>
+                                            </div>
+                                            <div class="channel-content">
+                                                <h4 class="channel-title h6">
+                                                    <a href="#" title="Sport Channel">
+                                                        Sport Channel
+                                                    </a>
+                                                </h4><div class="posted-on metadata-font">
+                                                    <span class="cactus-info font-size-1"><span> 8 videos</span></span><div class="cactus-info font-size-1"><i class="fa fa-eye"></i> 2011 views</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </aside>
+                        <hr>
+                        <aside id="videopro_categories-2" class=" style-2  widget videopro_widget_categories widget_casting">
+                            <style>#videopro_categories-2 .ct-sub-w-title{color:FFFFFF !important; background:FF0000 !important}</style>
+                            <div class="widget-inner"><h2 class="widget-title h4">Categories</h2>       
+                                <div class="widget_casting_content widget-cat-style-icon">
+                                    <div class="post-metadata sp-style style-2 style-3">
+                                        <div class="channel-subscribe ">
+                                            <div class="channel-content">
+                                                <h4 class="channel-title h6">
+                                                    <a href="#" title="GAME">
+                                                        <i class="fa fa-gamepad"></i>
+                                                    GAME                        </a>
+                                                    <span class="tt-number">(13)</span>
+                                                </h4>
+                                            </div>
+                                        </div>
+                                        <div class="channel-subscribe ">
+                                            <div class="channel-content">
+                                                <h4 class="channel-title h6">
+                                                    <a href="#" title="KOMBAT">
+                                                        <i class="fa fa-shield"></i>
+                                                    KOMBAT                        </a>
+                                                    <span class="tt-number">(8)</span>
+                                                </h4>
+                                            </div>
+                                        </div>
+                                        <div class="channel-subscribe ">
+                                            <div class="channel-content">
+                                                <h4 class="channel-title h6">
+                                                    <a href="#" title="MOVIE">
+                                                        <i class="fa fa-play"></i>
+                                                    MOVIE                        </a>
+                                                    <span class="tt-number">(15)</span>
+                                                </h4>
+                                            </div>
+                                        </div>
+                                        <div class="channel-subscribe ">
+                                            <div class="channel-content">
+                                                <h4 class="channel-title h6">
+                                                    <a href="#" title="MUSIC">
+                                                        <i class="fa fa-music"></i>
+                                                    MUSIC                        </a>
+                                                    <span class="tt-number">(14)</span>
+                                                </h4>
+                                            </div>
+                                        </div>
+                                        <div class="channel-subscribe ">
+                                            <div class="channel-content">
+                                                <h4 class="channel-title h6">
+                                                    <a href="#" title="NEWS">
+                                                        <i class="fa fa-newspaper-o"></i>
+                                                    NEWS                        </a>
+                                                    <span class="tt-number">(20)</span>
+                                                </h4>
+                                            </div>
+                                        </div>
+                                        <div class="channel-subscribe ">
+                                            <div class="channel-content">
+                                                <h4 class="channel-title h6">
+                                                    <a href="#" title="SPORT">
+                                                        <i class="fa fa-futbol-o"></i>
+                                                    SPORT                        </a>
+                                                    <span class="tt-number">(10)</span>
+                                                </h4>
+                                            </div>
+                                        </div>
+                                        <div class="channel-subscribe ">
+                                            <div class="channel-content">
+                                                <h4 class="channel-title h6">
+                                                    <a href="#" title="TECH">
+                                                        <i class="fa fa-location-arrow"></i>
+                                                    TECH                        </a>
+                                                    <span class="tt-number">(10)</span>
+                                                </h4>
+                                            </div>
+                                        </div>
+                                        <div class="channel-subscribe ">
+                                            <div class="channel-content">
+                                                <h4 class="channel-title h6">
+                                                    <a href="#" title="TV SHOW">
+                                                        <i class="fa fa-leaf"></i>
+                                                    TV SHOW                        </a>
+                                                    <span class="tt-number">(9)</span>
+                                                </h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </aside>                                               
+                    </nav>
+                    </div> 
+
+				<div class="col-sm-12 col-md-12 main">	
+					<!-- Page Content Holder -->
+					<div id="content">
+						<button type="button" id="sidebarCollapse" class="btn btn-primary navbar-btn"><i class="fa fa-bars"></i></button>						
+					</div>
+					<h4>Video's History</h4>
+					<div class="col-md-10">
+
+						<a href="watch.htm">
+							<div class="itemsContainer" style="margin: 15px;">
+								<div class="image"> <img src="https://dummyimage.com/200x200/000/fff" /> </div>
+								<div class="play"><img src="http://cdn1.iconfinder.com/data/icons/flavour/button_play_blue.png" /> </div>
+							</div>
+							<h4>Dummy Video Title</h4>
+						</a>
+						<hr>
+						<h6 class="channel-title h6">
+							<a href="#" title="Sport Channel">
+								Sport Channel Lorem ipsum dolor sit amet, 
+							</a>
+						</h6>
+						<p>consectetur adipisicing elit, sed do eiusmod
+							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+							quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+							consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+							cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+						proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+					</div>
+					<div class="col-md-2">
+						<div id="right_sidebar">
+							<input type="radio" name="all"> All<br>
+							<input type="radio" name="Last 1 hour"> Past 1 Hour<br>
+							<input type="radio" name="Last day"> Last day <br>
+							<input type="radio" name="Last 7 days"> Last 7 days <br>
+							<input type="radio" name="Last month"> Last Month <br>
+							<label>Custom</label>
+							<input type="date" name=""> <br>
+							<input type="date" name="">
+							<hr>
+							<button class="btn btn-block">Clear History</button>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--================================================== -->
+
+<script type="text/javascript" src="js/video.js"></script>	
+</body>
+</html>

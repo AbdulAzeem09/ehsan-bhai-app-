@@ -1,0 +1,2129 @@
+
+//POSTING SCRIPT
+
+$(document).ready(function () {
+	var hostUrl = window.location.host;
+	var hostSchema = window.location.protocol;
+	var MAINURL = hostSchema + '//' + hostUrl;
+	// THIS IS IMPORTANT SCRIPT FOR CUSTOM FIELDS
+	function readCustomFields($form, $postid) {
+		var allinputs = $form.find(".spPostField");
+		var formfields = new Array();
+		var inputs = null;
+		allinputs.each(function (i, e) {
+			var l = $("label[for='" + e.id + "']").text();
+			var n = $(e).attr("name");
+			var v = $(e).val();
+			var f = $(e).data("filter");
+			inputs = { spPostFieldLabel: l, spPostFieldName: n, spPostFieldValue: v, spPostings_idspPostings: $postid, spCategories_idspCategory: $(".spCategories_idspCategory").val(), spPostFieldIsFilter: f, editing_: postedit };
+			formfields.push(inputs);
+		});
+		return formfields;
+	}
+	// STORE
+	//=================POST A STORE FORM START=============
+	$("#spPostgroupSubmit").on("click", function () {
+		//alert();
+		var sendUrl = MAINURL;
+
+		if ($(this).hasClass("editing"))
+			postedit = true;
+		else
+			postedit = false;
+
+		var btn = this;
+		var idspprofile = $("#spProfiles_idspProfiles").val();
+		var $form = $("#sp-form-post");
+		if (idspprofile != "") {
+			//alert(title);
+			var spgroupid = $('#spgroupid').val();
+			var spgroupname = $('#spgroupname').val();
+			//alert(spgroupid);
+			//alert(spgroupname);
+
+			var title = document.getElementById("spPostingTitle").value;
+
+			//alert(title);
+			var country = $('#spUserCountry option:selected').val();
+			var state = $('#spUserState option:selected').val();
+			var city = $('#spPostingsCity option:selected').val();
+			var category = $('#eventcategory_ option:selected').val();
+			var postPrice = document.getElementById("spPostingPrice").value;
+			var postVenu = document.getElementById("spPostingEventVenue_").value;
+			var halCap = document.getElementById("hallcapacity_").value;
+			var tktCap = document.getElementById("ticketcapacity_").value;
+			var strDate = document.getElementById("spPostingStartDate_").value;
+			var endDate = document.getElementById("spPostingExpDt").value;
+			var strTime = document.getElementById("spPostingStartTime_").value;
+			var endTime = document.getElementById("spPostingEndTime_").value;
+			var organiser = document.getElementById("spPostingEventOrgId_").value;
+			var eventaddress = document.getElementById("spPostingNotes").value;
+
+
+			// alert(organiser);
+
+			/* alert(strDate);
+			 alert(endDate);*/
+			/*alert(strTime);
+			alert(endTime);*/
+			var eventstartdate = new Date($("#spPostingStartDate_").val());
+			var eventenddate = new Date($("#spPostingExpDt").val());
+
+			// alert(eventstartdate);
+			//  alert(eventenddate);
+			if (tktCap > halCap) {
+
+				$("#tic_cap").text("Ticket Capacity cannot be greater than Hall Capacity");
+
+			} else {
+				$("#tic_cap").text(" ");
+			}
+
+
+			if (eventstartdate > eventenddate) {
+
+
+				$("#end_date").text(" End Date should be Greater");
+			} else {
+
+				$("#end_date").text("");
+			}
+
+			if (endTime != "") {
+
+
+				if (strTime >= endTime) {
+					$("#end_time").text(" End Time should be Greater");
+					return false;
+				} else {
+					$("#end_time").text(" ");
+				}
+			}
+
+
+
+			/*alert(category);*/
+			/*if(title == ""  ){*/
+
+			if (title == "" && country == 0 && state == 0 && city == 0 && category == 0 && organiser == "" && postPrice == "" && postVenu == "" && halCap == "" && tktCap == "" && eventaddress == "" && strDate == "" && endDate == "") {
+				$("#lbl_1").text(" Enter Event Title");
+				$("#lbl_2").text(" Select Country");
+				$("#lbl_3").text(" Select State");
+				$("#lbl_city").text(" Select city");
+				$("#lbl_4").text(" Select Category");
+				$("#org_err").text(" Please Select Organiser");
+				$("#evadd_err").text(" Please Enter About Evnet");
+
+
+				$("#lbl_5").text(" Enter Ticket Price");
+				$("#lbl_6").text(" Enter Venue");
+				$("#lbl_7").text("Fill Capacity");
+				$("#lbl_8").text("Fill Capacity");
+				$("#lbl_9").text(" Select Start Date");
+				$("#lbl_10").text(" Select End Date");
+				$("#lbl_11").text(" Enter Start Time");
+				$("#lbl_12").text(" Enter End Time");
+
+				$("#spPostingTitle").focus();
+
+			} else {
+
+				if (title == "") {
+					$(".lbl_1").addClass("label_error");
+					$("#lbl_1").text(" Enter Event Title");
+					$("#lbl_2").text(" ");
+					$("#lbl_3").text(" ");
+					$("#lbl_city").text(" ");
+					$("#lbl_4").text(" ");
+					$("#lbl_5").text(" ");
+					$("#lbl_6").text(" ");
+					$("#lbl_7").text(" ");
+					$("#lbl_8").text(" ");
+					$("#lbl_9").text(" ");
+					$("#lbl_10").text(" ");
+					$("#lbl_11").text(" ");
+					$("#lbl_12").text(" ");
+					$("#org_err").text(" ");
+				} else {
+					$(".lbl_1").removeClass("label_error");
+					if (country == 0) {
+
+						$("#lbl_1").text("");
+						$("#lbl_2").text(" Select Country");
+						$("#lbl_3").text(" ");
+						$("#lbl_city").text(" ");
+						$("#lbl_4").text(" ");
+						$("#lbl_5").text(" ");
+						$("#lbl_6").text(" ");
+						$("#lbl_7").text(" ");
+						$("#lbl_8").text(" ");
+						$("#lbl_9").text(" ");
+						$("#lbl_10").text(" ");
+						$("#lbl_11").text(" ");
+						$("#lbl_12").text(" ");
+						$("#org_err").text(" ");
+					} else {
+
+						if (state == 0) {
+							$(".lbl_3").addClass("label_error");
+							$("#lbl_1").text(" ");
+							$("#lbl_2").text(" ");
+							$("#lbl_3").text(" Select State");
+							$("#lbl_city").text(" ");
+							$("#lbl_4").text(" ");
+							$("#lbl_5").text(" ");
+							$("#lbl_6").text(" ");
+							$("#lbl_7").text(" ");
+							$("#lbl_8").text(" ");
+							$("#lbl_9").text(" ");
+							$("#lbl_10").text(" ");
+							$("#lbl_11").text(" ");
+							$("#lbl_12").text(" ");
+							$("#org_err").text(" ");
+							$("#evadd_err").text(" ");
+						} else {
+							if (city == 0) {
+								$("#lbl_1").text(" ");
+								$("#lbl_2").text(" ");
+								$("#lbl_3").text(" ");
+								$("#lbl_city").text(" Select city");
+								$("#lbl_4").text(" ");
+								$("#lbl_5").text(" ");
+								$("#lbl_6").text(" ");
+								$("#lbl_7").text(" ");
+								$("#lbl_8").text(" ");
+								$("#lbl_9").text(" ");
+								$("#lbl_10").text(" ");
+								$("#lbl_11").text(" ");
+								$("#lbl_12").text(" ");
+								$("#org_err").text(" ");
+								$("#evadd_err").text(" ");
+							} else {
+								if (category == "") {
+									$(".lbl_4").addClass("label_error");
+									$("#lbl_1").text(" ");
+									$("#lbl_2").text(" ");
+									$("#lbl_3").text(" ");
+									$("#lbl_city").text(" ");
+									$("#lbl_4").text(" Select Category");
+									$("#lbl_5").text(" ");
+									$("#lbl_6").text(" ");
+									$("#lbl_7").text(" ");
+									$("#lbl_8").text(" ");
+									$("#lbl_9").text(" ");
+									$("#lbl_10").text(" S");
+									$("#lbl_11").text(" ");
+									$("#lbl_12").text(" ");
+									$("#org_err").text(" ");
+									$("#evadd_err").text(" ");
+								} else {
+									if (organiser == "") {
+										$(".lbl_4").addClass("label_error");
+										$("#lbl_1").text(" ");
+										$("#lbl_2").text(" ");
+										$("#lbl_3").text(" ");
+										$("#lbl_city").text(" ");
+										$("#lbl_4").text("");
+										$("#org_err").text("Please Select Organiser");
+										$("#lbl_5").text(" ");
+										$("#lbl_6").text(" ");
+										$("#lbl_7").text(" ");
+										$("#lbl_8").text(" ");
+										$("#lbl_9").text(" ");
+										$("#lbl_10").text(" S");
+										$("#lbl_11").text(" ");
+										$("#lbl_12").text(" ");
+										$("#evadd_err").text(" ");
+									} else {
+										$(".lbl_4").removeClass("label_error");
+										if (postPrice == "") {
+											$("#lbl_1").text(" ");
+											$("#lbl_2").text(" ");
+											$("#lbl_3").text(" ");
+											$("#lbl_city").text(" ");
+											$("#lbl_4").text(" ");
+											$("#lbl_5").text(" Enter Ticket Price");
+											$("#lbl_6").text(" ");
+											$("#lbl_7").text(" ");
+											$("#lbl_8").text(" ");
+											$("#lbl_9").text(" ");
+											$("#lbl_10").text(" ");
+											$("#lbl_11").text(" ");
+											$("#lbl_12").text(" ");
+											$("#org_err").text(" ");
+											$("#evadd_err").text(" ");
+										} else {
+											$(".lbl_5").removeClass("label_error");
+											if (postVenu == "") {
+												$(".lbl_6").addClass("label_error");
+												$("#lbl_1").text(" ");
+												$("#lbl_2").text(" ");
+												$("#lbl_3").text(" ");
+												$("#lbl_city").text("");
+												$("#lbl_4").text(" ");
+												$("#lbl_5").text("");
+												$("#lbl_6").text(" Enter Venue");
+												$("#lbl_7").text(" ");
+												$("#lbl_8").text(" ");
+												$("#lbl_9").text(" ");
+												$("#lbl_10").text(" ");
+												$("#lbl_11").text(" ");
+												$("#lbl_12").text(" ");
+												$("#org_err").text(" ");
+												$("#evadd_err").text(" ");
+											} else {
+												$(".lbl_6").removeClass("label_error");
+												if (halCap == "") {
+													$("#lbl_1").text(" ");
+													$("#lbl_2").text(" ");
+													$("#lbl_3").text(" ");
+													$("#lbl_city").text(" ");
+													$("#lbl_4").text(" ");
+													$("#lbl_5").text(" ");
+													$("#lbl_6").text(" ");
+													$("#lbl_7").text(" Enter Capacity");
+													$("#lbl_8").text("");
+													$("#lbl_9").text(" ");
+													$("#lbl_10").text(" ");
+													$("#lbl_11").text(" ");
+													$("#lbl_12").text(" ");
+													$("#org_err").text(" ");
+													$("#evadd_err").text(" ");
+												} else {
+													$(".lbl_7").removeClass("label_error");
+													if (tktCap == "") {
+														$("#lbl_1").text("");
+														$("#lbl_2").text(" ");
+														$("#lbl_3").text(" ");
+														$("#lbl_city").text(" ");
+														$("#lbl_4").text(" ");
+														$("#lbl_5").text(" ");
+														$("#lbl_6").text(" ");
+														$("#lbl_7").text(" ");
+														$("#lbl_8").text(" Enter  Capacity");
+														$("#lbl_9").text(" ");
+														$("#lbl_10").text(" ");
+														$("#lbl_11").text(" ");
+														$("#lbl_12").text(" ");
+														$("#org_err").text(" ");
+														$("#evadd_err").text(" ");
+													} else {
+														$(".lbl_7").removeClass("label_error");
+														if (eventaddress == "") {
+															$("#lbl_1").text("");
+															$("#lbl_2").text(" ");
+															$("#lbl_3").text(" ");
+															$("#lbl_city").text(" ");
+															$("#lbl_4").text(" ");
+															$("#lbl_5").text(" ");
+															$("#lbl_6").text(" ");
+															$("#lbl_7").text(" ");
+															$("#lbl_8").text(" ");
+															$("#evadd_err").text(" Please Enter About Evnet");
+
+															$("#lbl_9").text(" ");
+															$("#lbl_10").text(" ");
+															$("#lbl_11").text(" ");
+															$("#lbl_12").text(" ");
+															$("#org_err").text(" ");
+														} else {
+															$(".lbl_8").removeClass("label_error");
+															if (strDate == "") {
+																$("#lbl_1").text(" ");
+																$("#lbl_2").text(" ");
+																$("#lbl_3").text(" ");
+																$("#lbl_city").text(" ");
+																$("#lbl_4").text(" ");
+																$("#lbl_5").text(" ");
+																$("#lbl_6").text(" ");
+																$("#lbl_7").text(" ");
+																$("#lbl_8").text(" ");
+																$("#lbl_9").text(" Select Start Date");
+																$("#lbl_10").text(" ");
+																$("#lbl_11").text(" ");
+																$("#lbl_12").text(" ");
+																$("#org_err").text(" ");
+																$("#evadd_err").text(" ");
+															} else {
+																$(".lbl_9").removeClass("label_error");
+																if (endDate == "") {
+																	$("#lbl_1").text(" ");
+																	$("#lbl_2").text(" ");
+																	$("#lbl_3").text(" ");
+																	$("#lbl_city").text(" ");
+																	$("#lbl_4").text(" ");
+																	$("#lbl_5").text(" ");
+																	$("#lbl_6").text(" ");
+																	$("#lbl_7").text(" ");
+																	$("#lbl_8").text(" ");
+																	$("#lbl_9").text(" ");
+																	$("#lbl_10").text(" Select End Date");
+																	$("#lbl_11").text(" ");
+																	$("#lbl_12").text(" ");
+																	$("#org_err").text(" ");
+																	$("#evadd_err").text(" ");
+																} else {
+																	$(".lbl_10").removeClass("label_error");
+																	if (strTime == "") {
+																		$("#lbl_1").text(" ");
+																		$("#lbl_2").text(" ");
+																		$("#lbl_3").text(" ");
+																		$("#lbl_city").text(" ");
+																		$("#lbl_4").text(" ");
+																		$("#lbl_5").text(" ");
+																		$("#lbl_6").text(" ");
+																		$("#lbl_7").text(" ");
+																		$("#lbl_8").text(" ");
+																		$("#lbl_9").text(" ");
+																		$("#lbl_10").text(" ");
+																		$("#lbl_11").text(" Enter Start Time");
+																		$("#lbl_12").text(" ");
+																		$("#org_err").text(" ");
+																		$("#evadd_err").text(" ");
+																	} else {
+																		$(".lbl_11").removeClass("label_error");
+																		if (endTime == "") {
+																			$("#lbl_1").text(" ");
+																			$("#lbl_2").text(" ");
+																			$("#lbl_3").text(" ");
+																			$("#lbl_city").text(" ");
+																			$("#lbl_4").text(" ");
+																			$("#lbl_5").text(" ");
+																			$("#lbl_6").text(" ");
+																			$("#lbl_7").text(" ");
+																			$("#lbl_8").text(" ");
+																			$("#lbl_9").text(" ");
+																			$("#lbl_10").text(" ");
+																			$("#lbl_11").text(" ");
+																			$("#lbl_12").text(" Enter End Time");
+																			$("#org_err").text(" ");
+																			$("#evadd_err").text(" ");
+																		} else {
+																			$(".lbl_12").removeClass("label_error");
+
+																			//console.log("Success");
+																			// HERE WE WRITE A COMPLETE CODE
+																			$(".loadbox").css({ display: "block" });
+																			$(btn).button('loading...');
+																			term = $form.serializeArray();
+																			url = $form.attr("action");
+																			$.post(url, term, function (data, status) {
+																				//alert(data);
+																			}).fail(function () {
+																				$(btn).effect("shake");
+																			}).done(function (data) {
+																				//alert(data);
+																				var postid = data;
+																				var albumid = $(".album_id").val();
+
+
+																				// CUSTOM FIELDS 
+																				var inputs = readCustomFields($("#sp-form-post"), postid);
+																				$.each(inputs, function (i, val) {
+																					$.post(sendUrl + "/post-ad/addpostcustomfields.php", val, function (response) {
+																						//alert(response);
+																					});
+																				});
+																				var pageEvent = $("#leftmenu").attr("data-event");
+																				if (pageEvent == 1) {
+																					//this is event page for add feature, sponsor or co-host
+																					//add feature people
+																					var Accessids = "";
+																					$(".multi_select .btn-group>ul>li input:checked").each(function (k, obj) {
+																						Accessids = Accessids + $(obj).val() + ",";
+																					});
+																					Accessids = Accessids.substring(0, Accessids.length - 1);
+																					//console.log(Accessids);
+																					//add feature profile
+																					$.post(sendUrl + "/post-ad/addpostcustomfieldsfeature.php", { Accessids: Accessids, postid: postid, postedit: postedit }, function (re) {
+
+																					});
+																					//======add soponsor in field start======
+																					var spon = "";
+																					$(".add_spon .btn-group>ul>li input:checked").each(function (k, obj) {
+																						spon = spon + $(obj).val() + ",";
+																						//alert("no");
+																					});
+																					spon = spon.substring(0, spon.length - 1);
+																					//console.log(spon);
+																					$.post(sendUrl + "/post-ad/addsponsor.php", { spon: spon, postid: postid, postedit: postedit }, function (re) {
+																						//alert(re);
+																					});
+																					//======add co-host========
+																					var cohost = "";
+																					$(".multi_select_cohost .btn-group>ul>li input:checked").each(function (k, obj) {
+																						cohost = cohost + $(obj).val() + ",";
+																						//alert("no");
+																					});
+																					cohost = cohost.substring(0, cohost.length - 1);
+																					//console.log(cohost);
+																					$.post(sendUrl + "/post-ad/addcohost.php", { cohost: cohost, postid: postid, postedit: postedit }, function (cohost) {
+																						//alert(cohost);
+																					});
+																				} else {
+																					//alert(multi);
+																					var multi = $(".multiselect").attr("title");
+																					if (multi == 'None selected' || multi == '') {
+
+																					} else {
+																						$.post(sendUrl + "/post-ad/addpostcustomfieldssize.php", { multi: multi, postid: postid }, function (re) {
+																							//alert(re);
+																						});
+																					}
+																				}
+																				//for dell image
+																				// IMAGE
+																				var imgCount = $(".postingimg").length;
+
+																				//alert(imgCount);
+																				$(".postingimg").each(function (i, e) {
+																					//this is for featured image strt
+																					var fichek = $(e).attr("data-name");
+																					var isCheckeed = $('#' + fichek + ':checked').val() ? true : false;
+																					if (isCheckeed == true) {
+																						spFeatureimg = 1;
+																					} else {
+																						spFeatureimg = 0;
+																					}
+																					//this is for featured image end
+																					var base64image = $(e).attr("src");
+
+																					//alert(base64image);
+
+																					var arr = base64image.match(/data:image\/[a-z]+;/);
+																					var ext = arr[0].replace("data:image/", "");
+																					ext = ext.replace(";", "");
+																					$.post(sendUrl + "/post-ad/addgroupeventspic.php", { spPostings_idspPostings: postid, spPostingPic: base64image, ext: ext, spFeatureimg: spFeatureimg, postedit: postedit }, function (r) {
+																						//alert(r);
+																						//Timeline prepending
+																						if (i == imgCount - 1) {
+																							$.get(sendUrl + "/publicpost/timelineentry.php", { js: "1", timelineid: postid, grouptimeline: $(btn).data("grouptimeline") }, function (r) {
+																								$("#timeline-container").prepend(r);
+																								//$(btn).button('reset');
+																							});
+																						}
+																					});
+																				});
+																				//=======Add video start=======
+
+																				//Video post finaly
+																				//ev.preventDefault();
+																				var form_data = new FormData($("#sp-form-post")[0]);
+																				//form_data.push({spPostings_idspPostings: postid, spPostingAlbum_idspPostingAlbum: albumid});
+																				form_data.append('spPostings_idspPostings', postid);
+																				form_data.append('spPostingAlbum_idspPostingAlbum', albumid);
+																				$.ajax({
+																					url: sendUrl + "/post-ad/addpostmedia.php",
+																					type: "POST",
+																					data: form_data,
+																					contentType: false,
+																					cache: false,
+																					processData: false,
+																					success: function (vi) {
+																						//alert(vi);
+																						//window.location.reload();
+																						$("#dvPreview").html("");
+																						$("#spPreview").html("");
+																						$("#clearnow").val("");
+																						$(".grptimeline").val("");
+																						$("#postform .form-control").val("");
+																						//document.getElementById("sp-form-post").reset();
+																						if (postedit == true) {
+																							//window.location.reload();
+																						}
+																					},
+																					error: function (error) {
+																						//alert(error);
+																					}
+																				});
+
+																				//=======Add video end=======
+																				//Testing
+																				if (imgCount == 0) {
+																					$.get(sendUrl + "/publicpost/timelineentry.php", { js: "1", timelineid: postid, grouptimeline: $(btn).data("grouptimeline") }, function (r) {
+																						$("#timeline-container").prepend(r);
+																						//$(btn).button('reset');
+																						//alert(r);
+																					});
+																				}
+																				//Testing Complete
+																				//Media
+																				$(".media-file-data").each(function (i, e) {
+																					var base64image = $(e).attr("data-media");
+																					var arr = base64image.match(/data:[a-zA-Z0-9 -/]+;/);
+																					var ext = arr[0].replace("data:", "");
+
+																					$.post("../addmedia.php", { spPostings_idspPostings: postid, spPostingMedia: base64image, ext: ext, spPostingAlbum_idspPostingAlbum: albumid }, function (r) {
+																						//alert(r);
+																					});
+																				});
+																				//notification message from send box
+																				/*$.notify({
+																					title: '<strong>Posted Successfully</strong>',
+																					icon: '',
+																					message: ""
+																				},{
+																					type: 'success',
+																					animate: {
+																						enter: 'animated fadeInUp',
+																						exit: 'animated fadeOutRight'
+																					},
+																					placement: {
+																						from: "top",
+																						align: "right"
+																					},
+																					offset: 20,
+																					spacing: 10,
+																					z_index: 1031,
+																				});*/
+																				//Message after form submited
+																				$("#dvPreview").html("");
+																				$("#spPreview").html("");
+																				$("#clearnow").val("");
+																				$(".grptimeline").val("");
+																				$("#postform .form-control").val("");
+																				//document.getElementById("sp-form-post").reset();
+																				//this script for delay a redirect page for another page.
+																				var seconds = 10;
+																				setInterval(function () {
+																					seconds--;
+																					if (seconds == 0) {
+																						//	window.location.href = "posting.php?postid="+postid.trim();
+																						window.location.href = "../../grouptimelines/group-event.php?groupid=" + spgroupid + "&groupname=" + spgroupname + "&event";
+																						//window.location.reload();
+
+																					}
+																				}, 1000);
+																				//====end=====
+																			}).always(function () {
+																				//$(btn).button('reset');
+																			});
+																		}
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+		} else {
+			$("#invalid").html("<div class='alert alert-danger error_show' role='alert'>Please Select Business profile...!</div>");
+		}
+	});
+	//=================POST A STORE FORM END=============
+
+	//=============================================Group Post Event================================//
+
+	//=================POST A STORE FORM START=============
+	$("#spPostSubmitEvent").on("click", function () {
+		var sendUrl = MAINURL;
+
+		if ($(this).hasClass("editing"))
+			postedit = true;
+		else
+			postedit = false;
+
+		var btn = this;
+		var idspprofile = $("#spProfiles_idspProfiles").val();
+		var $form = $("#sp-form-post");
+		if (idspprofile != "") {
+			var title = document.getElementById("spPostingTitle").value;
+			var country = $('#spUserCountry option:selected').val();
+			var state = $('#spUserState option:selected').val();
+			var city = $('#spPostingsCity option:selected').val();
+			var category = $('#eventcategory_ option:selected').val();
+			var postPrice = document.getElementById("spPostingPrice").value;
+			var postVenu = document.getElementById("spPostingEventVenue_").value;
+			var halCap = document.getElementById("hallcapacity_").value;
+			var tktCap = document.getElementById("ticketcapacity_").value;
+			var strDate = document.getElementById("spPostingStartDate_").value;
+			var endDate = document.getElementById("spPostingExpDt").value;
+			var strTime = document.getElementById("spPostingStartTime_").value;
+			var endTime = document.getElementById("spPostingEndTime_").value;
+			var organiser = document.getElementById("spPostingEventOrgId_").value;
+			var eventaddress = document.getElementById("eventaddress").value;
+
+
+			// alert(organiser);
+
+			/* alert(strDate);
+			 alert(endDate);*/
+			/*alert(strTime);
+			alert(endTime);*/
+			var eventstartdate = new Date($("#spPostingStartDate_").val());
+			var eventenddate = new Date($("#spPostingExpDt").val());
+
+
+			if (tktCap > halCap) {
+
+				$("#tic_cap").text("Ticket Capacity cannot be greater than Hall Capacity");
+
+			} else {
+				$("#tic_cap").text(" ");
+			}
+
+
+
+
+			if (eventstartdate > eventenddate) {
+
+
+				$("#end_date").text(" End Date should be Greater");
+			} else {
+
+				$("#end_date").text("");
+			}
+
+			if (endTime != "") {
+
+
+				if (strTime >= endTime) {
+					$("#end_time").text(" End Time should be Greater");
+					return false;
+				} else {
+					$("#end_time").text(" ");
+				}
+			}
+
+
+
+			/*alert(category);*/
+			/*if(title == ""  ){*/
+
+			if (title == "" && country == 0 && state == 0 && city == 0 && category == 0 && organiser == "" && postPrice == "" && postVenu == "" && halCap == "" && tktCap == "" && eventaddress == "" && strDate == "" && endDate == "") {
+				$("#lbl_1").text(" Enter Event Title");
+				$("#lbl_2").text(" Select Country");
+				$("#lbl_3").text(" Select State");
+				$("#lbl_city").text(" Select city");
+				$("#lbl_4").text(" Select Category");
+				$("#org_err").text(" Please Select Organiser");
+				$("#evadd_err").text(" Please Enter Event Address");
+
+
+				$("#lbl_5").text(" Enter Ticket Price");
+				$("#lbl_6").text(" Enter Venue");
+				$("#lbl_7").text("Fill Capacity");
+				$("#lbl_8").text("Fill Capacity");
+				$("#lbl_9").text(" Select Start Date");
+				$("#lbl_10").text(" Select End Date");
+				$("#lbl_11").text(" Enter Start Time");
+				$("#lbl_12").text(" Enter End Time");
+
+				$("#spPostingTitle").focus();
+
+			} else {
+
+				if (title == "") {
+					$(".lbl_1").addClass("label_error");
+					$("#lbl_1").text(" Enter Event Title");
+					$("#lbl_2").text(" ");
+					$("#lbl_3").text(" ");
+					$("#lbl_city").text(" ");
+					$("#lbl_4").text(" ");
+					$("#lbl_5").text(" ");
+					$("#lbl_6").text(" ");
+					$("#lbl_7").text(" ");
+					$("#lbl_8").text(" ");
+					$("#lbl_9").text(" ");
+					$("#lbl_10").text(" ");
+					$("#lbl_11").text(" ");
+					$("#lbl_12").text(" ");
+					$("#org_err").text(" ");
+				} else {
+					$(".lbl_1").removeClass("label_error");
+					if (country == 0) {
+
+						$("#lbl_1").text("");
+						$("#lbl_2").text(" Select Country");
+						$("#lbl_3").text(" ");
+						$("#lbl_city").text(" ");
+						$("#lbl_4").text(" ");
+						$("#lbl_5").text(" ");
+						$("#lbl_6").text(" ");
+						$("#lbl_7").text(" ");
+						$("#lbl_8").text(" ");
+						$("#lbl_9").text(" ");
+						$("#lbl_10").text(" ");
+						$("#lbl_11").text(" ");
+						$("#lbl_12").text(" ");
+						$("#org_err").text(" ");
+					} else {
+
+						if (state == 0) {
+							$(".lbl_3").addClass("label_error");
+							$("#lbl_1").text(" ");
+							$("#lbl_2").text(" ");
+							$("#lbl_3").text(" Select State");
+							$("#lbl_city").text(" ");
+							$("#lbl_4").text(" ");
+							$("#lbl_5").text(" ");
+							$("#lbl_6").text(" ");
+							$("#lbl_7").text(" ");
+							$("#lbl_8").text(" ");
+							$("#lbl_9").text(" ");
+							$("#lbl_10").text(" ");
+							$("#lbl_11").text(" ");
+							$("#lbl_12").text(" ");
+							$("#org_err").text(" ");
+							$("#evadd_err").text(" ");
+						} else {
+							if (city == 0) {
+								$("#lbl_1").text(" ");
+								$("#lbl_2").text(" ");
+								$("#lbl_3").text(" ");
+								$("#lbl_city").text(" Select city");
+								$("#lbl_4").text(" ");
+								$("#lbl_5").text(" ");
+								$("#lbl_6").text(" ");
+								$("#lbl_7").text(" ");
+								$("#lbl_8").text(" ");
+								$("#lbl_9").text(" ");
+								$("#lbl_10").text(" ");
+								$("#lbl_11").text(" ");
+								$("#lbl_12").text(" ");
+								$("#org_err").text(" ");
+								$("#evadd_err").text(" ");
+							} else {
+								if (category == "") {
+									$(".lbl_4").addClass("label_error");
+									$("#lbl_1").text(" ");
+									$("#lbl_2").text(" ");
+									$("#lbl_3").text(" ");
+									$("#lbl_city").text(" ");
+									$("#lbl_4").text(" Select Category");
+									$("#lbl_5").text(" ");
+									$("#lbl_6").text(" ");
+									$("#lbl_7").text(" ");
+									$("#lbl_8").text(" ");
+									$("#lbl_9").text(" ");
+									$("#lbl_10").text(" S");
+									$("#lbl_11").text(" ");
+									$("#lbl_12").text(" ");
+									$("#org_err").text(" ");
+									$("#evadd_err").text(" ");
+								} else {
+									if (organiser == "") {
+										$(".lbl_4").addClass("label_error");
+										$("#lbl_1").text(" ");
+										$("#lbl_2").text(" ");
+										$("#lbl_3").text(" ");
+										$("#lbl_city").text(" ");
+										$("#lbl_4").text("");
+										$("#org_err").text("Please Select Organiser");
+										$("#lbl_5").text(" ");
+										$("#lbl_6").text(" ");
+										$("#lbl_7").text(" ");
+										$("#lbl_8").text(" ");
+										$("#lbl_9").text(" ");
+										$("#lbl_10").text(" S");
+										$("#lbl_11").text(" ");
+										$("#lbl_12").text(" ");
+										$("#evadd_err").text(" ");
+									} else {
+										$(".lbl_4").removeClass("label_error");
+										if (postPrice == "") {
+											$("#lbl_1").text(" ");
+											$("#lbl_2").text(" ");
+											$("#lbl_3").text(" ");
+											$("#lbl_city").text(" ");
+											$("#lbl_4").text(" ");
+											$("#lbl_5").text(" Enter Ticket Price");
+											$("#lbl_6").text(" ");
+											$("#lbl_7").text(" ");
+											$("#lbl_8").text(" ");
+											$("#lbl_9").text(" ");
+											$("#lbl_10").text(" ");
+											$("#lbl_11").text(" ");
+											$("#lbl_12").text(" ");
+											$("#org_err").text(" ");
+											$("#evadd_err").text(" ");
+										} else {
+											$(".lbl_5").removeClass("label_error");
+											if (postVenu == "") {
+												$(".lbl_6").addClass("label_error");
+												$("#lbl_1").text(" ");
+												$("#lbl_2").text(" ");
+												$("#lbl_3").text(" ");
+												$("#lbl_city").text("");
+												$("#lbl_4").text(" ");
+												$("#lbl_5").text("");
+												$("#lbl_6").text(" Enter Venue");
+												$("#lbl_7").text(" ");
+												$("#lbl_8").text(" ");
+												$("#lbl_9").text(" ");
+												$("#lbl_10").text(" ");
+												$("#lbl_11").text(" ");
+												$("#lbl_12").text(" ");
+												$("#org_err").text(" ");
+												$("#evadd_err").text(" ");
+											} else {
+												$(".lbl_6").removeClass("label_error");
+												if (halCap == "") {
+													$("#lbl_1").text(" ");
+													$("#lbl_2").text(" ");
+													$("#lbl_3").text(" ");
+													$("#lbl_city").text(" ");
+													$("#lbl_4").text(" ");
+													$("#lbl_5").text(" ");
+													$("#lbl_6").text(" ");
+													$("#lbl_7").text(" Enter Capacity");
+													$("#lbl_8").text("");
+													$("#lbl_9").text(" ");
+													$("#lbl_10").text(" ");
+													$("#lbl_11").text(" ");
+													$("#lbl_12").text(" ");
+													$("#org_err").text(" ");
+													$("#evadd_err").text(" ");
+												} else {
+													$(".lbl_7").removeClass("label_error");
+													if (tktCap == "") {
+														$("#lbl_1").text("");
+														$("#lbl_2").text(" ");
+														$("#lbl_3").text(" ");
+														$("#lbl_city").text(" ");
+														$("#lbl_4").text(" ");
+														$("#lbl_5").text(" ");
+														$("#lbl_6").text(" ");
+														$("#lbl_7").text(" ");
+														$("#lbl_8").text(" Enter  Capacity");
+														$("#lbl_9").text(" ");
+														$("#lbl_10").text(" ");
+														$("#lbl_11").text(" ");
+														$("#lbl_12").text(" ");
+														$("#org_err").text(" ");
+														$("#evadd_err").text(" ");
+													} else {
+														$(".lbl_7").removeClass("label_error");
+														if (eventaddress == "") {
+															$("#lbl_1").text("");
+															$("#lbl_2").text(" ");
+															$("#lbl_3").text(" ");
+															$("#lbl_city").text(" ");
+															$("#lbl_4").text(" ");
+															$("#lbl_5").text(" ");
+															$("#lbl_6").text(" ");
+															$("#lbl_7").text(" ");
+															$("#lbl_8").text(" ");
+															$("#evadd_err").text(" Please Enter Event Address");
+															$("#lbl_9").text(" ");
+															$("#lbl_10").text(" ");
+															$("#lbl_11").text(" ");
+															$("#lbl_12").text(" ");
+															$("#org_err").text(" ");
+														} else {
+															$(".lbl_8").removeClass("label_error");
+															if (strDate == "") {
+																$("#lbl_1").text(" ");
+																$("#lbl_2").text(" ");
+																$("#lbl_3").text(" ");
+																$("#lbl_city").text(" ");
+																$("#lbl_4").text(" ");
+																$("#lbl_5").text(" ");
+																$("#lbl_6").text(" ");
+																$("#lbl_7").text(" ");
+																$("#lbl_8").text(" ");
+																$("#lbl_9").text(" Select Start Date");
+																$("#lbl_10").text(" ");
+																$("#lbl_11").text(" ");
+																$("#lbl_12").text(" ");
+																$("#org_err").text(" ");
+																$("#evadd_err").text(" ");
+															} else {
+																$(".lbl_9").removeClass("label_error");
+																if (endDate == "") {
+																	$("#lbl_1").text(" ");
+																	$("#lbl_2").text(" ");
+																	$("#lbl_3").text(" ");
+																	$("#lbl_city").text(" ");
+																	$("#lbl_4").text(" ");
+																	$("#lbl_5").text(" ");
+																	$("#lbl_6").text(" ");
+																	$("#lbl_7").text(" ");
+																	$("#lbl_8").text(" ");
+																	$("#lbl_9").text(" ");
+																	$("#lbl_10").text(" Select End Date");
+																	$("#lbl_11").text(" ");
+																	$("#lbl_12").text(" ");
+																	$("#org_err").text(" ");
+																	$("#evadd_err").text(" ");
+																} else {
+																	$(".lbl_10").removeClass("label_error");
+																	if (strTime == "") {
+																		$("#lbl_1").text(" ");
+																		$("#lbl_2").text(" ");
+																		$("#lbl_3").text(" ");
+																		$("#lbl_city").text(" ");
+																		$("#lbl_4").text(" ");
+																		$("#lbl_5").text(" ");
+																		$("#lbl_6").text(" ");
+																		$("#lbl_7").text(" ");
+																		$("#lbl_8").text(" ");
+																		$("#lbl_9").text(" ");
+																		$("#lbl_10").text(" ");
+																		$("#lbl_11").text(" Enter Start Time");
+																		$("#lbl_12").text(" ");
+																		$("#org_err").text(" ");
+																		$("#evadd_err").text(" ");
+																	} else {
+																		$(".lbl_11").removeClass("label_error");
+																		if (endTime == "") {
+																			$("#lbl_1").text(" ");
+																			$("#lbl_2").text(" ");
+																			$("#lbl_3").text(" ");
+																			$("#lbl_city").text(" ");
+																			$("#lbl_4").text(" ");
+																			$("#lbl_5").text(" ");
+																			$("#lbl_6").text(" ");
+																			$("#lbl_7").text(" ");
+																			$("#lbl_8").text(" ");
+																			$("#lbl_9").text(" ");
+																			$("#lbl_10").text(" ");
+																			$("#lbl_11").text(" ");
+																			$("#lbl_12").text(" Enter End Time");
+																			$("#org_err").text(" ");
+																			$("#evadd_err").text(" ");
+																		} else {
+																			$(".lbl_12").removeClass("label_error");
+
+																			//console.log("Success");
+																			// HERE WE WRITE A COMPLETE CODE
+																			$(".loadbox").css({ display: "block" });
+																			$(btn).button('loading...');
+																			term = $form.serializeArray();
+																			url = $form.attr("action");
+																			$.post(url, term, function (data, status) {
+																				//alert(data);
+																			}).fail(function () {
+																				$(btn).effect("shake");
+																			}).done(function (data) {
+																				//alert(data);
+																				var postid = data;
+																				var albumid = $(".album_id").val();
+
+
+																				// CUSTOM FIELDS 
+																				var inputs = readCustomFields($("#sp-form-post"), postid);
+																				$.each(inputs, function (i, val) {
+																					$.post(sendUrl + "/post-ad/addpostcustomfields.php", val, function (response) {
+																						//alert(response);
+																					});
+																				});
+																				var pageEvent = $("#leftmenu").attr("data-event");
+																				if (pageEvent == 1) {
+																					//this is event page for add feature, sponsor or co-host
+																					//add feature people
+																					var Accessids = "";
+																					$(".multi_select .btn-group>ul>li input:checked").each(function (k, obj) {
+																						Accessids = Accessids + $(obj).val() + ",";
+																					});
+																					Accessids = Accessids.substring(0, Accessids.length - 1);
+																					//console.log(Accessids);
+																					//add feature profile
+																					$.post(sendUrl + "/post-ad/addpostcustomfieldsfeature.php", { Accessids: Accessids, postid: postid, postedit: postedit }, function (re) {
+
+																					});
+																					//======add soponsor in field start======
+																					var spon = "";
+																					$(".add_spon .btn-group>ul>li input:checked").each(function (k, obj) {
+																						spon = spon + $(obj).val() + ",";
+																						//alert("no");
+																					});
+																					spon = spon.substring(0, spon.length - 1);
+																					//console.log(spon);
+																					$.post(sendUrl + "/post-ad/addsponsor.php", { spon: spon, postid: postid, postedit: postedit }, function (re) {
+																						//alert(re);
+																					});
+																					//======add co-host========
+																					var cohost = "";
+																					$(".multi_select_cohost .btn-group>ul>li input:checked").each(function (k, obj) {
+																						cohost = cohost + $(obj).val() + ",";
+																						//alert("no");
+																					});
+																					cohost = cohost.substring(0, cohost.length - 1);
+																					//console.log(cohost);
+																					$.post(sendUrl + "/post-ad/addcohost.php", { cohost: cohost, postid: postid, postedit: postedit }, function (cohost) {
+																						//alert(cohost);
+																					});
+																				} else {
+																					//alert(multi);
+																					var multi = $(".multiselect").attr("title");
+																					if (multi == 'None selected' || multi == '') {
+
+																					} else {
+																						$.post(sendUrl + "/post-ad/addpostcustomfieldssize.php", { multi: multi, postid: postid }, function (re) {
+																							//alert(re);
+																						});
+																					}
+																				}
+																				//for dell image
+																				// IMAGE
+																				var imgCount = $(".postingimg").length;
+
+																				//alert(imgCount);
+																				$(".postingimg").each(function (i, e) {
+																					//this is for featured image strt
+																					var fichek = $(e).attr("data-name");
+																					var isCheckeed = $('#' + fichek + ':checked').val() ? true : false;
+																					if (isCheckeed == true) {
+																						spFeatureimg = 1;
+																					} else {
+																						spFeatureimg = 0;
+																					}
+																					//this is for featured image end
+																					var base64image = $(e).attr("src");
+
+																					//alert(base64image);
+																					var arr = base64image.match(/data:image\/[a-z]+;/);
+																					var ext = arr[0].replace("data:image/", "");
+																					ext = ext.replace(";", "");
+																					$.post(sendUrl + "/post-ad/addeventpic.php", { spPostings_idspPostings: postid, spPostingPic: base64image, ext: ext, spFeatureimg: spFeatureimg, postedit: postedit }, function (r) {
+																						//alert(r);
+																						//Timeline prepending
+																						if (i == imgCount - 1) {
+																							$.get(sendUrl + "/publicpost/timelineentry.php", { js: "1", timelineid: postid, grouptimeline: $(btn).data("grouptimeline") }, function (r) {
+																								$("#timeline-container").prepend(r);
+																								//$(btn).button('reset');
+																							});
+																						}
+																					});
+																				});
+																				//=======Add video start=======
+
+																				//Video post finaly
+																				//ev.preventDefault();
+																				var form_data = new FormData($("#sp-form-post")[0]);
+																				//form_data.push({spPostings_idspPostings: postid, spPostingAlbum_idspPostingAlbum: albumid});
+																				form_data.append('spPostings_idspPostings', postid);
+																				form_data.append('spPostingAlbum_idspPostingAlbum', albumid);
+																				$.ajax({
+																					url: sendUrl + "/post-ad/addpostmedia.php",
+																					type: "POST",
+																					data: form_data,
+																					contentType: false,
+																					cache: false,
+																					processData: false,
+																					success: function (vi) {
+																						//alert(vi);
+																						//window.location.reload();
+																						$("#dvPreview").html("");
+																						$("#spPreview").html("");
+																						$("#clearnow").val("");
+																						$(".grptimeline").val("");
+																						$("#postform .form-control").val("");
+																						//document.getElementById("sp-form-post").reset();
+																						if (postedit == true) {
+																							//window.location.reload();
+																						}
+																					},
+																					error: function (error) {
+																						//alert(error);
+																					}
+																				});
+
+																				//=======Add video end=======
+																				//Testing
+																				if (imgCount == 0) {
+																					$.get(sendUrl + "/publicpost/timelineentry.php", { js: "1", timelineid: postid, grouptimeline: $(btn).data("grouptimeline") }, function (r) {
+																						$("#timeline-container").prepend(r);
+																						//$(btn).button('reset');
+																						//alert(r);
+																					});
+																				}
+																				//Testing Complete
+																				//Media
+																				$(".media-file-data").each(function (i, e) {
+																					var base64image = $(e).attr("data-media");
+																					var arr = base64image.match(/data:[a-zA-Z0-9 -/]+;/);
+																					var ext = arr[0].replace("data:", "");
+
+																					$.post("../addmedia.php", { spPostings_idspPostings: postid, spPostingMedia: base64image, ext: ext, spPostingAlbum_idspPostingAlbum: albumid }, function (r) {
+																						//alert(r);
+																					});
+																				});
+																				//notification message from send box
+																				/*$.notify({
+																					title: '<strong>Posted Successfully</strong>',
+																					icon: '',
+																					message: ""
+																				},{
+																					type: 'success',
+																					animate: {
+																						enter: 'animated fadeInUp',
+																						exit: 'animated fadeOutRight'
+																					},
+																					placement: {
+																						from: "top",
+																						align: "right"
+																					},
+																					offset: 20,
+																					spacing: 10,
+																					z_index: 1031,
+																				});*/
+																				//Message after form submited
+																				$("#dvPreview").html("");
+																				$("#spPreview").html("");
+																				$("#clearnow").val("");
+																				$(".grptimeline").val("");
+																				$("#postform .form-control").val("");
+																				//document.getElementById("sp-form-post").reset();
+																				//this script for delay a redirect page for another page.
+																				var seconds = 10;
+																				setInterval(function () {
+																					seconds--;
+																					if (seconds == 0) {
+																						window.location.href = "posting.php?postid=" + postid.trim();
+																						//window.location.reload();
+																					}
+																				}, 1000);
+																				//====end=====
+																			}).always(function () {
+																				//$(btn).button('reset');
+																			});
+																		}
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+		} else {
+			$("#invalid").html("<div class='alert alert-danger error_show' role='alert'>Please Select Business profile...!</div>");
+		}
+	});
+	//=================POST A STORE FORM END=============
+	//=================POST A  FORM DRAFT===========
+	//Save in Draft
+
+	$("#spSaveDraftevent").on("click", function () {
+		var sendUrl = MAINURL;
+		var visibility = $("#spPostingVisibility").val();
+		$("#spPostingVisibility").val("0");
+
+		if ($(this).hasClass("editing"))
+
+			postedit = true;
+
+		else
+
+			postedit = false;
+
+		var btn = this;
+		var idspprofile = $("#spProfiles_idspProfiles").val();
+		var $form = $("#sp-form-post");
+		if (idspprofile != "") {
+
+			var title = document.getElementById("spPostingTitle").value;
+			var country = $('#spUserCountry option:selected').val();
+			var state = $('#spUserState option:selected').val();
+			var city = $('#spPostingsCity option:selected').val();
+			var category = $('#eventcategory_ option:selected').val();
+			var postPrice = document.getElementById("spPostingPrice").value;
+			var postVenu = document.getElementById("spPostingEventVenue_").value;
+			var halCap = document.getElementById("hallcapacity_").value;
+			var tktCap = document.getElementById("ticketcapacity_").value;
+			var strDate = document.getElementById("spPostingStartDate_").value;
+			var endDate = document.getElementById("spPostingExpDt").value;
+			var strTime = document.getElementById("spPostingStartTime_").value;
+			var endTime = document.getElementById("spPostingEndTime_").value;
+			var organiser = document.getElementById("spPostingEventOrgId_").value;
+			var eventaddress = document.getElementById("eventaddress").value;
+
+			var eventstartdate = new Date($("#spPostingStartDate_").val());
+			var eventenddate = new Date($("#spPostingExpDt").val());
+
+
+			if (tktCap > halCap) {
+
+				$("#tic_cap").text("Ticket Capacity cannot be greater than Hall Capacity");
+				return false;
+
+			} else {
+				$("#tic_cap").text(" ");
+			}
+
+
+
+
+			if (eventstartdate > eventenddate) {
+
+
+				$("#end_date").text(" End Date should be Greater");
+			} else {
+
+				$("#end_date").text("");
+			}
+
+			if (endTime != "") {
+
+
+				if (strTime >= endTime) {
+					$("#end_time").text(" End Time should be Greater");
+					return false;
+				} else {
+					$("#end_time").text(" ");
+				}
+			}
+
+
+
+			if (title == "" && country == 0 && state == 0 && city == 0 && category == 0 && organiser == "" && postPrice == "" && postVenu == "" && halCap == "" && tktCap == "" && eventaddress == "" && strDate == "" && endDate == "") {
+				$("#lbl_1").text(" Enter Event Title");
+				$("#lbl_2").text(" Select Country");
+				$("#lbl_3").text(" Select State");
+				$("#lbl_city").text(" Select city");
+				$("#lbl_4").text(" Select Category");
+				$("#org_err").text(" Please Select Organiser");
+				$("#evadd_err").text(" Please Enter Event Address");
+
+
+				$("#lbl_5").text(" Enter Ticket Price");
+				$("#lbl_6").text(" Enter Venue");
+				$("#lbl_7").text("Fill Capacity");
+				$("#lbl_8").text("Fill Capacity");
+				$("#lbl_9").text(" Select Start Date");
+				$("#lbl_10").text(" Select End Date");
+				$("#lbl_11").text(" Enter Start Time");
+				$("#lbl_12").text(" Enter End Time");
+
+				$("#spPostingTitle").focus();
+
+			} else {
+
+				if (title == "") {
+					$(".lbl_1").addClass("label_error");
+					$("#lbl_1").text(" Enter Event Title");
+					$("#lbl_2").text(" ");
+					$("#lbl_3").text(" ");
+					$("#lbl_city").text(" ");
+					$("#lbl_4").text(" ");
+					$("#lbl_5").text(" ");
+					$("#lbl_6").text(" ");
+					$("#lbl_7").text(" ");
+					$("#lbl_8").text(" ");
+					$("#lbl_9").text(" ");
+					$("#lbl_10").text(" ");
+					$("#lbl_11").text(" ");
+					$("#lbl_12").text(" ");
+					$("#org_err").text(" ");
+				} else {
+					$(".lbl_1").removeClass("label_error");
+					if (country == 0) {
+						$("#lbl_1").text("");
+						$("#lbl_2").text(" Select Country");
+						$("#lbl_3").text(" ");
+						$("#lbl_city").text(" ");
+						$("#lbl_4").text(" ");
+						$("#lbl_5").text(" ");
+						$("#lbl_6").text(" ");
+						$("#lbl_7").text(" ");
+						$("#lbl_8").text(" ");
+						$("#lbl_9").text(" ");
+						$("#lbl_10").text(" ");
+						$("#lbl_11").text(" ");
+						$("#lbl_12").text(" ");
+						$("#org_err").text(" ");
+					} else {
+						$(".lbl_2").removeClass("label_error");
+						if (state == 0) {
+							$(".lbl_3").addClass("label_error");
+							$("#lbl_1").text(" ");
+							$("#lbl_2").text(" ");
+							$("#lbl_3").text(" Select State");
+							$("#lbl_city").text(" ");
+							$("#lbl_4").text(" ");
+							$("#lbl_5").text(" ");
+							$("#lbl_6").text(" ");
+							$("#lbl_7").text(" ");
+							$("#lbl_8").text(" ");
+							$("#lbl_9").text(" ");
+							$("#lbl_10").text(" ");
+							$("#lbl_11").text(" ");
+							$("#lbl_12").text(" ");
+							$("#org_err").text(" ");
+							$("#evadd_err").text(" ");
+						} else {
+							$(".lbl_2").removeClass("label_error");
+							if (city == 0) {
+								$("#lbl_1").text(" ");
+								$("#lbl_2").text(" ");
+								$("#lbl_3").text(" ");
+								$("#lbl_city").text(" Select city");
+								$("#lbl_4").text(" ");
+								$("#lbl_5").text(" ");
+								$("#lbl_6").text(" ");
+								$("#lbl_7").text(" ");
+								$("#lbl_8").text(" ");
+								$("#lbl_9").text(" ");
+								$("#lbl_10").text(" ");
+								$("#lbl_11").text(" ");
+								$("#lbl_12").text(" ");
+								$("#org_err").text(" ");
+								$("#evadd_err").text(" ");
+							} else {
+								$(".lbl_3").removeClass("label_error");
+								if (category == "") {
+									$(".lbl_4").addClass("label_error");
+									$("#lbl_1").text(" ");
+									$("#lbl_2").text(" ");
+									$("#lbl_3").text(" ");
+									$("#lbl_city").text(" ");
+									$("#lbl_4").text(" Select Category");
+									$("#lbl_5").text(" ");
+									$("#lbl_6").text(" ");
+									$("#lbl_7").text(" ");
+									$("#lbl_8").text(" ");
+									$("#lbl_9").text(" ");
+									$("#lbl_10").text(" S");
+									$("#lbl_11").text(" ");
+									$("#lbl_12").text(" ");
+									$("#org_err").text(" ");
+									$("#evadd_err").text(" ");
+								} else {
+									if (organiser == "") {
+										$(".lbl_4").addClass("label_error");
+										$("#lbl_1").text(" ");
+										$("#lbl_2").text(" ");
+										$("#lbl_3").text(" ");
+										$("#lbl_city").text(" ");
+										$("#lbl_4").text("");
+										$("#org_err").text("Please Select Organiser");
+										$("#lbl_5").text(" ");
+										$("#lbl_6").text(" ");
+										$("#lbl_7").text(" ");
+										$("#lbl_8").text(" ");
+										$("#lbl_9").text(" ");
+										$("#lbl_10").text(" S");
+										$("#lbl_11").text(" ");
+										$("#lbl_12").text(" ");
+										$("#evadd_err").text(" ");
+									} else {
+										$(".lbl_4").removeClass("label_error");
+										if (postPrice == "") {
+											$("#lbl_1").text(" ");
+											$("#lbl_2").text(" ");
+											$("#lbl_3").text(" ");
+											$("#lbl_city").text(" ");
+											$("#lbl_4").text(" ");
+											$("#lbl_5").text(" Enter Ticket Price");
+											$("#lbl_6").text(" ");
+											$("#lbl_7").text(" ");
+											$("#lbl_8").text(" ");
+											$("#lbl_9").text(" ");
+											$("#lbl_10").text(" ");
+											$("#lbl_11").text(" ");
+											$("#lbl_12").text(" ");
+											$("#org_err").text(" ");
+											$("#evadd_err").text(" ");
+										} else {
+											$(".lbl_5").removeClass("label_error");
+											if (postVenu == "") {
+												$(".lbl_6").addClass("label_error");
+												$("#lbl_1").text(" ");
+												$("#lbl_2").text(" ");
+												$("#lbl_3").text(" ");
+												$("#lbl_city").text("");
+												$("#lbl_4").text(" ");
+												$("#lbl_5").text("");
+												$("#lbl_6").text(" Enter Venue");
+												$("#lbl_7").text(" ");
+												$("#lbl_8").text(" ");
+												$("#lbl_9").text(" ");
+												$("#lbl_10").text(" ");
+												$("#lbl_11").text(" ");
+												$("#lbl_12").text(" ");
+												$("#org_err").text(" ");
+												$("#evadd_err").text(" ");
+											} else {
+												$(".lbl_6").removeClass("label_error");
+												if (halCap == "") {
+													$("#lbl_1").text(" ");
+													$("#lbl_2").text(" ");
+													$("#lbl_3").text(" ");
+													$("#lbl_city").text(" ");
+													$("#lbl_4").text(" ");
+													$("#lbl_5").text(" ");
+													$("#lbl_6").text(" ");
+													$("#lbl_7").text(" Enter Capacity");
+													$("#lbl_8").text("");
+													$("#lbl_9").text(" ");
+													$("#lbl_10").text(" ");
+													$("#lbl_11").text(" ");
+													$("#lbl_12").text(" ");
+													$("#org_err").text(" ");
+													$("#evadd_err").text(" ");
+												} else {
+													$(".lbl_7").removeClass("label_error");
+													if (tktCap == "") {
+														$("#lbl_1").text("");
+														$("#lbl_2").text(" ");
+														$("#lbl_3").text(" ");
+														$("#lbl_city").text(" ");
+														$("#lbl_4").text(" ");
+														$("#lbl_5").text(" ");
+														$("#lbl_6").text(" ");
+														$("#lbl_7").text(" ");
+														$("#lbl_8").text(" Enter  Capacity");
+														$("#lbl_9").text(" ");
+														$("#lbl_10").text(" ");
+														$("#lbl_11").text(" ");
+														$("#lbl_12").text(" ");
+														$("#org_err").text(" ");
+														$("#evadd_err").text(" ");
+													} else {
+														$(".lbl_7").removeClass("label_error");
+														if (eventaddress == "") {
+															$("#lbl_1").text("");
+															$("#lbl_2").text(" ");
+															$("#lbl_3").text(" ");
+															$("#lbl_city").text(" ");
+															$("#lbl_4").text(" ");
+															$("#lbl_5").text(" ");
+															$("#lbl_6").text(" ");
+															$("#lbl_7").text(" ");
+															$("#lbl_8").text(" ");
+															$("#evadd_err").text(" Please Enter Event Address");
+															$("#lbl_9").text(" ");
+															$("#lbl_10").text(" ");
+															$("#lbl_11").text(" ");
+															$("#lbl_12").text(" ");
+															$("#org_err").text(" ");
+														} else {
+															$(".lbl_8").removeClass("label_error");
+															if (strDate == "") {
+																$("#lbl_1").text(" ");
+																$("#lbl_2").text(" ");
+																$("#lbl_3").text(" ");
+																$("#lbl_city").text(" ");
+																$("#lbl_4").text(" ");
+																$("#lbl_5").text(" ");
+																$("#lbl_6").text(" ");
+																$("#lbl_7").text(" ");
+																$("#lbl_8").text(" ");
+																$("#lbl_9").text(" Select Start Date");
+																$("#lbl_10").text(" ");
+																$("#lbl_11").text(" ");
+																$("#lbl_12").text(" ");
+																$("#org_err").text(" ");
+																$("#evadd_err").text(" ");
+															} else {
+																$(".lbl_9").removeClass("label_error");
+																if (endDate == "") {
+																	$("#lbl_1").text(" ");
+																	$("#lbl_2").text(" ");
+																	$("#lbl_3").text(" ");
+																	$("#lbl_city").text(" ");
+																	$("#lbl_4").text(" ");
+																	$("#lbl_5").text(" ");
+																	$("#lbl_6").text(" ");
+																	$("#lbl_7").text(" ");
+																	$("#lbl_8").text(" ");
+																	$("#lbl_9").text(" ");
+																	$("#lbl_10").text(" Select End Date");
+																	$("#lbl_11").text(" ");
+																	$("#lbl_12").text(" ");
+																	$("#org_err").text(" ");
+																	$("#evadd_err").text(" ");
+																} else {
+																	$(".lbl_10").removeClass("label_error");
+																	if (strTime == "") {
+																		$("#lbl_1").text(" ");
+																		$("#lbl_2").text(" ");
+																		$("#lbl_3").text(" ");
+																		$("#lbl_city").text(" ");
+																		$("#lbl_4").text(" ");
+																		$("#lbl_5").text(" ");
+																		$("#lbl_6").text(" ");
+																		$("#lbl_7").text(" ");
+																		$("#lbl_8").text(" ");
+																		$("#lbl_9").text(" ");
+																		$("#lbl_10").text(" ");
+																		$("#lbl_11").text(" Enter Start Time");
+																		$("#lbl_12").text(" ");
+																		$("#org_err").text(" ");
+																		$("#evadd_err").text(" ");
+																	} else {
+																		$(".lbl_11").removeClass("label_error");
+																		if (endTime == "") {
+																			$("#lbl_1").text(" ");
+																			$("#lbl_2").text(" ");
+																			$("#lbl_3").text(" ");
+																			$("#lbl_city").text(" ");
+																			$("#lbl_4").text(" ");
+																			$("#lbl_5").text(" ");
+																			$("#lbl_6").text(" ");
+																			$("#lbl_7").text(" ");
+																			$("#lbl_8").text(" ");
+																			$("#lbl_9").text(" ");
+																			$("#lbl_10").text(" ");
+																			$("#lbl_11").text(" ");
+																			$("#lbl_12").text(" Enter End Time");
+																			$("#org_err").text(" ");
+																			$("#evadd_err").text(" ");
+																		} else {
+																			$(".lbl_12").removeClass("label_error");
+
+																			//console.log("Success");
+																			// HERE WE WRITE A COMPLETE CODE
+																			$(".loadbox").css({ display: "block" });
+																			$(btn).button('loading...');
+																			term = $form.serializeArray();
+																			url = $form.attr("action");
+																			$.post(url, term, function (data, status) {
+																				//alert(data);
+																			}).fail(function () {
+																				$(btn).effect("shake");
+																			}).done(function (data) {
+																				//alert(data);
+																				var postid = data;
+																				var albumid = $(".album_id").val();
+
+
+																				// CUSTOM FIELDS 
+																				var inputs = readCustomFields($("#sp-form-post"), postid);
+																				/*$.each(inputs, function (i, val) {
+																					$.post(sendUrl+"/post-ad/addpostcustomfields.php", val, function (response) {
+																						//alert(response);
+																					});
+																				});*/
+																				/*var pageEvent = $("#leftmenu").attr("data-event");
+																				if(pageEvent == 1){
+																					//this is event page for add feature, sponsor or co-host
+																					//add feature people
+																					var Accessids = "";
+																					$(".multi_select .btn-group>ul>li input:checked").each(function(k,obj){
+																						Accessids=Accessids+$(obj).val()+",";
+																					});
+																					Accessids = Accessids.substring(0,Accessids.length - 1);
+																					//console.log(Accessids);
+																					//add feature profile
+																					$.post(sendUrl+"/post-ad/addpostcustomfieldsfeature.php",{Accessids:Accessids,postid:postid,postedit:postedit}, function (re) {
+																						
+																					});
+																					//======add soponsor in field start======
+																					var spon = "";
+																					$(".add_spon .btn-group>ul>li input:checked").each(function(k,obj){
+																						spon = spon+$(obj).val()+",";
+																						//alert("no");
+																					});
+																					spon = spon.substring(0,spon.length - 1);
+																					//console.log(spon);
+																					$.post(sendUrl+"/post-ad/addsponsor.php",{spon:spon,postid:postid,postedit:postedit}, function (re) {
+																						//alert(re);
+																					});
+																					//======add co-host========
+																					var cohost = "";
+																					$(".multi_select_cohost .btn-group>ul>li input:checked").each(function(k,obj){
+																						cohost = cohost+$(obj).val()+",";
+																						//alert("no");
+																					});
+																					cohost = cohost.substring(0,cohost.length - 1);
+																					//console.log(cohost);
+																					$.post(sendUrl+"/post-ad/addcohost.php",{cohost:cohost,postid:postid,postedit:postedit}, function (cohost) {
+																						//alert(cohost);
+																					});
+																				}else{
+																					//alert(multi);
+																					var multi = $(".multiselect").attr("title");
+																					if(multi == 'None selected' || multi == ''){
+																						
+																					}else{
+																						$.post(sendUrl+"/post-ad/addpostcustomfieldssize.php",{multi:multi,postid:postid}, function (re) {
+																							//alert(re);
+																						});
+																					}
+																				}*/
+																				//for dell image
+																				// IMAGE
+																				var imgCount = $(".postingimg").length;
+																				$(".postingimg").each(function (i, e) {
+																					//this is for featured image strt
+																					var fichek = $(e).attr("data-name");
+																					var isCheckeed = $('#' + fichek + ':checked').val() ? true : false;
+																					if (isCheckeed == true) {
+																						spFeatureimg = 1;
+																					} else {
+																						spFeatureimg = 0;
+																					}
+																					//this is for featured image end
+																					var base64image = $(e).attr("src");
+																					var arr = base64image.match(/data:image\/[a-z]+;/);
+																					var ext = arr[0].replace("data:image/", "");
+																					ext = ext.replace(";", "");
+																					$.post(sendUrl + "/post-ad/addeventpic.php", { spPostings_idspPostings: postid, spPostingPic: base64image, ext: ext, spFeatureimg: spFeatureimg, postedit: postedit }, function (r) {
+																						//alert(r);
+																						//Timeline prepending
+																						if (i == imgCount - 1) {
+																							$.get(sendUrl + "/publicpost/timelineentry.php", { js: "1", timelineid: postid, grouptimeline: $(btn).data("grouptimeline") }, function (r) {
+																								$("#timeline-container").prepend(r);
+																								//$(btn).button('reset');
+																							});
+																						}
+																					});
+																				});
+																				//=======Add video start=======
+
+																				//Video post finaly
+																				//ev.preventDefault();
+																				var form_data = new FormData($("#sp-form-post")[0]);
+																				//form_data.push({spPostings_idspPostings: postid, spPostingAlbum_idspPostingAlbum: albumid});
+																				form_data.append('spPostings_idspPostings', postid);
+																				form_data.append('spPostingAlbum_idspPostingAlbum', albumid);
+																				$.ajax({
+																					url: sendUrl + "/post-ad/addpostmedia.php",
+																					type: "POST",
+																					data: form_data,
+																					contentType: false,
+																					cache: false,
+																					processData: false,
+																					success: function (vi) {
+																						//alert(vi);
+																						//window.location.reload();
+																						$("#dvPreview").html("");
+																						$("#spPreview").html("");
+																						$("#clearnow").val("");
+																						$(".grptimeline").val("");
+																						$("#postform .form-control").val("");
+																						//document.getElementById("sp-form-post").reset();
+																						if (postedit == true) {
+																							//window.location.reload();
+																						}
+																					},
+																					error: function (error) {
+																						//alert(error);
+																					}
+																				});
+
+																				//=======Add video end=======
+																				//Testing
+																				/*if (imgCount == 0){
+																					$.get(sendUrl+"/publicpost/timelineentry.php", {js: "1", timelineid: postid, grouptimeline: $(btn).data("grouptimeline")}, function (r) {
+																						$("#timeline-container").prepend(r);
+																						//$(btn).button('reset');
+																						//alert(r);
+																					});
+																				}*/
+																				//Testing Complete
+																				//Media
+																				$(".media-file-data").each(function (i, e) {
+																					var base64image = $(e).attr("data-media");
+																					var arr = base64image.match(/data:[a-zA-Z0-9 -/]+;/);
+																					var ext = arr[0].replace("data:", "");
+
+																					$.post("../addmedia.php", { spPostings_idspPostings: postid, spPostingMedia: base64image, ext: ext, spPostingAlbum_idspPostingAlbum: albumid }, function (r) {
+																						//alert(r);
+																					});
+																				});
+																				//notification message from send box
+																				/*$.notify({
+																					title: '<strong>Posted Successfully</strong>',
+																					icon: '',
+																					message: ""
+																				},{
+																					type: 'success',
+																					animate: {
+																						enter: 'animated fadeInUp',
+																						exit: 'animated fadeOutRight'
+																					},
+																					placement: {
+																						from: "top",
+																						align: "right"
+																					},
+																					offset: 20,
+																					spacing: 10,
+																					z_index: 1031,
+																				});*/
+																				//Message after form submited
+																				$("#dvPreview").html("");
+																				$("#spPreview").html("");
+																				$("#clearnow").val("");
+																				$(".grptimeline").val("");
+																				$("#postform .form-control").val("");
+																				//document.getElementById("sp-form-post").reset();
+																				//this script for delay a redirect page for another page.
+																				var seconds = 10;
+																				setInterval(function () {
+																					seconds--;
+																					if (seconds == 0) {
+																						window.location.href = "posting.php?postid=" + postid.trim();
+																						//window.location.reload();
+																					}
+																				}, 1000);
+																				//====end=====
+																			}).always(function () {
+																				//$(btn).button('reset');
+																			});
+																		}
+																	}
+																}
+															}
+														}
+													}
+
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+		} else {
+			$("#invalid").html("<div class='alert alert-danger error_show' role='alert'>Please Select Business profile...!</div>");
+		}
+	});
+
+
+
+
+
+
+
+
+	//=================POST A Event FORM DRAFT END=======
+
+	$("#addSponser").on("click", function () {
+		var BaseUrl = MAINURL+"/";
+
+		//alert(BaseUrl);
+		var btn = this;
+		var $form = $(btn).closest("form");
+		$form.submit(function (e) {
+			e.preventDefault();
+			$(btn).button('loading');
+			term = $form.serializeArray();
+			url = $form.attr("action");
+			$.post(url, term, function (data, status) {
+				//alert(data);
+				var SponorId = data;
+				//alert(SponorId);
+				var imgCount = $(".sponsorimg").length;
+				//alert(imgCount);
+				if (imgCount != 0) {
+					var base64image = $(".sponsorimg").attr("src");
+					//alert(base64image);
+
+					var arr = base64image.match(/data:image\/[a-z]+;/);
+					var ext = arr[0].replace("data:image/", "");
+					ext = ext.replace(";", "");
+					$.post(BaseUrl + "/events/dashboard/addsponsorpic.php", { spPostingPic: base64image, ext: ext, SponorId: SponorId }, function (t) {
+						window.location.reload();
+					});
+				}
+			}).fail(function () {
+				$(btn).effect("shake");
+				$(btn).button('reset');
+			}).done(function (data) {
+
+			}).always(function () {
+				$(btn).button('reset');
+			});
+		});
+	});
+	//=======End sponsor=======
+
+	//=================POST A STORE FORM DE-ACTIVATE===========
+
+	$("#addSponsergroup").on("click", function () {
+
+
+		//alert();
+		var company = $("#sponsorTitle").val()
+
+		var Website = $("#sponsorWebsite").val()
+		var Price = $("#spsponsorPrice").val()
+		var category = $("#sponsorCategory").val()
+		var Description = $("#spsponsorDesc").val()
+		var sponsorImage = $("#sponsorImg").val()
+
+		if (company == "" && Website == "" && Price == "" && category.length == 0 && Description == "" && sponsorImage == "") {
+
+
+
+			$("#sponsorTitle_error").text("Please Enter Company Name .");
+			$("#sponsorTitle").focus();
+
+			$("#sponsorWebsite_error").text("Please Enter Website.");
+			$("#sponsorWebsite").focus();
+
+			$("#spsponsorPrice_error").text("Please Enter Price.");
+			$("#spsponsorPrice").focus();
+
+
+			$("#sponsorCategory_error").text("Please select Category.");
+			$("#sponsorCategory").focus();
+
+			$("#spsponsorDesc_error").text("Please Enter Description.");
+			$("#spsponsorDesc").focus();
+
+			$("#sponsorImg_error").text("Choose File.");
+			$("#sponsorImg").focus();
+
+
+
+
+
+
+			return false;
+		} else if (company == "") {
+
+			$("#sponsorTitle_error").text("Please Enter Company Name .");
+			$("#sponsorTitle").focus();
+
+			return false;
+		} else if (Website == "") {
+
+			$("#sponsorWebsite_error").text("Please Enter Website.");
+			$("#sponsorWebsite").focus();
+
+			return false;
+		} else if (Price == "") {
+			//alert(Price);
+
+			$("#spsponsorPrice_error").text("Please Enter Price.");
+			$("#spsponsorPrice").focus();
+
+			return false;
+		} else if (category.length == 0) {
+			$("#sponsorCategory_error").text("Please select Category.");
+			$("#sponsorCategory").focus();
+
+			return false;
+		} else if (Description == "") {
+
+			$("#spsponsorDesc_error").text("Please Enter Description.");
+			$("#spsponsorDesc").focus();
+
+
+
+			return false;
+		} else if (sponsorImage == "") {
+
+
+			$("#sponsorImg_error").text("Choose File.");
+			$("#sponsorImg").focus();
+
+
+			return false;
+		}
+
+
+
+		else {
+
+
+			var BaseUrl = MAINURL+"/";
+
+			//	alert(BaseUrl);
+
+
+			var btn = this;
+			var $form = $(btn).closest("form");
+
+			$form.submit(function (e) {
+				e.preventDefault();
+				$(btn).button('loading');
+				term = $form.serializeArray();
+				url = $form.attr("action");
+				$.post(url, term, function (data, status) {
+					//alert(data);
+					var SponorId = data;
+					//alert(SponorId);
+					var imgCount = $(".sponsorimg").length;
+
+					//alert(imgCount);
+					if (imgCount != 0) {
+						var base64image = $(".sponsorimg").attr("src");
+						//alert(base64image);
+
+						var arr = base64image.match(/data:image\/[a-z]+;/);
+						var ext = arr[0].replace("data:image/", "");
+						ext = ext.replace(";", "");
+						$.post(BaseUrl + "/post-ad/events/addgroup_sponsorpic.php", { spPostingPic: base64image, ext: ext, SponorId: SponorId }, function (t) {
+							window.location.reload();
+						});
+					}
+				}).fail(function () {
+					$(btn).effect("shake");
+					$(btn).button('reset');
+				}).done(function (data) {
+
+				}).always(function () {
+					$(btn).button('reset');
+				});
+			});
+		}
+	});
+
+
+	//=======End sponsor=======
+
+
+	$(".EditgroupSponser").on("click", function () {
+
+		//alert();
+		var company = $("#sponsorTitle1").val()
+
+		var Website = $("#sponsorWebsite1").val()
+		var Price = $("#spsponsorPrice1").val()
+		var category = $("#sponsorCategory1").val()
+		var Description = $("#spsponsorDesc1").val()
+		// var sponsorImage = $("#sponsorImg").val()
+
+
+		//alert(company);
+		/*alert(Website);
+		alert(Price);
+		alert(category);
+		alert(Description);
+		alert(sponsorImage);*/
+
+		//alert();
+
+
+
+		if (company == "" && Website == "" && Price == "" && category.length == 0 && Description == "") {
+
+
+			$("#sponsorTitle_error1").text("Please Enter Company Name .");
+			$("#sponsorTitle1").focus();
+
+			$("#sponsorWebsite_error1").text("Please Enter Website.");
+			$("#sponsorWebsite1").focus();
+
+			$("#spsponsorPrice_error1").text("Please Enter Price.");
+			$("#spsponsorPrice1").focus();
+
+
+			$("#sponsorCategory_error1").text("Please select Category.");
+			$("#sponsorCategory1").focus();
+
+			$("#spsponsorDesc_error1").text("Please Enter Description.");
+			$("#spsponsorDesc1").focus();
+
+			/*$("#sponsorImg_error").text("Choose File.");
+			$("#sponsorImg").focus();
+			*/
+
+
+			return false;
+		} else if (company == "") {
+			//alert(company); 
+			$("#sponsorTitle_error1").text("Please Enter Company Name .");
+			$("#sponsorTitle1").focus();
+
+			return false;
+		} else if (Website == "") {
+			//alert(Website);
+
+			$("#sponsorWebsite_error1").text("Please Enter Website.");
+			$("#sponsorWebsite1").focus();
+
+			return false;
+		} else if (Price == "") {
+
+			$("#spsponsorPrice_error1").text("Please Enter Price.");
+			$("#spsponsorPrice1").focus();
+
+			return false;
+		} else if (category.length == 0) {
+			//alert(category);
+
+			$("#sponsorCategory_error1").text("Please select Category.");
+			$("#sponsorCategory1").focus();
+
+			return false;
+		} else if (Description == "") {
+			//alert(Description);
+
+			$("#spsponsorDesc_error1").text("Please Enter Description.");
+			$("#spsponsorDesc1").focus();
+
+			return false;
+		}/*else if (sponsorImage == "") {
+       alert(sponsorImage);
+       
+            
+              $("#sponsorImg_error").text("Choose File.");
+             $("#sponsorImg").focus();
+
+
+             return false;
+        }*/
+
+
+		else {
+
+
+			var BaseUrl = MAINURL+"/";
+
+			//	alert(BaseUrl);
+
+
+			var btn = this;
+			var $form = $(btn).closest("form");
+
+			$form.submit(function (e) {
+				e.preventDefault();
+				$(btn).button('loading');
+				term = $form.serializeArray();
+				url = $form.attr("action");
+				$.post(url, term, function (data, status) {
+					//alert(data);
+					var SponorId = data;
+					//alert(SponorId);
+					var imgCount = $(".sponsorimg").length;
+
+					//alert(imgCount);
+					if (imgCount != 0) {
+						var base64image = $(".sponsorimg").attr("src");
+						//alert(base64image);
+
+						var arr = base64image.match(/data:image\/[a-z]+;/);
+						var ext = arr[0].replace("data:image/", "");
+						ext = ext.replace(";", "");
+						$.post(BaseUrl + "/post-ad/events/addgroup_sponsorpic.php", { spPostingPic: base64image, ext: ext, SponorId: SponorId }, function (t) {
+							window.location.reload();
+						});
+					}
+				}).fail(function () {
+					$(btn).effect("shake");
+					$(btn).button('reset');
+				}).done(function (data) {
+
+				}).always(function () {
+					$(btn).button('reset');
+				});
+			});
+		}
+	});
+
+
+
+
+	//=================POST A STORE FORM DEACTIVATE END=======
+
+
+
+});

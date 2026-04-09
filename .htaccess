@@ -1,0 +1,5 @@
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^thesharepage\.com$ [NC,OR]
+RewriteCond %{HTTP_HOST} ^www\.thesharepage\.com$ [NC]
+RewriteCond %{HTTPS} !on
+RewriteRule ^(.*)$ https://www.thesharepage.com/$1 [R=301,L]

@@ -1,0 +1,161 @@
+<?php $this->load->view('includes/head'); ?>
+</head>
+
+<body>
+    <div id="app">
+        <div class="main-wrapper">
+            <?php $this->load->view('includes/navbar'); ?>
+            <!-- Main Content -->
+            <div class="main-content">
+                <section class="section">
+                    <div class="section-header">
+                        <div class="section-header-back">
+                            <a href="<?= base_url('') ?>" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+                        </div>
+                        <h1>BIBLE WORKERS ASSIGNMENTS</h1>
+                        <div class="section-header-breadcrumb">
+                            <div class="breadcrumb-item active"><a
+                                    href="<?= base_url() ?>"><?= $this->lang->line('dashboard') ? $this->lang->line('dashboard') : 'Dashboard' ?></a>
+                            </div>
+                            <div class="breadcrumb-item">
+                                <?= $this->lang->line('Assign-Bibleworker') ? $this->lang->line('Assign-Bibleworker') : 'Assign-Bibleworker' ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="section-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card card-primary">
+                                    <form method="POST">
+                                        <div class="card-body">
+                                            <table class='table-striped' data-toggle="table" data-click-to-select="true"
+                                                data-side-pagination="server" data-pagination="true"
+                                                data-page-list="[5, 10, 20, 50, 100, 200]" data-search="true"
+                                                data-show-columns="true" data-show-refresh="false"
+                                                data-trim-on-search="false" data-sort-name="id" data-sort-order="desc"
+                                                data-mobile-responsive="true" data-toolbar="#tool"
+                                                data-show-export="false" data-maintain-selected="true"
+                                                data-query-params="queryParams">
+                                                <thead>
+                                                    <tr>
+                                                        <th data-field="All">
+                                                            <input type="checkbox" onchange="checkAll(this)"><br>
+                                                            All
+                                                        </th>
+                                                        <th data-field="Visitor Name">Visitor Name</th>
+                                                        <th data-field="Phone">Phone</th>
+                                                        <th data-field="Email">Email</th>
+                                                        <th data-field="Address">Address</th>
+                                                        <th data-field="Bible Worker">Bible Worker</th>
+                                                        <th data-field="Action">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php $x = 1;
+                          foreach ($visitorsdata as $visitorsdataval) {
+
+                          ?>
+                                                    <tr>
+                                                        <td><input type="checkbox" value="<?= $visitorsdataval['id'] ?>"
+                                                                name="chk[]"></td>
+                                                        <td><?= $visitorsdataval['first_name'] . ' ' . $visitorsdataval['last_name']; ?>
+                                                        </td>
+                                                        <td><?= $visitorsdataval['phone'] ?></td>
+                                                        <td><?= $visitorsdataval['email'] ?></td>
+                                                        <td><?= $visitorsdataval['address'] ?></td>
+                                                        <td>
+                                                            <?= $visitorsdataval['bible_worker'] ?>
+                                                        </td>
+                                                        <td>
+                                                            <?php
+                                if (!empty($visitorsdataval['bible_worker_id'])) { ?>
+
+                                                            <a onclick="return confirm('Are you sure?')"
+                                                                class="btn btn-primary"
+                                                                href="<?php echo base_url('Assign_bibleworker/deleteassignments?id=') . $bibleworkerassignmentsval['id']; ?>">Delete</a>
+
+                                                            <?php }
+                                ?>
+                                                        </td>
+                                                    </tr>
+                                                    <?php $x++;
+                          } ?>
+                                                </tbody>
+
+                                            </table>
+                                            <tfoot>
+                                                <tr>
+                                                    <td colspan="6" rowspan="1">
+                                                        <select id="bible_worker" name="bible_worker"
+                                                            class="form-control">
+                                                            <option>Select Bible Worker</option>
+                                                            <?php
+                              foreach ($bibleworker as $bibleworkerval) {
+                              ?>
+                                                            <option value="<?= $bibleworkerval['id'] ?>">
+                                                                <?= $bibleworkerval['first_name'] . ' ' . $bibleworkerval['last_name']; ?>
+                                                            </option>
+                                                            <?php
+                              } ?>
+                                                        </select>
+                                                        <button onclick="loadDoc()" type="button"
+                                                            class="btn btn-success">Assign</button>
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <?php $this->load->view('includes/footer'); ?>
+        </div>
+    </div>
+    <?php $this->load->view('includes/js'); ?>
+    <script type="text/javascript">
+    function loadDoc() {
+        var all_location_id = document.querySelectorAll('input[name="chk[]"]:checked');
+        var bible_worker = document.getElementById('bible_worker').value;
+        var aIds = [];
+        for (var x = 0, l = all_location_id.length; x < l; x++) {
+            aIds.push(all_location_id[x].value);
+        }
+        var str = aIds.join(', ');
+        alert(str);
+        var formData = new FormData();
+        formData.append('visitor_id', bible_worker);
+        formData.append('bible_worker_id', bible_worker);
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function() {
+            location.reload();
+        }
+        xhttp.open("POST", "<?= base_url('Assign_bibleworker/create_assign'); ?>");
+        xhttp.send(formData);
+    }
+
+    function checkAll(ele) {
+        var checkboxes = document.getElementsByTagName('input');
+        if (ele.checked) {
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].type == 'checkbox') {
+                    checkboxes[i].checked = true;
+                }
+            } 
+        } else {
+            for (var i = 0; i < checkboxes.length; i++) {
+                console.log(i)
+                if (checkboxes[i].type == 'checkbox') {
+                    checkboxes[i].checked = false;
+                }
+            }
+        }
+    }
+    </script>
+</body>
+
+</html>

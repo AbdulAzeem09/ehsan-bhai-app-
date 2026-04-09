@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Promotional Activities</title>
+
+	<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<!-- Template Main CSS File -->
+	<link href="assets/css/style.css" rel="stylesheet">
+	
+</head>
+<body>
+	
+	<!-- ======= Hero Section ======= -->
+	<section id="invite-friends">
+		<div class="hero-container" data-aos="fade-up">
+			<h1>Invite Your friends on<span>TheSharePage</span></h1>
+			<h2>$50 to $200 get instantly by inviting your friends on TheSharePage via lucky draw</h2>
+			<a href="#about" class="btn-get-started scrollto">Invite your Friend</a>
+		</div>
+	</section><!-- End Hero -->
+
+	<div class="wrapper d-flex align-items-stretch">
+		<nav id="sidebar">
+			<div class="custom-menu">
+				<button type="button" id="sidebarCollapse" class="btn btn-primary">
+					<i class="fa fa-bars"></i>
+					<span class="sr-only">Toggle Menu</span>
+				</button>
+			</div>
+			<div class="p-4">
+				<h1>
+					<a href="index.html" class="logo">Promo Rewards <span>The ShaprePage</span></a>
+				</h1>
+				<ul class="list-unstyled components mb-5">					
+					<li>
+						<a href="invite-friends.html" class="active"><span class="fa fa-sticky-note mr-3"></span> How It Works</a>
+					</li>
+					<li>
+						<a href="ifperformance.html"><span class="fa fa-briefcase mr-3"></span> Perfromace</a>
+					</li>															
+					<li>
+						<a href="iftransaction.html"><span class="fa fa-suitcase mr-3"></span> Transaction History</a>
+					</li>					
+					<li>
+						<a href="ifsupport.html"><span class="fa fa-paper-plane mr-3"></span> Support</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+
+		<!-- Page Content  -->
+		<div id="content" class="p-4 p-md-5 pt-5">
+			<h2 class="mb-4">Support</h2>
+			<p>
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+			</p>
+			<section id="contact" class="contact">
+				<div class="container"> 
+					<div class="row justify-content-center">
+						<div class="col-lg-4 col-md-12" data-aos="fade-up" data-aos-delay="100">
+							<div class="info-box">
+								<i class="fa fa-map"></i>
+								<h3>Our Address</h3>
+								<p>A108 Adam Street, New York, NY 535022</p>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-6 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="200">
+							<div class="info-box">
+								<i class="fa fa-envelope"></i>
+								<h3>Email Us</h3>
+								<p>info@example.com<br>contact@example.com</p>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-6 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="300">
+							<div class="info-box">
+								<i class="fa fa-phone"></i>
+								<h3>Call Us</h3>
+								<p>+1 5589 55488 55<br>+1 6678 254445 41</p>
+							</div>
+						</div>
+					</div>
+
+					<form action="forms/contact.php" method="post" role="form" class="php-email-form mt-4" data-aos="fade-up" data-aos-delay="400">
+						<div class="row">
+							<div class="col-md-6 form-group">
+								<input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
+							</div>
+							<div class="col-md-6 form-group mt-3 mt-md-0">
+								<input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+							</div>
+						</div>
+						<div class="form-group mt-3">
+							<input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+						</div>
+						<div class="form-group mt-3">
+							<textarea class="form-control" name="message" rows="10" placeholder="Message" required></textarea>
+						</div>
+						<div class="my-3">
+							<div class="loading">Loading</div>
+							<div class="error-message"></div>
+							<div class="sent-message">Your message has been sent. Thank you!</div>
+						</div>
+						<div class="text-center"><button type="submit" class="btn btn-outline-primary">Send Message</button></div>
+					</form>
+
+				</div>
+			</section><!-- End Contact Us Section -->
+		</div>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		(function ($) {
+			"use strict";
+			var fullHeight = function () {
+				$(".js-fullheight").css("height", $(window).height());
+				$(window).resize(function () {
+					$(".js-fullheight").css("height", $(window).height());
+				});
+			};
+			fullHeight();
+			$("#sidebarCollapse").on("click", function () {
+				$("#sidebar").toggleClass("active");
+			});
+		})(jQuery);
+	</script>
+	
+	
+	<script src="assets//js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,817 @@
+:root {
+    --backColor: #3E2048;
+    --text-purpal: #4A0080;
+    --text-orngclr: #FB8308;
+    --weight: bold;
+    --secondColor: #8bc34a;
+    --whitecolor: #fff;
+    --fontfamily: 'Poppins';
+    --bx-clr: #1F1216;
+    --lightbck: #F7F8FC;
+
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--backColor);
+    font-family: "Poppins", sans-serif;
+
+}
+
+a {
+    text-decoration: none;
+}
+
+.log_in,
+.tell-us , .what_do  , .cnfm_mail , .cong_mail{ /*29-2-24*/
+    max-width: 520px;
+    margin: 0px auto;
+    padding-top: 20px;
+}
+
+img.img-fluid.logo_share {
+    /* width: 80px; */
+}
+
+.log_in h2.head, .cnfm_mail h2,
+.tell-us h2  , .what_do h2 {
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--whitecolor);
+}
+
+.log_in p.text-center {
+    line-height: 32px;
+    font-size: 25px;
+    font-weight: 600;
+
+}
+
+.log_in form hr,
+.cnfm_mail .cont hr,
+.tell-us .tell-us_sec hr , .what_do .what_do_sec hr{
+    margin: 0 auto;
+    width: 12%;
+    height: 5px;
+    background: var(--text-orngclr);
+    opacity: 1;
+}
+.loadCity label.my-2.text-capitalize {
+    position: relative;
+}
+
+.loadCity label.my-2.text-capitalize:before {
+    content: '*';
+    color: red;
+    right: -10px;
+    position: absolute;
+}
+
+.log_in .form {
+    background-color: var(--whitecolor);
+    border-radius: 24px;
+    padding: 10px 45px;
+    box-shadow: 6px 10px 26px -5px rgb(255 255 255 / 30%);
+}
+
+.log_in .form label {
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 23px;
+}
+
+.log_in .form form h3,
+.tell-us .tell-us_sec .head_title , .what_do .what_do_sec .head_title {   /*29-2-24*/
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 33px;
+}
+
+.log_in form .d-grid {
+    padding: 3px 0;
+}
+
+.log_in input[type="text"],
+.log_in input[type="password"] {
+    padding: 5px 15px;
+    color: #212121;
+    background-color: #FAFAFC;
+    border: 1.07px solid #D9DCE0;
+    border-radius: 4px;
+
+}
+
+.log_in .form .pass,
+.form .capt {
+    position: relative;
+}
+
+.log_in form .pass i {
+    position: absolute;
+    right: 16px;
+    bottom: 12px;
+}
+
+.log_in .form .capt i {
+    position: absolute;
+    top: 15px;
+    left: 190px;
+    cursor: pointer;
+}
+
+.log_in .form .capt label span {
+    color: red;
+}
+
+.log_in .capt .captcha {
+    background-color: #D9DCE0 !important;
+    color: #1F1216;
+    outline: none;
+    border-radius: 0px !important;
+    align-items: center;
+    display: flex;
+    padding-left: 15px;
+}
+
+.log_in .capt .captcha-code {
+    outline: none;
+}
+
+.log_in .btns {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.log_in .btns input[type="submit"] {
+    padding: 3px 135px;
+    background-color: var(--backColor);
+    color: white;
+    border: 0px;
+    border-radius: 30px;
+    font-size: 20px;
+}
+.ref_cnt .pointer , .ref_cnt span.agr_cnt , .agree_con .agr_cnt {
+    font-size: 12px !important;
+    line-height: 17px !important;
+}
+
+.log_in .ref_cnt span,
+.log_in .agree_con span,
+.log_in .btns span {
+    color: #1F1216;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.log_in .ref_cnt.d-flex a,
+.log_in .agree_con.d-flex a,
+.log_in .btns span a {
+    color: #4A0080;
+    font-size: 16px;
+    line-height: 23px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.log_in input[type="checkbox"] {
+    width: 16px;
+}
+
+.log_in .btns span {
+    padding-top: 15px;
+}
+
+
+/*confirm email*/
+.cnfm_mail .img_head img {
+    /* width: 20%; */
+}
+
+.cnfm_mail {
+    /* max-width: 520px; */
+    /* padding-top: 80px; */
+    /* margin: 0 auto; */
+}
+
+/* .cnfm_mail h2,
+.tell-us h2  , .what_do h2{   29-2-24
+    font-size: 30px;
+    font-weight: 600;
+    color: var(--whitecolor);
+} */
+.cog_mail form#sendOtpForm {
+    padding: 0 15px !important;
+    box-shadow: unset !important;
+}
+.cnfm_mail .cont,
+.tell-us .tell-us_sec {
+    background: var(--whitecolor) !important;
+    padding: 10px 40px;
+    border-radius: 24px;
+    box-shadow: 6px 10px 26px -5px rgb(255 255 255 / 30%);
+    /* text-align: center; */
+}
+
+.cnfm_mail .cont span {
+    color: #3E2048;
+}
+
+.cnfm_mail .cont h3 {
+    padding-top: 10px;
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 46px;
+    color: black;
+}
+
+.cnfm_mail .cont p {
+    font-size: 16px;
+    line-height: 15px;
+    font-weight: 400;
+    color: #595959;
+}
+
+/* .cnfm_mail .cont hr {
+    margin: 0 auto;
+    width: 13%;
+    height: 5px;
+    background: #FB8308;
+    opacity: 1;
+} */
+
+.cnfm_mail .inpt_email input {
+    border-radius: 5px;
+    border: 1px solid #D9DCE0;
+    padding: 8px 15px;
+}
+
+.cnfm_mail .cont p.rec_cnt {
+    color: #1F1216;
+    font-size: 20px;
+    line-height: 30px;
+    font-weight: 500;
+}
+
+.cnfm_mail .cont p.rec_cnt a {
+    font-size: 18px;
+    line-height: 27px;
+    font-weight: 600;
+    color: var(--text-purpal);
+    text-decoration: none;
+}
+
+.cnfm_mail .cont button {
+    background: var(--backColor);
+    color: white;
+    /* padding: 9px 54px; */
+    border: none;
+    border-radius: 0 5px 5px 0;
+    font-size: 18px;
+    line-height: 25px;
+    /* font-weight: 600;  */
+}
+
+/*congratulation email*/
+.cong_mail {
+    /* max-width: 520px; */
+    /* margin: 0 auto; */
+    /* padding-top: 30px; */
+}
+
+.cong_mail .img_head h2 {
+    color: white;
+    font-weight: 600;
+    font-size: 32px;
+}
+
+.cong_mail_sec {
+    background-color: white;
+    padding: 15px 30px;
+    border-radius: 24px;
+    box-shadow: 6px 10px 26px -5px rgb(255 255 255 / 30%);
+}
+
+.container .innr_img_cong>div {
+    background-color: #09d260;
+    width: 110px;
+    height: 110px;
+    padding: 20px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+}
+
+.cong_mail .innr_img_cong>div img {
+    width: 100%;
+}
+
+/*28-2-24*/
+.pro_pic_img .pro_pic_cnt {
+    width: 100px;
+    height: 100px;
+    border: 1px solid #D9DCE0;
+    padding: 0px;
+    border-radius: 50%;
+    background-color: #FAFAFC;
+}
+
+.choose_pro .choose_img {
+    width: 78%;
+}
+
+.vrify_mob {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 20px;
+
+}
+
+.vrify_mob .tell_btn {
+    border-radius: 30px;
+}
+.vrify_mob input.bck_btn {
+    border: 2px solid var(--backColor);
+}
+
+.vrify_mob input.nxt_btn {
+    border: 0px;
+    background-color: var(--backColor);
+    color: white;
+}
+
+.cong_mail_sec h2,
+.cong_mob h2.cong_cnt {
+    font-size: 50px;
+    font-weight: 400;
+    color: orange;
+    font-family: "Rancho", sans-serif !important;
+}
+
+.cong_mail_sec h3,
+.cong_mob h3 {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 28px;
+    color: black;
+}
+
+.cong_mail .cong_mail_sec form.cont h4 {
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+.cong_mail .cong_mail_sec form.cont .form_field label {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 23px;
+}
+
+.cong_mail .cong_mail_sec form.cont .form_field input {
+    padding: 3px 15px;
+    color: #212121;
+    background-color: #FAFAFC;
+    border: 1.07px solid #D9DCE0;
+    border-radius: 4px;
+    outline: none;
+}
+
+.cong_mail .cong_mail_sec form.cont .cong_btn input,
+form.cong_mob .cong_nxt_btn {
+    background: #3E2048;
+    color: white;
+    padding: 6px 54px;
+    border: none;
+    border-radius: 30px;
+    font-size: 18px;
+    line-height: 25px;
+    font-weight: 500;
+}
+
+/*Tell Us*/
+
+.cntry_clm_2,
+.tell-us .nxt_btn , .what_do .nxt_btn {    /*29-4-24*/
+    display: grid;
+    column-gap: 17px;
+    row-gap: 10px;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.tell-us_sec .tell-cnt {
+    font-size: 13px;
+    color: #595959;
+}
+
+.cntry_clm_2 select.form-select {
+    font-size: 14px;
+    background-color: #fafafa;
+}
+
+.tell-us .nxt_btn {
+    padding: 0 7px;
+}
+
+.nxt_btn input.tell_btn {
+    padding: 3px 63px;
+    border-radius: 30px;
+}
+
+.nxt_btn input.bck_btn {
+    border: 2px solid var(--backColor);
+    background-color: white;
+}
+
+.nxt_btn input.nxt_btn {
+    border: 0px;
+    background-color: var(--backColor);
+    color: white;
+}
+
+/*verify number*/
+.tell-us_sec .nmber_sec .inpt {
+    outline: none;
+    border: 1px solid #D9DCE0;
+}
+
+.tell-us_sec .nmber_sec .no_code {
+    background-color: #cacacb;
+    color: black;
+    border-radius: 5px 0 0 5px;
+}
+
+.tell-us_sec .nmber_sec .vfy_no {
+    border-radius: 5px;
+}
+
+.rsend_time .rsnd_t {
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.rsend_time .snd_time {
+    color: #4A0080;
+}
+
+.pro_pic_img input#fileInput {
+    position: absolute;
+    left: 0;
+    width: 100px;
+    height: 100px;
+    opacity: 0;
+}
+
+/*profile pic*/
+.pro_head_title {
+    font-weight: 600;
+    font-size: 21px;
+    line-height: 33px;
+ 
+}
+
+.pro_pic_img {
+    position: relative;
+}
+
+
+.rsend_time .pic_cnt {
+    font-size: 18px;
+    font-weight: 600;
+}
+/*what do*/
+.what_do .what_do_sec { 
+    background: var(--whitecolor) !important;
+    padding: 10px 30px;
+    border-radius: 15px;
+    box-shadow: 6px 10px 26px -5px rgb(255 255 255 / 30%);
+}
+
+
+ 
+.what_do .nxt_btn{
+    padding: 0 20px;
+}
+.what_do_sec .what_do_btn label{
+    font-size: 18px;
+    font-weight: 600;
+}
+.what_do_sec .what_do_btn input.chk_btn:checked  ~ .chk_temp::before {
+    display: block;
+    background-image: unset !important;
+}
+.what_do_sec .what_do_btn input.chk_btn{
+    width: 19px  !important;
+    height: 19px !important;
+}
+.what_do_sec .what_do_btn input.chk_btn:checked{
+    border: 1px solid black !important;
+}
+.form-check-input:checked{
+    background-color: unset;
+}
+.what_do_btn{
+    position: relative;
+}
+.chk_temp{
+    position: absolute;
+}
+.chk_temp::before {
+    display: none;
+    position: absolute;
+    content: "";
+    top: -18px;
+    left: -19px;
+    width: 9px;
+    border-radius: 50%;
+    height: 9px;
+    background-color: #08B564;
+}
+.form-check-input:focus{
+    box-shadow: unset !important;
+}
+.tell-us .intl-tel-input.separate-dial-code.allow-dropdown.iti-sdc-2 input, .intl-tel-input.separate-dial-code.allow-dropdown.iti-sdc-2 input[type=text]{
+    padding: 5px 20px 5px 85px !important;
+}
+.nxt_btn .Wht_back{   /*what do 1st 1-3-24*/
+    border: 0px;
+    
+    color: var(--backColor);
+    border: 2px solid var(--backColor);
+    padding: 3px 63px;
+    border-radius: 30px;
+    text-align: center;
+}
+.nxt_btn .pro_skp ,.vrify_mob .pro_skp {    /*profile pic skip btn 1-3-24*/
+    border: 2px solid var(--backColor);
+     color:#3e2048; 
+    border-radius: 30px;
+    }
+    .log_in .form span.req_star, .tell-us .form span.req_star{
+        color: red;
+    }
+    .nxt_btn_bck{
+        display: grid;
+        grid-template-columns: repeat(2 , 1fr);
+        position: relative;
+    }
+    .nxt_btn_bck .nxt_btns{
+        background-color: #3E2048;
+        border-radius: 50%;
+    }
+    .nxt_btn_bck a{
+        color: #3E2048 !important;
+        font-weight: 600;
+    }
+    .nxt_btn_bck .bck_btns{
+        position: absolute;
+        left: 0;
+        top: 0;
+        text-align: left !important;
+    }
+   
+
+    i.fa.fa-angle-left.les_btn:before {
+        content: "\f104";
+        background: #3e2048;
+        margin-right: 7px;
+        padding: 3px 5px;
+        border-radius: 4px;
+        color: #fff;
+    }
+    .cong_pics{
+        text-align: center;
+    }
+    .tell-us .intl-tel-input.separate-dial-code .selected-dial-code {
+        padding-left: 25px !important;
+    }
+    .tell-us input#respUserEphone {
+        border-radius: 7px 0 0 7px;
+    }
+    .vrify_mo input.nxt_btn.tell_btn.col-3 {
+        background-color: #3E2048;
+        color: white;
+        border: none;
+        border-radius: 0 7px 7px 0;
+    }
+    
+    .red{
+        color: red !important;
+    }
+   
+
+@media screen and (max-width: 1440px) {
+    .log_in .img img {
+        /* width: 30%; */
+    }
+
+    .log_in h2.head {
+        font-size: 28px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .log_in .img img {
+        /* width: 30%; */
+    }
+
+    .log_in h2.head {
+        font-size: 26px;
+    }
+
+    /* .log_in form hr {
+        height: 3px;
+    } */
+
+    .log_in .form form h3 {
+        font-size: 21px;
+        line-height: 30px;
+    }
+
+    .log_in .form {
+        padding: 10px 25px;
+    }
+
+    .log_in .form label {
+        font-size: 15px;
+    }
+
+    .log_in input[type="text"],
+    .log_in input[type="password"] {
+        padding: 5px 10px;
+        font-size: 14px;
+    }
+
+    .log_in .ref_cnt.d-flex a,
+    .log_in .agree_con.d-flex a,
+    .log_in .btns span a {
+        color: #4A0080;
+        font-size: 14px;
+        padding-right: 6px;
+        line-height: 22px;
+    }
+
+    .log_in .ref_cnt span,
+    .log_in .agree_con span,
+    .log_in .btns span {
+        padding: 0 0px;
+        font-size: 14px;
+    }
+
+    .log_in .btns input[type="submit"] {
+        padding: 3px 108px;
+    }
+
+    .log_in .form .capt i {
+        position: absolute;
+        top: 15px;
+        left: 160px;
+    }
+
+    .log_in .btns span {
+        padding-top: 10px !important;
+    }
+
+    .log_in form .pass i {
+        position: absolute;
+        right: 15px;
+        bottom: 10px;
+    }
+
+    /*confirm email*/
+    .cnfm_mail .img_head img {
+        /* width: 22%; */
+    }
+
+    .log_in,
+    .tell-us {
+        padding-top: 10px;
+    }
+
+    .cnfm_mail {
+        padding-top: 30px;
+    }
+
+    .cnfm_mail h2,
+    .tell-us h2 {
+        font-size: 26px;
+    }
+
+    .cnfm_mail .cont h3 {
+        padding-top: 0;
+        font-size: 21px;
+        line-height: 33px;
+    }
+
+    .cnfm_mail .cont hr,
+    .log_in form hr {
+        height: 3px;
+    }
+
+    .cnfm_mail .cont p {
+        font-size: 13px;
+    }
+
+    .cnfm_mail .cont {
+        padding: 15px 25px;
+    }
+
+    .cnfm_mail .inpt_email input {
+        padding: 5px 15px;
+    }
+
+    .cnfm_mail .cont p.rec_cnt,
+    .cnfm_mail .cont p.rec_cnt a {
+        font-size: 15px;
+    }
+
+    .cnfm_mail .cont button {
+        padding: 7px 44px;
+        font-size: 15px;
+        font-weight: 500;
+    }
+
+    /*congratulation email*/
+    .cong_mail .img_head img {
+        width: 22%;
+    }
+
+    .cong_mail .img_head h2 {
+        font-size: 26px;
+    }
+
+    .cong_mail_sec h3,
+    .cong_mob h3 {
+        padding-top: 0;
+        font-size: 16px;
+        line-height: 33px;
+    }
+
+    .cong_mail .cong_mail_sec form.cont h4 {
+        font-size: 15px;
+    }
+
+    .cong_mail {
+        padding-top: 8px;
+    }
+
+    .cong_mail .innr_img_cong>div {
+        width: 80px;
+        height: 80px;
+    }
+
+    .cong_mail_sec h2,
+    .cong_mob h2.cong_cnt {
+        font-size: 36px;
+    }
+
+    .tell-us .tell-us_sec .head_title {
+        font-size: 18px;
+        line-height: 24px;
+    }
+
+    .cntry_clm_2,
+    .tell-us .nxt_btn , .what_do .nxt_btn , .vrify_mob {
+        row-gap: 0px;
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .tell-us .nxt_btn ,.what_do .nxt_btn ,.vrify_mob {
+        row-gap: 15px !important;
+    }
+
+    .tell-us_sec .tell-cnt {
+        font-size: 12px;
+    }
+    .tell-us .intl-tel-input.separate-dial-code.allow-dropdown.iti-sdc-2 input, .intl-tel-input.separate-dial-code.allow-dropdown.iti-sdc-2 input[type=text] {
+        padding: 5px 0 4px 85px !important;
+    }
+
+}
+
+@media screen and (max-width: 390px) {
+
+    .log_in .ref_cnt span,
+    .log_in .agree_con span,
+    .log_in .btns span {
+        font-size: 12px;
+    }
+
+    .log_in .ref_cnt.d-flex a,
+    .log_in .agree_con.d-flex a,
+    .log_in .btns span a {
+        line-height: 18px;
+    }
+
+    .log_in .ref_cnt span,
+    .log_in .agree_con.d-flex a {
+        padding-left: 5px;
+    }
+}

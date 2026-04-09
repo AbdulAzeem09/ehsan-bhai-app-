@@ -1,0 +1,801 @@
+
+
+<?php
+
+//die("==========");
+ob_start();
+include('../univ/baseurl.php');
+session_start();
+
+function sp_autoloader($class) {
+include '../mlayer/' . $class . '.class.php';
+}
+$group_id = isset($_GET['groupid']) ? (int) $_GET['groupid'] : 0;
+spl_autoload_register("sp_autoloader");
+if (!isset($_SESSION['pid'])) {
+include_once ("../authentication/check.php");
+$_SESSION['afterlogin'] = "../grouptimelines/?groupid=" . $group_id . "&groupname=" . $_GET['groupname'] . "&timeline";
+}
+include('email_campaign/Classes/PHPExcel/IOFactory.php');
+include('../mlayer/emailCampaignUser.php');
+?>
+
+<!DOCTYPE html>
+<html lang="en"> 
+<head>  
+<link rel="stylesheet" type="text/css" href="<?php echo $BaseUrl;?>/assets/css/design.css">
+
+<?php include('../component/links.php');?>
+<!--This script for posting timeline data Start-->
+<script src="<?php echo $BaseUrl; ?>/assets/js/jquery-2.1.4.min.js"></script>
+<script src="<?php echo $BaseUrl; ?>/assets/js/jquery-1.11.4-ui.min.js"></script>
+<!--This script for posting timeline data End-->
+<!--This script for sticky left and right sidebar STart-->
+<script type="text/javascript" src="<?php echo $BaseUrl;?>/assets/js/jquery.hc-sticky.min.js"></script>
+
+<link href="<?php echo $BaseUrl; ?>/assets/css/sweetalert.css" rel="stylesheet" media="screen">
+
+<script>
+function execute(settings) {
+$('#sidebar').hcSticky(settings);
+}
+// if page called directly
+jQuery(document).ready(function($){
+if (top === self) {
+execute({
+top: 20,
+bottom: 50
+});
+}
+});
+function execute_right(settings) {
+$('#sidebar_right').hcSticky(settings);
+}
+// if page called directly
+jQuery(document).ready(function($){
+if (top === self) {
+execute_right({
+top: 20,
+bottom: 50
+});
+}
+});
+
+</script>
+
+
+
+</head>
+<body onload="pageOnload('groupdd')" class="bg_gray">
+<?php
+
+include_once ("../header.php");
+
+$g = new _spgroup;
+$result = $g->groupdetails($group_id);
+//echo $g->ta->sql;
+if ($result != false) {
+$row = mysqli_fetch_assoc($result);
+$gimage = $row["spgroupimage"];
+$spGroupflag = $row['spgroupflag'];
+}
+?>
+<!--Adding new Resume modal-->
+
+
+<style>
+
+.tcenter{
+text-align:center!important;
+}
+button
+{
+border-radius:20px ;
+}
+/* .co
+{
+background-color:#fd7e14;   
+} */
+btn:hover {
+color: #f3e6f2 !important;
+opacity: .8;
+}
+.icon.warning.pulseWarning {
+display: none !important;
+}
+
+
+.hv2:hover {
+
+
+-webkit-box-shadow: none!important;
+
+} 
+</style>
+
+
+
+
+<div class="modal fade" id="newfile" tabindex="-1" role="dialog" aria-labelledby="resumeModalLabel">
+<div class="modal-dialog" role="document">
+<div class="modal-content no-radius" >
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+<h3 class="modal-title"  class="tcenter" id="fileheader">Create a folder</h3>
+</div>
+<div class="modal-body">
+<form action="folderinsert.php" method="POST" novalidate>
+<input type="hidden" id="grpid" name="grpid" value="<?php echo $group_id; ?>"/>
+<input type="hidden" name=
+"grpname" value="<?php echo $_GET["groupname"]; ?>">
+<div class="row folder_form">
+<!--   <div class="col-md-6">
+<div class="form-group">
+<label for="recipient-name" class="control-label"><h4>Select Folder</h4></label>
+<select class="form-control" name="txtFolerName" id="txtFolerName" >
+<option value="" >Select Folder</option>
+<?php
+//echo "<option value='misc' >Miscellaneous</option>";
+$spf = new _postingalbum;
+$result_fold2 = $spf->allfolder($_GET['groupid']);
+if($result_fold2){
+//echo $spf->spf->sql;
+while ($row2 = mysqli_fetch_assoc($result_fold2)) { ?>
+<option value="<?php echo $row2['spf_id'];?>"><?php echo $row2['spf_title'];?></option> <?php
+}
+}
+?>
+</select>
+</div>
+</div> -->
+<div class="col-md-12">
+<script type="text/javascript">
+function folderShow(){
+$("#hidDiv").hide();
+$("#shoDiv").show();
+$("#txtFoldTitle").focus();
+}
+</script>
+<?php
+$profileid = $_SESSION['pid'];
+$g = new _spgroup;
+$pr = $g->admin_Member($profileid, $group_id);
+//echo $g->tad->sql;
+if($pr){
+foreach ($pr as $key => $isAdmin) {
+$isAmdinha = $isAdmin['spProfileIsAdmin'];
+$isAssAdmin = $isAdmin['spAssistantAdmin'];
+if($isAmdinha == 0 || $isAssAdmin == 1){ ?>
+<div class="form-group">
+
+<input type="hidden" name="txtFolerName" id="txtFolerName">
+<div id="hidDiv">
+<!--- Removed in task 377 --->
+<!-- <label for="recipient-name" class="control-label"><h4>Create</h4></label> -->
+<!-- <label onclick="folderShow()" id="folderTitle" class="folderTitle form-control">Create folder</label> -->
+</div>
+<!-- <div id="shoDiv"> -->
+<!-- <label for="recipient-name" class="control-label"><h4>Folder Title</h4></label> -->
+<input type="text" class="form-control"  name="txtfoldername" title="Type a folder name..." placeholder="Type a folder name..."  maxlength="40" required />
+<!-- </div> -->
+</div>
+<?php
+}
+}
+}
+
+?>
+
+</div>
+
+<div class="col-md-12" style="display: none;">
+<div class="form-group">
+<label for="recipient-name" class="control-label">
+<h4>File Title</h4>
+</label>
+<input type="text" class="form-control" id="mediatitle"  title="Please fill this field..." maxlength="50" value="emp">
+</div>
+</div>
+
+<div class="col-md-6">
+<div class="form-group">
+
+<input type="file" id="adddocument" class="spmedia" name="spPostingMedia[]" multiple="multiple" required>
+</div>
+</div>
+</div>
+<div id="media-container"></div>
+
+<div class="modal-footer" class="uploadupdate">
+<button type="button" class="btn btn-danger btn-border-radius" data-dismiss="modal" style="color:white;">Cancel</button>
+<button type="sumbit" class="btn btn-primary btn-border-radius" >Create</button>
+<!-- <button type="button" class="btn btn_blue" style="background-color: green !important;">Create</button> -->
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+<div class="modal fade" id="uloadfile" tabindex="-1" role="dialog" aria-labelledby="resumeModalLabel">
+<div class="modal-dialog" role="document">
+<div class="modal-content no-radius" >
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+<h3 class="modal-title"  id="fileheader">Upload New File</h3>
+</div>
+<div class="modal-body">
+<form class=""   action="../myjobboard/addfiletofolder.php" method="POST" enctype="multipart/form-data">
+<input type="hidden" id="grpid" name="grpid" value="<?php echo $group_id; ?>"/>
+<input type="hidden" id="profileid" name="profileid" value="<?php echo $_SESSION['pid']; ?>"/>
+<input type="hidden" id="grpName" name="grpName" value="<?php echo $_GET["groupname"]; ?>"/>
+
+
+
+
+<br>
+<div class="row folder_form">
+<div class="col-md-6">
+<div class="form-group">
+<label for="recipient-name" class="control-label"><h4>Select Folder</h4></label>
+<select class="form-control" name="txtFolerName" id="txtFolerName" >
+<option value="" >Select Folder</option>
+<?php
+//echo "<option value='misc' >Miscellaneous</option>";
+$folder = isset($_GET['folder']) ? (int) $_GET['folder'] : 0;
+$spf = new _postingalbum;
+$result_fold2 = $spf->allfolder($group_id);
+//echo $spf->spf->sql;
+if($result_fold2){
+while ($row2 = mysqli_fetch_assoc($result_fold2)) { ?>
+<option value="<?php echo $row2['spf_id'];?>"
+<?php echo ($folder && $folder == $row2['spf_id']) ? 'selected' : '' ?>>
+<?php echo $row2['spf_title'];?>
+</option> <?php
+}
+}
+?>
+</select>
+</div>
+</div>
+<div class="col-md-6">
+<script type="text/javascript">
+function folderShow(){
+$("#hidDiv").hide();
+$("#shoDiv").show();
+$("#txtFoldTitle").focus();
+}
+</script>
+<?php
+/*                $profileid = $_SESSION['pid'];
+$g = new _spgroup;
+$pr = $g->admin_Member($profileid, $_GET["groupid"]);*/
+//echo $g->tad->sql;
+/*               if($pr){
+foreach ($pr as $key => $isAdmin) {
+$isAmdinha = $isAdmin['spProfileIsAdmin'];
+$isAssAdmin = $isAdmin['spAssistantAdmin'];
+if($isAmdinha == 0 || $isAssAdmin == 1){ ?>
+<div class="form-group">
+<div id="hidDiv">
+<label for="recipient-name" class="control-label"><h4>&nbsp;</h4></label>
+<label onclick="folderShow()" id="folderTitle" class="folderTitle form-control">Create folder</label>
+</div>
+<div id="shoDiv">
+<label for="recipient-name" class="control-label"><h4>Folder Title</h4></label>
+<input type="text" class="form-control" id="txtFoldTitle"  title="Please fill this field..." placeholder="Write folder title"  required />
+</div>
+</div>
+<?php
+}
+}
+}*/
+
+?>
+
+</div>
+<div class="col-md-12">
+<div class="form-group">
+<label for="recipient-name" class="control-label"><h4>File Title</h4></label>
+<input type="text" class="form-control" id="mediatitle" name="mediatitle" maxlength="50"  title="Please fill this field..."  placeholder="Please enter filename" required>
+</div>
+</div>
+<?php 
+if($folder && $folder != '') {
+$backUrl = $BaseUrl."/grouptimelines/group-folder.php?groupid=".$group_id."&groupname=".$_GET['groupname']."&files&folder=".$folder;
+} else {
+$backUrl = $BaseUrl."/grouptimelines/group-folder.php?groupid=".$group_id."&groupname=".$_GET['groupname']."&files";
+} ?>
+<input type="hidden" name="backPageUrl" value="<?php echo $backUrl; ?>">
+<div class="col-md-6">
+<div class="form-group custom-file-upload">
+
+<input type="file" id="adddocument" style="display: block;" class="spmedia" name="spPostingMedia" required>
+</div>
+</div>
+</div>
+<div id="media-container"></div>
+
+<div class="modal-footer" class="uploadupdate">
+<button type="button" style="border-radius:5px;" class="btn btn-danger" data-dismiss="modal">Close</button>
+<button type="submit" style="border-radius:5px;" id="uploadfilemedia" class="btn btn_blue">Upload</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div> 
+<!--Adding new resume modal complete-->
+<section class="landing_page">
+<div class="container">
+<input type="hidden" class="dynamic-pid" value="<?php echo $_SESSION['pid']; ?>">
+
+<input type="hidden" id="grpid" value="<?php echo $group_id; ?>">
+<input type="hidden" id="grpName" value="<?php echo $_GET["groupname"]; ?>">
+<input type="hidden" class="dynamic-profilename" value="<?php echo $_SESSION['pid']; ?>">
+<div class="row">       
+<div id="sidebar" class="col-md-2 no-padding">
+<?php include('../component/left-group.php');?>
+</div>  
+
+<div class="col-md-10">
+
+<div class="row">
+<div class="col-md-12">
+<div class="about_banner" id="ip6">
+<div class="top_heading_group " style="height:55px" id="ip6">
+<div class="row">
+<div class="col-md-4">
+<!--   <h3>Files</h3> -->
+<span id="size1">Group  <small>[Files]</small></span>
+</div>
+<div class="col-md-8">
+
+
+<a href="<?php echo $BaseUrl.'/grouptimelines/group-folder.php?groupid='.$group_id.'&groupname='.$_GET['groupname'];?>" 
+class="  db_btn db_orangebtn  pull-right btn-border-radius"><i class="fa fa-arrow-circle-left"></i><span class="hv2"> Back</span></a>
+
+
+
+<?php if($admin_Id == $_SESSION['pid']){ ?> 
+
+<a href="#" style="background-color: green;" class="  db_btn  pull-right btn-border-radius" data-toggle="modal" data-target="#newfile" id="nwfile"><i class="fa fa-plus"></i><span class="hv2"> Create Folder</span></a>
+
+
+<?php } ?>  
+
+<a href="#" class="  db_btn db_primarybtn pull-right btn-border-radius" data-toggle="modal" data-target="#uloadfile" id="uploadfile2"><i class="fa fa-cloud-upload"></i><span class="hv2" style="color:white;"> Upload File</span></a>
+
+
+
+</div>
+</div>
+</div>
+<?php
+if(isset($_GET['restorefile']) && $_GET['restorefile'] > 0){
+$spf = new _postingalbum;
+$result_fold = $spf->restore_files($_GET['restorefile']);
+
+}
+
+if(isset($_GET['restore']) && $_GET['restore'] > 0){
+$spf = new _postingalbum;
+$result_fold = $spf->restore_folder($_GET['restore']);
+
+}
+
+if(isset($_GET['miscTrash']) && $group_id > 0){
+include('misctrash.php');
+
+}else if(isset($_GET['misc']) && $group_id > 0){
+include('miscellaneous.php');
+
+}else if(isset($_GET['trash']) && $group_id > 0){
+include('trash.php');
+
+}else if($folder && $folder>0){
+
+include('folder.php');
+
+}else if(isset($_GET['shared'])){
+include('shared.php');
+}else{
+
+?>
+<div class="row">
+<div class="col-md-12">
+<div class="table-responsive">
+<table class="table table_green_head text-center tab_folder" style="margin-top: 15px;">
+<thead id="bgcl">
+<tr>
+<th>Folder Name</th>
+<th>Create By</th>
+<th>Date</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<?php
+//DELETE FOLDER FROM FOLDER START
+if(isset($_GET['delfolder']) && $_GET['delfolder'] >0){
+$spf = new _postingalbum;
+$result_fold = $spf->allfolder_dell($_GET['delfolder']);
+}
+//DELETE FOLDER FROM FOLDER END
+$spf = new _postingalbum;
+$result_fold = $spf->allfolder($group_id);
+//echo $spf->spf->sql;
+if ($result_fold) {
+// print_r(mysqli_fetch_assoc($result_fold));
+// exit;
+while ($row = mysqli_fetch_assoc($result_fold)) { 
+$countfile = $spf->countfile($row['spf_id']);
+?>
+<tr>
+<td class="text-left">
+<a href="<?php echo $BaseUrl.'/grouptimelines/group-folder.php?groupid='.$group_id.'&groupname='.$_GET['groupname'].'&files&folder='.$row['spf_id'];?>">
+<img src="<?php echo $BaseUrl;?>/assets/images/icon/files/folder_icon.png" class="img-responsive"> <?php echo  $row['spf_title'];?> (<span><?php echo $countfile;?></span>)
+</a>
+</td>
+<td>
+<p>
+<?php //Uploader name
+$p = new _spprofiles;
+$creatName = $p->read($row['spProfiles_idspProfiles']);
+if ($creatName != false) {
+    $spf_rpr = mysqli_fetch_assoc($creatName);
+    ?>
+    
+            <a href="<?php echo $BaseUrl.'/friends/?profileid='.$row['spProfiles_idspProfiles'];?>" style="color: #337ab7!important;"><?php echo  $spf_rpr["spProfileName"];   ?></a>
+    <?php
+}?>
+</p>
+</td>
+<td>
+<p><?php echo $row['spf_date'];?></p>
+</td>
+<td class="action_icon">
+<?php
+$profileid = $_SESSION['pid'];
+$g = new _spgroup;
+$pr = $g->admin_Member($profileid, $group_id);
+if ($pr) {
+    foreach ($pr as $key => $isAdmin) {
+        $isAmdinha = $isAdmin['spProfileIsAdmin'];
+        $isAssAdmin = $isAdmin['spAssistantAdmin'];
+    }
+        if($isAmdinha == 0 || $isAssAdmin == 1){ ?>
+            <input type="hidden" name="" value="<?php echo $BaseUrl.'/grouptimelines/group-folder.php?groupid='.$group_id.'&groupname='.$_GET['groupname'].'&files&delfolder='. $row['spf_id'];?>" id="txtDelfold<?php echo $row['spf_id']?>" />
+            <a href="javascript:void(0)" id="folderDel<?php echo $row['spf_id']?>" onclick="fol_del(<?php echo $row['spf_id']; ?>)" ><i class="fa fa-trash"></i></a>
+
+            <!-- <a href="javascript:void(0)" id="folderDel</?php echo $row['spf_id']?>" onclick="folderDel<?php echo $row['spf_id']?>();" ><i class="fa fa-trash"></i></a> -->
+            <a href="#" id="folderView" class="dellink" data-toggle="modal" data-target="#updatefile<?php echo $row['spf_id']?>" ><i class="fa fa-pencil"></i></a> 
+            
+            <!-- Update Resume modal -->
+
+            <div class="modal fade" id="updatefile<?php echo $row['spf_id']?>" tabindex="-1" role="dialog" aria-labelledby="resumeModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content no-radius" >
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h3 class="modal-title text-left" id="fileheader">Update Folder Name</h3>
+                        </div>
+                        <div class="modal-body">
+                            <form class="">
+                                <input type="hidden" id="txtGroupId" value="<?php echo $group_id; ?>"/>
+                                <input type="hidden" id="txtFolderId<?php echo $row['spf_id']?>" value="<?php echo $row['spf_id']; ?>"/>
+                                <!--Choose your new Resume-->
+                                <br>
+                                <div class="row folder_form text-left">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="recipient-name" class="control-label text-left">Rename Folder Name</label>
+                                            <input type="text" class="form-control" id="txtFolderTitle<?php echo $row['spf_id']?>" value="<?php echo $row['spf_title']?>"  required />
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Choose resume code complete -->
+                                <div class="modal-footer" class="uploadupdate">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    <button type="button" id="updateFolderFile<?php echo $row['spf_id']?>" class="btn btn-primary">Update</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                //Update folder Name
+                $("#updateFolderFile<?php echo $row['spf_id']?>").on("click", function () {
+                    
+                    var txtGroupId = document.getElementById("txtGroupId").value;
+                    var txtFolderId = document.getElementById("txtFolderId<?php echo $row['spf_id']?>").value;
+                    var txtFolderTitle = document.getElementById("txtFolderTitle<?php echo $row['spf_id']?>").value;
+                    
+                    $.post("../myjobboard/updateresume.php", {txtGroupId: txtGroupId, txtFolderId: txtFolderId, txtFolderTitle: txtFolderTitle}, function () {
+                        location.reload();
+                        $(".modal").modal('hide');
+
+                    });
+
+                })
+                
+
+                //Delete folder from group
+                //$("#folderDel</?php echo $row['spf_id']?>").on("click", function () {
+            //         function folderDel(id)
+
+            //             swal({
+            //                 title: "Are you sure?",
+            //                 type: "warning",
+            //                 confirmButtonClass: "sweet_ok",
+            //                 confirmButtonText: "Yes",
+            //                 cancelButtonClass: "sweet_cancel",
+            //                 cancelButtonText: "No",
+            //                 showCancelButton: true,
+            //             },
+            //             function(isConfirm) {
+            //                 if (isConfirm) {
+            //                 var txtDelfold = document.getElementById("txtDelfold<?php echo $row['spf_id']?>").value;
+            //                 window.location = txtDelfold;
+            //                 }
+            //             });
+            //         /*if (confirm("Are you sure you want to Delete Folder?")) {
+            //             var txtDelfold = document.getElementById("txtDelfold<?php echo $row['spf_id']?>").value;
+            //             window.location = txtDelfold;
+            //         }*/
+            //     });
+            // </script>
+            <?php
+        }
+    
+}
+
+
+?>
+</td>
+</tr>
+<?php
+
+}
+}
+$countMiscFile = $spf->countMiscFile($group_id);
+$countTrashFile = $spf->countTrashFolder($group_id);
+?>                     
+        
+
+<!-- <tr>
+<td class="text-left">
+<a href="<?php echo $BaseUrl.'/grouptimelines/group-folder.php?groupid='.$_GET['groupid'].'&groupname='.$_GET['groupname'].'&files&trash'?>">
+<img src="<?php echo $BaseUrl;?>/assets/images/icon/files/folder_icon.png" class="img-responsive"> Trash (<span><?php echo $countTrashFile;?></span>)
+</a>
+</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr> -->
+<!-- <tr>
+<td class="text-left">
+<a href="<?php echo $BaseUrl.'/grouptimelines/group-folder.php?groupid='.$_GET['groupid'].'&groupname='.$_GET['groupname'].'&files&misc'?>">
+<img src="<?php echo $BaseUrl;?>/assets/images/icon/files/folder_icon.png" class="img-responsive"> Miscellaneous (<span><?php echo $countMiscFile;?></span>)
+</a>
+</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr> -->
+<!-- <tr>
+<td class="text-left">
+<a href="<?php echo $BaseUrl.'/grouptimelines/group-folder.php?groupid='.$_GET['groupid'].'&groupname='.$_GET['groupname'].'&files&shared'?>">
+<img src="<?php echo $BaseUrl;?>/assets/images/icon/files/folder_icon.png" class="img-responsive"> Shared
+</a>
+</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr> -->
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<?php
+}?>
+</div>
+</div>
+</div>
+
+
+
+
+</div>  
+
+</div>
+</div>  
+</section>
+<script type="text/javascript">
+var hostUrl = window.location.host; 
+var hostSchema = window.location.protocol;
+var MAINURL = hostSchema+'//'+hostUrl;
+//Upload New File in folder
+/*    $("#uploadfile").on("click", function () {
+
+var time = new Date();
+var d = $.datepicker.formatDate("dd M", new Date());
+if ($("#adddocument").val() != "" && $("#mediatitle").val() != "") {
+
+$(".media-file-data").each(function (i, e)
+{
+
+var base64image = $(e).attr("data-media");
+var arr = base64image.match(/data:[a-zA-Z0-9 -/]+;/);
+var ext = arr[0].replace("data:", "");
+
+var txtFolerName = document.getElementById("txtFolerName").value;
+if(txtFolerName == ""){
+var txtFoldTitle = document.getElementById("txtFoldTitle").value;
+}else{
+var txtFoldTitle = "";
+}
+
+
+$.post("../myjobboard/addgroupfile.php", {txtFolerName: txtFolerName, txtFoldTitle:txtFoldTitle, spPostingMedia: base64image, ext: ext, mediatitle: $("#mediatitle").val(), profileid: $(".dynamic-pid").val(), filename: $("#adddocument").val(), groupid: $("#grpid").val()}, function (r) {
+
+var mediaid = r;
+//alert(mediaid);
+mediaid = mediaid.trim();
+//Getting File Information
+
+$.post('../grouptimelines/priviewfile.php', {mediaid: mediaid}, function (response) {
+var previewfile = response;
+//Testing Complete
+
+$('.table > tbody:last').append("<tr class='resumeoperation'><td width='72%' data-toggle='modal' data-target='#previewfile' data-src='https://thesharepage.com/resume/" + previewfile.trim() + "' class='preview'><a href='#'>" + $("#mediatitle").val() + "</a></td><td width='10%'><b>" + $(".dynamic-profilename").val() + "</b></td><td width='10%'>" + d + " " + time.getHours() + ":" + time.getMinutes() + "</td><td width='2%'><a href='https://thesharepage.com/resume/" + previewfile.trim() + "'  ata-toggle='tooltip' data-placement='left' title='Download'><span class='glyphicon glyphicon-download'  ></span></a></td><td width='6%'><button type='button' class='btn btn-link deleteresume' data-mediaid='" + mediaid + "'><span class='glyphicon glyphicon-trash'></span> Delete</td></tr>");
+$('#newfile').modal('toggle');
+location.reload();
+});
+});
+});//validation Check
+}
+if ($("#adddocument").val() == "")
+alert("Please select file..");
+if ($("#mediatitle").val() == "")
+alert("Please fill file title..");
+});*/
+
+$("#uploadfile").on("click", function () {
+
+var time = new Date();
+var d = $.datepicker.formatDate("dd M", new Date());
+/*alert($("#mediatitle").val())*/
+if ($("#mediatitle").val() != "") {
+
+/* $(".media-file-data").each(function (i, e)
+{*/
+
+/*   var base64image = $(e).attr("data-media");
+var arr = base64image.match(/data:[a-zA-Z0-9 -/]+;/);
+var ext = arr[0].replace("data:", "");*/
+
+var txtFolerName = document.getElementById("txtFolerName").value;
+if(txtFolerName == ""){
+var txtFoldTitle = document.getElementById("txtFoldTitle").value;
+}else{
+var txtFoldTitle = "";
+}
+
+
+/*  $.post("../myjobboard/addgroupfile.php", {txtFolerName: txtFolerName, txtFoldTitle:txtFoldTitle, spPostingMedia: base64image, ext: ext, mediatitle: $("#mediatitle").val(), profileid: $(".dynamic-pid").val(), filename: $("#adddocument").val(), groupid: $("#grpid").val()}, function (r) {*/
+$.post("../myjobboard/addgroupfile.php", {txtFolerName: txtFolerName, txtFoldTitle:txtFoldTitle, mediatitle: $("#mediatitle").val(), profileid: $(".dynamic-pid").val(), groupid: $("#grpid").val()}, function (r) {
+
+location.reload();
+/* var mediaid = r;
+//alert(mediaid);
+mediaid = mediaid.trim();*/
+//Getting File Information
+
+/*  $.post('../grouptimelines/priviewfile.php', {mediaid: mediaid}, function (response) {
+var previewfile = response;
+//Testing Complete
+
+$('.table > tbody:last').append("<tr class='resumeoperation'><td width='72%' data-toggle='modal' data-target='#previewfile' data-src='https://thesharepage.com/resume/" + previewfile.trim() + "' class='preview'><a href='#'>" + $("#mediatitle").val() + "</a></td><td width='10%'><b>" + $(".dynamic-profilename").val() + "</b></td><td width='10%'>" + d + " " + time.getHours() + ":" + time.getMinutes() + "</td><td width='2%'><a href='https://thesharepage.com/resume/" + previewfile.trim() + "'  ata-toggle='tooltip' data-placement='left' title='Download'><span class='glyphicon glyphicon-download'  ></span></a></td><td width='6%'><button type='button' class='btn btn-link deleteresume' data-mediaid='" + mediaid + "'><span class='glyphicon glyphicon-trash'></span> Delete</td></tr>");
+$('#newfile').modal('toggle');
+location.reload();
+});*/
+});
+/*});//validation Check*/
+}
+/*    if ($("#adddocument").val() == "")
+alert("Please select file..");
+if ($("#mediatitle").val() == "")
+alert("Please fill file title..");*/
+});
+
+
+
+$("#uploadfilemedia").on("click", function () {
+
+var time = new Date();
+var d = $.datepicker.formatDate("dd M", new Date());
+
+if ($("#adddocument").val() != "" && $("#mediatitle").val() != "") {
+
+$(".media-file-data").each(function (i, e)
+{
+var base64image = $(e).attr("data-media");
+var arr = base64image.match(/data:[a-zA-Z0-9 -/]+;/);
+var ext = arr[0].replace("data:", "");
+
+var txtFolerName = document.getElementById("txtFolerName").value;
+if(txtFolerName == ""){
+var txtFoldTitle = document.getElementById("txtFoldTitle").value;
+}else{
+var txtFoldTitle = "";
+}
+
+
+$.post("../myjobboard/addgroupfile.php", {txtFolerName: txtFolerName, txtFoldTitle:txtFoldTitle, spPostingMedia: base64image, ext: ext, mediatitle: $("#mediatitle").val(), profileid: $(".dynamic-pid").val(), filename: $("#adddocument").val(), groupid: $("#grpid").val()}, function (r) {
+
+var mediaid = r;
+//alert(mediaid);
+mediaid = mediaid.trim();
+//Getting File Information
+$.post('../grouptimelines/priviewfile.php', {mediaid: mediaid}, function (response) {
+var previewfile = response;
+//Testing Complete
+
+$('.table > tbody:last').append("<tr class='resumeoperation'><td width='72%' data-toggle='modal' data-target='#previewfile' data-src='"+mainUrl+"/resume/" + previewfile.trim() + "' class='preview'><a href='#'>" + $("#mediatitle").val() + "</a></td><td width='10%'><b>" + $(".dynamic-profilename").val() + "</b></td><td width='10%'>" + d + " " + time.getHours() + ":" + time.getMinutes() + "</td><td width='2%'><a href='"+mainUrl+"/resume/" + previewfile.trim() + "'  ata-toggle='tooltip' data-placement='left' title='Download'><span class='glyphicon glyphicon-download'  ></span></a></td><td width='6%'><button type='button' class='btn btn-link deleteresume' data-mediaid='" + mediaid + "'><span class='glyphicon glyphicon-trash'></span> Delete</td></tr>");
+$('#newfile').modal('toggle');
+location.reload();
+});
+});
+});//validation Check
+}
+/* if ($("#adddocument").val() == "")
+alert("Please select file..");
+if ($("#mediatitle").val() == "")
+alert("Please fill file title..");*/
+});
+
+
+</script>
+<script src='https://cdn.rawgit.com/t4t5/sweetalert/v0.2.0/lib/sweet-alert.min.js'></script>
+
+<script>
+function fol_del(mm){
+
+swal({
+title: "Are you sure to delete?",
+type: "warning",
+confirmButtonClass: "sweet_ok",
+confirmButtonText: "Yes",
+cancelButtonClass: "sweet_cancel",
+cancelButtonText: "No",
+showCancelButton: true,
+}, function (isConfirm) {
+if (isConfirm) {
+//alert('jkfgf');
+//alert(isfavourite);
+$.post("../social/deletefol.php", {
+
+id: mm
+}, function (response) {
+//alert(response);
+window.location.reload();
+});
+
+
+
+}
+});
+}
+</script>
+
+
+
+<?php include('../component/footer.php');?>
+<!-- INNER PAGE SCRIPTS STARTS FOR SMS AND EMAIL START-->
+<?php include('../component/btm_script.php'); ?>
+
+</body> 
+</html>

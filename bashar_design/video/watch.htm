@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">	
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/video.css">
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>	
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+
+<body cz-shortcut-listen="true"> 
+
+	<div class="container-fluid">
+		<div class="row">			
+			<div class="wrapper">
+				<!-- Sidebar Holder -->
+					<div id="sidebar">
+						<nav class="">
+							<div class="sidebar-header">
+								<div class="profile" style="margin: 0 27%; text-align: center;">
+									<img src="https://dummyimage.com/100x100/000/fff" class="img-circle">
+									<h4>Kim Jhone</h4>
+									<p>Vloger</p>
+								</div>
+
+								<div class="input-group">
+									<input type="text" class="form-control" placeholder="Search for...">
+									<span class="input-group-btn">
+										<button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+									</span>
+								</div><!-- /input-group -->
+								<div class="input-group">
+									<button type="button" onclick="window.location.href='dashboard.htm'" class="btn btn-success btn-block"><i class="fa fa-dashboard"></i> Dashboard</button>	
+								</div>
+								<div class="input-group">
+									<button type="button" onclick="window.location.href='upload.htm'" class="btn btn-primary btn-block"><i class="fa fa-upload"></i> Upload</button>	
+								</div>
+							</div>
+							<ul>
+								<li><a href="index.htm"><i class="fa fa-home"></i> Home</a></li>				            
+								<li><a href="myuploads.htm"><i class="fa fa-video-camera"></i> My Videos </a></li>
+								<li><a href="myvideos.htm"><i class="fa fa-list"></i> My Playlist </a></li>
+								<li><a href="myvideos.htm"><i class="fa fa-file-video-o"></i> My Album </a></li>
+								<li><a href="myvideos.htm"><i class="fa fa-heart"></i> My Favourites </a></li>
+								<li><a href="myearning.htm"><i class="fa fa-dollar"></i> My Earning </a></li>
+								<li><a href="myvideos.htm"><i class="fa fa-file-video-o"></i> My Purchased Video </a></li>
+								<li><a href="myvideos.htm"><i class="fa fa-handshake-o"></i> Contributions </a></li>
+								<li><a href="myvideos.htm"><i class="fa fa-flag"></i> Flagged Videos </a></li>
+								<li><a href="history.htm"><i class="fa fa-history"></i> History </a></li>
+							</ul>  						
+						</nav>
+					</div>
+				<div class="">
+				<div class="col-xs-12 col-sm-12 col-md-10 main">
+					<!-- Page Content Holder -->
+				<div id="content">
+					<button type="button" id="sidebarCollapse" class="btn btn-primary navbar-btn"><i class="fa fa-bars"></i></button>						
+				</div>
+					<ol class="breadcrumb">
+						<li><a href="#">Video Home</a></li>  
+						<li><a href="#">Dashboard</a></li>          
+					</ol>
+					<!-- 16:9 aspect ratio -->
+					<div class="embed-responsive embed-responsive-16by9" >
+						<!-- The video -->
+						<video loop id="myVideo">
+							<source src="rain.mp4" type="video/mp4">
+						</video>
+							<div class="hide">
+								<button id="myBtn" onclick="myFunction()" class="center"><i class="fa fa-play"></i></button>
+								<!-- Optional: some overlay text to describe the video -->
+								<div class="content">
+
+								</div>
+							</div>						
+					</div>	
+					<div class="title">
+						<div class="pull-left"><i class="fa fa-thumbs-up"></i> | <i class="fa fa-thumbs-down"></i> | <i class="fa fa-share-alt" aria-hidden="true"></i>	</div>	
+
+						<div class="pull-right"> <button type="button" class="btn btn-danger pull-right">Subscribe</button></div>
+					</div>
+					<div class="description">
+						<h4>Dummy Video Title Full</h4>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+							tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+							tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+							quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo...								
+							<a class="" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="">
+								More
+							</a>
+						</p>
+						<div class="collapse" id="collapseExample">
+							<div class="">
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+								tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+								quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+								consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+								cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+								proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+								tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+								quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+								consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+								cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+								proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+								tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+								quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+								consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+								cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+								proident, sunt in culpa qui officia deserunt mollit anim id est laborum.	Ut enim ad minim veniam,
+								quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+								consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+								cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+								proident, sunt in culpa qui officia deserunt mollit anim id est laborum...
+								<div class="tags">
+									<button class="btn btn-outline-secondary btn-round">Rain</button>
+									<button class="btn btn-outline-secondary btn-round">Movie</button>
+									<button class="btn btn-outline-secondary btn-round">space</button>
+									<button class="btn btn-outline-secondary btn-round">funny</button>
+									<button class="btn btn-outline-secondary btn-round">classical</button>
+								</div>
+							</div>
+						</div>
+					</div>						
+					<div class="comments">
+						<div class="col-md-12">
+							<textarea class="form-control" rows="3" placeholder="Type Your comment here and Enter"></textarea>
+						<button class="btn btn-default pull-right"> Post Comment</button><hr>
+						</div>						
+						<div class="channel-subscribe">
+							<div class="channel-picture">
+								<a href="#" title="Music Channel">
+									<img data-src="https://dummyimage.com/70x70/000/fff" data-srcset="https://dummyimage.com/70x70/000/fff 50w, https://dummyimage.com/70x70/000/fff 150w, https://dummyimage.com/70x70/000/fff 298w" data-sizes="(max-width: 50px) 100vw, 50px" class="effect-fade lazyloaded" src="https://dummyimage.com/70x70/000/fff" style="padding-top:100%;" alt="vp-ms07" sizes="(max-width: 50px) 100vw, 50px" srcset="https://dummyimage.com/70x70/000/fff 50w, https://dummyimage.com/70x70/000/fff 150w, https://dummyimage.com/70x70/000/fff 298w">
+								</a>
+							</div>
+							<div class="channel-content">
+								<h4 class="channel-title h6">
+									<a href="#" title="Music Channel">
+										Dumay Name
+									</a>
+								</h4><div class="posted-on metadata-font">
+									<span class="cactus-info font-size-1"><span> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+										tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+										quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+										consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+										cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+									proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span></span>
+
+								</div>
+							</div>
+						</div>
+						<div class="channel-subscribe">
+							<div class="channel-picture">
+								<a href="#" title="Music Channel">
+									<img data-src="https://dummyimage.com/70x70/000/fff" data-srcset="https://dummyimage.com/70x70/000/fff 50w, https://dummyimage.com/70x70/000/fff 150w, https://dummyimage.com/70x70/000/fff 298w" data-sizes="(max-width: 50px) 100vw, 50px" class="effect-fade lazyloaded" src="https://dummyimage.com/70x70/000/fff" style="padding-top:100%;" alt="vp-ms07" sizes="(max-width: 50px) 100vw, 50px" srcset="https://dummyimage.com/70x70/000/fff 50w, https://dummyimage.com/70x70/000/fff 150w, https://dummyimage.com/70x70/000/fff 298w">
+								</a>
+							</div>
+							<div class="channel-content">
+								<h4 class="channel-title h6">
+									<a href="#" title="Music Channel">
+										Dumay Name
+									</a>
+								</h4>
+								<div class="posted-on metadata-font">
+									<span class="cactus-info font-size-1"><span> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+										tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+										quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+										consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+										cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+									proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span></span>
+
+								</div>
+							</div>
+						</div>
+						<div class="channel-subscribe">
+							<div class="channel-picture">
+								<a href="#" title="Music Channel">
+									<img data-src="https://dummyimage.com/70x70/000/fff" data-srcset="https://dummyimage.com/70x70/000/fff 50w, https://dummyimage.com/70x70/000/fff 150w, https://dummyimage.com/70x70/000/fff 298w" data-sizes="(max-width: 50px) 100vw, 50px" class="effect-fade lazyloaded" src="https://dummyimage.com/70x70/000/fff" style="padding-top:100%;" alt="vp-ms07" sizes="(max-width: 50px) 100vw, 50px" srcset="https://dummyimage.com/70x70/000/fff 50w, https://dummyimage.com/70x70/000/fff 150w, https://dummyimage.com/70x70/000/fff 298w">
+								</a>
+							</div>
+							<div class="channel-content">
+								<h4 class="channel-title h6">
+									<a href="#" title="Music Channel">
+										Dumay Name
+									</a>
+								</h4>
+								<div class="posted-on metadata-font">
+									<span class="cactus-info font-size-1"><span> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+										tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+										quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+										consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+										cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+									proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span></span>
+
+								</div>
+							</div>
+						</div>
+						<div class="channel-subscribe">
+							<div class="channel-picture">
+								<a href="#" title="Music Channel">
+									<img data-src="https://dummyimage.com/70x70/000/fff" data-srcset="https://dummyimage.com/70x70/000/fff 50w, https://dummyimage.com/70x70/000/fff 150w, https://dummyimage.com/70x70/000/fff 298w" data-sizes="(max-width: 50px) 100vw, 50px" class="effect-fade lazyloaded" src="https://dummyimage.com/70x70/000/fff" style="padding-top:100%;" alt="vp-ms07" sizes="(max-width: 50px) 100vw, 50px" srcset="https://dummyimage.com/70x70/000/fff 50w, https://dummyimage.com/70x70/000/fff 150w, https://dummyimage.com/70x70/000/fff 298w">
+								</a>
+							</div>
+							<div class="channel-content">
+								<h4 class="channel-title h6">
+									<a href="#" title="Music Channel">
+										Dumay Name
+									</a>
+								</h4>
+								<div class="posted-on metadata-font">
+									<span class="cactus-info font-size-1">
+										<span> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+											tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+											quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+											consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+											cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+										proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span>
+									</span>
+
+								</div>
+							</div>
+						</div>											
+					</div>
+					<div id="comments" class="comments-area">
+						<div id="respond" class="comment-respond">
+							<h3 id="reply-title" class="comment-reply-title">ADD YOUR CONTRIBUTION TO THIS VIDEO <small><a rel="nofollow" id="cancel-comment-reply-link" href="#" style="display:none;">Cancel reply</a></small></h3>			
+							<form action="https://videopro.cactusthemes.com/v1/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+								<p class="comment-notes">
+									<span id="email-notes">Your email address will not be published.</span> Required fields are marked 
+									<span class="required">*</span>
+								</p>
+								<textarea id="comment" name="comment" aria-required="true" required="required" placeholder="Your comment *"></textarea>
+								<input id="author" name="author" type="text" placeholder="Your Name *" value=""  required="required" aria-required="true">
+								<input id="email" placeholder="Your Email *" name="email" type="email" value=""  required="required" aria-required="true">								
+								<p class="comment-form-cookies-consent">
+									<input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes">
+									<label for="wp-comment-cookies-consent">Save my name, email, and website in this browser for the next time I comment.</label>
+								</p>
+								<p class="form-submit">
+									<input name="submit" type="submit" id="submit" class="submit" value="Send Contribution"> 
+									<input type="hidden" name="comment_post_ID" value="129" id="comment_post_ID">
+									<input type="hidden" name="comment_parent" id="comment_parent" value="0">
+								</p>
+								<p style="display: none;">
+									<input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="0e42bd1963">
+								</p>
+								<p style="display: none;"></p>			
+								<input type="hidden" id="ak_js" name="ak_js" value="1639761916913">
+							</form>
+						</div>
+					</div>
+				</div>	
+
+				<div class="col-xs-12 col-sm-12 col-md-2">
+					<div id="right_sidebar">
+						<a href="watch.htm">
+							<div class="itemsContainer">
+								<div class="image"> <img src="https://dummyimage.com/500x500/000/fff" /> </div>
+								<div class="play"><img src="http://cdn1.iconfinder.com/data/icons/flavour/button_play_blue.png" /> </div>
+							</div>
+							<h4>Dummy Video Title</h4>
+						</a>
+						<hr>
+						<a href="watch.htm">
+							<div class="itemsContainer">
+								<div class="image"> <img src="https://dummyimage.com/500x500/000/fff" /> </div>
+								<div class="play"><img src="http://cdn1.iconfinder.com/data/icons/flavour/button_play_blue.png" /> </div>
+							</div>
+							<h4>Dummy Video Title</h4>
+						</a>
+						<hr>
+						<a href="watch.htm">
+							<div class="itemsContainer">
+								<div class="image"> <img src="https://dummyimage.com/500x500/000/fff" /> </div>
+								<div class="play"><img src="http://cdn1.iconfinder.com/data/icons/flavour/button_play_blue.png" /> </div>
+							</div>
+							<h4>Dummy Video Title</h4>
+						</a>
+						<hr>
+						<a href="watch.htm">
+							<div class="itemsContainer">
+								<div class="image"> <img src="https://dummyimage.com/500x500/000/fff" /> </div>
+								<div class="play"><img src="http://cdn1.iconfinder.com/data/icons/flavour/button_play_blue.png" /> </div>
+							</div>
+							<h4>Dummy Video Title</h4>
+						</a>
+						<hr>
+						<a href="watch.htm">
+							<div class="itemsContainer">
+								<div class="image"> <img src="https://dummyimage.com/500x500/000/fff" /> </div>
+								<div class="play"><img src="http://cdn1.iconfinder.com/data/icons/flavour/button_play_blue.png" /> </div>
+							</div>
+							<h4>Dummy Video Title</h4>
+						</a>
+						<hr>
+						<a href="watch.htm">
+							<div class="itemsContainer">
+								<div class="image"> <img src="https://dummyimage.com/500x500/000/fff" /> </div>
+								<div class="play"><img src="http://cdn1.iconfinder.com/data/icons/flavour/button_play_blue.png" /> </div>
+							</div>
+							<h4>Dummy Video Title</h4>
+						</a>
+						<hr>
+						<a href="watch.htm">
+							<div class="itemsContainer">
+								<div class="image"> <img src="https://dummyimage.com/500x500/000/fff" /> </div>
+								<div class="play"><img src="http://cdn1.iconfinder.com/data/icons/flavour/button_play_blue.png" /> </div>
+							</div>
+							<h4>Dummy Video Title</h4>
+						</a>
+						<hr>
+						<a href="watch.htm">
+							<div class="itemsContainer">
+								<div class="image"> <img src="https://dummyimage.com/500x500/000/fff" /> </div>
+								<div class="play"><img src="http://cdn1.iconfinder.com/data/icons/flavour/button_play_blue.png" /> </div>
+							</div>
+							<h4>Dummy Video Title</h4>
+						</a>
+						<hr>
+						<a href="watch.htm">
+							<div class="itemsContainer">
+								<div class="image"> <img src="https://dummyimage.com/500x500/000/fff" /> </div>
+								<div class="play"><img src="http://cdn1.iconfinder.com/data/icons/flavour/button_play_blue.png" /> </div>
+							</div>
+							<h4>Dummy Video Title</h4>
+						</a>
+						<hr>
+						<a href="watch.htm">
+							<div class="itemsContainer">
+								<div class="image"> <img src="https://dummyimage.com/500x500/000/fff" /> </div>
+								<div class="play"><img src="http://cdn1.iconfinder.com/data/icons/flavour/button_play_blue.png" /> </div>
+							</div>
+							<h4>Dummy Video Title</h4>
+						</a>
+					</div>								
+				</div>
+				</div>
+			</div>		
+		</div>
+	</div>
+
+		<!--================================================== -->
+
+		<script type="text/javascript" src="js/video.js"></script>	
+		<script type="text/javascript">
+			$("#myVideo").hover(function() {
+				$('#elements').removeClass('hide');
+			}, function() {
+				$('#elements').addClass('hide');
+			});
+			// Get the video
+			var video = document.getElementById("myVideo");
+			// Get the button
+			var btn = document.getElementById("myBtn");
+
+			// Pause and play the video, and change the button text
+			function myFunction() {
+				if (video.paused) {
+					video.play();    
+					btn.innerHTML = '<i class="fa fa-pause" style:"padding:100px;"></i>';    
+				} else {
+					video.pause();
+					btn.innerHTML = '<i class="fa fa-play" style:"padding:100px;"></i>';
+				}
+			}
+
+			
+		</script>
+	</body>
+	</html>

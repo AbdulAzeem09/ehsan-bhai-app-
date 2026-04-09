@@ -1,0 +1,162 @@
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+@media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+    }
+}
+
+
+.btn-primary {
+    color: #fff;
+    /*background-color: #0d6efd;*/
+    /*border-color: #0d6efd;*/
+    background-color: #3e2048;
+    border-color: #3e2048;
+}
+
+.btn-primary:hover {
+    color: #000;
+    background: rgb(240, 87, 94);
+    background: linear-gradient(130deg, rgba(240, 87, 94, 1) 0%, rgba(153, 133, 190, 1) 20%, rgba(123, 199, 230, 1) 40%, rgba(143, 208, 181, 1) 60%, rgba(234, 128, 36, 1) 80%, rgba(211, 186, 42, 1) 100%);
+    border-color: #3e2048;
+}
+
+.btn-secondary {
+    background-color: #eadcff;
+    color: #000;
+}
+
+.btn-secondary:hover {
+    color: #000;
+    background: rgb(240, 87, 94);
+    background: linear-gradient(130deg, rgba(240, 87, 94, 1) 0%, rgba(153, 133, 190, 1) 20%, rgba(123, 199, 230, 1) 40%, rgba(143, 208, 181, 1) 60%, rgba(234, 128, 36, 1) 80%, rgba(211, 186, 42, 1) 100%);
+    border-color: #3e2048;
+}
+
+.marketing h2 {
+    font-weight: 600;
+    color: #000;
+}
+
+.marketing p {
+    color: #000;
+}
+
+.bg1 {
+    background-color: #a0e266;
+    min-height: 420px;
+    margin-top: 75px;
+}
+
+.bg1 img {
+    margin-top: -75px;
+}
+
+.bg2 {
+    background-color: #f15353;
+    min-height: 420px;
+    margin-top: 75px;
+}
+
+.bg2 img {
+    margin-top: -75px;
+}
+
+.bg3 {
+    background-color: #fce047;
+    min-height: 420px;
+    margin-top: 75px;
+}
+
+.bg3 img {
+    margin-top: -75px;
+}
+
+.bg4 {
+    background-color: #a4d6f9;
+    min-height: 420px;
+    margin-top: 75px;
+}
+
+.bg4 img {
+    margin-top: -75px;
+}
+
+.bg5 {
+    background-color: rgba(234, 128, 36, 1);
+}
+
+.bg6 {
+    background-color: rgba(211, 186, 42, 1);
+}
+
+a {
+    color: #090b3c;
+    text-decoration: none;
+}
+
+.icons {
+    background: #fff;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.icons:hover,
+a:hover {
+    background: #3e2048;
+    color: #fff;
+}
+
+/***** 20.07.2020 ****/
+body {
+    overflow-x: hidden;
+}
+
+.topPohotoshome .topartBox .badge {
+    padding: 7px 12px;
+    border-radius: 0px;
+    display: inline-block;
+}
+
+.marketing .feat_box {
+    padding: 25px 25px !important;
+}
+
+@media(max-width: 767px) {
+    .container.foot-index {
+        width: 100% !important;
+    }
+
+    .foot {
+        padding: 20px 0 !important;
+    }
+    .btm_foot.text-center p {
+        margin-bottom: 4px;
+        font-size: 12px;
+    }
+    
+}
+
+.featurette-divider {
+    margin: 2rem 0;
+}
+
+.featurette .icons img {
+    max-height: 70px;
+}
+
+.featurette .icons h6 {
+    font-size: 15px;
+    margin-top: 10px;
+
+}
+
+.navright {
+    text-align: center;
+}

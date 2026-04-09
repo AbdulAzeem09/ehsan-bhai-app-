@@ -1,0 +1,226 @@
+<?php
+    ob_start();
+    include('../univ/baseurl.php');
+    session_start();
+if (!isset($_SESSION['pid'])) {
+    $_SESSION['afterlogin'] = "my-groups/";
+    include_once ("../authentication/check.php");
+
+}else{
+    function sp_autoloader($class) {
+        include '../mlayer/' . $class . '.class.php';
+    }
+
+    spl_autoload_register("sp_autoloader");
+
+
+    include('email_campaign/Classes/PHPExcel/IOFactory.php');
+    include('../mlayer/emailCampaignUser.php');
+    if(isset($_GET['groupid']) && isset($_GET['groupname']) && $_GET['groupid'] > 0){
+
+    }else{
+        header('location:'.$BaseUrl.'/timeline');
+    }
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <?php include('../component/f_links.php');?>
+        <!--NOTIFICATION-->
+        <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.3/animate.min.css'>
+        <!--This script for sticky left and right sidebar STart-->
+        <script type="text/javascript" src="<?php echo $BaseUrl;?>/assets/js/jquery.hc-sticky.min.js"></script>
+        <script>
+            function execute(settings) {
+                $('#sidebar').hcSticky(settings);
+            }
+            // if page called directly
+            jQuery(document).ready(function($){
+                if (top === self) {
+                    execute({
+                        top: 20,
+                        bottom: 50
+                    });
+                }
+            });
+            function execute_right(settings) {
+                $('#sidebar_right').hcSticky(settings);
+            }
+             // if page called directly
+            jQuery(document).ready(function($){
+                if (top === self) {
+                    execute_right({
+                        top: 20,
+                        bottom: 50
+                    });
+                }
+            });
+
+        </script>
+
+    </head>
+    <body onload="pageOnload('groupdd')" class="bg_gray">
+        <?php
+
+        include_once ("../header.php");
+        if (!isset($_SESSION['pid'])) {
+            include_once ("../authentication/check.php");
+            $_SESSION['afterlogin'] = "../grouptimelines/?groupid=" . $_GET["groupid"] . "&groupname=" . $_GET['groupname'] . "&timeline";
+        }
+        $g = new _spgroup;
+        $result = $g->groupdetails($_GET["groupid"]);
+        //echo $g->ta->sql;
+        if ($result != false) {
+            $row = mysqli_fetch_assoc($result);
+          /*  print_r($row);*/
+            $gimage = $row["spgroupimage"];
+            $spGroupflag = $row['spgroupflag'];
+        }
+
+                $result_ismember = $g->ismember($_GET["groupid"],$_SESSION['pid']);
+        //echo $g->ta->sql;
+        if($result_ismember != false){
+
+
+
+            $row_ismember = mysqli_fetch_assoc($result_ismember);
+
+           /* print_r($row_ismember);*/
+
+
+          /*  $admin_Id = $row_ismember['idspProfiles'];
+            $admin_Name = $row_ismember['spProfileName'];
+
+               $admin_ptype = $row_ismember['spProfileType_idspProfileType'];*/
+
+            $profile_exist = $row_ismember['spProfiles_idspProfiles'];
+                $approve =   $row_ismember['spApproveRegect'];
+
+            /*spApproveRegect*/
+
+        }
+
+
+
+        ?>
+
+
+        <!-- Trigger the modal with a button -->
+        <div class="modal fade" id="mycomment" tabindex="-1" role="dialog" aria-labelledby="commentModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content no-radius">
+                    <form action="../social/addcomment.php" method="post">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="commentModalLabel">Comments</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div id="commentUploading">
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-12" >
+                                    <div class="input-group">
+                                        <div class="input-group-addon commentprofile inputgroupadon">
+                                            <div id="profilepictures"></div>
+                                        </div>
+                                        <input type="text" class="form-control" name="comment" id="comment"  placeholder="Type your comment here ..." style='height:45px;border-radius: 0px;'>
+                                    </div>
+
+                                    <input type="hidden" id="postcomment" name="spPostings_idspPostings" value="" />
+                                    <input class="dynamic-pid" name="spProfiles_idspProfiles" type="hidden" value="<?php echo $_SESSION['pid'] ?>">
+                                    <input name="userid" type="hidden" value="<?php echo $_SESSION['uid']?>">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn_gray" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn_blue commentboxpost">Comment</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- COMMENT MODEL FOR TIMELINE START -->
+        <section class="landing_page">
+            <div class="container">
+                <input type="hidden" class="dynamic-pid" value="<?php echo $_SESSION['pid']; ?>">
+
+                <input type="hidden" id="grpid" value="<?php echo $_GET["groupid"]; ?>">
+                <input type="hidden" id="grpName" value="<?php echo $_GET["groupname"]; ?>">
+                <input type="hidden" class="dynamic-profilename" value="<?php echo $_SESSION['myprofile']; ?>">
+                <div class="row">
+                    <div id="sidebar" class="col-md-2 no-padding">
+                        <?php
+                        //GET ADMIN NAME OR ID
+                        include('../component/left-group.php');
+                        ?>
+                    </div>
+
+                    <div class="col-md-10">
+                        <?php include('top_banner_group.php');?>
+
+                        <div class="row">
+                            <div class="col-md-9">
+                                <?php
+                                    //this is another form for group timeline
+                                    $grouptimelines = 1;
+                                    if(!empty($profile_exist) &&  $approve == 1){
+                                    include("grouptimelineform.php");
+                                }
+                                    //GLOBAL TIME LINE DETAIL FOR GROUP OR TIMELINE
+                                    //include("../publicpost/globaltimelines.php");
+									include("../publicpost/grouptimeline.php");
+                                ?>
+                            </div>
+
+
+                         <?php if(!empty($profile_exist) &&  $approve == 1){ ?>
+
+                            <div id="sidebar_right" class="col-md-3" style="padding-left: 0px;">
+                                <div class="add_friend bg_white right_sidebar_group_timeline" style="height: 500px;">
+                                    <div class="member_add_top bg-white">
+                                        <h2><img src="<?php echo $BaseUrl;?>/assets/images/icon/time-line/add_member.png" class="" alt="" /> Add Members</h2>
+                                    </div>
+                                    <?php include('../my-groups/myfriend.php');?>
+                                    <!-- <div class="see_more">
+                                        <a href="#" class="">See More <img src="<?php echo $BaseUrl;?>/assets/images/icon/time-line/dropdown_arrow_black.png"></a>
+                                    </div> -->
+                                </div>
+
+                        <!--         <div class="add_friend bg_white right_sidebar_group_timeline">
+                                    <div class="member_add_top bg-white">
+                                        <h2>Who is online <img src="<?php echo $BaseUrl;?>/assets/images/icon/time-line/who_is_online.png" class="pull-right" alt="" /></h2>
+                                    </div>
+                                    <?php include('onlineusers.php');?>
+
+                                    <div class="member_add_top search_online bg-white" style="    padding-bottom: 33px;">
+                                        <input type="text" name="" class="form-control bradius-20" placeholder="Search" />
+                                    </div>
+
+                                </div> -->
+                            </div>
+
+                         <?php } ?>
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        <?php include('../component/f_footer.php');?>
+        <!-- INNER PAGE SCRIPTS STARTS FOR SMS AND EMAIL START-->
+        <?php include('../component/f_btm_script.php'); ?>
+        <script src='<?php echo $BaseUrl.'/assets/';?>js/bootstrap-notify.min.js'></script>
+    </body>
+</html>
+<?php
+} ?>

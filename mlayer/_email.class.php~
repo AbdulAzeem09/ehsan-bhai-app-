@@ -1,0 +1,2028 @@
+<?php
+
+//require_once($BaseUrl . "/univ/baseurl.php");
+
+class _email
+{
+    public $dbclose = false;
+	public $conn;
+	public $ta;
+	public $BaseUrl = "https://dev.thesharepage.com";
+	
+    // SEND SMS TO SINGLE USER AT THE TIME OF REGISTTATION
+    function sendemail(){
+        $emails = 'adnan@thesharepage.com';
+        $api_key = "ae6e0fc1f1fcf9db61dfc51f1d4831a8-9c988ee3-65f27b72"; /* Api Key got from https://mailgun.com/cp/my_account */
+        $domain = "dev.thesharepage.com";
+
+        $subject = "Developer";
+        $message = "Hi this is my first email";
+
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+        curl_setopt($ch, CURLOPT_USERPWD, 'api:' . $api_key);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+        curl_setopt($ch, CURLOPT_URL, 'https://api.mailgun.net/v2/' . $domain . '/messages');
+        curl_setopt($ch, CURLOPT_POSTFIELDS, array(
+            //'X-Mailgun-Recipient-Variables' => $myJSON,
+            'from'      => 'Thesharepage <info@thesharepage.com>',
+            'to'        =>  $emails,
+            'subject'   => $subject,
+            'html'      => $message,
+            'o:tracking-clicks' => TRUE
+        ));
+        $result = curl_exec($ch);
+        curl_close($ch);
+    }
+    // ===MAIL FUNCTION FOR SENDING ALL
+    function send_all_email($email_to, $subj, $message){
+
+        $email_test = array();
+        if ($email_to != '') {
+            $emails = $email_to;
+            if (isset($subj) && $subj != '') {
+                $subject = $subj;
+            }else{
+                $subject = "The SharePage";
+            }
+            
+            $txt = $message;        
+                        
+            $api_key = "ae6e0fc1f1fcf9db61dfc51f1d4831a8-9c988ee3-65f27b72"; /* Api Key got from https://mailgun.com/cp/my_account */
+            $domain = "dev.thesharepage.com";
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+            curl_setopt($ch, CURLOPT_USERPWD, 'api:' . $api_key);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+            curl_setopt($ch, CURLOPT_URL, 'https://api.mailgun.net/v2/' . $domain . '/messages');
+            curl_setopt($ch, CURLOPT_POSTFIELDS, array(
+                //'X-Mailgun-Recipient-Variables' => $myJSON,
+                'from'      => 'The SharePage <info@thesharepage.com>',
+                'to'        => $emails, //'adnan@jouple.com'
+                'subject'   => $subject,
+                'html'      => $txt,
+                'o:tracking-clicks' => TRUE
+            ));
+            $result = curl_exec($ch);
+            curl_close($ch);
+            //$string = '{ "id": "<20170424074159.23658.65668.63B3D50D@www.ondotz.com>", "message": "Queued. Thank you." }';
+            //$output = explode(',', $result);
+            $output = explode(',', $result);
+            $messageId = $output[0];
+            $string2 = ltrim($messageId, '{');
+            $string3 = ltrim($string2, ' "id": "<');
+            $string4 = trim($string3);
+            $string5 = ltrim($string4, '"id": "<');
+            $job_id = rtrim($string5, '>"');
+
+            return $job_id;
+        }
+        
+    }
+
+    // ===END
+
+
+    //new email 
+        function send_contact_email($email, $cname, $cemail, $message){
+
+
+            $msg = '
+            <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>The SharePage</title>
+                    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+                    <style type="text/css">
+                        .mmaintab{
+                            background: #FFF;
+                            margin: 0 auto;
+                            padding: 15px;
+                            width: 640px;
+                        }
+                        .logo h1{
+                            color: #000;
+                            margin: 20px 0px 25px;;
+
+                        }
+                        .letstart{
+                            background: #2F6230;
+                            padding: 15px;
+                            font-size: 20px;
+                            color: #FFF;
+                            margin: 15px 0px;
+                            text-align: center;
+                        }
+                        .letstart h1{
+                            font-size: 20px;
+                            margin: 0px;
+                        }
+                        .btn{
+                            background: #2F6230;
+                            color: #FFF!important;
+                            padding: 8px 15px;
+                            display: inline-block;
+                            margin-bottom: 15px;
+                            text-decoration: none;
+                            margin-top: 15px;
+                        }
+                        .foot{
+                            border-top: 1px solid;
+                            text-align: center;
+
+                        }
+                        .foot p{
+                            margin: 0px;
+                            color: #808080;
+                            padding: 10px
+                        }
+                        .no-margin{
+                            margin: 0px;
+                        }                   
+                    </style>
+                </head>
+                <body bgcolor="#efefef" text="#808080" style="background-color: #efefef; color: #808080; margin: 0px; padding: 20px; -webkit-text-size-adjust:none; line-height: normal; font-size: 16px; font-family:arial,helvetica,sans-serif;">
+                    <table class="mmaintab" border="0" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td align="center" class="logo" >
+                                    <a href="'.$this->BaseUrl.'/"><img src="'.$this->BaseUrl.'/assets/images/logo/tsp_trans.png" alt="The SharePage" style="width: 100px;"></a>
+                                    <h1>The SharePage</h1>
+                                </td>
+                            </tr>
+                       
+                            <tr>
+                                <td>
+                                    <p>Hi '.ucfirst(strtolower($cname)).',</p>
+                                    
+                                </td>
+                            </tr>
+
+                              <tr>
+                                <td>
+                                    <p> Email-'.ucfirst(strtolower($cemail)).'</p>
+                                    
+                                </td>
+                            </tr>
+
+                             <tr>
+                                <td>
+                                    <p> Message-'.ucfirst(strtolower($message)).'</p>
+                                    
+                                </td>
+                            </tr>
+                           
+                        </tbody>
+                        
+                    </table>
+                    <div style="width: 640px;text-align: center;margin: 0 auto">
+                        <p style="margin-bottom: 10px;">© Copyright '.date('Y').' The SharePage. All rights reserved.</p>
+                        
+                    </div>
+
+                </body>
+            </html>
+
+        ';
+               $subject = "The SharePage Store Contact Information.";
+
+             $this->send_all_email($email, $subject, $msg);
+
+        }
+
+  // public rfq email
+
+
+ function send_publicrfq_email($sellerEmailid, $buyerEmailid, $spTitle, $sellerName, $buyerName, $idspRfq){
+
+            $link = $this->BaseUrl."/store/dashboard/quotation_list.php?idspRfq=".$idspRfq;
+
+            $msg = '
+            <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>The SharePage</title>
+                    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+                    <style type="text/css">
+                        .mmaintab{
+                            background: #FFF;
+                            margin: 0 auto;
+                            padding: 15px;
+                            width: 640px;
+                        }
+                        .logo h1{
+                            color: #000;
+                            margin: 20px 0px 25px;;
+
+                        }
+                        .letstart{
+                            background: #2F6230;
+                            padding: 15px;
+                            font-size: 20px;
+                            color: #FFF;
+                            margin: 15px 0px;
+                            text-align: center;
+                        }
+                        .letstart h1{
+                            font-size: 20px;
+                            margin: 0px;
+                        }
+                        .btn{
+                            background: #2F6230;
+                            color: #FFF!important;
+                            padding: 8px 15px;
+                            display: inline-block;
+                            margin-bottom: 15px;
+                            text-decoration: none;
+                            margin-top: 15px;
+                        }
+                        .foot{
+                            border-top: 1px solid;
+                            text-align: center;
+
+                        }
+                        .foot p{
+                            margin: 0px;
+                            color: #808080;
+                            padding: 10px
+                        }
+                        .no-margin{
+                            margin: 0px;
+                        }                   
+                    </style>
+                </head>
+                <body bgcolor="#efefef" text="#808080" style="background-color: #efefef; color: #808080; margin: 0px; padding: 20px; -webkit-text-size-adjust:none; line-height: normal; font-size: 16px; font-family:arial,helvetica,sans-serif;">
+                    <table class="mmaintab" border="0" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td align="center" class="logo" >
+                                    <a href="'.$this->BaseUrl.'/"><img src="'.$this->BaseUrl.'/assets/images/logo/tsp_trans.png" alt="The SharePage" style="width: 100px;"></a>
+                                    <h1>The SharePage</h1>
+                                </td>
+                            </tr>
+                       
+                            <tr>
+                                <td>
+                                    <p>Hi '.ucfirst(strtolower($buyerName)).',</p>
+                                    
+                                </td>
+                            </tr>
+
+                          
+
+                             <tr>
+                                <td>
+                                    <p>'.ucfirst(strtolower($sellerName)).' quote on your '.ucfirst(strtolower($spTitle)).' product.</p>
+                                    
+                                </td>
+                            </tr>
+
+                             <tr>
+                                <td>
+                                 <a href="'.$link.'">See your quoted list</a>
+                                    
+                                </td>
+                            </tr>
+
+                            
+                           
+                        </tbody>
+                        
+                    </table>
+                    <div style="width: 640px;text-align: center;margin: 0 auto">
+                        <p style="margin-bottom: 10px;">© Copyright '.date('Y').' The SharePage. All rights reserved.</p>
+                        
+                    </div>
+
+                </body>
+            </html>
+
+        ';
+               $subject = "The SharePage Public RFQ Information.";
+
+             $this->send_all_email($buyerEmailid, $subject, $msg);
+
+        }
+    //new private email 
+        function send_privaterfq_email($sellerEmailid, $buyerEmailid, $spTitle, $sellerName, $buyerName){
+
+            $link = $this->BaseUrl."/store/dashboard/myprivate_rfq.php";
+
+            $msg = '
+            <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>The SharePage</title>
+                    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+                    <style type="text/css">
+                        .mmaintab{
+                            background: #FFF;
+                            margin: 0 auto;
+                            padding: 15px;
+                            width: 640px;
+                        }
+                        .logo h1{
+                            color: #000;
+                            margin: 20px 0px 25px;;
+
+                        }
+                        .letstart{
+                            background: #2F6230;
+                            padding: 15px;
+                            font-size: 20px;
+                            color: #FFF;
+                            margin: 15px 0px;
+                            text-align: center;
+                        }
+                        .letstart h1{
+                            font-size: 20px;
+                            margin: 0px;
+                        }
+                        .btn{
+                            background: #2F6230;
+                            color: #FFF!important;
+                            padding: 8px 15px;
+                            display: inline-block;
+                            margin-bottom: 15px;
+                            text-decoration: none;
+                            margin-top: 15px;
+                        }
+                        .foot{
+                            border-top: 1px solid;
+                            text-align: center;
+
+                        }
+                        .foot p{
+                            margin: 0px;
+                            color: #808080;
+                            padding: 10px
+                        }
+                        .no-margin{
+                            margin: 0px;
+                        }                   
+                    </style>
+                </head>
+                <body bgcolor="#efefef" text="#808080" style="background-color: #efefef; color: #808080; margin: 0px; padding: 20px; -webkit-text-size-adjust:none; line-height: normal; font-size: 16px; font-family:arial,helvetica,sans-serif;">
+                    <table class="mmaintab" border="0" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td align="center" class="logo" >
+                                    <a href="'.$this->BaseUrl.'/"><img src="'.$this->BaseUrl.'/assets/images/logo/tsp_trans.png" alt="The SharePage" style="width: 100px;"></a>
+                                    <h1>The SharePage</h1>
+                                </td>
+                            </tr>
+                       
+                            <tr>
+                                <td>
+                                    <p>Hi '.ucfirst(strtolower($sellerName)).',</p>
+                                    
+                                </td>
+                            </tr>
+
+                          
+
+                             <tr>
+                                <td>
+                                    <p>Your product '.ucfirst(strtolower($spTitle)).' quoted by  '.ucfirst(strtolower($buyerName)).'</p>
+                                    
+                                </td>
+                            </tr>
+
+                             <tr>
+                                <td>
+                                 <a href="'.$link.'">See your quoted list</a>
+                                    
+                                </td>
+                            </tr>
+
+                            
+                           
+                        </tbody>
+                        
+                    </table>
+                    <div style="width: 640px;text-align: center;margin: 0 auto">
+                        <p style="margin-bottom: 10px;">© Copyright '.date('Y').' The SharePage. All rights reserved.</p>
+                        
+                    </div>
+
+                </body>
+            </html>
+
+        ';
+               $subject = "The SharePage Private RFQ Information.";
+
+             $this->send_all_email($sellerEmailid, $subject, $msg);
+
+        }
+    // SEND USER EMAIL WHEN USER REGISTERED
+    function send_reg_email($email, $userName, $uid, $code){
+
+        $link = $this->BaseUrl."/authentication/activate.php?me=".$uid."&active=".$code;
+
+      /*  $msg = '
+            <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>The SharePage</title>
+                    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+                    <style type="text/css">
+                        .mmaintab{
+                            background: #FFF;
+                            margin: 0 auto;
+                            padding: 15px;
+                            width: 640px;
+                        }
+                        .logo h1{
+                            color: #000;
+                            margin: 20px 0px 25px;;
+
+                        }
+                        .letstart{
+                            background: #2F6230;
+                            padding: 15px;
+                            font-size: 20px;
+                            color: #FFF;
+                            margin: 15px 0px;
+                            text-align: center;
+                        }
+                        .letstart h1{
+                            font-size: 20px;
+                            margin: 0px;
+                        }
+                        .btn{
+                            background: #2F6230;
+                            color: #FFF;
+                            padding: 8px 15px;
+                            display: inline-block;
+                            margin-bottom: 15px;
+                            text-decoration: none;
+                            margin-top: 15px;
+                        }
+                        .btn:hover{
+                            opacity: 0.8;
+                        }
+                        .foot{
+                            border-top: 1px solid;
+                            text-align: center;
+
+                        }
+                        .foot p{
+                            margin: 0px;
+                            color: #808080;
+                            padding: 10px
+                        }
+                        .no-margin{
+                            margin: 0px;
+                        }                   
+                    </style>
+                </head>
+                <body bgcolor="#efefef" text="#808080" style="background-color: #efefef; color: #808080; margin: 0px; padding: 20px; -webkit-text-size-adjust:none; line-height: normal; font-size: 16px; font-family:arial,helvetica,sans-serif;">
+                    <table class="mmaintab" border="0" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td align="center" class="logo" >
+                                    <a href="'.$this->BaseUrl.'/">
+
+<img src="'.$this->BaseUrl.'/assets/images/logo/logo.png" alt="The SharePage" style="width: 100px;">
+
+                                    </a>
+                                    <h1>The SharePage</h1>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td class="letstart" >
+                                    <h1>Verify your email address</h1>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Hi '.ucfirst(strtolower($userName)).',</p>
+                                    
+                                    <p>Thanks for signing up to The SharePage.<br> To get access to your account please verify your email address.</p>
+                                    <a href="'.$link.'" class="btn">Verify your email address</a>
+                                    <p class="no-margin" >Regards,</p>
+                                    <p class="no-margin" >The SharePage</p>
+                                    <p class="no-margin" >A solution for an ad-free site where you can actually get value for your time.</p>
+                                    <p   style="min-height: 50px;"></p>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td  align="center" class="foot">
+                                    <p style="margin-b ottom: 0px;">This email was sent from a notification-only address. Please do not reply.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                        
+                    </table>
+                    <div style="width: 640px;text-align: center;margin: 0 auto">
+                        <p style="margin-bottom: 10px;">© Copyright 2019 The SharePage. All rights reserved.</p>
+                        
+                        <div >
+                            <a href="'.$this->BaseUrl.'/page/?page=privacy_policy" style="color: #808080;"">Privacy Policy</a> | <a href="'.$this->BaseUrl.'/page/?page=copyrights" style="color: #808080;"">Terms & Conditions</a>
+                        </div>
+                    </div>
+
+                </body>
+            </html>
+
+        ';
+       */
+
+
+       $msg = '
+       <!DOCTYPE html>
+            <html>
+            <head>
+                <title>The SharePage</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+                <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+                <style type="text/css">
+                    .mmaintab{
+                        background: #FFF;
+                        margin: 0 auto;
+                        padding: 15px;
+                        width: 640px;
+                    }
+                    .logo h1{
+                        color: #000;
+                        margin: 20px 0px 25px;;
+
+                    }
+                    .letstart{
+                        background: #032350;
+                        padding: 15px;
+                        font-size: 20px;
+                        color: #FFF;
+                        margin: 15px 0px;
+                        text-align: center;
+                    }
+                    .letstart h1{
+                        font-size: 20px;
+                        margin: 0px;
+                    }
+                    .btn{
+                        background: #032350;
+                        color: #FFF;
+                        padding: 8px 15px;
+                        display: inline-block;
+                        margin-bottom: 15px;
+                        text-decoration: none;
+                        margin-top: 15px;
+                    }
+                    .foot{
+                        border-top: 1px solid;
+                        text-align: center;
+
+                    }
+                    .foot p{
+                        margin: 0px;
+                        color: #808080;
+                        padding: 10px
+                    }
+                    
+                    
+
+table {
+  border-collapse: collapse;
+  border: 2px solid black;
+  margin-left:10px;
+  margin-right:10px;
+
+}
+
+table td {
+  border: 2px solid black;
+ 
+}
+
+.row > div {
+    margin-top:10px;
+     margin-left:10px;
+  margin-right:10px;
+  flex: 1;
+  border: 1px solid grey;
+}
+.left-margin{
+
+    margin-left:10px;
+
+}
+.btnhover:hover{
+    color:white!important;
+
+}
+.btnhover{
+color:#fff!important;
+}
+.tablecontent{
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: justify;
+
+}
+.paracontent{
+        padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    text-align: justify;
+
+}
+
+                </style>
+            </head>
+            <body bgcolor="#efefef" text="#808080" style="background-color: #efefef; color: #808080; margin: 0px; padding: 20px; -webkit-text-size-adjust:none; line-height: normal; font-size: 16px; font-family:arial,helvetica,sans-serif;">
+                <table class="mmaintab" border="0" cellpadding="0" cellspacing="0">
+                    <tbody>
+                        <tr>
+                            <td align="center" class="logo" >
+                                <a href="javascript:void(0)">
+                                    
+<img src="'.$this->BaseUrl.'/assets/images/logo/tsplogo.PNG" alt="logo" style="height: 100px;" class="img-responsive" >
+
+                        
+                                </a>
+
+                                <h1>The SharePage</h1>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="letstart" >
+                                <h1>Verify your email address</h1>
+
+                            </td>
+                        </tr>
+                        <tr>
+                     
+
+                            <td>
+                            
+                                <p class="left-margin" style=" text-transform: capitalize;">Hey '.ucfirst(strtolower($userName)).',</p>
+                                
+                                <p class="left-margin" >Congratulations!! You are all set now at the Sharepage!!<br>Login to your account and discover all the possibilities<br>Here is a glimps of what you can find at the SharePage!</p>
+
+
+<table class="table" >
+  
+  <tbody>
+    <tr>
+      
+      <td><img src="'.$this->BaseUrl.'/assets/images/logo/table1.PNG" alt="table" style="height: 100px;" class="img-responsive" >
+</td>
+      <td class="tablecontent">Business and pleasure is not going to mix any more! Now you can add your family and friends with confidence by creating different profiles! </td>
+    
+    </tr>
+    <tr>
+     
+      <td><img src="'.$this->BaseUrl.'/assets/images/logo/table2.PNG" alt="table" style="height: 100px; padding-left: 8px;" class="img-responsive" ></td>
+      <td class="tablecontent">You have a store that’s ready for you! All you have to do is upload the images of your items and start selling!</td>
+      
+    </tr>
+    <tr>
+     
+      <td><img src="'.$this->BaseUrl.'/assets/images/logo/table3.PNG" alt="table" style="height: 100px; padding-left: 8px;" class="img-responsive" ></td>
+      <td class="tablecontent">You think u can make some extra income from freelancing?? Here is an opportunity to find freelancer work as well as find freelancers!</td>
+      
+    </tr>
+  </tbody>
+</table>
+
+<div class="row"> 
+<div class="col-xs-12 paracontent">
+This is just a glimpse of the world that’s waiting for you at The SharePage! Login now and discover the gems waiting for you!
+</div>
+</div>
+
+                                <a href="'.$link.'" class="btn left-margin btnhover">Verify your email address</a>
+                                <p class="left-margin" >Regards,</p>
+                                <p class="left-margin" >The SharePage</p>
+                                <p class="left-margin" >A solution for an ad-free site where you can actually get value for your time.</p>
+                                <p   style="min-height: 50px;"></p>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td  align="center" class="foot">
+                                <p style="margin-bottom: 0px;">This email was sent from a notification-only address. Please do not reply.</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                    
+                </table>
+                <div style="width: 640px;text-align: center;margin: 0 auto">
+                    <p style="margin-bottom: 10px;">© Copyright '.date('Y').' The SharePage. All rights reserved.</p>
+                    
+                    <div >
+                        <a href="'.$this->BaseUrl.'/page/?page=privacy_policy" style="color: #808080;"">Privacy Policy</a> | <a href="'.$this->BaseUrl.'/page/?page=copyrights" style="color: #808080;"">Terms & Conditions</a>
+                    </div>
+                </div>
+
+            </body>
+        </html>
+
+    ';
+        $to = "developer@thesharepage.com";
+        $subject = "The SharePage [Registration Successfully]";
+        
+        $this->send_all_email($email, $subject, $msg);
+        $this->send_all_email($to, $subject, $msg);
+    }
+    // ===FORGET PASSWORD SEND TO THE USER LINK
+    function forgotpass($name, $email, $link){
+        $msg = '
+            <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>The SharePage</title>
+                    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+                    <style type="text/css">
+                        .mmaintab{
+                            background: #FFF;
+                            margin: 0 auto;
+                            padding: 15px;
+                            width: 640px;
+                        }
+                        .logo h1{
+                            color: #000;
+                            margin: 20px 0px 25px;;
+
+                        }
+                        .letstart{
+                            background: #2F6230;
+                            padding: 15px;
+                            font-size: 20px;
+                            color: #FFF;
+                            margin: 15px 0px;
+                            text-align: center;
+                        }
+                        .letstart h1{
+                            font-size: 20px;
+                            margin: 0px;
+                        }
+                        .btn{
+                            background: #2F6230;
+                            color: #FFF!important;
+                            padding: 8px 15px;
+                            display: inline-block;
+                            margin-bottom: 15px;
+                            text-decoration: none;
+                            margin-top: 15px;
+                        }
+                        .foot{
+                            border-top: 1px solid;
+                            text-align: center;
+
+                        }
+                        .foot p{
+                            margin: 0px;
+                            color: #808080;
+                            padding: 10px
+                        }
+                        .no-margin{
+                            margin: 0px;
+                        }                   
+                    </style>
+                </head>
+                <body bgcolor="#efefef" text="#808080" style="background-color: #efefef; color: #808080; margin: 0px; padding: 20px; -webkit-text-size-adjust:none; line-height: normal; font-size: 16px; font-family:arial,helvetica,sans-serif;">
+                    <table class="mmaintab" border="0" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td align="center" class="logo" >
+                                    <a href="'.$this->BaseUrl.'/"><img src="'.$this->BaseUrl.'/assets/images/logo/logo.png" alt="The SharePage" style="width: 100px;"></a>
+                                    <h1>The SharePage</h1>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td class="letstart" >
+                                    <h1>Reset Password</h1>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Hi '.ucfirst(strtolower($name)).',</p>
+                                    
+                                    <p>You have requested to reset your password on <a href="'.$this->BaseUrl.'/">The SharePage</a></p>
+                                    <a href="'.$link.'" class="btn">Reset Link</a>
+
+                                    <p class="no-margin" >Regards,</p>
+                                    <p class="no-margin" >The SharePage</p>
+                                    <p class="no-margin" >A solution for an ad-free site where you can actually get value for your time.</p>
+                                    <p   style="min-height: 50px;"></p>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td  align="center" class="foot">
+                                    <p style="margin-bottom: 0px;">This email was sent from a notification-only address. Please do not reply.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                        
+                    </table>
+                    <div style="width: 640px;text-align: center;margin: 0 auto">
+                        <p style="margin-bottom: 10px;">© Copyright '.date('Y').' The SharePage. All rights reserved.</p>
+                        
+                        <div >
+                            <a href="'.$this->BaseUrl.'/page/?page=privacy_policy" style="color: #808080;"">Privacy Policy</a> | <a href="'.$this->BaseUrl.'/page/?page=copyrights" style="color: #808080;"">Terms & Conditions</a>
+                        </div>
+                    </div>
+
+                </body>
+            </html>
+
+        ';
+        
+        $subject = "The SharePage [Forgot Password]";
+        //$to = "adnanghouri97@gmail.com";
+        $this->send_all_email($email, $subject, $msg);
+    }
+
+
+
+    function sendeventbooked($name,$posteduseremail,$eventname,$bokkedbyname,$qty,$totalprice){
+        $msg = '
+            <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>The SharePage</title>
+                    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+                    <style type="text/css">
+                        .mmaintab{
+                            background: #FFF;
+                            margin: 0 auto;
+                            padding: 15px;
+                            width: 640px;
+                        }
+                        .logo h1{
+                            color: #000;
+                            margin: 20px 0px 25px;;
+
+                        }
+                        .letstart{
+                            background: #f15c80;
+                            padding: 15px;
+                            font-size: 20px;
+                            color: #FFF;
+                            margin: 15px 0px;
+                            text-align: center;
+                        }
+                        .letstart h1{
+                            font-size: 20px;
+                            margin: 0px;
+                        }
+                        .btn{
+                            background: #f15c80;
+                            color: #FFF!important;
+                            padding: 8px 15px;
+                            display: inline-block;
+                            margin-bottom: 15px;
+                            text-decoration: none;
+                            margin-top: 15px;
+                        }
+                        .foot{
+                            border-top: 1px solid;
+                            text-align: center;
+
+                        }
+                        .foot p{
+                            margin: 0px;
+                            color: #808080;
+                            padding: 10px
+                        }
+                        .no-margin{
+                            margin: 0px;
+                        }                   
+                    </style>
+                </head>
+                <body bgcolor="#efefef" text="#808080" style="background-color: #efefef; color: #808080; margin: 0px; padding: 20px; -webkit-text-size-adjust:none; line-height: normal; font-size: 16px; font-family:arial,helvetica,sans-serif;">
+                    <table class="mmaintab" border="0" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td align="center" class="logo" >
+                                    <a href="'.$this->BaseUrl.'/"><img src="'.$this->BaseUrl.'/assets/images/logo/tsp_trans.png" alt="The SharePage" style="width: 100px;"></a>
+                                    <h1>The SharePage</h1>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td class="letstart" >
+                                    <h1>Event Booked</h1>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Hi '.ucfirst(strtolower($name)).',</p>
+                                    
+                                    <p>Your Event has been booked.</p>
+                                    <br>
+
+                                    <p><label>Event : </label>'.ucfirst($eventname).'</p>
+                                    <p><label>Booked By : </label>'.ucfirst($bokkedbyname).'</p>
+                                    <p><label>Quantity : </label>'.$qty.'</p>
+                                    <p><label>Total : </label>$'.$totalprice.'</p>
+                                   
+                                   
+
+                                    <p class="no-margin" >Regards,</p>
+                                    <p class="no-margin" >The SharePage</p>
+                                    <p class="no-margin" >A solution for an ad-free site where you can actually get value for your time.</p>
+                                    <p   style="min-height: 50px;"></p>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td  align="center" class="foot">
+                                    <p style="margin-bottom: 0px;">This email was sent from a notification-only address. Please do not reply.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                        
+                    </table>
+                    <div style="width: 640px;text-align: center;margin: 0 auto">
+                        <p style="margin-bottom: 10px;">© Copyright '.date('Y').' The SharePage. All rights reserved.</p>
+                        
+                        <div >
+                            <a href="'.$this->BaseUrl.'/page/?page=privacy_policy" style="color: #808080;"">Privacy Policy</a> | <a href="'.$this->BaseUrl.'/page/?page=copyrights" style="color: #808080;"">Terms & Conditions</a>
+                        </div>
+                    </div>
+
+                </body>
+            </html>
+
+        ';
+        
+        $subject = "The SharePage [Event Booked]";
+        //$to = "adnanghouri97@gmail.com";
+        $this->send_all_email($posteduseremail, $subject, $msg);
+    }
+
+
+
+    function sendgroupeventbooked($name,$posteduseremail,$eventname,$bokkedbyname,$qty,$totalprice){
+        $msg = '
+            <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>The SharePage</title>
+                    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+                    <style type="text/css">
+                        .mmaintab{
+                            background: #FFF;
+                            margin: 0 auto;
+                            padding: 15px;
+                            width: 640px;
+                        }
+                        .logo h1{
+                            color: #000;
+                            margin: 20px 0px 25px;;
+
+                        }
+                        .letstart{
+                            background: #f15c80;
+                            padding: 15px;
+                            font-size: 20px;
+                            color: #FFF;
+                            margin: 15px 0px;
+                            text-align: center;
+                        }
+                        .letstart h1{
+                            font-size: 20px;
+                            margin: 0px;
+                        }
+                        .btn{
+                            background: #f15c80;
+                            color: #FFF!important;
+                            padding: 8px 15px;
+                            display: inline-block;
+                            margin-bottom: 15px;
+                            text-decoration: none;
+                            margin-top: 15px;
+                        }
+                        .foot{
+                            border-top: 1px solid;
+                            text-align: center;
+
+                        }
+                        .foot p{
+                            margin: 0px;
+                            color: #808080;
+                            padding: 10px
+                        }
+                        .no-margin{
+                            margin: 0px;
+                        }                   
+                    </style>
+                </head>
+                <body bgcolor="#efefef" text="#808080" style="background-color: #efefef; color: #808080; margin: 0px; padding: 20px; -webkit-text-size-adjust:none; line-height: normal; font-size: 16px; font-family:arial,helvetica,sans-serif;">
+                    <table class="mmaintab" border="0" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td align="center" class="logo" >
+                                    <a href="'.$this->BaseUrl.'/"><img src="'.$this->BaseUrl.'/assets/images/logo/tsp_trans.png" alt="The SharePage" style="width: 100px;"></a>
+                                    <h1>The SharePage</h1>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td class="letstart" >
+                                    <h1>Event Booked</h1>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Hi '.ucfirst(strtolower($name)).',</p>
+                                    
+                                    <p>Your Event has been booked.</p>
+                                    <br>
+
+                                    <p><label>Event : </label>'.ucfirst($eventname).'</p>
+                                    <p><label>Booked By : </label>'.ucfirst($bokkedbyname).'</p>
+                                    <p><label>Quantity : </label>'.$qty.'</p>
+                                    <p><label>Total : </label>$'.$totalprice.'</p>
+                                   
+                                   
+
+                                    <p class="no-margin" >Regards,</p>
+                                    <p class="no-margin" >The SharePage</p>
+                                    <p class="no-margin" >A solution for an ad-free site where you can actually get value for your time.</p>
+                                    <p   style="min-height: 50px;"></p>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td  align="center" class="foot">
+                                    <p style="margin-bottom: 0px;">This email was sent from a notification-only address. Please do not reply.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                        
+                    </table>
+                    <div style="width: 640px;text-align: center;margin: 0 auto">
+                        <p style="margin-bottom: 10px;">© Copyright '.date('Y').' The SharePage. All rights reserved.</p>
+                        
+                        <div >
+                            <a href="'.$this->BaseUrl.'/page/?page=privacy_policy" style="color: #808080;"">Privacy Policy</a> | <a href="'.$this->BaseUrl.'/page/?page=copyrights" style="color: #808080;"">Terms & Conditions</a>
+                        </div>
+                    </div>
+
+                </body>
+            </html>
+
+        ';
+        
+        $subject = "The SharePage [Group Event Booked]";
+        //$to = "adnanghouri97@gmail.com";
+        $this->send_all_email($posteduseremail, $subject, $msg);
+    }
+
+   function sendproductsold($name,$posteduseremail,$prosold,$prosellQty,$prosellammount){
+        $msg = '
+     <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>The SharePage</title>
+                    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+                    <style type="text/css">
+                        .mmaintab{
+                            background: #FFF;
+                            margin: 0 auto;
+                            padding: 15px;
+                            width: 640px;
+                        }
+                        .logo h1{
+                            color: #000;
+                            margin: 20px 0px 25px;;
+
+                        }
+                        .letstart{
+                            background: #0b241e;
+                            padding: 15px;
+                            font-size: 20px;
+                            color: #FFF;
+                            margin: 15px 0px;
+                            text-align: center;
+                        }
+                        .letstart h1{
+                            font-size: 20px;
+                            margin: 0px;
+                        }
+                        .btn{
+                            background: #0b241e;
+                            color: #FFF!important;
+                            padding: 8px 15px;
+                            display: inline-block;
+                            margin-bottom: 15px;
+                            text-decoration: none;
+                            margin-top: 15px;
+                        }
+                        .foot{
+                            border-top: 1px solid;
+                            text-align: center;
+
+                        }
+                        .foot p{
+                            margin: 0px;
+                            color: #808080;
+                            padding: 10px
+                        }
+                        .no-margin{
+                            margin: 0px;
+                        }                   
+                    </style>
+                </head>
+                <body bgcolor="#efefef" text="#808080" style="background-color: #efefef; color: #808080; margin: 0px; padding: 20px; -webkit-text-size-adjust:none; line-height: normal; font-size: 16px; font-family:arial,helvetica,sans-serif;">
+                    <table class="mmaintab" border="0" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td align="center" class="logo" >
+                                    <a href="'.$this->BaseUrl.'/"><img src="'.$this->BaseUrl.'/assets/images/logo/tsp_trans.png" alt="The SharePage" style="width: 100px;"></a>
+                                    <h1>The SharePage</h1>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td class="letstart" >
+                                    <h1>Order Placed</h1>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Hi '.ucfirst(strtolower($name)).',</p>
+                                    
+                                    <p>Your Product '.ucfirst($prosold).' has Been sold.Please login to <a href="'.$this->BaseUrl.'" style="color: ##3338d4;"> The SharePage</a> to See Detail</p>
+                                    <br>
+                                     <p>Product Name: '.ucfirst($prosold).'</p>
+                                     <p>Product Quantity:  '.$prosellQty.'</p>
+                                     <p>Product Price:  '.$prosellammount.'</p>
+                                    <p class="no-margin" >Regards,</p>
+                                    <p class="no-margin" >The SharePage</p>
+                                    <p class="no-margin" >A solution for an ad-free site where you can actually get value for your time.</p>
+                                    <p   style="min-height: 50px;"></p>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td  align="center" class="foot">
+                                    <p style="margin-bottom: 0px;">This email was sent from a notification-only address. Please do not reply.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                        
+                    </table>
+                    <div style="width: 640px;text-align: center;margin: 0 auto">
+                        <p style="margin-bottom: 10px;">© Copyright '.date('Y').' The SharePage. All rights reserved.</p>
+                        
+                        <div >
+                            <a href="'.$this->BaseUrl.'/page/?page=privacy_policy" style="color: #808080;"">Privacy Policy</a> | <a href="'.$this->BaseUrl.'/page/?page=copyrights" style="color: #808080;"">Terms & Conditions</a>
+                        </div>
+                    </div>
+
+                </body>
+            </html>
+
+        ';
+        
+        $subject = "The SharePage [Product Sold]";
+        //$to = "adnanghouri97@gmail.com";
+        $this->send_all_email($posteduseremail, $subject, $msg);
+    }
+
+   function sendhire($name,$posteduseremail){
+    $logo = ''.$this->BaseUrl.'/assets/images/logo/tsp_trans.png';
+        $msg = '
+     <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>The SharePage</title>
+                    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+                    <style type="text/css">
+                        .mmaintab{
+                            background: #FFF;
+                            margin: 0 auto;
+                            padding: 15px;
+                            width: 640px;
+                        }
+                        .logo h1{
+                            color: #000;
+                            margin: 20px 0px 25px;;
+
+                        }
+                        .letstart{
+                            background: #0b241e;
+                            padding: 15px;
+                            font-size: 20px;
+                            color: #FFF;
+                            margin: 15px 0px;
+                            text-align: center;
+                        }
+                        .letstart h1{
+                            font-size: 20px;
+                            margin: 0px;
+                        }
+                        .btn{
+                            background: #0b241e;
+                            color: #FFF!important;
+                            padding: 8px 15px;
+                            display: inline-block;
+                            margin-bottom: 15px;
+                            text-decoration: none;
+                            margin-top: 15px;
+                        }
+                        .foot{
+                            border-top: 1px solid;
+                            text-align: center;
+
+                        }
+                        .foot p{
+                            margin: 0px;
+                            color: #808080;
+                            padding: 10px
+                        }
+                        .no-margin{
+                            margin: 0px;
+                        }                   
+                    </style>
+                </head>
+                <body bgcolor="#efefef" text="#808080" style="background-color: #efefef; color: #808080; margin: 0px; padding: 20px; -webkit-text-size-adjust:none; line-height: normal; font-size: 16px; font-family:arial,helvetica,sans-serif;">
+                    <table class="mmaintab" border="0" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td align="center" class="logo" >
+                                  <img  alt="The SharePage" src="'.$logo.'" style="width: 100px;">
+                                    <h1>The SharePage</h1>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td class="letstart" >
+                                    <h1>Hired</h1>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Hi '.ucfirst(strtolower($name)).',</p>
+                                    
+                                    <p>You got a direct hiring!.Please login to <a href="'.$this->BaseUrl.'/freelancer/dashboard/freelancer_requested_project.php" style="color: ##3338d4;"> The SharePage</a> to See Detail</p>
+                                    
+                                  
+                                    <p class="no-margin" >Regards,</p>
+                                    <p class="no-margin" >The SharePage</p>
+                                    <p class="no-margin" >A solution for an ad-free site where you can actually get value for your time.</p>
+                                    <p   style="min-height: 50px;"></p>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td  align="center" class="foot">
+                                    <p style="margin-bottom: 0px;">This email was sent from a notification-only address. Please do not reply.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                        
+                    </table>
+                    <div style="width: 640px;text-align: center;margin: 0 auto">
+                        <p style="margin-bottom: 10px;">© Copyright '.date('Y').' The SharePage. All rights reserved.</p>
+                        
+                        <div >
+                            <a href="'.$this->BaseUrl.'/page/?page=privacy_policy" style="color: #808080;"">Privacy Policy</a> | <a href="'.$this->BaseUrl.'/page/?page=copyrights" style="color: #808080;"">Terms & Conditions</a>
+                        </div>
+                    </div>
+
+                </body>
+            </html>
+
+        ';
+        
+        $subject = "The SharePage [Hired]";
+        //$to = "adnanghouri97@gmail.com";
+       // $this->send_all_email($posteduseremail, $subject, $msg);
+        $this->send_all_email($posteduseremail, $subject, $msg);
+    }
+
+      function sendaward($name,$posteduseremail){
+		  
+    $logo = ''.$this->BaseUrl.'/assets/images/logo/tsp_trans.png';
+        $msg = '
+     <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>The SharePage</title>
+                    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+                    <style type="text/css">
+                        .mmaintab{
+                            background: #FFF;
+                            margin: 0 auto;
+                            padding: 15px;
+                            width: 640px;
+                        }
+                        .logo h1{
+                            color: #000;
+                            margin: 20px 0px 25px;;
+
+                        }
+                        .letstart{
+                            background: #0b241e;
+                            padding: 15px;
+                            font-size: 20px;
+                            color: #FFF;
+                            margin: 15px 0px;
+                            text-align: center;
+                        }
+                        .letstart h1{
+                            font-size: 20px;
+                            margin: 0px;
+                        }
+                        .btn{
+                            background: #0b241e;
+                            color: #FFF!important;
+                            padding: 8px 15px;
+                            display: inline-block;
+                            margin-bottom: 15px;
+                            text-decoration: none;
+                            margin-top: 15px;
+                        }
+                        .foot{
+                            border-top: 1px solid;
+                            text-align: center;
+
+                        }
+                        .foot p{
+                            margin: 0px;
+                            color: #808080;
+                            padding: 10px
+                        }
+                        .no-margin{
+                            margin: 0px;
+                        }                   
+                    </style>
+                </head>
+                <body bgcolor="#efefef" text="#808080" style="background-color: #efefef; color: #808080; margin: 0px; padding: 20px; -webkit-text-size-adjust:none; line-height: normal; font-size: 16px; font-family:arial,helvetica,sans-serif;">
+                    <table class="mmaintab" border="0" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td align="center" class="logo" >
+                                  <img  alt="The SharePage" src="'.$logo.'" style="width: 100px;">
+                                    <h1>The SharePage</h1>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td class="letstart" >
+                                    <h1>PROJECT AWARDED!</h1>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Hi '.ucfirst(strtolower($name)).',</p>
+                                    <p>Congratulations! You have won the project! Please login to <a href="'.$this->BaseUrl.'/freelancer/dashboard/freelancer_requested_project.php" style="color: ##3338d4;"> The SharePage</a> to see the details of the project,and start your project.<br>All the best!</p>
+                                    <p class="no-margin" >Regards,</p>
+                                    <p class="no-margin" >The SharePage</p>
+                                    <p class="no-margin" >A solution for an ad-free site where you can actually get value for your time.</p>
+                                    <p   style="min-height: 50px;"></p>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td  align="center" class="foot">
+                                    <p style="margin-bottom: 0px;">This email was sent from a notification-only address. Please do not reply.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                        
+                    </table>
+                    <div style="width: 640px;text-align: center;margin: 0 auto">
+                        <p style="margin-bottom: 10px;">© Copyright '.date('Y').' The SharePage. All rights reserved.</p>
+                        
+                        <div >
+                            <a href="'.$this->BaseUrl.'/page/?page=privacy_policy" style="color: #808080;"">Privacy Policy</a> | <a href="'.$this->BaseUrl.'/page/?page=copyrights" style="color: #808080;"">Terms & Conditions</a>
+                        </div>
+                    </div>
+
+                </body>
+            </html>
+
+        ';
+       
+        $subject = "The SharePage [Project Awarded]";
+        //$to = "adnanghouri97@gmail.com";
+        $this->send_all_email($posteduseremail, $subject, $msg);
+        /*$this->send_all_email($posteduseremail, $subject, $msg);*/
+    }
+
+
+
+          function sendmilestonecreated($name,$posteduseremail,$link){
+    $logo = ''.$this->BaseUrl.'/assets/images/logo/tsp_trans.png';
+        $msg = '
+     <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>The SharePage</title>
+                    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+                    <style type="text/css">
+                        .mmaintab{
+                            background: #FFF;
+                            margin: 0 auto;
+                            padding: 15px;
+                            width: 640px;
+                        }
+                        .logo h1{
+                            color: #000;
+                            margin: 20px 0px 25px;;
+
+                        }
+                        .letstart{
+                            background: #0b241e;
+                            padding: 15px;
+                            font-size: 20px;
+                            color: #FFF;
+                            margin: 15px 0px;
+                            text-align: center;
+                        }
+                        .letstart h1{
+                            font-size: 20px;
+                            margin: 0px;
+                        }
+                        .btn{
+                            background: #0b241e;
+                            color: #FFF!important;
+                            padding: 8px 15px;
+                            display: inline-block;
+                            margin-bottom: 15px;
+                            text-decoration: none;
+                            margin-top: 15px;
+                        }
+                        .foot{
+                            border-top: 1px solid;
+                            text-align: center;
+
+                        }
+                        .foot p{
+                            margin: 0px;
+                            color: #808080;
+                            padding: 10px
+                        }
+                        .no-margin{
+                            margin: 0px;
+                        }                   
+                    </style>
+                </head>
+                <body bgcolor="#efefef" text="#808080" style="background-color: #efefef; color: #808080; margin: 0px; padding: 20px; -webkit-text-size-adjust:none; line-height: normal; font-size: 16px; font-family:arial,helvetica,sans-serif;">
+                    <table class="mmaintab" border="0" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td align="center" class="logo" >
+                                  <img  alt="The SharePage" src="'.$logo.'" style="width: 100px;">
+                                    <h1>The SharePage</h1>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td class="letstart" >
+                                    <h1>Milestone</h1>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Hi '.ucfirst(strtolower($name)).',</p>
+                                    
+                                    <p>New Milestone created!.Click '.$link.' to See Detail</p>
+                                    
+                                  
+                                    <p class="no-margin" >Regards,</p>
+                                    <p class="no-margin" >The SharePage</p>
+                                    <p class="no-margin" >A solution for an ad-free site where you can actually get value for your time.</p>
+                                    <p   style="min-height: 50px;"></p>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td  align="center" class="foot">
+                                    <p style="margin-bottom: 0px;">This email was sent from a notification-only address. Please do not reply.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                        
+                    </table>
+                    <div style="width: 640px;text-align: center;margin: 0 auto">
+                        <p style="margin-bottom: 10px;">© Copyright '.date('Y').' The SharePage. All rights reserved.</p>
+                        
+                        <div >
+                            <a href="'.$this->BaseUrl.'/page/?page=privacy_policy" style="color: #808080;"">Privacy Policy</a> | <a href="'.$this->BaseUrl.'/page/?page=copyrights" style="color: #808080;"">Terms & Conditions</a>
+                        </div>
+                    </div>
+
+                </body>
+            </html>
+
+        ';
+        
+        $subject = "The SharePage [Milestone]";
+        //$to = "adnanghouri97@gmail.com";
+        $this->send_all_email($posteduseremail, $subject, $msg);
+        /*$this->send_all_email($posteduseremail, $subject, $msg);*/
+    }
+
+    function sendprojectpostacept($name,$posteduseremail,$link){
+    $logo = ''.$this->BaseUrl.'/assets/images/logo/tsp_trans.png';
+        $msg = '
+     <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>The SharePage</title>
+                    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+                    <style type="text/css">
+                        .mmaintab{
+                            background: #FFF;
+                            margin: 0 auto;
+                            padding: 15px;
+                            width: 640px;
+                        }
+                        .logo h1{
+                            color: #000;
+                            margin: 20px 0px 25px;;
+
+                        }
+                        .letstart{
+                            background: #0b241e;
+                            padding: 15px;
+                            font-size: 20px;
+                            color: #FFF;
+                            margin: 15px 0px;
+                            text-align: center;
+                        }
+                        .letstart h1{
+                            font-size: 20px;
+                            margin: 0px;
+                        }
+                        .btn{
+                            background: #0b241e;
+                            color: #FFF!important;
+                            padding: 8px 15px;
+                            display: inline-block;
+                            margin-bottom: 15px;
+                            text-decoration: none;
+                            margin-top: 15px;
+                        }
+                        .foot{
+                            border-top: 1px solid;
+                            text-align: center;
+
+                        }
+                        .foot p{
+                            margin: 0px;
+                            color: #808080;
+                            padding: 10px
+                        }
+                        .no-margin{
+                            margin: 0px;
+                        }                   
+                    </style>
+                </head>
+                <body bgcolor="#efefef" text="#808080" style="background-color: #efefef; color: #808080; margin: 0px; padding: 20px; -webkit-text-size-adjust:none; line-height: normal; font-size: 16px; font-family:arial,helvetica,sans-serif;">
+                    <table class="mmaintab" border="0" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td align="center" class="logo" >
+                                  <img  alt="The SharePage" src="'.$logo.'" style="width: 100px;">
+                                    <h1>The SharePage</h1>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td class="letstart" >
+                                    <h1>Project</h1>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Hi '.ucfirst(strtolower($name)).',</p>
+                                    
+                                    <p> '.$link.'</p>
+                                    
+                                  
+                                    <p class="no-margin" >Regards,</p>
+                                    <p class="no-margin" >The SharePage</p>
+                                    <p class="no-margin" >A solution for an ad-free site where you can actually get value for your time.</p>
+                                    <p   style="min-height: 50px;"></p>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td  align="center" class="foot">
+                                    <p style="margin-bottom: 0px;">This email was sent from a notification-only address. Please do not reply.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                        
+                    </table>
+                    <div style="width: 640px;text-align: center;margin: 0 auto">
+                        <p style="margin-bottom: 10px;">© Copyright '.date('Y').' The SharePage. All rights reserved.</p>
+                        
+                        <div >
+                            <a href="'.$this->BaseUrl.'/page/?page=privacy_policy" style="color: #808080;"">Privacy Policy</a> | <a href="'.$this->BaseUrl.'/page/?page=copyrights" style="color: #808080;"">Terms & Conditions</a>
+                        </div>
+                    </div>
+
+                </body>
+            </html>
+
+        ';
+        
+        $subject = "The SharePage [Freelancer project Project]";
+        //$to = "adnanghouri97@gmail.com";
+        $this->send_all_email("nitintiwari354@gmail.com", $subject, $msg);
+        /*$this->send_all_email($posteduseremail, $subject, $msg);*/
+    }
+
+
+    function sendproductplaced($name,$posteduseremail){
+        $msg = '
+            <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>The SharePage</title>
+                    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+                    <style type="text/css">
+                        .mmaintab{
+                            background: #FFF;
+                            margin: 0 auto;
+                            padding: 15px;
+                            width: 640px;
+                        }
+                        .logo h1{
+                            color: #000;
+                            margin: 20px 0px 25px;;
+
+                        }
+                        .letstart{
+                            background: #0b241e;
+                            padding: 15px;
+                            font-size: 20px;
+                            color: #FFF;
+                            margin: 15px 0px;
+                            text-align: center;
+                        }
+                        .letstart h1{
+                            font-size: 20px;
+                            margin: 0px;
+                        }
+                        .btn{
+                            background: #0b241e;
+                            color: #FFF!important;
+                            padding: 8px 15px;
+                            display: inline-block;
+                            margin-bottom: 15px;
+                            text-decoration: none;
+                            margin-top: 15px;
+                        }
+                        .foot{
+                            border-top: 1px solid;
+                            text-align: center;
+
+                        }
+                        .foot p{
+                            margin: 0px;
+                            color: #808080;
+                            padding: 10px
+                        }
+                        .no-margin{
+                            margin: 0px;
+                        }                   
+                    </style>
+                </head>
+                <body bgcolor="#efefef" text="#808080" style="background-color: #efefef; color: #808080; margin: 0px; padding: 20px; -webkit-text-size-adjust:none; line-height: normal; font-size: 16px; font-family:arial,helvetica,sans-serif;">
+                    <table class="mmaintab" border="0" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td align="center" class="logo" >
+                                    <a href="'.$this->BaseUrl.'/"><img src="'.$this->BaseUrl.'/assets/images/logo/tsp_trans.png" alt="The SharePage" title="Logo" style="width: 100px;"></a>
+                                    <h1>The SharePage</h1>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td class="letstart" >
+                                    <h1>Order Placed</h1>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Hi '.ucfirst(strtolower($name)).',</p>
+                                    
+                                    <p>Your Product Product Placed  Successfully For more Detail Login to <a href="'.$this->BaseUrl.'" style="color: ##3338d4;"> The SharePage</a>.</p>
+                                    <br>
+
+                                 
+                                    <p class="no-margin" >Regards,</p>
+                                    <p class="no-margin" >The SharePage</p>
+                                    <p class="no-margin" >A solution for an ad-free site where you can actually get value for your time.</p>
+                                    <p   style="min-height: 50px;"></p>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td  align="center" class="foot">
+                                    <p style="margin-bottom: 0px;">This email was sent from a notification-only address. Please do not reply.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                        
+                    </table>
+                    <div style="width: 640px;text-align: center;margin: 0 auto">
+                        <p style="margin-bottom: 10px;">© Copyright '.date('Y').' The SharePage. All rights reserved.</p>
+                        
+                        <div >
+                            <a href="'.$this->BaseUrl.'/page/?page=privacy_policy" style="color: #808080;"">Privacy Policy</a> | <a href="'.$this->BaseUrl.'/page/?page=copyrights" style="color: #808080;"">Terms & Conditions</a>
+                        </div>
+                    </div>
+
+                </body>
+            </html>
+
+        ';
+        
+        $subject = "The SharePage [Product Booked]";
+        //$to = "adnanghouri97@gmail.com";
+        $this->send_all_email($posteduseremail, $subject, $msg);
+    }
+
+
+
+    function sendmybookedticket($name, $email, $link){
+        $msg = '
+            <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>The SharePage</title>
+                    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+                    <style type="text/css">
+                        .mmaintab{
+                            background: #FFF;
+                            margin: 0 auto;
+                            padding: 15px;
+                            width: 640px;
+                        }
+                        .logo h1{
+                            color: #000;
+                            margin: 20px 0px 25px;;
+
+                        }
+                        .letstart{
+                            background: #2F6230;
+                            padding: 15px;
+                            font-size: 20px;
+                            color: #FFF;
+                            margin: 15px 0px;
+                            text-align: center;
+                        }
+                        .letstart h1{
+                            font-size: 20px;
+                            margin: 0px;
+                        }
+                        .btn{
+                            background: #2F6230;
+                            color: #FFF!important;
+                            padding: 8px 15px;
+                            display: inline-block;
+                            margin-bottom: 15px;
+                            text-decoration: none;
+                            margin-top: 15px;
+                        }
+                        .foot{
+                            border-top: 1px solid;
+                            text-align: center;
+
+                        }
+                        .foot p{
+                            margin: 0px;
+                            color: #808080;
+                            padding: 10px
+                        }
+                        .no-margin{
+                            margin: 0px;
+                        }                   
+                    </style>
+                </head>
+                <body bgcolor="#efefef" text="#808080" style="background-color: #efefef; color: #808080; margin: 0px; padding: 20px; -webkit-text-size-adjust:none; line-height: normal; font-size: 16px; font-family:arial,helvetica,sans-serif;">
+                    <table class="mmaintab" border="0" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td align="center" class="logo" >
+                                    <a href="'.$this->BaseUrl.'/"><img src="'.$this->BaseUrl.'/assets/images/logo/logo.png" alt="The SharePage" style="width: 100px;"></a>
+                                    <h1>The SharePage</h1>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td class="letstart" >
+                                    <h1>Event Booked</h1>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>Hi '.ucfirst(strtolower($name)).',</p>
+                                    
+                                    <p>You have requested to reset your password on <a href="'.$this->BaseUrl.'/">The SharePage</a></p>
+                                    <a href="'.$link.'" class="btn">Reset Link</a>
+
+                                    <p class="no-margin" >Regards,</p>
+                                    <p class="no-margin" >The SharePage</p>
+                                    <p class="no-margin" >A solution for an ad-free site where you can actually get value for your time.</p>
+                                    <p   style="min-height: 50px;"></p>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td  align="center" class="foot">
+                                    <p style="margin-bottom: 0px;">This email was sent from a notification-only address. Please do not reply.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                        
+                    </table>
+                    <div style="width: 640px;text-align: center;margin: 0 auto">
+                        <p style="margin-bottom: 10px;">© Copyright '.date('Y').' The SharePage. All rights reserved.</p>
+                        
+                        <div >
+                            <a href="'.$this->BaseUrl.'/page/?page=privacy_policy" style="color: #808080;"">Privacy Policy</a> | <a href="'.$this->BaseUrl.'/page/?page=copyrights" style="color: #808080;"">Terms & Conditions</a>
+                        </div>
+                    </div>
+
+                </body>
+            </html>
+
+        ';
+        
+        $subject = "The SharePage [Event Booked]";
+        //$to = "adnanghouri97@gmail.com";
+        $this->send_all_email($email, $subject, $msg);
+    }
+
+
+
+    // ===END
+    // UPDATE PASSWORD EMAIL SEND TO THE USERS
+    function update_password_email($name, $email, $password){
+        $msg = '
+            <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>The SharePage</title>
+                    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+                    <style type="text/css">
+                        .mmaintab{
+                            background: #FFF;
+                            margin: 0 auto;
+                            padding: 15px;
+                            width: 640px;
+                        }
+                        .logo h1{
+                            color: #000;
+                            margin: 20px 0px 25px;;
+
+                        }
+                        .letstart{
+                            background: #2F6230;
+                            padding: 15px;
+                            font-size: 20px;
+                            color: #FFF;
+                            margin: 15px 0px;
+                            text-align: center;
+                        }
+                        .letstart h1{
+                            font-size: 20px;
+                            margin: 0px;
+                        }
+                        .btn{
+                            background: #2F6230;
+                            color: #FFF;
+                            padding: 8px 15px;
+                            display: inline-block;
+                            margin-bottom: 15px;
+                            text-decoration: none;
+                            margin-top: 15px;
+                        }
+                        .foot{
+                            border-top: 1px solid;
+                            text-align: center;
+
+                        }
+                        .foot p{
+                            margin: 0px;
+                            color: #808080;
+                            padding: 10px
+                        }
+                        .no-margin{
+                            margin: 0px;
+                        }                   
+                    </style>
+                </head>
+                <body bgcolor="#efefef" text="#808080" style="background-color: #efefef; color: #808080; margin: 0px; padding: 20px; -webkit-text-size-adjust:none; line-height: normal; font-size: 16px; font-family:arial,helvetica,sans-serif;">
+                    <table class="mmaintab" border="0" cellpadding="0" cellspacing="0">
+                        <tbody>
+                            <tr>
+                                <td align="center" class="logo" >
+                                <a href="'.$this->BaseUrl.'/"><img src="'.$this->BaseUrl.'/assets/images/logo/thesharepage.png" alt="The SharePage" title="Logo" style="margin-left: 0%; width: 230px;" height:230px;></a>
+
+                                    
+                                    <h1>The SharePage</h1>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td class="letstart" >
+                                    <h1>Password Change</h1>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p style="text-transform: capitalize;" >Hi '.ucfirst(strtolower($name)).',</p>
+                                    
+                                    <p>Your Password is successfully changed. Please login to The SharePage with your new password. <a href="'.$this->BaseUrl.'/">The SharePage</a></p>
+                                    
+                                    <p class="no-margin" >Regards,</p>
+                                    <p class="no-margin" >The SharePage</p>
+                                    <p class="no-margin" >A solution for an ad-free site where you can actually get value for your time.</p>
+                                    <p   style="min-height: 50px;"></p>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td  align="center" class="foot">
+                                    <p style="margin-bottom: 0px;">This email was sent from a notification-only address. Please do not reply.</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                        
+                    </table>
+                    <div style="width: 640px;text-align: center;margin: 0 auto">
+                        <p style="margin-bottom: 10px;">© Copyright'.date('Y').' The SharePage. All rights reserved.</p>
+                        
+                        <div >
+                            <a href="'.$this->BaseUrl.'/page/?page=privacy_policy" style="color: #808080;"">Privacy Policy</a> | <a href="'.$this->BaseUrl.'/page/?page=copyrights" style="color: #808080;"">Terms & Conditions</a>
+                        </div>
+                    </div>
+
+                </body>
+            </html>
+        ';
+        //$to = "adnanghouri97@gmail.com";
+        //$tostr = "adnan@thesharepage.com";
+        $subject = "The SharePage [Security alert]";
+        
+        // $headers = "From:  The SharePage <admin@thesharepage.com>" . "\r\n";
+        // $headers .= "MIME-Version: 1.0" . "\r\n"; 
+        // $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n"; 
+        
+        // mail($to,$subject,$msg,$headers);
+
+        // if(mail($email, "The SharePage, registration successful.", $msg, $headers)){
+            
+        // }
+        $subject = "The SharePage [Forgot Password]";
+        // $to = "reenahathaliya411@gmail.com";
+        $this->send_all_email($email, $subject, $msg);
+        // $this->send_all_email($to, $subject, $msg);
+
+    }
+
+}

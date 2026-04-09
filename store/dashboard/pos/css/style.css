@@ -1,0 +1,40 @@
+.top-icon{
+	display: inline-grid;
+    text-align: center;
+}
+.footer{
+	position: fixed;
+    bottom: 0;
+    font-size: 12px;
+    background-color: #212529;
+    color: #ccc;
+    height: 30px;
+    line-height: 30px;
+}
+.summary{
+	position: fixed;
+    bottom: 30px;
+    font-size: 18px;
+    color: #000;
+    
+}
+.footer span{
+	padding: 20px;
+}
+.top-product img{
+	max-width: 50px;
+}
+.tinput{
+	color: red;
+    font-weight: 800;
+    width: 170px;
+    margin-right: 15px;
+    text-align: right;
+}
+.profile{
+	position: fixed;
+	bottom: 0;
+}
+.select2-selection{
+	height: 38px !important;
+}

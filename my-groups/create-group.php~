@@ -1,0 +1,822 @@
+<?php
+
+
+    $dbHost  =   'localhost';
+    $dbUser     =   'osspdev';
+    $dbPass     =   'Office@256';
+    $dbName     =   'thesharepage';
+
+$dbConn = mysqli_connect($dbHost,$dbUser,$dbPass,$dbName);
+// Check connection
+if (mysqli_connect_errno()) {
+  echo "Failed to connect to MySQL: " . mysqli_connect_error();
+  exit();
+}
+?>
+<?php
+/*   include '../connection/conn.php';
+*/   include('../univ/baseurl.php');
+
+    session_start();
+if(!isset($_SESSION['pid'])){ 
+    $_SESSION['afterlogin']="my-groups/";
+    include_once ("../authentication/check.php");
+    
+}else{
+
+    function sp_autoloader($class) {
+        include '../mlayer/' . $class . '.class.php';
+    }
+
+    spl_autoload_register("sp_autoloader");
+
+    // ===========get ip and then get location
+    $ip = $_SERVER['REMOTE_ADDR']; // your ip address here
+    
+    $que_rec = @unserialize(file_get_contents('http://ip-api.com/php/'.$ip));
+    if($que_rec && $que_rec['status'] == 'success'){
+        $currentLoc = $que_rec['city'];
+    }else{
+        $currentLoc = "";
+    }
+
+
+?>
+
+<!DOCTYPE html>
+<html lang="en-US">
+    
+    <head>
+        <?php include('../component/f_links.php');?>
+        <!--This script for posting timeline data End-->
+        <link rel="stylesheet" type="text/css" href="<?php echo $BaseUrl;?>/assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo $BaseUrl;?>/assets/css/design.css">          
+
+    </head>
+
+    <body class="bg_gray">
+        <?php include('../header.php');?>
+    <!--     <section class="create_grp_top bg_white">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="dropdown pull-right" id="trans_drop">
+                            <button class="btn  dropdown-toggle" type="button" data-toggle="dropdown">My Groups <span>(All)</span>
+                            <span class="caret"></span></button>
+                        </div>
+                    </div>
+                    <div class="col-md-7"></div>
+                    <div class="col-md-3">
+                        <div class="dropdown" id="trans_drop">
+                            <button class="btn  dropdown-toggle" type="button" data-toggle="dropdown">Explore <span>(All)</span>
+                            <span class="caret"></span></button>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> -->
+        <section class="detail_group">
+            <div class="container">
+                <div class="row">
+
+
+                
+
+          <!--    <div class="topstatus timeline-topstatus right_sidebar">
+                    <div class="left_grid left_group_gray">
+                  
+                        <?php
+                        $g = new _spgroup;
+                        $result = $g->groupmember($_SESSION['uid']);
+                        //echo $g->ta->sql;
+                        if($result != false){
+                            while ($row = mysqli_fetch_assoc($result)) { ?>
+                                <div class="left_create row groupdiv_<?php echo $row['idspGroup'];?>">
+                                    <div class="left_img_create">
+                                        <?php
+                                        $result2 = $g->groupdetails($row['idspGroup']);
+                                        if ($result2 != false) {
+                                            $row2 = mysqli_fetch_assoc($result2);
+                                            $gimage = $row2["spgroupimage"];
+                                        }
+                                        if($gimage == ""){ ?>
+                                            <img src="<?php echo $BaseUrl;?>/assets/images/icon/group_main_banner.jpg" class="img-circle main_grp_img" alt="" /><?php
+                                        }else{ ?>
+                                            <img src="<?php echo ($gimage); ?>" class="img-circle main_grp_img" alt="" /><?php
+                                        }
+                                        ?>
+                                    </div>
+                                    <h4>
+                                        <a href="<?php echo $BaseUrl;?>/grouptimelines/?groupid=<?php echo $row['idspGroup']?>&groupname=<?php echo $row['spGroupName']?>&timeline" data-toggle="tooltip" title="<?php echo $row["spGroupName"];?>">
+                                            <?php
+                                            if(strlen($row["spGroupName"]) > 12){
+                                                echo $string = substr($row["spGroupName"], 0, 12).'...';
+                                            }else{
+                                                echo $row["spGroupName"];
+                                            } ?>
+                                        </a>
+                                        <input type="hidden" id="post_id" value="<?php echo $row['idspGroup']?>">
+
+                                        
+
+                                       
+                                         <div class="dropdown">
+<button class="btn dropdown-toggle pull-right  bg-white" type="button" id="menu1" data-toggle="dropdown" style="
+    margin: -25px 5px 0px 0px;
+">
+
+                   <span  ><img src="<?php echo $BaseUrl;?>/assets/images/icon/group/cog.png" class="img-responsive"  alt=""></span>
+                 </button>
+    <ul class="dropdown-menu pull-right mr-30" role="menu" aria-labelledby="menu1">
+      <li role="presentation" class="<?php if($row['spgroupflag'] == 1){echo "active_drp";} ?>"><a role="menuitem" class="Group_status"  data-id="1" href="#"><i class="fa fa-lock" aria-hidden="true"></i>&nbsp;&nbsp;Private</a></li>
+      <li role="presentation" class="<?php if($row['spgroupflag'] != 1){echo "active_drp";} ?>"><a role="menuitem" class="Group_status"  data-id="0" href="#"><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Public</a></li>
+      <li role="presentation" ><a role="menuitem" data-id="<?php echo $row['idspGroup']; ?>" href="#" class="Group_delete"><i class="fa fa-trash" aria-hidden="true"></i>&nbsp;&nbsp;Delete</a></li>
+    
+    </ul>
+  </div>
+  
+ 
+
+                                    
+ 
+
+
+
+                                    </h4>
+                                    <h5>10+ unread Post</h5>
+                                    <?php
+                                    if($row['spgroupflag'] == 1){
+                                        echo '<h6><i class="fa fa-lock"></i> Private</h6>';
+                                    }else{
+                                        echo '<h6><i class="fa fa-globe"></i> Public</h6>';
+                                    }
+                                    ?>
+                                </div>
+                                <?php
+                            }
+                        }
+                        ?>
+     </div>
+ </div> -->
+
+
+
+
+
+    <!-- 
+                    <div class="col-md-3 ">
+
+    <link rel="stylesheet" type="text/css" href="<?php echo $BaseUrl;?>/assets/css/design.css">          
+    <div class="w-100">
+
+                        <div class="topstatus timeline-topstatus right_sidebar" >
+                    <div class="left_grid left_group_gray">
+
+                        <?php
+                        $g = new _spgroup;
+                        $result = $g->groupmember($_SESSION['uid']);
+
+                  
+
+                        if($result != false){
+                            while ($row = mysqli_fetch_assoc($result)) { 
+                               
+
+                                ?>
+                                <div class="left_create row groupdiv_<?php echo $row['idspGroup'];?>">
+                                    <div class="left_img_create">
+                                        <?php
+
+                                        $result2 = $g->groupdetails($row['idspGroup']);
+                                          // $row2 = mysqli_fetch_assoc($result2);
+
+                                           
+                                        if ($result2 != false) {
+                                            $row2 = mysqli_fetch_assoc($result2);
+
+                                            $con = mysqli_connect('thesharepage.com', 'osspdev', 'Office@256');
+
+                                                 if(!$con) {
+                                                    die('Not Connected To Server');
+                                                }
+                                             
+                                                //Connection to database
+                                                if(!mysqli_select_db($con, 'thesharepage')) {
+                                                    echo 'Database Not Selected';
+                                                }
+                                           
+
+                                           
+                                             $query1 = mysqli_query($con,"SELECT group_category_icon FROM group_category WHERE group_category_name = '".$row2['spgroupCategory']."'");
+
+                                             
+                                            $Category_img = mysqli_fetch_assoc($query1);
+
+                                            $catimg = $Category_img['group_category_icon'];
+                                           
+                                            /*print_r($Category_img);*/
+                                            $gimage = $row2["spgroupimage"];
+                                          /*  /upload/content/group_c/*/
+                                        }
+                                        if($Category_img == ""){ ?>
+                                            <img src="<?php echo $BaseUrl;?>/assets/images/icon/group_main_banner.jpg" style="margin-left: 10px;" class="img-circle main_grp_img" alt="" /><?php
+                                        }else{ ?>
+                                           
+                                            <img src="<?php echo $BaseUrl;?>/upload/content/group_c/<?php  echo $catimg;?>"  style="margin-left: 10px;" class="img-circle main_grp_img" alt="" />
+                                            <?php
+                                        }
+                                        ?>
+                                    </div>
+                                    <h4 style="margin-left: 10px;">
+                                        <a href="<?php echo $BaseUrl;?>/grouptimelines/?groupid=<?php echo $row['idspGroup']?>&groupname=<?php echo $row['spGroupName']?>&timeline" data-toggle="tooltip" title="<?php echo $row["spGroupName"];?>">
+                                            <?php
+                                            if(strlen($row["spGroupName"]) > 12){
+                                                echo $string = substr($row["spGroupName"], 0, 12).'...';
+                                            }else{
+                                                echo $row["spGroupName"];
+                                            } ?>
+                                        </a>
+                                        <input type="hidden" id="post_id" value="<?php echo $row['idspGroup']?>">
+
+                                        
+
+                                       
+                                         <div class="dropdown">
+<button class="btn dropdown-toggle pull-right  bg-white" type="button" id="menu1" data-toggle="dropdown" style="
+    margin: -25px 5px 0px 0px;
+">
+
+                   <span  ><img src="<?php echo $BaseUrl;?>/assets/images/icon/group/cog.png" class="img-responsive"  alt=""></span>
+                 </button>
+    <ul class="dropdown-menu pull-right mr-30" role="menu" aria-labelledby="menu1">
+      <li role="presentation" class="<?php if($row['spgroupflag'] == 1){echo "active_drp";} ?>"><a role="menuitem" class="Group_status"  data-id="1" href="#"><i class="fa fa-lock" aria-hidden="true"></i>&nbsp;&nbsp;Private</a></li>
+      <li role="presentation" class="<?php if($row['spgroupflag'] != 1){echo "active_drp";} ?>"><a role="menuitem" class="Group_status"  data-id="0" href="#"><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Public</a></li>
+      <li role="presentation" ><a role="menuitem" data-id="<?php echo $row['idspGroup']; ?>" href="#" class="Group_delete"><i class="fa fa-trash" aria-hidden="true"></i>&nbsp;&nbsp;Delete</a></li>
+    
+    </ul>
+  </div>
+  
+ 
+
+                                       
+                                   
+
+
+                                    </h4>
+                              
+                                    <?php
+                                    if($row['spgroupflag'] == 1){
+                                        echo '<h6 style="margin-left: 65px;"><i class="fa fa-lock"></i> Private</h6>';
+                                    }else{
+                                        echo '<h6 style="margin-left: 65px;"><i class="fa fa-globe"></i> Public</h6>';
+                                    }
+                                    ?>
+                                </div>
+                                <?php
+                            }
+                        }
+                        ?>
+
+
+
+                        
+                         </div>
+                          </div>
+
+ </div>
+
+  </div>
+
+
+ -->
+
+
+
+                    <div class="col-md-12">
+                        <div class="mid_creat_form bg-white bradius-15">
+                            <h4 class="bg-white bradius-15"><i class="fa fa-pencil"></i> Create New Group</h4>
+                            <div class="bg_white form_grp bradius-15">
+                                <p>Groups are great for getting things done and staying in touch with just the people you want. Share photos and videos, have conversations, make plans and more.</p>
+                                
+                                <div class="row groupfield">
+                                    <form class="creaate_new_grp" action="../post-ad/addgroup.php" method="post" enctype="multipart/form-data" id="sp-add-group">
+                                        <!-- all the hidden value-->
+                                        <input class="dynamic-pid" type="hidden" id="myprofileid" name="pid_" value="<?php echo $_SESSION['pid']; ?>">
+                                        <input id="spProfileTypes_idspProfileTypes" type="hidden" value="<?php echo $_SESSION['ptid']; ?>">
+                                        <input id="userid" type="hidden" value="<?php echo $_SESSION['uid']; ?>" value="1">
+
+                                        <div class="form-group col-md-12">
+                                            <label for="email">Name Your Group :</label><span class="red"> *</span>
+                                            <input type="text" id="spGroupName" name="spGroupName" onkeyup="clearerror();" class="form-control bradius-10"  >
+                                            <span id=title_error  class="red"></span>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="email">Group Category :</label><span class="red"> *</span>
+                                            <select class="form-control bradius-10" onclick="clearerror();" id="grpcategory" name="spgroupCategory" >
+                                                <option value="0">Select Category </option>
+                                               
+                                                 <?php
+                                                 
+                                               $sql =  "SELECT * FROM `group_category` WHERE `status` = 0 ";
+
+
+
+
+
+
+                                                            $result=mysqli_query($dbConn,$sql);
+
+                                                            while($rows = mysqli_fetch_assoc($result)){ ?>
+
+                               <option value='<?php echo $rows["group_category_name"]; ?>' ><?php echo $rows["group_category_name"];?></option>
+
+
+                                                            <?php                                           
+                                                               }
+                                                ?> 
+                                                
+                                            </select>
+
+
+                                            <span id=cat_error  class="red"></span>
+                                        </div>
+
+
+                                        <div class="form-group col-md-6 bradius-10">
+                                            <label for="email">Location/City :</label><span class="red"> *</span>
+                                            <input type="text" onkeyup="clearerror();" class="form-control bradius-10" id="locationcity" name="spgroupLocation" value="<?php echo $currentLoc; ?>"  />
+                                            <span id=city_error  class="red"></span>
+                                        </div>
+                                        <div class="form-group col-md-12 bradius-10">
+                                            <label for="email">Short Description (Max 50 words) :</label><span class="red"> *</span>
+                                            <input type="text" onkeyup="clearerror();" class="form-control bradius-10" id="spGroupTagline" name="spGroupTag">
+                                            <span id=sdesc_error  class="red"></span>
+                                        </div>
+                                        <div class="form-group col-md-12 bradius-10">
+                                            <label for="email">Select Privacy :</label><span class="red"> *</span>
+                                            <div class="form-control bg_gray_light no-radius bradius-10">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <label class="checkbox-inline"><input type="radio" id="spgroupflag" onclick="clearerror();" name="spgroupflag" class="groupflag" value="0">Public</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label class="checkbox-inline"><input type="radio" id="spgroupflag" onclick="clearerror();" name="spgroupflag" class="groupflag" value="1" checked>Private</label>
+                                                    </div>
+                                                    
+                                                </div>                                                
+                                            </div>
+                                            <span id=privacy_error  class="red"></span>
+                                        </div>
+                                        <div class="form-group col-md-12 bradius-10">
+                                            <label for="email">Description :</label><span class="red">*</span>
+                                            <textarea onkeyup="clearerror();" class="form-control bradius-10" id="spGroupAbout" name="spGroupAbout"></textarea>
+                                            <span id=desc_error  class="red"></span>
+                                        </div>
+                                        <div class="form-group col-md-4 bradius-10">
+
+                                            <label for="email">Group Banner image:<span class="red"> *</span></label>
+                                            <div class="box">
+                                                <!-- <input type="file" name="spgroupimage" multiple="multiple" id="file-1" class="grpbnrimg inputfile inputfile-1" > -->
+                                                <input type="file" name="spgroupimage"  id="file-1" class="" style="display: block;">
+                                               <!--  <label for="file-1"> <span>Choose from</span></label> -->
+                                                <img src="" alt="" class="grpbannerpic"  >
+                                            </div>
+                                             <span id=banner_error  class="red"></span>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                           
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <button type="button" id="spgroupSubmit" class="btn btnPosting db_btn db_primarybtn btn-create-form float-right">Create</button>
+                                        </div>
+                                        
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+              <!--       <div class="col-md-3 no-padding">
+                        <div class="right_create join_timeline_main  right_sidebar_group">
+                            <?php
+                            $notgrp = new _spgroup;
+                            $result = $notgrp->notgroupmember($_SESSION['uid']);
+                            //echo $notgrp->ta->sql;
+                            if($result != false){
+                                while ($row = mysqli_fetch_assoc($result)) { ?>
+                                    <div class="explore_box row">
+                                        <div class="righ_img">
+                                            <?php
+                                            $result2 = $g->groupdetails($row['idspGroup']);
+                                            if ($result2 != false) {
+                                             
+
+                                            $row2 = mysqli_fetch_assoc($result2);
+
+                                            $con = mysqli_connect('thesharepage.com', 'osspdev', 'Office@256');
+
+                                                 if(!$con) {
+                                                    die('Not Connected To Server');
+                                                }
+                                             
+                                                //Connection to database
+                                                if(!mysqli_select_db($con, 'thesharepage')) {
+                                                    echo 'Database Not Selected';
+                                                }
+                                           
+
+                                           
+                                             $query1 = mysqli_query($con,"SELECT group_category_icon FROM group_category WHERE group_category_name = '".$row2['spgroupCategory']."'");
+
+                                             
+                                            $Category_img = mysqli_fetch_assoc($query1);
+
+                                            $catimg = $Category_img['group_category_icon'];
+                                           
+                                          
+                                            $gimage = $row2["spgroupimage"];
+                                       
+                                            }
+
+                                           
+
+                                            if($gimage == ""){ ?>
+                                                <img src="<?php echo $BaseUrl;?>/assets/images/icon/group_main_banner.jpg" class="img-circle main_grp_img" alt="" /><?php
+                                            }else{ ?>
+                                                <img src="<?php echo $BaseUrl;?>/upload/content/group_c/<?php  echo $catimg;?>" class="img-circle main_grp_img" alt="" /><?php
+                                            }
+                                            ?>
+                                            
+                                        </div>
+                                       
+
+                                        <button class="join_timeline btn view_right_joinbtn" data-pid="<?php echo $_SESSION['pid'] ?>" data-gid="<?php echo $row['idspGroup'] ?>" id="addmemontimeline"> Join </button>
+                                        <h3>
+                                            <a href="<?php echo $BaseUrl;?>/grouptimelines/?groupid=<?php echo $row['idspGroup']?>&groupname=<?php echo $row['spGroupName']?>&timeline" data-toggle="tooltip" title="<?php echo $row["spGroupName"];?>">
+                                                <?php
+                                                if(strlen($row["spGroupName"]) > 12){
+                                                    echo $string = substr($row["spGroupName"], 0, 12).'...';
+                                                }else{
+                                                    echo $row["spGroupName"];
+                                                } ?>
+                                            </a>
+                                        </h3>
+                                           <?php
+                                    if($row['spgroupflag'] == 1){
+                                        echo '<h6 style="margin-left: 65px;"><i class="fa fa-lock"></i> Private</h6>';
+                                    }else{
+                                        echo '<h6 style="margin-left: 65px;"><i class="fa fa-globe"></i> Public</h6>';
+                                    }
+                                    ?>
+                                       
+                                    </div> <?php
+                                }
+                            }
+                            ?>
+                            
+
+                            <div class="text-center right_show_all">
+                                <a href="#" class="">Show All</a>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </section>
+        
+        <?php 
+        include('../component/f_footer.php');
+        include('../component/f_btm_script.php'); 
+        ?>
+    </body>
+</html>
+<?php
+} ?>
+
+<script>
+
+$(function () {
+  
+});
+
+
+
+/* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function myFunction(id) {
+
+  
+  document.getElementById("myDropdown"+id).classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script>
+
+ <script type="text/javascript">
+    function clearerror(){
+                   var spGroupName = $("#spGroupName").val();
+                    var grpcategory = $("#grpcategory").val();
+                    var spgroupflag = $("#spgroupflag").val();
+                    var banner = $("#banner").val();
+                    var spGroupTagline = $("#spGroupTagline").val();
+                    var spGroupAbout = $("#spGroupAbout").val();    
+                    var locationcity = $("#locationcity").val();               
+       var flag=0;
+       if (spGroupName!="")
+       {
+       var strArr = new Array();
+       strArr = spGroupName.split("");
+
+       if(strArr[0]==" ") // this is the the key part. you can do whatever you want here!
+       {
+       flag=1;
+       }
+
+
+       }
+
+
+
+       var flag2=0;
+      
+       if (spGroupTagline!="")
+       {
+       var strArr1 = new Array();
+       strArr = spGroupTagline.split("");
+
+       if(strArr1[0]==" ") // this is the the key part. you can do whatever you want here!
+       {
+       flag2=1;
+       }
+
+
+       }
+
+          var flag3=0;
+      
+       if (spGroupAbout!="")
+       {
+       var strArr2 = new Array();
+       strArr2 = spGroupAbout.split("");
+
+       if(strArr2[0]==" ") // this is the the key part. you can do whatever you want here!
+       {
+       flag3=1;
+       }
+
+
+       }
+
+
+         var flag4=0;
+      
+       if (locationcity!="")
+       {
+       var strArr4 = new Array();
+       strArr4 = locationcity.split("");
+
+       if(strArr4[0]==" ") // this is the the key part. you can do whatever you want here!
+       {
+       flag4=1;
+       }
+
+
+       }
+               
+
+
+                if(spGroupName != "" && flag == 1 ){
+
+                  $("#title_error").text("Space not allowed.");
+                }else if(spGroupName != "" && flag != 1){
+                     $("#title_error").text("");
+                }
+
+
+                if(spGroupTagline!= "" &&  flag2 == 1){
+                    $("#sdesc_error").text("Space not allowed.");
+                }else if(spGroupTagline!= "" &&  flag2 != 1){
+                    $("#sdesc_error").text("");
+                }
+
+                 if(spGroupAbout!= "" &&  flag3 == 1){
+                    $("#desc_error").text("Space not allowed.");
+                }else if(spGroupAbout!= "" &&  flag3 != 1){
+                    $("#desc_error").text("");
+                }
+
+                  if(locationcity!= "" &&  flag4 == 1){
+                    $("#city_error").text("Space not allowed.");
+                }else if(spGroupAbout!= "" &&  flag3 != 1){
+                    $("#desc_error").text("");
+                }
+
+             
+                if(grpcategory != "0"){
+                       
+                        $("#cat_error").text("");
+                }
+                 if(locationcity != ""){
+                       
+                        $("#city_error").text("");
+                     }
+                if(spgroupflag != ""){
+                       
+                        $("#privacy_error").text("");
+                     }
+
+                if(spGroupTagline != ""){
+                       
+                        $("#sdesc_error").text("");
+                     }
+                if(spGroupAbout != ""){
+                       
+                        $("#desc_error").text("");
+                     }
+              
+ 
+
+             }
+
+            
+           $( document ).ready(function() {
+                $("#spgroupSubmit").on("click", function(){
+
+
+                    var spGroupName = $("#spGroupName").val();
+                    var grpcategory = $("#grpcategory").val();
+                    var locationcity = $("#locationcity").val();
+                    var spgroupflag = $("#spgroupflag").val();
+                    var banner = $("#file-1").val();
+                    var spGroupTagline = $("#spGroupTagline").val();
+                   
+                    var spGroupAbout = $("#spGroupAbout").val();
+
+                   
+         
+
+                      var flag=0;
+      
+       if (spGroupName!="")
+       {
+       var strArr = new Array();
+       strArr = spGroupName.split("");
+
+       if(strArr[0]==" ") // this is the the key part. you can do whatever you want here!
+       {
+       flag=1;
+       }
+
+
+       }
+
+          var flag2=0;
+      
+       if (spGroupTagline!="")
+       {
+       var strArr1 = new Array();
+       strArr = spGroupTagline.split("");
+
+       if(strArr1[0]==" ") // this is the the key part. you can do whatever you want here!
+       {
+       flag2=1;
+       }
+
+
+       }
+
+          var flag3=0;
+      
+       if (spGroupAbout!="")
+       {
+       var strArr2 = new Array();
+       strArr2 = spGroupAbout.split("");
+
+       if(strArr2[0]==" ") // this is the the key part. you can do whatever you want here!
+       {
+       flag3=1;
+       }
+
+
+       }
+
+         var flag4=0;
+      
+       if (locationcity!="")
+       {
+       var strArr4 = new Array();
+       strArr4 = locationcity.split("");
+
+       if(strArr4[0]==" ") // this is the the key part. you can do whatever you want here!
+       {
+       flag4=1;
+       }
+
+
+       }
+
+
+               
+                    if(spGroupName == "" || grpcategory == "0" || locationcity == "" || spGroupTagline == "" || $('input[name="spgroupflag"]:checked').length == 0 || spGroupAbout == ""){
+
+                    if(spGroupName == ""){
+                        if(flag == 1){
+                        $("#title_error").text("Space not allowed.");
+                        return false;
+
+                         }else{
+                             $("#title_error").text("Please Enter Group Name.");
+                         }
+                     }
+                     if(grpcategory == "0"){
+                       
+                        $("#cat_error").text("Please Select Category Name.");
+                     }
+                      if(locationcity == ""){
+                       
+                        $("#city_error").text("Please Enter City.");
+                     }
+                      if(spGroupTagline == ""){
+                       
+                        $("#sdesc_error").text("Please Enter Short Description.");
+                     }
+                     if($('input[name="spgroupflag"]:checked').length == 0){
+                       
+                        $("#privacy_error").text("Please Seleet Privacy.");
+                     }
+                      if(spGroupAbout == ""){
+                       
+                        $("#desc_error").text("Please Enter  Description.");
+                     }
+                     
+
+                      if(flag == 1){
+                        $("#title_error").text("Space not allowed.");
+                        return false;
+
+                     }
+                    if(flag2 == 1){
+                        $("#sdesc_error").text("Space not allowed.");
+                        return false;
+
+                     }
+
+                     if(flag3 == 1){
+                        $("#desc_error").text("Space not allowed.");
+                        return false;
+
+                     }
+
+                     if(flag4 == 1){
+                        $("#city_error").text("Space not allowed.");
+                        return false;
+
+                     }
+
+
+
+                    }else{
+                       
+                        $("#sp-add-group").submit();
+                     }
+
+           
+
+                 });
+           });
+
+        </script>   
+
+
+        <script type="text/javascript">
+            $("#file-1").change(function() {
+
+    var val = $(this).val();
+
+    switch(val.substring(val.lastIndexOf('.') + 1).toLowerCase()){
+        case 'gif': case 'jpg': case 'png':
+           $("#banner_error").text("")
+            break;
+        default:
+            $(this).val('');
+            // error message here
+            /*alert("not an image");*/
+             $("#banner_error").text("Please select Image only.")
+            break;
+    }
+});
+
+
+    </script>   

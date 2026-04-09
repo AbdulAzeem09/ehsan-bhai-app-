@@ -1,0 +1,472 @@
+<?php 
+include('../univ/baseurl.php');
+session_start();
+function sp_autoloader($class) {
+include '../mlayer/' . $class . '.class.php';
+}
+spl_autoload_register("sp_autoloader");
+if (!isset($_SESSION['pid'])) {
+include_once ("../authentication/check.php");
+$_SESSION['afterlogin'] = "../timeline/";
+}
+
+$_GET["categoryid"] = $_GET["categoryID"] = 13;
+
+
+?>
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+<?php include('../component/links.php');?>
+<!--This script for posting timeline data Start-->
+<script src="<?php echo $BaseUrl; ?>/assets/js/jquery-2.1.4.min.js"></script>
+<script src="<?php echo $BaseUrl; ?>/assets/js/jquery-1.11.4-ui.min.js"></script>
+<!--This script for posting timeline data End-->
+
+
+<!-- ===== INPAGE SCRIPTS====== -->
+<!-- High Charts script -->
+<script src="<?php echo $BaseUrl;?>/assets/js/highcharts.js"></script>
+<?php include('../component/dashboard-link.php'); ?>
+<!-- Morris chart -->
+<link href="<?php echo $BaseUrl; ?>/assets/admin/plugins/morris/morris.css" rel="stylesheet" type="text/css" />
+
+
+
+</head>
+
+<body class="bg_gray">
+<?php 
+$header_photo = "header_photo";
+include_once("../header.php");
+?>
+<section class="innerArtBanner">
+<div class="container">
+<div class="row">
+<div class="col-md-12">
+<h1 style="text-align: center;">Dashboard</h1>
+</div>
+<?php include('top-search.php');?>
+</div>
+</div>
+</section>
+<section class="bg_white" style="border-bottom: 2px solid #CCC">
+<div class="container">
+<div class="row">
+<div class="col-md-12">
+<ul class="art_scnd_levl">
+<li><a href="<?php echo $BaseUrl.'/photos/artist.php?cat=1';?>">Visual Artist</a></li>
+<li><a href="<?php echo $BaseUrl.'/photos/artist.php?cat=2';?>">Graphics Designer</a></li>
+<li><a href="<?php echo $BaseUrl.'/photos/artist.php?cat=3';?>">Contemporary</a></li>
+<li><a href="<?php echo $BaseUrl.'/photos/artist.php?cat=4';?>">Animation</a></li>
+<li><a href="<?php echo $BaseUrl.'/photos/artist.php?cat=5';?>">Musician</a></li>
+</ul>
+</div>
+</div>
+</div>
+</section> 
+<div class="space"></div> 
+<section class="">
+<div class="container">
+<div class="row">
+<div class="col-md-12 topbread">
+<nav aria-label="breadcrumb">
+<ol class="breadcrumb">
+<li class="breadcrumb-item"><a href="<?php echo $BaseUrl.'/photos';?>"><i class="fa fa-home"></i></a></li>
+
+<li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+</ol>
+</nav>
+</div>
+</div>
+<?php include('top-dashboard.php');?>
+
+
+<div class="row m_top_15">
+<div class="col-md-5">
+<!-- TABLE: LATEST ORDERS -->
+<div class="box box-info">
+<div class="box-header with-border">
+<h3 class="box-title">Store</h3>
+<div class="box-tools pull-right">
+<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+<button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+</div>
+</div><!-- /.box-header -->
+<div class="box-body">
+<div class="table-responsive">
+<?php
+$p = new _postingview;
+$po = new _postings;
+$en = new _postenquiry;
+$atb = new _addtoboard;
+$ag = new _artgalleryenquiry;
+// total Products
+$totalProducts = 0; 
+$result = $p->mycatProduct($_GET['categoryid'], $_SESSION['pid']);
+//echo $p->ta->sql;
+if ($result) {
+$totalProducts = $result->num_rows;
+}else{
+$totalProducts = 0;
+}
+// =========ACTIVE POST
+$totalActive = 0;
+$result4 = $p->profileactivepost($_GET["categoryid"], $_SESSION['pid']);
+//echo $p->ta->sql;
+if ($result4) {
+$totalActive = $result4->num_rows;
+}
+// =========IN-ACTIVE POST
+$totInActive = $totalProducts - $totalActive;
+// ==========DRAFT
+$totalDraft = 0;
+$result3 = $p->readMyDraftprofile($_GET["categoryid"], $_SESSION['pid']);
+//echo $p->ta->sql;
+if ($result3) {
+$totalDraft = $result3->num_rows;
+}else{
+$totalDraft = 0;
+}
+// =========FAVOURITE POST
+$totFav = 0;
+$result5 = $p->myfavourite_music($_SESSION['pid'], $_GET['categoryid']);
+//echo $p->ta->sql;
+if ($result5) {
+$totFav = $result5->num_rows;
+}
+
+// ============YOUR BOARD
+$board = 0;
+$result6 = $atb->readMyBoard($_SESSION['pid']);
+if ($result6) {
+$board = $result6->num_rows;
+}
+
+// =============ENQUIRY
+$totenquiry = 0;
+$result7 = $ag->readMyEnquery($_SESSION['pid']);
+if ($result7) {
+$totenquiry = $result7->num_rows;
+}
+
+?>
+<table class="table table-striped no-margin">
+<tbody>
+<tr>
+<td><a href="javascript:void(0)">Total Art</a></td>
+<td><span class="label label-success"><?php echo $totalProducts; ?></span></td>
+</tr>
+<tr>
+<td><a href="<?php echo $BaseUrl.'/photos/myphotos.php';?>">Active Art</a></td>
+<td><span class="label label-info"><?php echo $totalActive; ?></span></td>
+</tr>
+<tr>
+<td><a href="javascript:void(0)">Past Art</a></td>
+<td><span class="label label-info"><?php echo $totInActive; ?></span></td>
+</tr>
+<tr>
+<td><a href="javascript:void(0)">Draft Art</a></td>
+<td><span class="label label-danger"><?php echo $totalDraft; ?></span></td>
+</tr>
+<tr>
+<td><a href="<?php echo $BaseUrl.'/photos/flaged.php'; ?>">Flaged Art</a></td>
+<td><span class="label label-warning"><?php echo $totFav; ?></span></td>
+</tr>
+<tr>
+<td><a href="<?php echo $BaseUrl.'/photos/your_board.php';?>">Your Board</a></td>
+<td><span class="label label-warning"><?php echo $board; ?></span></td>
+</tr>
+<tr>
+<td><a href="<?php echo $BaseUrl.'/photos/myenquiry.php'; ?>">Total Enquiry</a></td>
+<td><span class="label label-warning"><?php echo $totenquiry; ?></span></td>
+</tr>                                           
+</tbody>
+</table>
+</div><!-- /.table-responsive -->
+</div><!-- /.box-body -->
+
+</div><!-- /.box -->
+<!-- =======donut chart===== -->
+<div class="nav-tabs-custom">
+<!-- Tabs within a box -->
+<ul class="nav nav-tabs pull-right">
+<li class="pull-left header"><i class="fa fa-pie-chart"></i> Donut Chart</li>
+</ul>
+<div class="tab-content no-padding">
+<div class="chart tab-pane active" id="chart-two" style="position: relative; height: 292px;">   
+
+</div>                                        
+</div>
+</div><!-- /.nav-tabs-custom -->
+</div>
+
+<div class="col-md-7">
+<!-- Custom tabs (Charts with tabs)-->
+<div class="nav-tabs-custom">
+<ul class="nav nav-tabs pull-right">
+<li class="pull-left header"><i class="fa fa-bar-chart"></i> Bar Chart</li>
+</ul>
+<div class="tab-content no-padding">
+<!-- Morris chart - Sales -->
+<div class="chart tab-pane active" id="bar-chart" style="position: relative; height: 285px;">
+<div id="jobBoardChart" style="width: 100%; height: 100%; margin: 0 auto"></div>
+</div>
+<!-- this is xxtra chart for dummy -->
+<div class="chart tab-pane " id="revenue-chart" style="position: relative; height: 280px;">
+
+</div>
+</div>
+</div><!-- /.nav-tabs-custom -->
+
+<div class="nav-tabs-custom">
+<ul class="nav nav-tabs pull-right">
+<li class="pull-left header"><i class="fa fa-pie-chart"></i> Pie Chart</li>
+</ul>
+<div class="tab-content no-padding">
+<div class="chart tab-pane active" id="pie-chart" style="position: relative; height: 292px;">   
+<div id="allmodule"></div>
+</div>                                        
+</div>
+</div><!-- /.nav-tabs-custom -->
+
+<!-- solid sales graph -->
+<div class="box box-solid bg-teal-gradient">
+<div class="box-header">
+<i class="fa fa-th"></i>
+<h3 class="box-title">Sales Graph</h3>
+<div class="box-tools pull-right">
+<button class="btn bg-teal btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+<button class="btn bg-teal btn-sm" data-widget="remove"><i class="fa fa-times"></i></button>
+</div>
+</div>
+<div class="box-body border-radius-none">
+<div class="chart" id="line-chart" style="height: 250px;"></div>
+</div><!-- /.box-body -->
+<div class="box-footer no-border">
+<div class="row">
+<div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
+<input type="text" class="knob" data-readonly="true" value="20" data-width="60" data-height="60" data-fgColor="#39CCCC"/>
+<div class="knob-label">Mail-Orders</div>
+</div><!-- ./col -->
+<div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
+<input type="text" class="knob" data-readonly="true" value="50" data-width="60" data-height="60" data-fgColor="#39CCCC"/>
+<div class="knob-label">Online</div>
+</div><!-- ./col -->
+<div class="col-xs-4 text-center">
+<input type="text" class="knob" data-readonly="true" value="30" data-width="60" data-height="60" data-fgColor="#39CCCC"/>
+<div class="knob-label">In-Store</div>
+</div><!-- ./col -->
+</div><!-- /.row -->
+</div><!-- /.box-footer -->
+</div><!-- /.box -->
+</div>
+</div><!-- /.row -->
+
+</div>
+</section>
+
+<div class="space"></div>
+<?php 
+include('../component/footer.php');
+include('../component/btm_script.php'); 
+?>
+
+
+
+
+<!-- ========DASHBOARD FOOTER CHARTS====== -->
+
+<!-- Morris.js charts -->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="<?php echo $BaseUrl?>/assets/admin/plugins/morris/morris.min.js" type="text/javascript"></script>
+<!-- Sparkline -->
+<script src="<?php echo $BaseUrl?>/assets/admin/plugins/sparkline/jquery.sparkline.min.js" type="text/javascript"></script>
+<!-- jvectormap -->
+<script src="<?php echo $BaseUrl?>/assets/admin/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js" type="text/javascript"></script>
+<script src="<?php echo $BaseUrl?>/assets/admin/plugins/jvectormap/jquery-jvectormap-world-mill-en.js" type="text/javascript"></script>
+<!-- jQuery Knob Chart -->
+<script src="<?php echo $BaseUrl?>/assets/admin/plugins/knob/jquery.knob.js" type="text/javascript"></script>
+<!-- daterangepicker -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js" type="text/javascript"></script>
+<script src="<?php echo $BaseUrl?>/assets/admin/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+<!-- datepicker -->
+<script src="<?php echo $BaseUrl?>/assets/admin/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
+<!-- Bootstrap WYSIHTML5 -->
+<script src="<?php echo $BaseUrl?>/assets/admin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" type="text/javascript"></script>
+<!-- Slimscroll -->
+<script src="<?php echo $BaseUrl?>/assets/admin/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+// Create the chart
+Highcharts.chart('jobBoardChart', {
+chart: {
+type: 'column'
+},
+title: {
+text: 'Graph'
+},
+subtitle: {
+text: ''
+},
+xAxis: {
+type: 'category'
+},
+yAxis: {
+title: {
+text: ''
+}
+
+},
+legend: {
+enabled: false
+},
+plotOptions: {
+series: {
+borderWidth: 0,
+dataLabels: {
+enabled: true,
+format: '{point.y:.0f}'
+}
+}
+},
+
+tooltip: {
+headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.0f}</b> of total<br/>'
+},
+
+series: [{
+name: 'Art Gallery',
+colorByPoint: true,
+data: [{
+name: "Total Art",
+y: <?php echo $totalProducts;?>
+},{
+name: "Active Art",
+y: <?php echo $totalActive;?>
+},{
+name: "Past Art",
+y: <?php echo $totInActive; ?>
+},{
+name: "Draft Art",
+y: <?php echo $totalDraft; ?>
+},{
+name: "Flaged Art",
+y: <?php echo $totFav;?>
+},{
+name: "Your Board",
+y: <?php echo $board;?>
+},{
+name: "Total Enquiry",
+y: <?php echo $totenquiry;?>
+}]
+}],
+
+});
+</script>
+<script type="text/javascript">
+$(function () {
+//Donut Chart
+var donut = new Morris.Donut({
+element: 'chart-two',
+resize: true,
+colors: ["#3c8dbc", "#f56954", "#00a65a", "#F00"],
+data: [
+{label: "Total Art", value: <?php echo $totalProducts;?>},
+{label: "Active Art", value: <?php echo $totalActive;?>},
+{label: "Past Art", value: <?php echo $totInActive; ?>},
+{label: "Draft Art", value: <?php echo $totalDraft; ?>},
+{label: "Flaged Art", value: <?php echo $totFav;?>},
+{label: "Your Board", value: <?php echo $board;?>},
+{label: "Total Enquiry", value: <?php echo $totenquiry;?>}
+],
+hideHover: 'auto'
+});
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function () {
+var ctoptions = {// My store pi chart
+chart: {
+height: 290,
+renderTo: 'allmodule',
+plotBackgroundColor: null,
+plotBorderWidth: null,
+plotShadow: false
+},
+title: {
+text: 'All Module',
+style: {
+fontWeight: 'normal',
+fontSize: '13px'
+}
+},
+tooltip: {
+pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+},
+legend: {
+itemStyle: {
+color: '#777',
+fontWeight: 'normal',
+fontSize: '9px'
+}
+},
+credits: {
+enabled: false
+},
+plotOptions: {
+pie: {
+size: 200,
+allowPointSelect: true,
+cursor: 'pointer',
+dataLabels: {
+enabled: false
+},
+showInLegend: true,
+point: {
+events: {
+click: function () {
+console.log('events');
+//window.location.href = "../my-store/";
+}
+}
+}
+}
+},
+series: [{
+type: 'pie',
+name: 'John',
+data: [{
+name: "Total Art",
+y: <?php echo $totalProducts;?>
+},{
+name: "Active Art",
+y: <?php echo $totalActive;?>
+},{
+name: "Past Art",
+y: <?php echo $totInActive; ?>
+},{
+name: "Draft Art",
+y: <?php echo $totalDraft; ?>
+},{
+name: "Flaged Art",
+y: <?php echo $totFav;?>
+},{
+name: "Your Board",
+y: <?php echo $board;?>
+},{
+name: "Total Enquiry",
+y: <?php echo $totenquiry;?>
+}]                     
+}]
+}
+chart = new Highcharts.Chart(ctoptions);
+});
+</script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="<?php echo $BaseUrl?>/assets/admin/dist/js/pages/dashboard.js" type="text/javascript"></script>
+</body>
+</html>

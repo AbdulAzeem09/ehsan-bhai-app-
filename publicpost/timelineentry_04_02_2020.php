@@ -1,0 +1,325 @@
+
+<div style="font-weight:bold;" >
+    <?php
+    include('../univ/baseurl.php');
+    
+    ob_start();
+    //session_start();
+
+    if (isset($_GET["js"])) {
+
+        function sp_autoloader($class) {
+            include '../mlayer/' . $class . '.class.php';
+        }
+
+        spl_autoload_register("sp_autoloader");
+        $grouptimelines = $_GET["js"];
+    }
+
+    $p2 = new _postingview;
+    if (isset($grouptimelines) && $grouptimelines == 1) {
+        $res2 = $p2->allgrouptimelines($_GET["timelineid"]);
+    } else {
+        $res2 = $p2->singletimelines($_GET["timelineid"]);
+        
+    }
+	//echo $p2->ta->sql;
+    ?>
+    
+    <?php
+    //echo $p2->ta->sql;
+    if ($res2 != false)
+        while ($rows = mysqli_fetch_assoc($res2)) {
+            $postingDate = $p2->spPostingDate($rows["spPostingDate"]); ?>
+            <div class="post_timeline searchable deldiv_<?php echo $rows['idspPostings'];?>" >
+                <div class="row <?php (isset($_GET["grouptimeline"]) ? "" : ($rows["spPostingVisibility"] != -1 && !isset($_GET["groupid"]) ? "highlight" : ""));?>">
+                    <div class="col-md-6">
+                        <?php
+                        $picture = $rows["spProfilePic"];
+                        $profilename = $rows["spProfileName"];
+                        //this option is true when any person share any post
+                        if(isset($shareby) && $shareby!= NULL){
+                            //echo $shareby;
+                            $pro = new _spprofiles;
+                            $result3 = $pro->readUserId($shareby);
+                            if($result3 != false){ 
+                                $row3 = mysqli_fetch_assoc($result3); 
+                                // this is new time
+                                $postingDate3 = $p2->get_timeago(strtotime($rows["spPostingDate"]));
+                                // this is old time
+                                //$postingDate3 = $p2->spPostingDate($rows["spPostingDate"]); ?>
+                                <div class="left_profile_timeline">
+                                    <?php
+                                    $picture3 = $row3["spProfilePic"];
+                                    $profilename3 = $row3["spProfileName"];
+
+                                    if (isset($picture3)) {
+                                        echo "<img alt='profilepic'  class='img-circle' src=' " . ($picture3) . "'>";
+                                    }else{
+                                        echo "<img alt='profilepic'  class='' src='".$BaseUrl."/assets/images/icon/blank-img.png' >";
+                                    }
+                                    $sharedProfile = $BaseUrl."/friends/?profileid=".$shareby;
+                                    $PostProfile = $BaseUrl."/friends/?profileid=".$rows['idspProfiles'];
+                                    ?>
+                                </div> 
+                                <div class="title_profile">
+                                    <h4><?php echo "<a href='".ucwords(strtolower($sharedProfile))."'>".ucwords(strtolower($profilename3))."</a> Shared <a href='".$PostProfile."'>".ucwords(strtolower($profilename))."</a> Post"; ?> </h4>
+                                    <h5><?php echo $postingDate3; ?> <i class="fa fa-globe"></i></h5>
+                                </div>
+                                <?php
+                            }
+                        }else{
+                            ?>
+                            <div class="left_profile_timeline">
+                                <?php
+                                
+
+                                if (isset($picture)) {
+                                    echo "<img alt='profilepic'  class='img-circle' src=' " . ($picture) . "'>";
+                                }else{
+                                    echo "<img alt='profilepic'  class='' src='".$BaseUrl."/assets/images/icon/blank-img.png' >";
+                                }
+                                ?>
+                            </div>
+                            <div class="title_profile">
+                                <h4><a href="<?php echo $BaseUrl.'/friends/?profileid='.$rows['idspProfiles'];?>"><?php echo ucwords(strtolower($profilename)); ?></a></h4>
+                                <h5><?php echo $postingDate; ?> <i class="fa fa-globe"></i></h5>
+                            </div> <?php
+                        } ?>
+                        
+                    </div>
+                    <div class="col-md-6">
+                        <div class="dropdown pull-right right_profile_timeline">
+                            <button class="btn dropdown-toggle   6666667777" type="button" data-toggle="dropdown"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></button>
+                            <ul class="dropdown-menu">
+                                <?php
+								if(isset($_SESSION['pid'])){
+									$sp = new _savepost;
+									$result2 = $sp->savepost($rows['idspPostings'], $_SESSION['pid'], $_SESSION['uid']);
+									if($result2){
+										if($result2->num_rows > 0){ ?>
+											<li><a href="<?php echo $BaseUrl.'/post-ad/savePost.php?unsave='.$rows['idspPostings'];?>"><i class="fa fa-save"></i> Unsave Post</a></li> <?php
+										}else{ ?>
+											<li><a href="<?php echo $BaseUrl.'/post-ad/savePost.php?postid='.$rows['idspPostings'];?>"><i class="fa fa-save"></i> Save Post</a></li> <?php
+										}
+									}else{?>
+										<li><a href="<?php echo $BaseUrl.'/post-ad/savePost.php?postid='.$rows['idspPostings'];?>"><i class="fa fa-save"></i> Save Post</a></li> <?php
+									}
+								}else{?>
+									<li><a href="<?php echo '../post-ad/savePost.php?postid='.$rows['idspPostings'];?>"><i class="fa fa-save"></i> Save Post</a></li> <?php
+								}
+                                if($_SESSION['pid'] == $rows['idspProfiles']){ ?>
+                                    <li><a href="javascript:void(0)" data-toggle="modal" data-target="#myPostEdit" data-postid="<?php echo $rows['idspPostings']; ?>" class="sendPostidEdit"><i  class="fa fa-pencil"></i> Edit Post</a></li> <?php
+                                }
+                                ?>
+                                
+                                
+                                <!-- <li><a href="#"><i class="fa fa-map-o"></i> Add Location</a></li> -->
+                                <?php
+                                //Delete timeline by poster//
+								if(isset($_SESSION['uid'])){
+									$pr = new _spprofiles;
+									$pres = $pr->checkprofile($_SESSION['uid'], $rows['idspProfiles']);
+									if ($pres != false) {
+                                        ?>
+                                        <li><a href="javascript:void(0);" class="postdel" data-id="<?php echo $rows['idspPostings']?>" data-pid="<?php ?>" ><i class='fa fa-trash'></i> Delete Post</a></li>
+                                        <?php
+										//echo "<li><a href='../post-ad/deletePost.php?postid=".$rows['idspPostings']."&flag=1' ><i class='fa fa-trash'></i> Delete Post</a></li>";
+										//echo "<li><a href='#'><i class='fa fa-trash'></i> Delete Post</a></li>";
+									}
+								}else{
+									echo "<li><a href='../post-ad/deletePost.php?postid=".$rows['idspPostings']."&flag=1' ><i class='fa fa-trash'></i> Delete Post</a></li>";
+								}
+                                //hide post from timeline
+                                if($_SESSION['pid'] != $rows['idspProfiles']){
+                                    echo "<li><a href='".$BaseUrl."/post-ad/hidePost.php?postid=".$rows['idspPostings']."&flag=1' ><i class='fa fa-minus-square-o'></i> Hide Post</a></li>";   
+                                }
+                                ?>
+                                <!-- <li><a href="#"><i class="fa fa-bell-o"></i> Notification On</a></li> -->
+
+                            </ul>
+
+                        </div>
+                    </div>
+
+<div class="col-md-12 ">
+                        <h2>
+                            <?php // echo $rows['spPostingNotes'];?>
+                            <!-- MAKE A LINK -->
+                            <?php   echo $text = $p2->turnUrlIntoHyperlink($rows['spPostingNotes']); ?>
+                            <!-- END -->
+                        </h2>
+
+                        <?php
+                        $pic = new _postingpic;
+                        $result = $pic->read($rows['idspPostings']);
+                        //echo $pic->ta->sql;
+                        if ($result != false) {
+                            while ($rp = mysqli_fetch_assoc($result)) {
+                                $pict = $rp['spPostingPic'];
+                            }
+                        } else{
+                            $pict = NULL;
+                        }
+                        $media = new _postingalbum;
+                        $result = $media->read($rows['idspPostings']);
+                        if ($result != false) {
+                            $r = mysqli_fetch_assoc($result);
+                            $picture = $r['spPostingMedia'];
+							$sppostingmediaTitle = $r['sppostingmediaTitle'];
+							$sppostingmediaExt = $r['sppostingmediaExt'];
+							if($sppostingmediaExt == 'mp3'){ ?>
+								<div style='margin-left:15px;margin-right:15px;'>
+									<audio controls>
+										<source src="<?php echo $BaseUrl.'/upload/'.$sppostingmediaTitle;?>" type="audio/<?php echo $sppostingmediaExt;?>">
+										Your browser does not support the audio element.
+									</audio>
+								</div>
+								<?php
+							}else if($sppostingmediaExt == 'mp4'){ ?>
+								<div style='margin-left:15px;margin-right:15px;'>
+									<video  style='max-height:300px;width: 100%' controls>
+										<source src='<?php echo $BaseUrl.'/upload/'.$sppostingmediaTitle;?>' type="video/<?php echo $sppostingmediaExt;?>">
+									</video>
+								</div>
+								<?php
+							}else if($sppostingmediaExt == 'pdf' || $sppostingmediaExt == 'xls' || $sppostingmediaExt == 'doc' || $sppostingmediaExt == 'docx'){
+								?>
+								<div class="row timelinefile">
+									<div class="col-md-offset-1 col-md-1 no-padding">
+										<img src="<?php echo $BaseUrl.'/assets/images/pdf.png'?>" alt="pdf" class="img-responsive" />
+									</div>
+									<div class="col-md-10">
+										<h3><?php echo $sppostingmediaTitle;?></h3>
+										<small><?php echo $sppostingmediaExt;?></small>
+										<a href="<?php echo $BaseUrl.'/upload/'.$sppostingmediaTitle;?>" target="_blank">Download</a>
+									</div>
+								</div>
+								<?php
+							}
+                        } else {
+                            if (isset($pict)) {
+                                echo "<div class='timlinepicture text-center'>";
+                                echo "<img alt='Posting Pic' src='" . ($pict) . "' class='postpic img-thumbnail img-responsive'>";
+                                include("postingpic.php");
+                                echo "</div>";
+                            }
+                            /* else
+                              echo "<img alt='Posting Pic' src='../img/no.png' style='vertical-align:top; max-height: 300px; max-width: 800px;' class='postpic img-thumbnail' height='300' width='600' class='img-thumbnail'>" ; */
+                        } ?>
+                        
+                    </div>
+                    
+                    <div class="col-md-12">
+                        <div class="post_footer">
+                            <ul>
+                                <li> 
+                                    <?php
+                                    $pl = new _postlike;
+                                    $r = $pl->readnojoin($rows['idspPostings']);
+                                    if ($r != false) {
+                                        $i = 0;
+                                        $liked = $r->num_rows;
+                                        while ($row = mysqli_fetch_assoc($r)) {
+                                            if ($row['spProfiles_idspProfiles'] == $_SESSION['pid']) {
+                                                echo "<span id='spLikePost' data-toggle='tooltip' data-placement='bottom' title='Unlike' class='icon-socialise fa fa-thumbs-up spunlike' data-postid='" . $rows['idspPostings'] . "' data-liked='" . $r->num_rows . "'> (" . $r->num_rows . ") <span class='font_regular'></span></span>";
+                                                $i++;
+                                            }
+                                        }
+                                        if ($i == 0) {
+                                            echo "<span id='spLikePost' data-likeid='postid" . $rows['idspPostings'] . "' data-toggle='tooltip' data-placement='bottom' title='Like' class='icon-socialise sp-like fa fa-thumbs-o-up' data-postid='" . $rows['idspPostings'] . "' data-liked='" . $r->num_rows . "'> (" . $r->num_rows . ") <span class='font_regular'>Like</span></span>";
+                                        }
+                                    } else {
+                                        $liked = 0;
+                                        echo "<span id='spLikePost' data-likeid='postid" . $rows['idspPostings'] . "' data-toggle='tooltip' data-placement='bottom' title='Like' class='icon-socialise sp-like fa fa-thumbs-o-up' data-postid='" . $rows['idspPostings'] . "' data-liked='" . $liked . "'> <span class='font_regular'>Like</span></span>";
+                                    }?>
+                                </li>
+
+                                <li><i class="fa fa-comment-o"></i> <span class='font_regular'>Comment</span></li>
+                                <li>
+                                    <?php
+                                    $pl = new _favorites;
+                                    $re = $pl->read($rows['idspPostings']);
+                                    if ($re != false) {
+                                        $i = 0;
+                                        while ($rw = mysqli_fetch_assoc($re)) {
+                                            if ($rw['spUserid'] == $_SESSION['uid']) {
+                                                echo "<span id='spFavouritePost' data-toggle='tooltip' data-placement='bottom' title='Unfavourite' class='icon-favorites fa fa-heart removefavorites' data-postid='" . $rows['idspPostings'] . "'><span class='font_regular'> Unfavourite</span></span>";
+                                                $i++;
+                                            }
+                                        }
+                                        if ($i == 0) {
+                                            echo "<span id='spFavouritePost' data-toggle='tooltip' data-placement='bottom' title='favourite' class='icon-favorites fa fa-heart-o sp-favorites' data-postid='" . $rows['idspPostings'] . "'><span class='font_regular'> Favourite</span></span>";
+                                        }
+                                    } else {
+
+                                        echo "<span id='spFavouritePost' data-toggle='tooltip' data-placement='bottom' title='favourite' class='icon-favorites fa fa-heart-o sp-favorites' data-postid='" . $rows['idspPostings'] . "'><span class='font_regular'> Favourite</span></span>";
+                                    }?>
+                                </li>
+                                <li><a href="javascript:void(0);"  data-toggle='modal' data-target='#myshare'><span class='sp-share' data-postid='<?php echo $rows['idspPostings'];?>' src='<?php echo ($pict); ?>'><i class="fa fa-share-alt"></i> <span class='font_regular'>Share</span></span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-12 no-padding">
+                        <div class="commt_box">
+                            <?php
+                                if(isset($_GET['idspprofile'])){
+                                    $idspprofile = $_GET['idspprofile'];
+                                }else{
+                                    $idspprofile = $_SESSION['pid'];
+                                }
+                                
+                                include("commentform.php");
+                            ?>
+                        </div>
+                        
+                            <?php
+                            $c = new _comment;
+                            $result = $c->read($rows['idspPostings']);
+                            $totalcmt = 0;
+                            if ($result != false) {
+                                $totalcmt = $result->num_rows;
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    $profilename = $row["spProfileName"];
+                                    $comment = $row["comment"];
+                                    $picture = $row["spProfilePic"];
+                                    //$date = $row["commentdate"];
+                                } ?>
+                                <div class="timelinecmnt">
+                                    <!--
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <?php
+                                            if (isset($picture))
+                                                echo "<img alt='profilepic'  class='' src=' " . ($picture) . "' >";
+                                            else
+                                                echo "<img alt='profilepic'  class='' src='../assets/images/blank-img/default-profile.png' >";
+                                            ?>
+                                        </div>
+                                        <div class="col-md-11">
+                                            <div class="right_coment_detail">
+                                                <a href="#"><?php echo $profilename;?></a>
+                                                <p><?php echo $comment; ?></p>
+                                            </div>
+                                        </div>
+                                    </div>-->
+                                    
+                                    <div class="row view_more_cmnt">
+                                        <div class="col-md-12">
+                                            <?php
+                                            echo "<a href='javascript:void(0)' data-toggle='modal' data-target='#mycomment'><span class='morecomment' data-postid='" . $rows['idspPostings'] . "' >View all comments <span class='tltcmt'>" . $totalcmt . "</span></span></a>";
+                                            ?>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php
+                            } ?>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            <?php
+        } ?>
+</div>
+

@@ -1,0 +1,265 @@
+		.sidebar{	
+			background-color: #f9f9f9;
+			overflow: hidden;	
+			padding: 10px;
+			/*height: calc(100vh - 100px);*/
+		}		
+		
+		.sidebar ul {
+			padding: 0 0 20px 0;
+
+		}	
+
+		.sidebar ul li {
+			padding: 10px;
+			list-style: none;		    
+		}
+
+		.sidebar ul li a {
+			display: block;
+			color: #8a8a8a;
+		}		
+
+		.sidebar ul li:hover {
+			background: #2A6395;
+		}
+
+		.sidebar ul li a:hover {
+			text-decoration: none;
+			color: #ffffff;
+		}
+		.input-group {
+			position: relative;
+			display: block;
+			border-collapse: separate;
+			padding-top: 5px;
+			padding-bottom: 5px;
+		}
+		.input-group .form-control {
+			position: relative;
+			z-index: 2;
+			float: left;
+			width: 83%;
+			margin-bottom: 0;
+		}
+		.border_bg{
+			border: 1px solid #000;
+			padding: 10px;
+			border-radius: 10px;
+		}
+		.sp_color{
+			background-color: #00A65A;
+			height: 150px;
+			font-size: 70px;
+			color: #fff;
+			font-weight: bold;
+		}
+		.sp_color i{			
+			font-size: 70px;
+			color: #00000073;
+			font-weight: bold;
+			float: right;
+		}
+		.sp_color_footer{
+			background-color: #018549;
+			text-align: center;
+			color: #fff;
+		}
+		.my_earn{
+			background-color: #00C0EF;
+			height: 150px;
+			font-size: 70px;
+			color: #fff;
+			font-weight: bold;
+		}
+		.my_earn i{			
+			font-size: 70px;
+			color: #00000073;
+			font-weight: bold;
+			float: right;
+		}
+		.my_earn_footer{
+			background-color: #0089AA;
+			text-align: center;
+			color: #fff;
+		}
+		.my_video{
+			background-color: #F39C12;
+			height: 150px;
+			font-size: 70px;
+			color: #fff;
+			font-weight: bold;
+		}
+		.my_video i{			
+			font-size: 70px;
+			color: #00000073;
+			font-weight: bold;
+			float: right;
+		}
+		.my_video_footer{
+			background-color: #B77000;
+			text-align: center;
+			color: #fff;
+		}
+		.contribution{
+			background-color: #DD4B39;
+			height: 150px;
+			font-size: 70px;
+			color: #fff;
+			font-weight: bold;
+		}
+		.contribution i{			
+			font-size: 70px;
+			color: #00000073;
+			font-weight: bold;
+			float: right;
+		}
+		.contribution_footer{
+			background-color: #971100;
+			text-align: center;
+			color: #fff;
+		}
+		.pane, .panel-body{	
+			height: 150px;
+			font-size: 40px;			
+			font-weight: bold;
+		}
+		.panel i{			
+			font-size: 70px;
+			color: #00000073;
+			font-weight: bold;
+			float: right;
+		}
+
+		.top_channels img{
+			margin: auto 0;
+		}
+		.top_channels h4{
+			margin: 5px 0;
+		}
+		.top_channels p{
+			margin: 0 0 5px;
+			color: #8A8A8A;
+		}
+		hr {
+			display: block;
+			margin-top: 0.5em;
+			margin-bottom: 0.5em;
+			margin-left: auto;
+			margin-right: auto;
+			border-style: dotted;
+			border-width: 1px;
+		}
+		.MultiCarousel { 
+			float: left; 
+			overflow: hidden; 
+			padding: 10px; 
+			width: 100%; 
+			position:relative; 
+		}
+		.MultiCarousel .MultiCarousel-inner { 
+			transition: 1s ease all; 
+			float: left; 
+		}
+		.MultiCarousel .MultiCarousel-inner .item { 
+			float: left;
+		}
+		.MultiCarousel .MultiCarousel-inner .item > div { 
+			text-align: left; 
+			padding:5px; 
+			margin:5px; 
+			background:#f1f1f1; 
+			color:#666;
+			border: 1px solid;
+		}
+		.MultiCarousel .leftLst, .MultiCarousel .rightLst { 
+			position:absolute; 
+			border-radius:50%;
+			top:calc(50% - 20px);
+		}
+		.MultiCarousel .leftLst { 
+			left:0; 
+		}
+		.MultiCarousel .rightLst { 
+			right:0; 
+		}
+
+		.MultiCarousel .leftLst.over, .MultiCarousel .rightLst.over { pointer-events: none; background:#ccc; }
+
+		.tags{
+			height: 50px;
+			border: solid 1px #000;
+			padding: 5px 10px;
+		}
+		.tags .btn{
+			border-radius: 20px;
+			border: none;
+		}
+		h4{
+			color: #1757B4;
+		}
+		.pad15 {
+			background:red; 
+			float:left;
+			position:relative
+		}
+		.pad15 a{
+			text-decoration: none;
+		}
+		.pad15:hover .play{display:block}
+		.play{
+			position : absolute;
+			display:none;
+			top:25%; 
+			width:60px;
+			margin:0 auto; left:0px;
+			right:0px;
+			z-index:100
+		} 
+
+		/* Style the video: 100% width and height to cover the entire window */
+		#myVideo {
+			/*position: fixed;*/
+			right: 0;
+			bottom: 0;
+			min-width: 100%;
+			min-height: 100%;
+		}
+		
+		/* Add some content at the bottom of the video/page */
+		.content {
+			position: absolute;
+			bottom: 0;
+			background: rgba(0, 0, 0, 0.5);
+			color: #f1f1f1;
+			width: 100%;
+			padding: 20px;
+		}
+
+		/* Style the button used to pause/play the video */
+		#myBtn {
+			    position: absolute;
+			    border-radius: 50%;
+			    width: 90px;
+			    height: 90px;
+			    /* padding: 0px; */
+			    border: none;
+			    background: #2e6da4;
+			    color: #fff;
+			    cursor: pointer;
+			    top: 40%;
+			    left: 45%;
+			    font-size: 25px;
+			    text-align: center;
+		}
+
+		#myBtn:hover{
+			background: #ddd;
+			color: black;
+			display: block;
+		}
+		.hide {
+			  visibility: none;
+			}
+
+		

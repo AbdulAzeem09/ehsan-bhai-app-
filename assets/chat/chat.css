@@ -1,0 +1,177 @@
+.chatbox {
+	position: fixed;
+	position:expression("absolute");
+	width: 225px;
+	display:none;
+}
+
+.chatboxhead {
+	background-color: #f99d39;
+	padding:7px;
+	color: #ffffff;
+
+	border-right:1px solid #f99d39;
+	border-left:1px solid #f99d39;
+}
+
+.chatboxblink {
+	background-color: #176689;
+	border-right:1px solid #176689;
+	border-left:1px solid #176689;
+}
+
+.chatboxcontent {
+	font-family: arial,sans-serif;
+	font-size: 13px;
+	color: #333333;
+	height:200px;
+	width:225px;
+	overflow-y:auto;
+	overflow-x:auto;
+	padding:7px;
+	border-left:1px solid #cccccc;
+	border-right:1px solid #cccccc;
+	border-bottom:1px solid #eeeeee;
+	background-color: #ffffff;
+	line-height: 1.3em;
+}
+
+.chatboxinput {
+	padding: 5px;
+	background-color: #ffffff;
+	border-left:1px solid #cccccc;
+	border-right:1px solid #cccccc;
+	border-bottom:1px solid #cccccc;
+}
+
+.chatboxtextarea {
+	width: 210px;
+	height:44px;
+	padding:3px 0pt 3px 3px;
+	border: 1px solid #e7ae69;
+	margin: 1px;
+	overflow:hidden;
+	resize: none;
+}
+
+.chatboxtextareaselected {
+	border: 1px solid #e7ae69;
+	margin:0;
+}
+
+.chatboxmessage {
+	margin-left:1em;
+	margin-bottom: 10px;
+	display: block;
+    width: 96%;
+    height: 25px;
+}
+
+.chatboxinfo {
+	margin-left:-1em;
+	color:#666666;
+
+}
+
+.chatboxmessagefrom {
+	margin-left:-1em;
+	font-weight: bold;
+}
+
+.chatboxmessagecontent {
+    background: #f5f5f5;
+    padding: 8px;
+    border-radius: 6px;
+    display: inline-block;
+	max-width: 77%;
+}
+
+.chatboxoptions {
+	float: right;
+}
+
+.chatboxoptions a {
+	text-decoration: none;
+	color: white;
+	font-weight:bold;
+	font-family:Verdana,Arial,"Bitstream Vera Sans",sans-serif;
+}
+
+.chatboxtitle {
+	float: left;
+}
+
+
+.mainchat{
+	display: inline-block;
+    clear: both;
+    float: left;
+    margin: 1px 15px 1px 5px;
+    /* margin: 19px 15px 13px 5px; */
+    width: calc(100% - 5px);
+    font-size: 0.9em;
+}
+.sentchat img{
+	margin: 6px 8px 0 0;
+	width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    float: left;
+}
+.sentchat p{
+	max-width: 77%;
+	display: inline-block;
+    padding: 8px;
+    float: right;
+    border-radius: 7px;
+    line-height: 130%;
+	margin-bottom: 3px;
+	background: #f5f5f5;
+}
+.replychat img{
+	float: right;
+    margin: 6px 0 0 8px;
+	width: 22px;
+    height: 22px;
+    border-radius: 50%;
+}
+.replychat p{
+	background: #f5f5f5;
+    float: left;
+	max-width: 77%;
+	display: inline-block;
+    padding: 8px;
+    border-radius: 7px;
+    line-height: 130%;
+	margin-bottom: 3px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

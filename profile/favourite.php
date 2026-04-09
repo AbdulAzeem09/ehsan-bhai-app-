@@ -1,0 +1,492 @@
+<link rel="stylesheet" href="../assets/css/magnific-popup/magnific-popup.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="<?php echo $baseurl?>/assets/js/sweetalert.js"></script>
+
+<!-- Magnific Popup core JS file -->
+<script src="../assets/css/magnific-popup/jquery.magnific-popup.js"></script>
+<!-- Favourite post start -->
+<!--<div class="post_timeline bradius-15 bg-white" style="padding: 5px 15px;">
+<!-- Audio start -->
+<!-- <input type="hidden" name="txtProfileId" id="txtProfileId" value="<?php echo $_SESSION['pid']; ?>">
+<input type="hidden" name="txtPagid" id="txtPagid" value="5">
+<div class="row filterArea no-margin bradius-20 bg-white">
+<!--  <div class="col-md-4 " style="padding: 3px;">
+
+</div> -->
+<!--<div class="col-md-4 no-padding">
+<form class="form-inline">
+<div class="form-group">
+<label>Sort By</label>
+<select class="form-control ordrSave bradius-20">
+<option value="DESC">DESC</option>
+<option value="ASC">ASC</option>
+
+</select>
+</div>
+</form>
+</div>
+<style>
+#searchtx {
+margin-left: 196px !important;
+}
+</style>
+<!--  <div class="col-md-4 no-padding">
+<a href="<?php echo $BaseUrl . '/profile/index.php?hidePost' ?>" class="db_btn db_primarybtn">Hidden Post</a>
+</div> -->
+<!-- <div class="col-md-4 no-padding">
+<form class="">
+<div class="">
+
+<input type="text" name="" value="" id="searchtx" class="form-control searchkeywordbox" placeholder="search keyword, description" />
+</div>
+</form>
+</div>
+</div>
+
+</div>-->
+<style>
+  body {
+	font-family: 'Roboto', sans-serif;
+	font-size: 14px;
+	line-height: 18px;
+	background: #f4f4f4;
+}
+
+.list-wrapper {
+	padding: 15px;
+	overflow: hidden;
+}
+
+.list-item {
+	border: 1px solid #EEE;
+	background: #FFF;
+	margin-bottom: 10px;
+	padding: 10px;
+	box-shadow: 0px 0px 10px 0px #EEE;
+}
+
+.list-item h4 {
+	color: black;
+	font-size: 18px;
+	margin: 0 0 5px;	
+}
+
+.list-item p {
+	margin: 0;
+}
+
+.simple-pagination ul {
+	margin: 0 0 20px;
+	padding: 0;
+	list-style: none;
+	text-align: center;
+}
+
+.simple-pagination li {
+	display: inline-block;
+	margin-right: 5px;
+}
+
+.simple-pagination li a,
+.simple-pagination li span {
+	color: #666;
+	padding: 5px 10px;
+	text-decoration: none;
+	border: 1px solid #EEE;
+	background-color: #FFF;
+	box-shadow: 0px 0px 10px 0px #EEE;
+}
+
+.simple-pagination .current {
+	color: #FFF;
+	background-color: #FF7182;
+	border-color: #FF7182;
+}
+
+.simple-pagination .prev.current,
+.simple-pagination .next.current {
+	background: #e04e60;
+}
+  </style>
+<div class="" >
+
+<div class="row ">
+<div class="gallery-img" id="update_gallery">  
+<div class="list-wrapper">
+<?php
+
+//die('==========');
+//$res = $p->globaltimelinesProfile($start, $_SESSION["pid"]);
+// $res = $p->globaltimelinesFavourite($start, $_SESSION['pid']);
+$res = $p->globaltimelinesFavourite_uid_pid($start, $_SESSION['pid'], $_SESSION['uid']);
+//var_dump($res);
+//echo $p->ta->sql;
+if($count){
+ $count=mysqli_num_rows($res);
+}
+//echo $count;
+//die("000000000000000000");
+if ($res != false) {
+
+while ($timeline = mysqli_fetch_assoc($res)) {
+  //echo "<pre>";
+//print_r($timeline);   
+$_GET["timelineid"] = $timeline['idspPostings'];
+// print_r($timeline);
+// exit;
+?>
+
+	<div class="list-item">
+<div style="font-weight:bold;">
+
+<?php
+
+
+$p2 = new _postingview;
+if (isset($grouptimelines) && $grouptimelines == 1) {
+
+// echo"here";
+$res2 = $p2->allgrouptimelines($_GET["timelineid"]);
+} else {
+// echo"here1";
+$res2 = $p2->singletimelines($_GET["timelineid"]);
+}
+//echo $p2->ta->sql;
+?>
+
+<?php
+//echo $p2->ta->sql;
+if ($res2 != false)
+while ($rows = mysqli_fetch_assoc($res2)) {
+//$postingDate = $p2->spPostingDate($timeline["added_on"]);
+$postingDate = $p2->spPostingDate($timeline["spPostingDate"]); 
+//print_r($postingDate);
+
+?>
+<div class=" post_timeline searchable post_timeline_all_post "> 
+<div class="row <?php (isset($_GET["grouptimeline"]) ? "" : ($rows["spPostingVisibility"] != -1 && !isset($_GET["groupid"]) ? "highlight" : "")); ?>">
+<div class="col-md-6">
+<div class="left_profile_timeline">
+<?php
+//print_r($rows);die('+++');
+$picture = $rows["spProfilePic"];
+$profilename = $rows["spProfileName"];
+
+if (isset($picture)) {
+echo "<img alt='profilepic'  class='img-circle' src=' " . ($picture) . "'>";
+} else {
+echo "<img alt='profilepic'  class='' src='" . $BaseUrl . "/assets/images/icon/blank-img.png' >";
+}
+?>
+</div>
+<div class="title_profile">
+<a href="<?php echo $BaseUrl.'/friends/?profileid='.$rows['spProfiles_idspProfiles']; ?>"><h4><?php if (strlen($profilename) > 0) {
+echo ucwords(substr($profilename, 0, 20) . '...');
+} else {
+echo ucwords($profilename);
+} ?></h4></a>
+<h5><?php echo $postingDate; ?> <i class="fa fa-globe"></i></h5>
+</div>
+</div>
+<div class="col-md-6">
+<div class="dropdown pull-right right_profile_timeline">
+<button class="btn dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></button>
+<ul class="dropdown-menu">
+<?php
+$sp = new _savepost;
+$result2 = $sp->savepost($rows['idspPostings'], $_SESSION['pid'], $_SESSION['uid']);
+if ($result2) {
+if ($result2->num_rows > 0) { ?>
+<li id="savefun<?php echo $rows['idspPostings'];  ?>" ><a onclick="myUnsave('<?php echo $rows['idspPostings']; ?>')" onclick="myfan('id')"><i class="fa fa-save"></i> Unsave Post</a></span></li> <?php
+                                                                                                                                    } else { ?>
+<li><a href="<?php echo $BaseUrl . '/post-ad/savePost.php?postid=' . $rows['idspPostings']; ?>"><i class="fa fa-save"></i> Save Post</a></li> <?php
+                                                                                                                                    }
+                                                                                                                                } else { ?>
+<li id="savefun<?php echo $rows['idspPostings'];  ?>"><a onclick="myFun('<?php echo $rows['idspPostings']; ?>')"><i class="fa fa-save"></i> Save Post</a></li> <?php
+                                                                                                                                }
+                                                                                                                                ?>
+<li><a onclick="deletePost('<?php echo $rows['idspPostings'];?>');"><i class='fa fa-trash'></i> Delete Post</a></li>
+<!-- <li><a href="#"><i class="fa fa-pencil"></i> Edit Post</a></li> -->
+<!-- <li><a href="#"><i class="fa fa-map-o"></i> Add Location</a></li> -->
+<?php
+//Delete timeline by poster//
+$pr = new _spprofiles;
+$pres = $pr->checkprofile($_SESSION['uid'], $rows['idspProfiles']);
+if ($pres != false) {
+
+$fv = new _favorites;
+$pres_1 = $fv->read($rows['idspPostings']);
+
+if ($pres_1 != false) {
+$row_1 = mysqli_fetch_assoc($pres_1);
+echo "<li><a href='../post-ad/delete_favPost.php?postid=" . $row_1['id'] . "&flag=1' ><i class='fa fa-trash'></i> Unfavorite Post</a></li>";
+//echo "<li><a href='#'><i class='fa fa-trash'></i> Delete Post</a></li>";
+}
+}
+?>
+<!-- <li><a href="#"><i class="fa fa-bell-o"></i> Notification On</a></li> -->
+
+</ul>
+
+</div>
+</div>
+
+<div class="col-md-12 ">
+<h2><?php echo $rows['spPostingNotes']; ?></h2>
+
+
+<?php
+
+
+
+$pic = new _postingpic;
+$result = $pic->read($rows['idspPostings']);
+// echo $pic->ta->sql;
+// 
+if ($result != false) {
+
+//die('mjh');
+while ($rp = mysqli_fetch_assoc($result)) {
+$pict = $rp['spPostingPic'];
+}
+} else {
+$pict = NULL;
+}
+$media = new _postingalbum;
+$result = $media->read($rows['idspPostings']);
+if ($result != false) {
+$r = mysqli_fetch_assoc($result);
+// print_r($r);
+// die('========');
+$picture = $r['spPostingMedia'];
+$sppostingmediaTitle = $r['sppostingmediaTitle'];
+$sppostingmediaExt = $r['sppostingmediaExt'];
+if ($sppostingmediaExt == 'mp3') { ?>
+<div style='margin-left:15px;margin-right:15px;'>
+<audio controls>
+<source src="<?php echo $BaseUrl . '/upload/' . $sppostingmediaTitle; ?>" type="audio/<?php echo $sppostingmediaExt; ?>">
+Your browser does not support the audio element.
+</audio>
+</div>
+<?php
+} else if ($sppostingmediaExt == 'mp4') { ?>
+<div style='margin-left:15px;margin-right:15px;'>
+<video style='max-height:300px;width: 100%; border-radius: 17px;' controls>
+<source src='<?php echo $sppostingmediaTitle; ?>' type="video/<?php echo $sppostingmediaExt; ?>">
+</video>
+</div>
+<?php
+} else if ($sppostingmediaExt == 'pdf' || $sppostingmediaExt == 'xls' || $sppostingmediaExt == 'doc' || $sppostingmediaExt == 'docx') {
+?>
+<div class="row timelinefile">
+<div class="col-md-offset-1 col-md-1 no-padding">
+<img src="<?php echo $BaseUrl . '/assets/images/pdf.png' ?>" alt="pdf" class="img-responsive" />
+</div>
+<div class="col-md-10">
+<h3><?php echo $sppostingmediaTitle; ?></h3>
+<small><?php echo $sppostingmediaExt; ?></small>
+<a href="<?php echo $sppostingmediaTitle; ?>">Download</a>
+</div>
+</div>
+<?php
+}
+} else {
+if (isset($pict)) {
+echo "<div class='timlinepicture text-center'>"; 
+echo "<a class='fav mag' data-effect='mfp-newspaper' href='" . ($pict) . "'><img alt='Posting Pic' src='" . ($pict) . "' class='postpic img-thumbnail img-responsive' style='width:50%;height:50%'></a>";
+include("postingpic.php");
+echo "</div>";
+}
+/* else
+echo "<img alt='Posting Pic' src='../img/no.png' style='vertical-align:top; max-height: 300px; max-width: 800px;' class='postpic img-thumbnail' height='300' width='600' class='img-thumbnail'>" ; */
+} ?>
+
+</div>
+
+<div class="col-md-12">
+<div class="space"></div>
+</div>
+
+
+</div>
+</div>
+<?php
+} ?>
+</div>
+</div>
+
+<?php
+}
+}
+
+?>
+</div> 
+<?php
+if($count >=10){
+?>
+<div id="pagination-container"></div>
+<?php
+}
+?>
+</div>
+
+<!-- <div class="col-md-4  right_box_timeline right_sidebar pull-right" style="background-color: yellow11;">
+khgjhbjk
+
+</div> -->
+</div>
+
+<!-- image gallery end --> 
+</div>
+
+
+
+<script>
+function myFun(id) {
+
+  Swal.fire({
+  title: "Do you want to Save this post?",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, Save it!'
+}).then((result) => {
+  if (result.isConfirmed) {
+    $.ajax({
+url: "/post-ad/savePost.php",
+type: "GET",
+data: {
+save: id,
+//profileid: ide
+},
+success: function(response) {
+  Swal.fire('Save Successfully');
+
+$("#savefun" + id).html('<a class="profile_section" onclick="myUnsave(' + id + ')" style="color: black;"><i class="fa fa-save"></i> Unsave Post</a>');
+}
+
+});
+}
+});
+
+
+
+  /*
+Swal.fire({
+title: 'Do you want to Save this post?',
+icon: 'warning',
+showCancelButton: true,
+confirmButtonColor: '#3085d6',
+cancelButtonColor: '#d33',
+confirmButtonText: 'Yes, Accepted it!'
+}).then((result) => {
+if (result.isConfirmed) {
+
+
+$.ajax({
+url: "/post-ad/savePost.php",
+type: "GET",
+data: {
+save: id,
+//profileid: ide
+},
+success: function(response) {
+
+
+$("#savefun" + id).html('<a class="profile_section" onclick="myUnsave(' + id + ')" style="color: black; padding-left: 20px;"><i class="fa fa-save"></i> Unsave Post</a>');
+}
+
+});
+}
+});*/
+}
+
+function myUnsave(id) {
+Swal.fire({
+title: 'Do you want to Unsave this post?',
+icon: 'warning',
+showCancelButton: true,
+confirmButtonColor: '#3085d6',
+cancelButtonColor: '#d33',
+confirmButtonText: 'Yes, Unsave it!'
+}).then((result) => {
+if (result.isConfirmed) {
+
+$.ajax({
+url: "/post-ad/savePost.php",
+type: "GET",
+data: {
+unsave: id,
+//profileid: ide
+},
+success: function(response) {
+ Swal.fire('Unsave Successfully');
+$("#savefun" + id).html('<a class="profile_section" onclick="myFun(' + id + ')" style="color: black;"><i class="fa fa-save"></i>&nbspSave Post</a>');
+ }
+
+});
+}
+});
+}
+
+
+function deletePost(id){
+
+Swal.fire({
+title: 'Are you sure you want to delete ?',
+icon: 'warning',
+showCancelButton: true,
+confirmButtonColor: '#3085d6',
+confirmButtonText: 'Yes',
+cancelButtonColor: '#FF0000',
+cancelButtonText: 'No',
+
+
+}).then((result) => {
+if (result.isConfirmed) {
+//window.location.href = 'processRegUser.php?action=delete&userId=' + userId;
+window.location.href = '../post-ad/deletePost.php?postid=' + id + '&flag=1&timeline=1';
+}
+});
+
+}
+
+</script>
+
+
+<script type="text/javascript">
+$('.fav').magnificPopup({
+type: 'image'
+// other options
+});
+</script>
+<script  src="https://cdnjs.cloudflare.com/ajax/libs/simplePagination.js/1.6/jquery.simplePagination.js"></script>
+
+<?php 
+if(isset($_GET['favourite']))
+{
+?>
+<script>
+var items = $(".list-wrapper .list-item");
+    var numItems = items.length;
+    var perPage = 11;
+
+    items.slice(perPage).hide();
+
+    $('#pagination-container').pagination({
+        items: numItems,
+        itemsOnPage: perPage,
+        prevText: "&laquo;",
+        nextText: "&raquo;",
+        onPageClick: function (pageNumber) {
+            var showFrom = perPage * (pageNumber - 1);
+            var showTo = showFrom + perPage;
+            items.hide().slice(showFrom, showTo).show();
+        }
+    });
+</script>
+
+<?php 
+}
+?>

@@ -1,0 +1,581 @@
+<?php
+    include('../../univ/baseurl.php');
+    session_start();
+	
+if(!isset($_SESSION['pid'])){ 
+    $_SESSION['afterlogin']="store/";
+    include_once ("../../authentication/islogin.php");
+  
+}else{
+    function sp_autoloader($class){
+      include '../../mlayer/' . $class . '.class.php';
+    }
+    spl_autoload_register("sp_autoloader");
+
+    $_GET["categoryid"] = "1";
+?>
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <title>Business Account & Inventory | TheSharepage </title>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css" integrity="sha512-3M00D/rn8n+2ZVXBO9Hib0GKNpkm8MSUU/e2VNthDyBYxKWG+BftNYYcuEjXlyrSO637tidzMBXfE7sQm0INUg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+   <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+   <div class="container-fluid">
+      <div class="row flex-nowrap">
+	  
+	  <?php include('left_side_landing.php');?>  
+	 
+	 
+         <div class="col py-3">
+            <div class="row mb-4">
+               <div class="col-12">
+			   <?php
+	 if($_GET['msg']=="message"){
+	 ?>
+<div class="alert alert-success" id="success" role="alert">
+Peyment Success.
+</div>
+	 <?php } ?>
+			   
+                  <h3> Payment Details</h3>
+				   <?php if($_GET['action']=="all"){ ?>
+				   <form action="pos_sales_record.php" method="get">
+                  <div class="row">
+				 
+                     <div class="col-2 mb-3">
+                        <input type="number" class="form-control" name = "phone" id="phone_" placeholder="Enter Phone Number:" aria-label="Customer ID:" aria-describedby="addon-wrapping">
+                     </div>
+                     <!--<div class="col-4">
+                        <select class="form-control form-select js-example-basic-multiple" id="inputGroupSelect02" name="customer">
+                           <option value="1">Jhone</option>
+                           <option value="2">Dave</option>
+                           <option value="3">Yusha</option>
+                        </select>
+                     </div>
+                     <div class="col-2">
+                        <input type="date" class="form-control" placeholder="Choose Date Start"  aria-describedby="addon-wrapping">
+                     </div>
+                     <div class="col-2">
+                        <input type="date" class="form-control" placeholder="Choose Date End"  aria-describedby="addon-wrapping">
+                     </div>-->
+                     <div class="col-2">
+                        <button type="submit"  class="btn btn-main">Search</button> 
+                     </div>
+					 
+                  </div>
+				  </form>
+				 
+			
+                  <div class="info"></div>
+				  
+				  
+				  
+                  <table id="table_id" class="display" data-page-length='10'>
+                   <thead>
+                    <tr>
+                     <th>Name</th>
+                     <th>Phone</th>
+                     <th>Date</th>
+                     <th>Total Of Price</th>
+                     <th>Total Discount</th>
+                     <th>Total By Net</th>
+                     <th>Total Tax</th>
+                     <th>Total Amount</th>
+                     <th>Status</th>
+                     <th>Payment Code</th>
+					  <th>Biller Type</th>
+                     
+                     
+                     
+                     <th>View</th>
+                  </tr>
+               </thead>
+               <tbody>
+			   
+			    <?php
+				
+				$id = $_GET['id'];
+				
+					$p = new _pos;
+					
+							$result = $p->read_pos_customer_uid($_SESSION['uid']);
+							
+					if ($result) {
+						$i = 1;
+						while ($row = mysqli_fetch_assoc($result)) {
+							
+							//print_r($row); die('------'); 
+							$customer_id = $row['customer_id'];
+							
+							$result_2 = $p->cust_name($customer_id);
+                        if($result_2){						 
+
+						 $sdata = mysqli_fetch_assoc($result_2);
+						 $customername= $sdata['customer_name'];
+						 $phone= $sdata['phone'];
+						}	
+                          					
+							
+					?>
+                  <tr>
+                     <td>
+					 <?php echo $customername;  ?>
+					
+					 </td>
+                     <td><?php echo $phone; ?></td> 
+                     <td><?php echo $row['date']; ?></td>
+                     <td><?php echo $row['currency']; ?>&nbsp;<?php echo $row['sub_total']; ?></td>
+                     <td><?php echo $row['currency']; ?>&nbsp;<?php echo $row['discount_by_net'] ; ?> </td>
+                     <td><?php echo $row['currency']; ?>&nbsp;<?php echo $row['total_by_net']; ?></td>
+                     <td><?php echo $row['currency']; ?>&nbsp;<?php echo $row['total_tax']; ?></td>
+                     <td><?php echo $row['currency']; ?>&nbsp;<?php echo $row['Gross_net']; ?></td>
+                     <td>
+					 
+					 <?php if($row['status'] == 1){  ?>
+					 
+					 <button class="btn btn-success">Success</button>
+
+					 <?php  } ?>
+					 
+					 
+					  <?php if($row['status'] == 0){  ?>
+					 
+					 <button class="btn btn-danger">Pending</button>
+
+					 <?php  } ?>
+					 
+					 
+					
+					 
+					 
+					 </td> 
+                     <td><?php echo $row['rand_no']; ?></td>  
+                      <td>
+					 <?php  if($row['billier_type']== 2){
+						 echo 'Admin';
+					 } 
+					 elseif($row['billier_type']== 1){
+						 $p = new _pos;  
+						$us1=$p->read_users_id($row['salesperson_id']);
+                     if($us1!=false){
+		            $row_2 = mysqli_fetch_assoc($us1);
+                    echo ucfirst($row_2['user_name']);	 	
+												  
+	                } 
+						
+					 } 
+					 ?>
+					 
+					 </td>
+                     
+                     <td><a href="<?php echo $BaseUrl; ?>/store/pos-dashboard/history_sales.php?id=<?php echo $row['id'];  ?>"><i class="fas fa-eye me-1"></i></a></td> 
+					 
+					 <!--| <a href="#" class="text-danger"> <i class="fas fa-trash"></i></a></td>-->
+                  </tr>
+				 <?php }} ?>
+                 <!-- <tr>
+                     <td>02-09-2022</td>
+                     <td>inv-012346</td>
+                     <td>apples</td>
+                     <td>Lorem ipsum dolor sit amet, </td>
+                     <td>5</td>
+                     <td>$12</td>
+                     <td>$15</td>
+                     <td>%5</td>
+                     
+                     <!--<td><a href="#"><i class="fas fa-edit me-1"></i></a>| <a href="#" class="text-danger"> <i class="fas fa-trash"></i></a></td>-->
+                  </tr>
+                 
+               </tbody>
+            </table>
+				   <?php } ?>
+			<?php if($_GET['phone']!=""){ ?> 
+			
+			
+			 <form action="pos_sales_record.php?action=filter" method="post"> 
+                  <div class="row">
+				 
+                     <div class="col-2 mb-3">
+                        <input type="number" class="form-control" value="<?php echo $_GET['phone']; ?>" name = "phone" id="phone_" placeholder="Enter Phone Number:" aria-label="Customer ID:" aria-describedby="addon-wrapping">
+                     </div>
+                     <!--<div class="col-4">
+                        <select class="form-control form-select js-example-basic-multiple" id="inputGroupSelect02" name="customer">
+                           <option value="1">Jhone</option>
+                           <option value="2">Dave</option>
+                           <option value="3">Yusha</option>
+                        </select>
+                     </div>-->
+                     <div class="col-2">
+                        <input type="date" class="form-control" name="start_date" placeholder="Choose Date Start"  aria-describedby="addon-wrapping">
+                     </div>
+                     <div class="col-2">
+                        <input type="date" class="form-control"  name ="end_date" placeholder="Choose Date End"  aria-describedby="addon-wrapping">
+                     </div>
+                     <div class="col-1">
+                        <button type="submit"  class="btn btn-main">Search</button> 
+                     </div>
+					 
+					  <div class="col-1">
+                        <a href="pos_sales_record.php?action=all"  class="btn btn-secondary">Reset</a> 
+                     </div>
+					 
+                  </div>
+				  </form>
+				  
+				  
+				   <div class="p-3">
+				   <?php
+				
+				$phone = $_GET['phone'];
+				
+					$p = new _pos;
+					
+							$result_2 = $p->read_data_phone($phone);
+                        if($result_2){						 
+
+						 $data = mysqli_fetch_assoc($result_2);  
+						 
+						}	
+						 //print_r($data); die('---------'); 
+					?>
+				  
+				  
+				<h4><?= $data['customer_name']; ?></h4>
+               <h6>Call: <span class="font-li"><?= $data['phone']; ?></span></h6>
+                <h6>Email: <span class="font-li"><?= $data['email']; ?></span></h6>
+                <h6>Address: <span class="font-li"><?= $data['address']; ?></span></h6><br/>
+            </div>
+				 
+			
+                  <div class="info"></div>
+			
+				
+				 <table id="table_id" class="display" data-page-length='10'>
+                   <thead>
+                    <tr>
+                     <th>Name</th>
+                     <th>Phone</th>
+                     <th>Date</th>
+                     <th>Total Of Price</th>
+                     <th>Total Discount</th>
+                     <th>Total By Net</th>
+                     <th>Total Tax</th>
+                     <th>Total Amount</th>
+                     <th>Biller Type</th>
+                     
+                     
+                     <th>View</th>
+                  </tr>
+               </thead>
+               <tbody>
+			   
+			    <?php
+				
+				$phone = $_GET['phone'];
+				
+					$p = new _pos;
+					
+							$result = $p->read_data_phone($phone);
+							
+					if ($result) {
+						$i = 1;
+						while ($row = mysqli_fetch_assoc($result)) {
+							
+							//print_r($row); die('------'); 
+							$id = $row['id'];
+							
+							$customername= $row['customer_name'];
+						 $phone= $row['phone'];
+							
+							$result_2 = $p->read_pos_customer_by_id($id); 
+                        if($result_2){						 
+
+						 While($sdata = mysqli_fetch_assoc($result_2)){
+							 
+						
+						
+                          					
+							
+					?>
+                  <tr>
+                     <td>
+					 <?php echo $customername;  ?>
+					
+					 </td>
+                     <td><?php echo $phone; ?></td> 
+                     <td><?php echo $sdata['date']; ?></td>
+                     <td><?php echo $sdata['currency']; ?>&nbsp;<?php echo $sdata['sub_total']; ?></td>
+                     <td><?php echo $sdata['currency']; ?>&nbsp;<?php echo $sdata['discount_by_net'] ; ?> </td>
+                     <td><?php echo $sdata['currency']; ?>&nbsp;<?php echo $sdata['total_by_net']; ?></td>
+                     <td><?php echo $sdata['currency']; ?>&nbsp;<?php echo $sdata['total_tax']; ?></td>
+                     <td><?php echo $sdata['currency']; ?>&nbsp;<?php echo $sdata['Gross_net']; ?></td>
+                     
+					 <td>
+					 <?php  if($sdata['billier_type']== 2){
+						 echo 'Admin';
+					 } 
+					 elseif($sdata['billier_type']== 1){
+						 $p = new _pos;  
+						$us1=$p->read_users_id($sdata['salesperson_id']);
+                     if($us1!=false){
+		            $row_2 = mysqli_fetch_assoc($us1);
+                    echo ucfirst($row_2['user_name']);	 	
+												  
+	                } 
+						
+					 } 
+					 ?>
+					 
+					 </td>
+                     
+                     <td><a href="<?php echo $BaseUrl; ?>/store/pos-dashboard/history_sales.php?id=<?php echo $sdata['id'];  ?>"><i class="fas fa-eye me-1"></i></a></td> 
+					 
+					 <!--| <a href="#" class="text-danger"> <i class="fas fa-trash"></i></a></td>-->
+                  </tr>
+					<?php }} }} ?>
+                 <!-- <tr>
+                     <td>02-09-2022</td>
+                     <td>inv-012346</td>
+                     <td>apples</td>
+                     <td>Lorem ipsum dolor sit amet, </td>
+                     <td>5</td>
+                     <td>$12</td>
+                     <td>$15</td>
+                     <td>%5</td>
+                     
+                     <!--<td><a href="#"><i class="fas fa-edit me-1"></i></a>| <a href="#" class="text-danger"> <i class="fas fa-trash"></i></a></td>-->
+                  </tr>
+                 
+               </tbody>
+            </table>
+				
+				
+			<?php }?>
+			
+			
+			
+			
+			<?php if($_GET['action']=="filter" ){ ?>  
+			
+			
+			 <form action="pos_sales_record.php" method="get">
+                  <div class="row">
+				 
+                     <div class="col-2 mb-3">
+                        <input type="number" class="form-control" value="<?php echo $_POST['phone']; ?>" name = "phone" id="phone_" placeholder="Enter Phone Number:" aria-label="Customer ID:" aria-describedby="addon-wrapping">
+                     </div>
+                     <!--<div class="col-4">
+                        <select class="form-control form-select js-example-basic-multiple" id="inputGroupSelect02" name="customer">
+                           <option value="1">Jhone</option>
+                           <option value="2">Dave</option>
+                           <option value="3">Yusha</option>
+                        </select>
+                     </div>-->
+                     <div class="col-2">
+                        <input type="date" class="form-control" value="<?php echo $_POST['start_date']; ?>" placeholder="Choose Date Start"  aria-describedby="addon-wrapping">
+                     </div>
+                     <div class="col-2">
+                        <input type="date" class="form-control" value="<?php echo $_POST['end_date']; ?>" placeholder="Choose Date End"  aria-describedby="addon-wrapping">
+                     </div>
+                     <div class="col-1">
+                        <button type="submit"  class="btn btn-main">Search</button> 
+                     </div>
+					  <div class="col-1">
+                        <a href="pos_sales_record.php?action=all"  class="btn btn-secondary">Reset</a> 
+                     </div>
+                  </div>
+				  </form>
+				  
+				  <div class="p-3">
+				   <?php
+				
+				$phone = $_POST['phone'];
+				
+					$p = new _pos;
+					
+							$result_2 = $p->read_data_phone($phone);
+                        if($result_2){						 
+
+						 $data = mysqli_fetch_assoc($result_2);  
+						 
+						}	
+						 //print_r($data); die('---------'); 
+					?>
+				  
+				  
+				<h4><?= $data['customer_name']; ?></h4>
+               <h6>Call: <span class="font-li"><?= $data['phone']; ?></span></h6>
+                <h6>Email: <span class="font-li"><?= $data['email']; ?></span></h6>
+                <h6>Address: <span class="font-li"><?= $data['address']; ?></span></h6><br/>
+            </div>  
+				  
+				  
+				 
+			
+                  <div class="info"></div>
+			
+				
+				 <table id="table_id" class="display" data-page-length='10'>
+                   <thead>
+                    <tr>
+                     <th>Name</th>
+                     <th>Phone</th>
+                     <th>Date</th>
+                     <th>Total Of Price</th>
+                     <th>Total Discount</th>
+                     <th>Total By Net</th>
+                     <th>Total Tax</th>
+                     <th>Total Amount</th>
+					 <th>Biller Type</th>
+                     
+                     
+                     
+                     <th>View</th>
+                  </tr>
+               </thead>
+               <tbody>
+			   
+			    <?php
+				
+				$phone = $_POST['phone'];
+				$start_date = $_POST['start_date'];
+				$end_date = $_POST['end_date'];  
+				
+					$p = new _pos;
+					
+							$result = $p->read_data_phone($phone);
+							
+					if ($result) {
+						$i = 1;
+						while ($row = mysqli_fetch_assoc($result)) {
+							
+							//print_r($row); die('------'); 
+							$id = $row['id'];
+							
+							$customername= $row['customer_name'];
+						 $phone= $row['phone'];
+							
+							$result_2 = $p->read_pos_customer_by_date($id,$start_date,$end_date); 
+                        if($result_2){						 
+
+						 While($sdata = mysqli_fetch_assoc($result_2)){
+							 
+						
+						
+                          					
+							
+					?>
+                  <tr>
+                     <td>
+					 <?php echo $customername;  ?>
+					
+					 </td>
+                     <td><?php echo $phone; ?></td> 
+                     <td><?php echo $sdata['date']; ?></td>
+                     <td><?php echo $sdata['currency']; ?>&nbsp;<?php echo $sdata['sub_total']; ?></td>
+                     <td><?php echo $sdata['currency']; ?>&nbsp;<?php echo $sdata['discount_by_net'] ; ?> </td>
+                     <td><?php echo $sdata['currency']; ?>&nbsp;<?php echo $sdata['total_by_net']; ?></td>
+                     <td><?php echo $sdata['currency']; ?>&nbsp;<?php echo $sdata['total_tax']; ?></td>
+                     <td><?php echo $sdata['currency']; ?>&nbsp;<?php echo $sdata['Gross_net']; ?></td>
+                     
+					  <td>
+					 <?php  if($sdata['billier_type']== 2){
+						 echo 'Admin';
+					 } 
+					 elseif($sdata['billier_type']== 1){
+						 $p = new _pos;  
+						$us1=$p->read_users_id($sdata['salesperson_id']);
+                     if($us1!=false){
+		            $row_2 = mysqli_fetch_assoc($us1);
+                    echo ucfirst($row_2['user_name']);	  	
+												  
+	                } 
+						
+					 } 
+					 ?>
+					 
+					 </td>
+                     
+                     <td><a href="<?php echo $BaseUrl; ?>/store/pos-dashboard/history_sales.php?id=<?php echo $sdata['id'];  ?>"><i class="fas fa-eye me-1"></i></a></td> 
+					 
+					 <!--| <a href="#" class="text-danger"> <i class="fas fa-trash"></i></a></td>-->
+                  </tr>
+					<?php }} }} ?>
+                 <!-- <tr>
+                     <td>02-09-2022</td>
+                     <td>inv-012346</td>
+                     <td>apples</td>
+                     <td>Lorem ipsum dolor sit amet, </td>
+                     <td>5</td>
+                     <td>$12</td>
+                     <td>$15</td>
+                     <td>%5</td>
+                     
+                     <!--<td><a href="#"><i class="fas fa-edit me-1"></i></a>| <a href="#" class="text-danger"> <i class="fas fa-trash"></i></a></td>-->
+                  </tr>
+                 
+               </tbody>
+            </table>
+				
+				
+			<?php }?>
+			
+			
+         </div>
+      </div>
+
+      <div class="row">
+         <div class="col-lg-12 footer">                     
+            <span>Copyrights &copy; 2022 TheSharePage, All Reights Reserved</span>                    
+         </div>
+      </div>
+   </div>
+</div>
+</div>
+<!------------------------------------------ Scripts Files ------------------------------------------>
+<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+<script src="js/data.js"></script>
+<script src="js/custom-chart.js"></script>
+<script>
+  setTimeout(function () {
+                    $("#success").hide();
+                 }, 5000);
+</script>
+
+<script type="text/javascript">
+   $(document).ready( function () {
+     var table = $('#table_id').dataTable( );
+    
+  } );
+  
+  
+  
+  
+  function filter_fun(){
+	  var phone = $('#phone_').val();
+	  alert(phone); 
+	  
+  }
+</script>
+</body>
+</html>
+
+<?php } ?>

@@ -1,0 +1,34 @@
+<div class="col-md-3">
+				<div class="artBox">
+					<div class="topartBox">
+						<a href="https://dev.thesharepage.com/artandcraft/detail.php?postid=3445" class="btn btn_custom bg_purple">Sale</a>
+						<a href="https://dev.thesharepage.com/artandcraft/detail.php?postid=3445" class="btn btn_custom bg_green_art">New</a>
+						<a href="https://dev.thesharepage.com/artandcraft/detail.php?postid=3445">
+                            
+							<img alt="Posting Pic" src="../img/no.png" class="img-responsive">						</a>
+						<a class="title" href="https://dev.thesharepage.com/artandcraft/detail.php?postid=3445" title="" data-toggle="tooltip" data-original-title="">
+													</a>
+						<p>
+							test  with s3 33						</p>
+						<hr>
+						<div class="row">
+							<div class="col-md-12">
+								<!-- <strike>#40.00</strike> -->
+								<span class="price">Free</span>							</div>
+						</div>
+					</div>
+					<div class="btmartBox">
+						<ul class="social">
+							<li><a href="javascrpit:void(0)" class="addtoboard" data-postid="3445" data-pid="997" data-toggle="tooltip" title="" data-original-title="Add to board"><img src="https://dev.thesharepage.com/assets/images/art/icon-add.png" alt="" class="img-responsive"></a></li>
+							<li><a href="https://dev.thesharepage.com/artandcraft/detail.php?postid=3445" data-toggle="tooltip" title="" data-original-title="Download"><img src="https://dev.thesharepage.com/assets/images/art/icon-download.png" alt="" class="img-responsive"></a></li>
+							<!-- <li><a href="javascrpit:void(0)" data-toggle="tooltip" title="Share"><img src="https://dev.thesharepage.com/assets/images/art/icon-share.png" alt="" class="img-responsive"></a></li> -->
+							<li data-toggle="tooltip" title="" data-original-title="Share"><a href="javascrpit:void(0)" data-toggle="modal" data-target="#myshare"><span class="sp-share-art" data-postid="3445" src="https://artandcraft1.s3.ca-central-1.amazonaws.com/1642382898"><img src="https://dev.thesharepage.com/assets/images/art/icon-share.png" alt="" class="img-responsive"></span></a></li>
+							<li><a href="https://dev.thesharepage.com/artandcraft/detail.php?postid=3445" data-toggle="tooltip" title="" data-original-title="View Product">
+								<i class="fa fa-info-circle" aria-hidden="true" style=" font-size: 27px; color: white; "></i>
+							</a></li>
+							
+							
+						</ul>
+					</div>
+				</div>
+                </div>

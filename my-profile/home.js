@@ -1,0 +1,11028 @@
+//alert('=========');
+var hostUrl = window.location.origin;
+var hostSchema = window.location.protocol;
+//const MAINURL = 'https://dev.thesharepage.com';
+
+/*var MAINURL = hostSchema+'//'+hostUrl;
+const MAINURL = 'http://localhost/sharepagego/Sharepage';*/
+//const all_baseurl = 'http://localhost/sharepagego/Sharepage';
+//var MAINURL = 'http://localhost/sharepagego/Sharepage';
+
+        var MAINURL =hostUrl; 
+//alert( MAINURL);
+
+//alert(hostUrl);
+//var MAINURL = MAINURL;
+//var MAINURL = "https://thesharepage.dbvertex.com/";
+//alert(hostSchema);
+//alert(hostUrl);
+
+function goBack() {
+    window.history.back();
+}
+// CHECK EMAIL VALID OR NOT
+function IsEmail(email) {
+    var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/; 
+    if (!regex.test(email)) {
+        return false;
+    } else {
+        return true;
+    }
+}
+//Sorting bassed on expiry date//
+(function ($) {
+    $.sortByDate = function (elements, order) {
+        var arr = [];
+        elements.each(function () {
+            var obj = {},
+                $el = $(this),
+                time = $el.find("time").text(),
+                date = new Date($.trim(time)),
+                timestamp = date.getTime();
+            obj.html = $el[0].outerHTML;
+            obj.time = timestamp;
+            arr.push(obj);
+        });
+        var sorted = arr.sort(function (a, b) {
+            if (order == "ASC") {
+                return a.time > b.time;
+            } else {
+                return b.time > a.time;
+            }
+        });
+        return sorted;
+    };
+    $(function () {
+        var $newer = $("#newer");
+        var $older = $("#older");
+        var $content = $("#posts");
+        var $elements = $(".post");
+        var $a = $newer.closest("#searched");
+        var $b = $older.closest("#searched");
+        $("#newer").on("click", function () {
+            var elements = $.sortByDate($elements, "DESC");
+            var html = "";
+            for (var i = 0; i < elements.length; ++i) {
+                html += elements[i].html;
+            }
+            $content[0].innerHTML = html;
+            $(this).addClass("selected").
+                siblings().
+                removeClass("selected");
+            return false;
+        });
+        $("#older").on("click", function () {
+            var elements = $.sortByDate($elements, "ASC");
+            var html = "";
+            for (var i = 0; i < elements.length; ++i) {
+                html += elements[i].html;
+            }
+            $content[0].innerHTML = html;
+            $(this).addClass("selected").
+                siblings().
+                removeClass("selected");
+            return false;
+        });
+    });
+})(jQuery);
+//Sorting based on expiry date colmpleted//
+jQuery.expr[':'].Contains = function (a, i, m) {
+    return jQuery(a).text().toLowerCase().indexOf(m[3].toLowerCase()) >= 0;
+};
+
+function search() {
+    sstr = ".searchable:not(:Contains('"; 
+    //sstr = sstr.concat($("#searchtx").val().toLowerCase());
+    sstr = sstr.concat($("#searchtx").val());
+	//alert("hello");
+	//alert(sstr);   
+    sstr = sstr.concat("'))");
+    if ($(sstr).length > 201) $(sstr).hide();
+    else $(sstr).slideUp();
+    sstr = ".searchable:Contains('";
+   // sstr = sstr.concat($("#searchtx").val().toLowerCase());  
+    sstr = sstr.concat($("#searchtx").val());
+	//alert("222222");  
+    sstr = sstr.concat("')");
+    if ($(sstr).length > 201) $(sstr).show();
+    else $(sstr).slideDown();
+}
+
+function pageOnload(caller) {
+    $("#" + caller).addClass('active');
+    $("#" + caller).siblings().removeClass('active');
+    if ($(".checkdraft").val() != "check") $(".searchcategory:first-child").trigger("click");
+    //$(".friendchat:first-child").trigger("click");
+    $(".messageing:first-child").trigger("click");
+    $(".postcost").trigger("click");
+    //$(".entertain:first-child").trigger("click");
+    //$(".free-training").trigger("click");
+    if ($('[type="date"]').prop('type') != 'date') {
+        $('[type="date"]').datepicker({
+            dateFormat: 'dd-mm-yy'
+        });
+    }
+    //Video Thumbnail code
+    //code complete
+    //$('[type="time"]').timepicker({});
+}
+$(".myfriend").height($(window).height() - 350);
+$(".grpdd").height($(window).height() - 350);
+$(".freeplayer").height($(window).height() - 350);
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $('#profilepic').attr('src', e.target.result);
+            $('.grpbannerpic').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+//SHOW MESSAGES
+function notify_msg(title) {
+    $.notify({
+        title: title,
+        icon: '',
+        message: ""
+    }, {
+        type: 'success',
+        animate: {
+            enter: 'animated fadeInUp',
+            exit: 'animated fadeOutRight'
+        },
+        placement: {
+            from: "top",
+            align: "right"
+        },
+        offset: 20,
+        spacing: 10,
+        z_index: 9999999,
+    });
+}
+$(function () {
+    //changer sponsor logo
+    $(".sponsorPic").change(function () {
+        if (typeof (FileReader) != "undefined") {
+            var spPreview = $("#spPreview");
+            //spPreview.html("");
+            var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
+            $($(this)[0].files).each(function () {
+                var file = $(this);
+                //alert(file[0].size);
+                if (file[0].size <= 2097152) {
+                    if (regex.test(file[0].name.toLowerCase())) {
+                        
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            var img = $("<div class='col-md-2 sponsorpost'><span class='fa fa-remove dynamicspimg'></span><img class='sponsorimg overlayImage' style='width:400%; height: 400%; margin-right:5px;' src='" + e.target.result + "'/></div>");
+                            //img.attr("style", "width:72px; height: 80px; margin-right:5px;");
+                            //img.attr("src", e.target.result);
+                            spPreview.append(img);
+                            document.getElementById("spPreview").classList.remove('hidden');
+                        }
+                        reader.readAsDataURL(file[0]);
+                    } else {
+                        //alert(file[0].name + " is not a valid image file.");
+                        //spPreview.html("");
+                        return false;
+                    }
+                } else {
+                    alert(file[0].name + " is too large. Please upload image less then 2Mb.");
+                    return false;
+                }
+            });
+        } else {
+            alert("This browser does not support HTML5 FileReader.");
+        }
+    });
+    $(".featurepic").change(function () {
+        //alert($("#dvPreview  .imagepost").length);
+        /*var files = $(this)[0].files;*/
+        var imgcound = $("#fePreview  .imagepost").length;
+        var files = $(this)[0].files;
+        //alert($(this)[0].files);
+        if (files.length <= 1) {
+            if (imgcound <= 1) {
+                if (typeof (FileReader) != "undefined") {
+                    var dvPreview = $("#fePreview");
+                    //dvPreview.html("");
+                    var regex = /^([a-zA-Z0-9\s_\\.\-:$()])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
+                    var r = 0;
+                    $($(this)[0].files).each(function () {
+                        var file = $(this);
+                        //  alert(file[0]);
+                        /*  if(file[0].size <= 2097152){*/
+                        if (regex.test(file[0].name.toLowerCase())) {
+                            var reader = new FileReader();
+                            reader.onload = function (e) {
+                                //this code for feature image selection start
+                                var countNum = $(".count").val();
+                                countNum++;
+                                r++;
+                                // alert(r);
+                                //alert(imgcound);
+                                //alert(countNum);
+                                $("#count").val(countNum);
+                                ////alert(countNum);
+                                $('.featureImg:checkbox:checked:visible:first').val();
+                                //this code for feature image selection end
+                                if (r == 1 && imgcound > 0) {
+                                    var img = $("<div class='col-md-2 featurepost'><span class='fa fa-remove dynamicimg closed' style='display:none;'></span><img class='featureimg overlayImage' style='width:100px; height: 100px; margin-right:5px;' data-name='fi_" + countNum + "' src='" + e.target.result + "'/><label style='font-size: 9px;'><input type='radio' class='featureImg' name='featureImg_' id='fi_" + countNum + "' value='0' />Feature Image</label></div>");
+                                } else if (r == 1) {
+                                    var img = $("<div class='col-md-2 imagepost'><span onclick='remove()' class='fa fa-remove dynamicimg closed' style='margin-right:4px !important; background: black;color: white;'></span><img class='postingimg overlayImage44' style='width:100px; height: 100px; margin-right:5px;' data-name='fi_" + countNum + "' src='" + e.target.result + "'/><label style='font-size: 9px;'><input type='radio' class='featureImg' name='featureImg_' id='fi_" + countNum + "' value='1' checked/>Feature Image</label></div>"); 
+                                } else { 
+                                    var img = $("<div class='col-md-2 featurepost'><span class='fa fa-remove dynamicimg closed'  style='display:none;'></span><img  class='featureimg overlayImage' style='width:100px; height: 100px; margin-right:5px;' data-name='fi_" + countNum + "' src='" + e.target.result + "'/><label style='font-size: 9px;'><input type='radio' class='featureImg' name='featureImg_' id='fi_" + countNum + "' value='0' />Feature Image</label></div>");
+                                }
+                                //var img = $("<div class='col-md-2 imagepost'><span class='fa fa-remove dynamicimg closed'></span><img class='postingimg overlayImage' style='width:100px; height: 100px; margin-right:5px;' data-name='fi_"+countNum+"' src='" + e.target.result + "'/><label style='font-size: 9px;'><input type='radio' class='featureImg' name='featureImg_' id='fi_"+countNum+"' value='0' />Feature Image</label></div>");
+                                //var img = $("<div class='col-md-2 imagepost'><span class='fa fa-remove dynamicimg closed'></span><img class='postingimg overlayImage' style='width:100px; height: 100px; margin-right:5px;' data-name='fi_"+countNum+"' src='" + e.target.result + "'/><label style='font-size: 9px;'><input type='radio' class='featureImg' name='featureImg_' id='fi_"+countNum+"' value='0' />Feature Image</label></div>");
+                                //img.attr("style", "width:72px; height: 80px; margin-right:5px;");
+                                //img.attr("src", e.target.result);
+                                dvPreview.html(img);
+                                document.getElementById("fePreview").classList.remove('hidden');
+                            }
+                            reader.readAsDataURL(file[0]);
+                        } else {
+                            //alert(file[0].name + " is not a valid image file.");
+                            //dvPreview.html("");
+                            var file_name = file[0].name + " is not a valid image file.";
+                            swal({
+                                title: "Please select a valid image file.",
+                                text: file_name,
+                                type: "warning",
+                                showCancelButton: false,
+                                showConfirmButton: true,
+                                confirmButtonClass: "btn-success",
+                                confirmButtonText: "ok",
+                                closeOnConfirm: false
+                            });
+
+                            return false;
+                        }
+                        /*        }else{
+                                  //alert(file[0].name + " is too large. Please upload image less then 2Mb.");
+
+                                             var file_name=   file[0].name + " is too large. Please upload image less then 2Mb.";
+                                                 swal({
+                                                  title: "Please upload image less then 2Mb",
+                                                  type: "warning",
+                                                  showCancelButton: false,
+                                                  showConfirmButton: true,
+                                                  confirmButtonClass: "btn-success",
+                                                  confirmButtonText: "ok",
+                                                  closeOnConfirm: false
+                                                });
+                                  return false;
+                              }*/
+                    });
+                } else {
+                    alert("This browser does not support HTML5 FileReader.");
+                }
+            } else {
+                var logo = MAINURL + "/assets/images/logo/tsplogo.PNG";
+                swal({
+                    title: "You can Upload 1 Feature Image Only.",
+                    imageUrl: logo
+                });
+            }
+        } else {
+            var logo = MAINURL + "/assets/images/logo/tsplogo.PNG";
+            swal({
+                title: "You can Upload 1 Feature Image Only.",
+                imageUrl: logo
+            });
+            $(".postingpic").val("");
+        }
+    });
+    $(".postingpic").change(function () {
+		
+        //alert($("#dvPreview  .imagepost").length);
+        /*var files = $(this)[0].files;*/
+        var imgcound = $("#dvPreview  .imagepost").length;
+        var files = $(this)[0].files;
+        //alert($(this)[0].files);
+        if (files.length <= 20) {
+            if (imgcound < 20) {
+				
+                if (typeof (FileReader) != "undefined") {
+                    var dvPreview = $("#dvPreview");
+                    //dvPreview.html("");
+                    var regex = /^([a-zA-Z0-9\s_\\.\-:$()])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
+                    var r = 0;
+					var sz = 0;
+                    $($(this)[0].files).each(function () {
+                        var file = $(this);
+                        //  alert(file[0]);
+                      if(file[0].size <= 20971520){
+                        if (regex.test(file[0].name.toLowerCase())) {
+                            var reader = new FileReader();
+                            reader.onload = function (e) {
+								//alert("fghtfbhf");
+                                //this code for feature image selection start
+                                var countNum = $(".count").val();
+                                countNum++;
+                                r++;
+                                // alert(r);
+                               // alert(e.name);
+                                 //alert(countNum);
+								 sz = sz+e.total;
+								// alert(sz);
+								 //console.log(e);
+                                $("#count").val(countNum);
+								//if(sz<1572864)
+								//{
+                                ////alert(countNum);
+                                $('.featureImg:checkbox:checked:visible:first').val();
+                                //this code for feature image selection end
+                                if (r == 1 && imgcound > 0) {
+									//alert("udhdfk");
+                                    var img = $("<div class='col-md-2 imagepost'><span class='fa fa-remove dynamicimg 222 closed'></span><img class='postingimg overlayImage11' style='width:100px; height: 100px; margin-right:5px;' data-name='fi_" + countNum + "' src='" + e.target.result + "'/><label style='font-size: 9px;'><input type='radio' class='featureImg' name='featureImg_' id='fi_" + countNum + "' value='1' />Feature Image</label></div>");
+                                } else if (r == 1) {
+                                    var img = $("<div class='col-md-2 imagepost'><span onclick='remove()' class='fa fa-remove dynamicimg closed' style='margin-right:4px !important;'></span><img class='postingimg overlayImage22' style='width:100px; height: 100px; margin-right:5px;' data-name='fi_" + countNum + "' src='" + e.target.result + "'/></div>");
+                                    /*  <label style='font-size: 9px;'><input type='radio' class='featureImg' name='featureImg_' id='fi_"+countNum+"' value='1' />Feature Image</label> */
+                                } else {
+                                    var img = $("<div class='col-md-2 imagepost'><span class='fa fa-remove dynamicimg 444 closed'></span><img class='postingimg overlayImage33' style='width:100px; height: 100px; margin-right:5px;' data-name='fi_" + countNum + "' src='" + e.target.result + "'/></div>");
+                                    /*<label style='font-size: 9px;'><input type='radio' class='featureImg' name='featureImg_' id='fi_"+countNum+"' value='1' />Feature Image</label>*/
+                                }
+
+							/* } else {
+                            
+                            swal({
+                                title: "You can not upload more than 2 MB.",
+                                text: file_name,
+                                type: "warning",
+                                showCancelButton: false,
+                                showConfirmButton: true,
+                                confirmButtonClass: "btn-success",
+                                confirmButtonText: "ok",
+                                closeOnConfirm: false
+                            });
+								$(".postingpic").val("");
+                            return false;
+                        }*/
+                                //var img = $("<div class='col-md-2 imagepost'><span class='fa fa-remove dynamicimg closed'></span><img class='postingimg overlayImage' style='width:100px; height: 100px; margin-right:5px;' data-name='fi_"+countNum+"' src='" + e.target.result + "'/><label style='font-size: 9px;'><input type='radio' class='featureImg' name='featureImg_' id='fi_"+countNum+"' value='0' />Feature Image</label></div>");
+                                //var img = $("<div class='col-md-2 imagepost'><span class='fa fa-remove dynamicimg closed'></span><img class='postingimg overlayImage' style='width:100px; height: 100px; margin-right:5px;' data-name='fi_"+countNum+"' src='" + e.target.result + "'/><label style='font-size: 9px;'><input type='radio' class='featureImg' name='featureImg_' id='fi_"+countNum+"' value='0' />Feature Image</label></div>");
+                                //img.attr("style", "width:72px; height: 80px; margin-right:5px;");
+                                //img.attr("src", e.target.result);
+								//alert("hhhhhhhhhh");
+                                dvPreview.append(img);
+								
+                                document.getElementById("dvPreview").classList.remove('hidden');
+                            }
+                            reader.readAsDataURL(file[0]);
+                        } else {
+                            //alert(file[0].name + " is not a valid image file.");
+                            //dvPreview.html("");
+                            var file_name = file[0].name + " is not a valid image file.";
+                            swal({
+                                title: "Please select a valid image file.",
+                                text: file_name,
+                                type: "warning",
+                                showCancelButton: false,
+                                showConfirmButton: true,
+                                confirmButtonClass: "btn-success",
+                                confirmButtonText: "ok",
+                                closeOnConfirm: false
+                            });
+                            return false;
+                        }
+						
+						
+						}
+						
+						else {
+							
+							   swal({
+                                title: "You can not upload more than 20 MB.",
+                                text: file_name,
+                                type: "warning",
+                                showCancelButton: false,
+                                showConfirmButton: true,
+                                confirmButtonClass: "btn-success",
+                                confirmButtonText: "ok",
+                                closeOnConfirm: false
+                            });
+								$(".postingpic").val("");
+                            return false;
+					//		alert('file size');
+						}
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+                        /*        }else{
+                                  //alert(file[0].name + " is too large. Please upload image less then 2Mb.");
+
+                                             var file_name=   file[0].name + " is too large. Please upload image less then 2Mb.";
+                                                 swal({
+                                                  title: "Please upload image less then 2Mb",
+                                                  type: "warning",
+                                                  showCancelButton: false,
+                                                  showConfirmButton: true,
+                                                  confirmButtonClass: "btn-success",
+                                                  confirmButtonText: "ok",
+                                                  closeOnConfirm: false
+                                                });
+                                  return false;
+                              }*/
+                    });
+                } else {
+                    alert("This browser does not support HTML5 FileReader.");
+                }
+            } else {
+                var logo = MAINURL + "/assets/images/logo/tsplogo.PNG";
+                swal({
+                    title: "You can Upload 20 Images Only.",
+                    imageUrl: logo
+                });
+            }
+        } else {
+            var logo = MAINURL + "/assets/images/logo/tsplogo.PNG";
+            swal({
+                title: "You can Upload 20 Images Only.", 
+                imageUrl: logo
+            });
+            $(".postingpic").val("");
+        }
+    });
+    
+    //timeline post group name show
+    $(".my-group-dd").click(function () {
+        var editButtonHTML = '<span><a id="removeed" class="btn btn-xs my-group-remove" data-gid="1" data-ggname="abc" data-profileid="1" data-categoryid="1600" style="color: red;">X</a></span>';
+        var gname = "<span>Share with: " + $(this).attr("data-gname") + "</span>";
+        var fomtcont = '<span id="grp_set"><input id="groupid" name="groupid" type="hidden" value="' + $(this).attr("data-gid") + '"></span>';
+        var res = gname.concat(editButtonHTML);
+        if (res != '') {
+            $("#groupTitle").html(res);
+            $("#sp-form-post").append(fomtcont);
+            // $(".spCategories_idspCategory").val(1600);
+        }
+    });
+    $(document).on('click', '#removeed', function () {
+        $("#groupTitle").empty();
+        $("#grp_set").empty();
+        $("#spPostingVisibility").val(-1);
+        $(".spCategories_idspCategory").val(16);
+        //$(".spCategories_idspCategory").val(16);
+    });
+    //timeline post pdf and word document
+    $(".spDocument").change(function () {
+        if (typeof (FileReader) != "undefined") {
+            var myfile = "";
+            myfile = $('.spDocument').val();
+            var ext = myfile.split('.').pop();
+            //alert(ext);
+            var mcontainer = $("#media-container");
+            var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.doc|.xls|.docx|.pdf)$/;
+            $($(this)[0].files).each(function () {
+                var file = $(this);
+                var fileType = file[0].type;
+				
+				  if(file[0].size <= 5097152){
+                //alert(fileType);
+                var fileName = "Uploaded: " + file[0].name;
+                if (ext == 'pdf' || ext == 'doc' || ext == 'xls' || ext == 'docx') {
+                    var reader = new FileReader();
+                    $("#mediaTitle").html(fileName);
+                    reader.onload = function (e) { }
+                    reader.readAsDataURL(file[0]);
+                    $("#showchekbox").removeClass("hidden");
+                } else {
+                    // alert(file[0].name + " is not a valid file. Upload only documents");
+                    var file_name = file[0].name + " is not a valid file. upload only documents";
+                    swal({
+                        title: "Please select a valid document file.",
+                        text: file_name,
+                        type: "warning",
+                        showCancelButton: false,
+                        showConfirmButton: true,
+                        confirmButtonClass: "btn-success",
+                        confirmButtonText: "ok",
+                        closeOnConfirm: false
+                    });
+                    document.getElementById("sp-form-post").reset();
+                    return false;
+                }
+				 }
+				
+				else {
+						
+							   swal({
+                                title: "",
+                                text: file_name,
+                                type: "warning",
+                                showCancelButton: false,
+                                showConfirmButton: true,
+                                confirmButtonClass: "btn-success",
+                                confirmButtonText: "ok",
+                                closeOnConfirm: false
+                            });
+						   document.getElementById("sp-form-post").reset();
+                    return false;
+					
+				}
+				
+				
+				
+				
+				
+            });
+        } else {
+            alert("This browser does not support HTML5 FileReader.");
+        }
+    });
+    //timeline post video / audio
+    $(".spmedia").change(function () {
+        if (typeof (FileReader) != "undefined") {
+            var mcontainer = $("#media-container");
+            //var regex = /^([a-zA-Z0-9\s_\\.\\+\-:])+(.mp4|.3g2|.3gp|.avi|.flv|.h264|.m4v|.mkv|.mov|.mp4|.mpg|.rm|.swf|.vob|.wmv|.mp3|.mpa|.wav|.wma|.midi|.mid)$/;
+            var regex = /^([\+\a-zA-Z0-9\s_\\.\-\+:]+$)+(.mp4|.3g2|.3gp|.avi|.flv|.h264|.m4v|.mkv|.mov|.mp4|.mpg|.rm|.swf|.vob|.wmv|.mp3|.mpa|.wav|.wma|.midi|.mid)$/;
+            $($(this)[0].files).each(function () {
+                var file = $(this);
+                var fileName = "Uploaded: " + file[0].name;
+				
+				
+				
+				  if(file[0].size <= 80097152){
+                if (file[0].name.match(/.(mp4|3g2|3gp|avi|flv|h264|m4v|mkv|mov|mp4|mpg|rm|swf|vob|wmv|mp3|mpa|wav|wma|midi|mid)$/i)) {
+                    //if (regex.test(file[0].name.toLowerCase())) {
+                    var reader = new FileReader();
+                    $("#mediaTitle").html(fileName);
+                    reader.onload = function (e) {
+                        var div = $("<div class='media-file-data postingvideo'></div>");
+                        div.attr("data-media", e.target.result);
+                        mcontainer.append(div);
+                    }
+                    reader.readAsDataURL(file[0]);
+                    $("#showchekbox").removeClass("hidden");
+                } else {
+                    //alert(file[0].name + " is not a valid image file.");
+                    var file_name = file[0].name + " is not a valid video file.";
+                    swal({
+                        title: "Please select a valid Audio/Video file.",
+                        text: file_name,
+                        type: "warning",
+                        showCancelButton: false,
+                        showConfirmButton: true,
+                        confirmButtonClass: "btn-success",
+                        confirmButtonText: "ok",
+                        closeOnConfirm: false
+                    });
+                    document.getElementById("sp-form-post").reset();
+                    return false;
+                }
+				}
+				else {
+					  swal({
+                                title: "You can not upload more than 80 MB.",
+                                text: file_name,
+                                type: "warning",
+                                showCancelButton: false,
+                                showConfirmButton: true,
+                                confirmButtonClass: "btn-success",
+                                confirmButtonText: "ok",
+                                closeOnConfirm: false
+                            });
+					  document.getElementById("sp-form-post").reset();
+                    return false;
+				}
+				
+				
+				
+				
+				
+				
+            });
+        } else {
+            alert("This browser does not support HTML5 FileReader.");
+        }
+    });
+    $(".information").on("change", ".spmedia", function () {
+        if (typeof (FileReader) != "undefined") {
+            var mcontainer = $("#media-container");
+            var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.pdf|.jpg|.jpeg|.gif|.png|.bmp|.doc|.xls|.docx|.png|.bmp|.mp4|.mp3|.m3u|.webm)$/;
+            $($(this)[0].files).each(function () {
+                var file = $(this);
+                if (regex.test(file[0].name.toLowerCase())) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        var div = $("<div class='media-file-data'></div>");
+                        div.attr("data-media", e.target.result);
+                        mcontainer.append(div);
+                    }
+                    reader.readAsDataURL(file[0]);
+                } else {
+                    alert(file[0].name + " is not a valid image file.");
+                    return false;
+                }
+            });
+        } else {
+            alert("This browser does not support HTML5 FileReader.");
+        }
+    });
+});
+$(document).ready(function () {
+    /*$(".downloadfile").on("click" , function(){
+     var btn = this;
+     $.post("/download/downloadfile.php", {mediaid:$(btn).data("mediaid")},function(data){
+     });
+ });*/
+    var reloadTheMainChatId;
+    reloadTheMainChatId = setInterval(reloadChatBox, 3500);
+    $(document).on("focus", "#freindmessage", function () {
+        clearInterval(reloadTheMainChatId);
+    });
+    $("#commentUploading").on("click", ".editcomment", function () {
+        $("#comment").val($(this).data("commenttext"));
+        $("#commentid").val($(this).data("commentid"));
+    });
+    // DELETE COMMENT ON POPUP
+    $("#commentUploading").on("click", ".deletecmt", function () {
+        var btn = this;
+        var cmntid = $(this).data("commentid");
+        swal({
+            title: "Are you sure?",
+            type: "warning",
+            confirmButtonClass: "sweet_ok",
+            confirmButtonText: "Yes",
+            cancelButtonClass: "sweet_cancel",
+            cancelButtonText: "No",
+            showCancelButton: true,
+        }, function (isConfirm) {
+            if (isConfirm) {
+                $.post(MAINURL + "/social/commentdelete.php", {
+                    commentid: cmntid
+                }, function (data) {
+                    //console.log(data);
+                    $(btn).closest(".commentdel").remove();
+                });
+                $(".hidecmnt_" + cmntid).html('');
+            }
+        });
+    });
+    // END
+    $("#emailwith").on("click", function () {
+        $.post("/publicpost/mailto.php", {
+            profilename: $("#shareprofile").val(),
+            postid: $("#sharedpost").val(),
+            recipientemail: $("#recipientemail").val()
+        }, function (data) {
+            $("#mailto").modal("hide");
+        });
+    });
+    $(".emailto").on("click", function () {
+        $("#recipientemail").val("");
+        $(".emaildetails").load("/publicpost/postdetails.php", {
+            idspPostings: $(this).data("postid")
+        }, function () { });
+    });
+    //Rename album
+    $("#mydrftflder").on("click", function () {
+        $(".saveddraftpost").removeClass("hidden");
+        $(".myallpostinfo").addClass("hidden");
+        $("#mydrftflder").addClass("active");
+        $(".searchcategory").removeClass("active");
+        $(".post-grid-item").removeClass("hidden");
+    });
+    //===SHOW NOTIFICATION
+    function showNofification(title, icon) {
+        $.notify({
+            title: title,
+            icon: icon,
+            message: ""
+        }, {
+            type: 'success',
+            animate: {
+                enter: 'animated fadeInUp',
+                exit: 'animated fadeOutRight'
+            },
+            placement: {
+                from: "top",
+                align: "right"
+            },
+            offset: 20,
+            spacing: 10,
+            z_index: 1031,
+        });
+    }
+    //===STORE ENQUIRY FORM SUBMIT
+    $(".postenquiry").on("click", function () {
+        var bid = $("#buyerProfileid").val();
+        var sid = $("#sellerProfileid").val();
+        var postid = $("#spPostings_idspPostings").val();
+        //  var msg = $("#message-text").val();
+        var messagetext = $('#message-text').val();
+        if (messagetext == "") {
+            $('#messagetext_error').text("Please Enter Your Message.");
+            $("#message-text").focus();
+            return false;
+        } else {
+            $.post("../enquiry/addmsgenquire.php", {
+                buyerProfileid: bid,
+                sellerProfileid: sid, 
+                spPostings_idspPostings: postid,
+                message: messagetext
+            }, function (data) { });
+            $("#enqueryModal").modal('hide');
+            $(".modal").modal('hide');
+            //show notification on the page
+            var title = '<strong>Your enquiry sent successfully</strong>';
+            var icon = 'fa fa-comments';
+            showNofification(title, icon);
+        }
+    });
+    //===STORE ENQUIRY FORM SUBMIT
+    $(".sndnotification").on("click", function () {
+        var btn = this;
+        $.post("/enquiry/updateconversation.php", {
+            mid: $("#messageid").val(),
+            receiver: $("#receiverid").val()
+        }, function (r) {
+            $.post("/enquiry/conversation.php", {
+                spMessaging_idspMessage: $("#messageid").val(),
+                spConversationFlag: 1,
+                spConversation: $("#message").val(),
+                spconversationReceiver: $("#receiverid").val()
+            }, function (data) {
+                $.post("/enquiry/updatenotification.php", {
+                    spMessaging_idspMessage: $("#messageid").val()
+                }, function (data) { });
+                $("#totnotification").load("/enquiry/totnotification.php", function () { });
+            });
+            $(".clicked").closest(".notify").find(".fntstyle").removeClass("fntstyle");
+            $(".clicked").closest(".notify").find(".allnotification").append("<p class='commentoverflow' style='word-wrap: break-word;max-width: 100%;'>" + $("#message").val() + "</p><br>");
+            $("#conversationModal").modal("hide");
+        });
+    });
+    $("#postingPicPreview").on("click", ".dynamicimg", function () {
+        $(this).closest(".imagepost").remove();
+        $('#postingpic_realestate').val('');
+		
+		
+		//alert("hdsddh");
+    });
+    //remove sponsor logo 
+    $("#postingsponsorPreview").on("click", ".dynamicspimg", function () {
+        $(this).closest(".sponsorpost").remove();
+		//alert("dghfgdh");
+    });
+    $("#allfile").on("click", function () {
+        $(".resumeoperation").removeClass("hidden");
+        $("#allfile").addClass("hidden");
+    });
+    $(".fileuplaoder").on("click", function () {
+        $("#allfile").removeClass("hidden");
+        var filter = $(this).data("profilename");
+        $(".fileuplaoder:not(:contains(" + filter + "))").closest(".resumeoperation").addClass("hidden");
+    });
+    $(".eventcalender").on("click", ".eventdate", function () {
+        $(".eventcalender").load("../grouptimelines/event.php", {
+            month: $(this).data("month"),
+            year: $(this).data("year"),
+            groupid: $(this).data("groupid"),
+            flag: 1
+        }, function () { });
+    });
+    //===event detail on click show going people intrested people
+    $(".eventDetail").on("click", function () {
+        //alert($(this).data("postid"));
+        var postid = $(this).data("postid");
+        var pid = $(this).data("pid");
+        var intrest = $(this).data("intrest");
+        $(".addeventdetail").load("addeventdetail.php", {
+            postid: postid,
+            pid: pid,
+            intrest: intrest
+        }, function (data) { });
+    });
+    //===event detail on click show going people intrested people
+    $('#newfile').on('shown.bs.modal', function () {
+        $("#adddocument").val("");
+        $("#mediatitle").val("");
+    });
+    $(".joinevent").on("click", function () {
+        var btn = this;
+        $.post("/cart/addorder.php", {
+            spByuerProfileId: $(this).data("profileid"),
+            spSellerProfileId: $(this).data("seller"),
+            spOrderStatus: 0,
+            spOrderQty: 1,
+            sporderAmount: 0,
+            spOrderAdid_: $(this).data("postid")
+        }, function (r) { });
+        $(btn).addClass("disabled");
+        $(btn).text("Joined")
+    });
+    $(".sp-group-details").on("click", "#editgrp", function () {
+        $(".nwgrp").removeClass("hidden");
+        $(".sp-group-details").addClass("hidden");
+        $(".groupfield").load("../my-groups/grpupfield.php", {
+            gid: $(this).data("groupid")
+        }, function () { });
+    });
+    $(".sp-group-details").on("change", ".grpbnrimg", function () {
+        readURL(this);
+    });
+    //show image on click to change
+    $(".groupfield").on("change", ".grpbnrimg", function () {
+        readURL(this);
+    });
+    $("#newgrp").click(function () {
+        $(".sp-group-label").removeClass("active");
+        $(".nwgrp").removeClass("hidden");
+        $(".sp-group-details").addClass("hidden");
+        $(".groupfield").load("../my-groups/grpupfield.php", {}, function () { });
+    });
+    $(".commentstatus").on("click", ".hidecomment", function () {
+        var btn = this;
+        $.post("hidecomment.php", {
+            postid: $(this).data("postid")
+        }, function (r) {
+            $(btn).html("<span class='fa fa-comment' aria-hidden='true'></span> Allow Comment");
+            $(btn).addClass("allowcomment").removeClass("hidecomment");
+        });
+    });
+    $(".commentstatus").on("click", ".allowcomment", function () {
+        var btn = this;
+        $.post("allowcomment.php", {
+            postid: $(this).data("postid")
+        }, function (r) {
+            $(btn).html("<span class='fa fa-comment' aria-hidden='true'></span> Hide Comment");
+            $(btn).addClass("hidecomment").removeClass("allowcomment");
+        });
+    });
+    //Checking store
+    $(".sp-profile-det").on("click", "#storeName", function () {
+        $("#checkstore").addClass("hidden");
+    });
+    $(".sp-profile-det").on("blur", "#storeName", function () {
+        $.post("/my-profile/checkstore.php", {
+            storename: $("#storeName").val()
+        }, function (r) {
+            if (r == " Try") {
+                $("#checkstore").removeClass("hidden");
+            } else $("#checkstore").addClass("hidden");
+        });
+    });
+    $("#saveplylist").on("click", function () {
+        $("#exampleModal").modal('hide');
+        $.post("editplaylist.php", {
+            idspPostingAlbum: $("#palylistalbumid").val(),
+            spPostingAlbumName: $("#spAlbumName").val(),
+            spPostingAlbumDescription: $("#spAlbumDescription").val()
+        }, function (r) { });
+        //Testing 
+        $(".albmname").each(function (i, e) {
+            if ($(e).text() == $("#plylistname").val()) {
+                $(e).text($("#spAlbumName").val());
+            }
+        });
+        //Complete
+    });
+    $(".editalbm").on("click", function () {
+        //$("#palylistalbumid").val($(this).data("albumid"));
+        $(".albumdet").load("albumdetails.php", {
+            albumid: $(this).data("albumid")
+        }, function (r) { });
+    });
+    $(".deletealbm").on("click", function () {
+        var btn = this;
+        if (confirm("Are you sure you want to Delete ?")) {
+            $.post("deletealbum.php", {
+                albumid: $(this).data("albumid")
+            }, function (r) {
+                $(btn).closest(".albmlist").remove();
+            });
+        }
+    });
+    $(".sp-profile-det").on("click", ".publish", function () {
+        $.post("/my-profile/published.php", {
+            profileid: $(this).data("profileid")
+        }, function (r) {
+            $("#publishprofile").text("Conceal");
+            $("#publishprofile").removeClass("publish").addClass("conceal");
+        });
+    });
+    $(".sp-profile-det").on("click", ".conceal", function () {
+        $.post("/my-profile/conceal.php", {
+            profileid: $(this).data("profileid")
+        }, function (r) {
+            $("#publishprofile").text("Publish");
+            $("#publishprofile").removeClass("conceal").addClass("publish");
+        });
+    });
+    $(".social").on("click", ".deleteitem", function (event) {
+        event.stopPropagation();
+        $.post("/myjobboard/deleteresume.php", {
+            mediaid: $(this).data("mid")
+        }, function (r) {
+            //alert(r);
+        });
+    });
+    $(".loadmyplayer").on("click", ".playlistitem", function () {
+        $(".video").html("loading...");
+        $(".video").load("media.php", {
+            postid: $(this).data("postid")
+        }, function () { });
+    });
+    $(".myplaylist").on("click", ".playlistdd", function () {
+        $("#plyname").text($(this).text());
+        $(".playlistdd").removeClass("active");
+        $(this).addClass("active");
+        $(".playlistitm").load("albumplayer.php", {
+            albumid: $(this).data("albumid")
+        }, function () { });
+    });
+    $(".social").on("click", ".playlist", function (event) {
+        //event.stopPropagation();
+        var base64image = $(".entertainment").attr("data-entertain");
+        var arr = base64image.match(/data:[a-zA-Z0-9 -/]+;/);
+        var ext = arr[0].replace("data:", "");
+        $.post("../../post-ad/addmedia.php", {
+            spPostings_idspPostings: $(this).data("postid"),
+            spPostingMedia: base64image,
+            ext: ext,
+            spPostingAlbum_idspPostingAlbum: $(this).data("albumid")
+        }, function (r) {
+            //alert(r);
+        });
+    });
+    $(".social").on("click", "#closelist", function () {
+        $("#mlist").toggle();
+    });
+    //create Playlist
+    $(".social").on("click", "#createplaylist", function () {
+        var btn = this;
+        var $form = $(btn).closest("form");
+        $form.submit(function (e) {
+            e.preventDefault();
+            $(btn).button('loading');
+            term = $form.serializeArray();
+            url = $form.attr("action");
+            $.post(url, term, function (data, status) {
+                $("#newply").prepend("<li class='playerlist' style='padding-left:10px;'><a href='#' class='playlist' data-albumid='" + data.trim() + "' data-albumname='" + $("#playlisttitle").val() + "' data-postid='" + $("#pstid").val() + "'><div class='checkbox'><label><input type='checkbox'>" + $("#playlisttitle").val() + "</label></div></a></li>");
+                $("#plylistdd").prepend("<li><a href='#' class='playlistdd' data-albumid='" + data.trim() + "'>" + $("#playlisttitle").val() + "<span class='" + ($("#albumcat").val == 10 ? 'glyphicon glyphicon-facetime-video' : 'glyphicon glyphicon-music') + "'></span></a></li>");
+                $("#playlisttitle").val("");
+                $("#playlistDescription").val("");
+            }).fail(function () {
+                $(btn).effect("shake");
+                $(btn).button('reset');
+            }).done(function (data) { }).always(function () {
+                $(btn).button('reset');
+            });
+        });
+    });
+    $(".social").on("click", "#addtolist", function (event) {
+        $("#mlist").toggle();
+        var $target = $('html,body');
+        $target.animate({
+            scrollTop: $target.height()
+        }, 1000);
+        $("#newplylist").addClass("hidden");
+        $("#opencreatealbm").removeClass("hidden");
+    });
+    $(".social").on("click", "#opencreatealbm", function (event) {
+        event.stopPropagation();
+        $("#opencreatealbm").addClass("hidden");
+        $("#newplylist").removeClass("hidden");
+        var $target = $('html,body');
+        $target.animate({
+            scrollTop: $target.height()
+        }, 1000);
+    });
+    //Upload New File in folder
+    $("#uploadfile").on("click", function () {
+        var time = new Date();
+        var d = $.datepicker.formatDate("dd M", new Date());
+        if ($("#adddocument").val() != "" && $("#mediatitle").val() != "") {
+            $(".media-file-data").each(function (i, e) {
+                var base64image = $(e).attr("data-media");
+                var arr = base64image.match(/data:[a-zA-Z0-9 -/]+;/);
+                var ext = arr[0].replace("data:", "");
+                var txtFolerName = document.getElementById("txtFolerName").value;
+                if (txtFolerName == "") {
+                    var txtFoldTitle = document.getElementById("txtFoldTitle").value;
+                } else {
+                    var txtFoldTitle = "";
+                }
+                $.post("../myjobboard/addgroupfile.php", {
+                    txtFolerName: txtFolerName,
+                    txtFoldTitle: txtFoldTitle,
+                    spPostingMedia: base64image,
+                    ext: ext,
+                    mediatitle: $("#mediatitle").val(),
+                    profileid: $(".dynamic-pid").val(),
+                    filename: $("#adddocument").val(),
+                    groupid: $("#grpid").val()
+                }, function (r) {
+                    var mediaid = r;
+                    //alert(mediaid);
+                    mediaid = mediaid.trim();
+                    //Getting File Information
+                    $.post('../grouptimelines/priviewfile.php', {
+                        mediaid: mediaid
+                    }, function (response) {
+                        var previewfile = response;
+                        //Testing Complete
+                        $('.table > tbody:last').append("<tr class='resumeoperation'><td width='72%' data-toggle='modal' data-target='#previewfile' data-src='" + MAINURL + "/resume/" + previewfile.trim() + "' class='preview'><a href='#'>" + $("#mediatitle").val() + "</a></td><td width='10%'><b>" + $(".dynamic-profilename").val() + "</b></td><td width='10%'>" + d + " " + time.getHours() + ":" + time.getMinutes() + "</td><td width='2%'><a href='" + MAINURL + "/resume/" + previewfile.trim() + "'  ata-toggle='tooltip' data-placement='left' title='Download'><span class='glyphicon glyphicon-download'  ></span></a></td><td width='6%'><button type='button' class='btn btn-link deleteresume' data-mediaid='" + mediaid + "'><span class='glyphicon glyphicon-trash'></span> Delete</td></tr>");
+                        $('#newfile').modal('toggle');
+                        location.reload();
+                    });
+                });
+            }); //validation Check
+        }
+        if ($("#adddocument").val() == "") alert("Please select file..");
+        if ($("#mediatitle").val() == "") alert("Please fill file title..");
+    });
+    $("#adminlogin").on("click", function () {
+        $.post('../authentication/adminlogin.php', {
+            spUserName: $("#usrname").val(),
+            spUserPassword: $("#usrpassword").val()
+        }, function (data) {
+            $("#usrpassword").val("")
+            $("#usrname").val("")
+            if (data == " /admin/buy/") window.open(data, "_self");
+            else {
+                $(".dropdown-toggle").dropdown("toggle");
+                alert("Wrong user name and password");
+            }
+        });
+    });
+    //THIS IS CLICK ON BUSINESS CHECKBOX
+    $(".sp-profile-det").on("click", "#servicebusiness", function () {
+        if ($("#checkbusiness").hasClass("select")) {
+            $("#checkbusiness").removeClass("select").addClass("selected");
+            $("#checkbusiness").val(1);
+        } else {
+            $("#checkbusiness").removeClass("selected").addClass("select");
+            $("#checkbusiness").val(0);
+        }
+    });
+    //THIS IS SHOW EMAIL
+    $(".sp-profile-det").on("click", "#showEmail", function () {
+        if ($("#showEmailProfile").hasClass("select")) {
+            $("#showEmailProfile").removeClass("select").addClass("selected");
+            $("#showEmailProfile").val(1);
+        } else {
+            $("#showEmailProfile").removeClass("selected").addClass("select");
+            $("#showEmailProfile").val(0);
+        }
+    });
+    //THIS IS ADD NEWS
+    $(".sp-profile-det").on("click", "#addnews", function () {
+        if ($("#checkAddNews").hasClass("select")) {
+            $("#checkAddNews").removeClass("select").addClass("selected");
+            $("#checkAddNews").val(1);
+        } else {
+            $("#checkAddNews").removeClass("selected").addClass("select");
+            $("#checkAddNews").val(0);
+        }
+    });
+    //THIS IS SHOW PHONE
+    $(".sp-profile-det").on("click", "#showPhone", function () {
+        if ($("#checkPhone").hasClass("select")) {
+            $("#checkPhone").removeClass("select").addClass("selected");
+            $("#checkPhone").val(1);
+        } else {
+            $("#checkPhone").removeClass("selected").addClass("select");
+            $("#checkPhone").val(0);
+        }
+    });
+    //THIS IS LINK STORE
+    $(".sp-profile-det").on("click", "#LinkStore", function () {
+        if ($("#checkLinkstore").hasClass("select")) {
+            $("#checkLinkstore").removeClass("select").addClass("selected");
+            $("#checkLinkstore").val(1);
+        } else {
+            $("#checkLinkstore").removeClass("selected").addClass("select");
+            $("#checkLinkstore").val(0);
+        }
+    });
+    //THIS IS LINK STORE
+    $(".sp-profile-det").on("click", "#LinkVido", function () {
+        if ($("#checkLinkVideo").hasClass("select")) {
+            $("#checkLinkVideo").removeClass("select").addClass("selected");
+            $("#checkLinkVideo").val(1);
+        } else {
+            $("#checkLinkVideo").removeClass("selected").addClass("select");
+            $("#checkLinkVideo").val(0);
+        }
+    });
+    //==================================
+    //send sms on message compose window
+    $(".composTxtNow").on("click", function () {
+		//alert('=====');
+        var btn = this;
+        var postmsg = $("#friendMessage").val();
+        var pid_reciver = $("#txtReceiver").val();
+        var pid_sender = $("#txtSender").val();
+        var isvalid = true;
+        if (pid_reciver == 0) {
+            $(".error_user").html("Please select any user");
+            isvalid = false;
+        } else {
+            $(".error_user").html("");
+        }
+        if (postmsg.trim() == '') {
+            $(".error_msg").html("Please write any content");
+            //isvalid = false;
+			return false;
+        } else {
+            $(".error_msg").html("");
+        } 
+        if (isvalid == true) {
+           
+            $.post(MAINURL + '/friendmessage/sendmessage.php', {
+                spfriendChattingMessage: $("#friendMessage").val(),
+                spprofiles_idspProfilesReciver: $("#txtReceiver").val(),
+                spprofiles_idspProfilesSender: $("#txtSender").val(),
+				  module: $("#module").val()
+            }
+			
+			, function (data) {
+				//alert('1111')
+				Swal.fire({
+      title: 'Message Sent Successfully',
+     // text: "It will updated permanently !",
+      icon: 'success',
+     // showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+     // cancelButtonColor: '#d33',
+      confirmButtonText: 'OK'
+    }).then((result) => {
+      if (result.isConfirmed) {
+         window.location = url;
+      }
+    })  
+				document.getElementById("friendMessage").value = "";
+				 btn.reset();
+				 
+				//$("#friendMessage").val('');
+				//$("#txtReceiver").val('');
+				
+             //   $('#composeNewTxt').modal('toggle');
+                
+              /*  $.notify({
+                    title: '<strong>Message has been sent!</strong>',
+                    icon: 'fa fa-envelope',
+                    message: ""
+                }, {
+				
+						//
+                    type: 'success',
+					
+                    animate: {
+                        enter: 'animated fadeInUp',
+                        exit: 'animated fadeOutRight',
+						
+                    },
+                    placement: {
+                        from: "top",
+                        align: "right"
+                    },
+                    offset: 20,
+                    spacing: 10,
+                    z_index: 1031,
+					
+                });*/
+				
+                //window.location.reload();
+				
+    //    alert('jjjjjj');
+     
+            
+
+            });
+        }
+		
+		
+        // MESSAGE HIDE AFTER SPECIFIC TIME
+        var seconds = 3;
+        setInterval(function () {
+            seconds--;
+            if (seconds == 0) {
+                $(".error_user").html("");
+                $(".error_msg").html("");
+            }
+        }, 1000);
+		window.location.reload();
+        //====end=====
+    });
+	
+	
+    //send sms through profile visit
+	
+	
+    $(".wthmsg").on("click", function () {
+        /// alert("sent");
+		var ss=$('#sndmsg').val();
+	if(ss !='')
+	{
+	//return false;
+
+	}
+	else{
+		$('#span2').html('Please Fill Message');
+		return false;
+	}
+        var btn = this;
+        $.post('../friendmessage/sendmessage.php', {
+            spfriendChattingMessage: $("#sndmsg").val(),
+            spprofiles_idspProfilesReciver: $(btn).attr("data-reciver"),
+            spprofiles_idspProfilesSender: $(btn).attr("data-sender")
+        }, function (data) {
+            $("#sendmesg").dropdown("toggle");
+            $("#sndmsg").val("");
+            //show notification on the page 
+            $.notify({
+                title: '<strong>Message has been sent!</strong>',
+                icon: 'fa fa-envelope',
+                message: ""
+            }, {
+                type: 'success',
+                animate: {
+                    enter: 'animated fadeInUp',
+                    exit: 'animated fadeOutRight'
+                },
+                placement: {
+                    from: "top",
+                    align: "right"
+                },
+                offset: 20,
+                spacing: 10,
+                z_index: 1031,
+            });
+        });
+    });
+    $(".myfriend").on("click", ".removefrnd", function () {
+        $(this).closest(".frnd").remove();
+    });
+    $(".myfriend").on("keydown.autocomplete", "#srhfriend", function () {
+        $(this).autocomplete({
+            minLength: 1,
+            source: "../mlayer/listfriend.php",
+            focus: function (event, ui) {
+                //$(this).val(ui.item.label);
+                return false;
+            },
+            select: function (event, ui) {
+                //$("#srhfriend").val(ui.item.label);
+                //$("#friendlist").append("<li><span id='frndicon' class='"+ui.item.icon+"'></span> <span class='panel-title friendtitle'>"+ui.item.label+"</span></li>");
+                $("#friendlist").append("<div class='btn-group frnd' role='group' aria-label='...' style='padding-top:2px;'><button type='button' class='btn btn-success btn-sm btnfriend' data-friendid='" + ui.item.value + "'><span class='" + ui.item.icon + "'></span> " + ui.item.label + "</button><button type='button' class='btn btn-default btn-sm removefrnd'>X</button></div>&nbsp;");
+                return false;
+            }
+        });
+    });
+    $("#srhfriend").autocomplete({
+        minLength: 1,
+        source: "/mlayer/profilelist.php",
+        focus: function (event, ui) {
+            $(this).val(ui.item.label);
+            return false;
+        },
+        select: function (event, ui) {
+            $("#sp-auto-friends").val(ui.item.label);
+            // $("#sp-auto-friends").val(ui.item.value);
+            window.open("/friends/?profileid=" + ui.item.value + "", "_self");
+            return false;
+        }
+    });
+    $(".originalimg").on("click", function () {
+        $("#postpicture").attr("src", $(this).attr("src"))
+    });
+    $(".messageing").on("click", function () {
+        $(".messageing").removeClass("active");
+        $(this).addClass("active");
+    });
+    $('#conversationModal').on('shown.bs.modal', function () {
+        $("#message").val("");
+        $("#description").val("");
+    });
+    $(".myfriend").on("click", ".readmessage", function () {
+        var btn = this;
+        $.post("/friendmessage/read.php", {
+            messageid: $(this).data("mid")
+        }, function (r) {
+            $(btn).closest(".message").remove();
+        });
+    });
+    var monthNames = ["Jan", "Fe", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    var date = new Date();
+    var day = date.getDate();
+    var monthIndex = date.getMonth();
+    var year = date.getFullYear();
+    //console.log(day, monthNames[monthIndex], year);
+    var d = new Date(); // for now
+    datetext = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+    $("#groupconversation").on("click", function () {
+        var btn = this;
+        var $form = $(btn).closest("form");
+        $form.submit(function (e) {
+            e.preventDefault();
+            //$(btn).button('loading');
+            term = $form.serializeArray();
+            url = $form.attr("action");
+            $.post(url, term, function (data, status) { }).fail(function () {
+                $(btn).effect("shake");
+                $(btn).button('reset');
+            }).done(function (data) {
+                //alert(data);
+                //Data collection
+                var pending = "Pending for approval..";
+                if ($("#grpflag").val() == "0") {
+                    pending = "";
+                }
+                //$(".grpconversation").prepend("<div class='conversationmessage'><div class='row'><div class='col-md-3'><p class='discussion displayconversation'>" + $("#message").val() + "</p><p class='pending'>" + pending + "</p></div><div class='col-md-3'>" + $("#starter").val() + "</div><div class='col-md-2'>0</div><div class='col-md-3'><p>" + $("#starter").val() + "</p><p class='datetime'>" + day + ', ' + monthNames[monthIndex] + ' ' + year + "</p><p class='datetime'>" + datetext + "</p></div><div class='col-md-1'><span class='displayconversation'><span class='glyphicon glyphicon-envelope'></span> Reply </span></div></div><div class='conversation hidden'><div class='loadconversation'></div><form action='addconversation.php' method='post'><input type='hidden' name='spGroupConProfile' value='" + $("#conversationinit").val() + "'/><input type='hidden' id='spGroupMessage_idspGroupMessage' name='spGroupMessage_idspGroupMessage' value='" + data.trim() + "'/><div class='form-group' style='width:10cm;'><textarea class='form-control spGroupConversationText' rows='2' name='spGroupConversationText' placeholder='Write message...'></textarea></div><button type='button' class='btn btn-primary addconversation' data-gmesgid='" + data.trim() + "'>Send message</button><button type='button' class='btn btn-warning pull-right alldiscuss' data-toggle='tooltip' data-placement='left' title='See all discussion'><span class='glyphicon glyphicon-remove'></span></button></form></div></div><hr class='hrline'></hr>");
+                $("#conversationModal").modal("toggle");
+            }).always(function () {
+                $(btn).button('reset');
+            });
+        });
+    });
+    $(".trainingv").on("click", function () {
+        $(".trainingv").removeClass("active");
+        $(this).addClass("active");
+    });
+    //Delete item from playlist
+    $(".loadmyplayer").on("click", ".delitemlist", function () {
+        var btn = this;
+        if (confirm("Are you sure you want to Delete ?")) {
+            $.post("/myjobboard/deleteresume.php", {
+                mediaid: $(this).data("mediaid")
+            }, function (r) {
+                $(btn).closest(".searchable").remove();
+            });
+        }
+    });
+    //Play All
+    $(".loadmyplayer").on("click", ".autoplay", function () {
+        $(".video").html("<div class='loader'></div>");
+        $(this).addClass("active");
+        $(".musicpost").each(function (i, e) {
+            $(".video").load("music.php", {
+                postid: $(this).data("postid")
+            }, function () {
+                /*$("#audio").onended = function()
+                 {
+                 alert("The audio has ended");
+             };*/
+            });
+        });
+    });
+    //Dynamic uploading video
+    $(".loadmyplayer").on("click", ".mediapost", function () {
+        $(".video").html("<div class='loader'></div>");
+        $(".musicpost").removeClass("active");
+        $(".mediapost").removeClass("active");
+        $(this).addClass("active");
+        $(".video").load("media.php", {
+            postid: $(this).data("postid")
+        }, function () { });
+    });
+    //Dynamic uploding audio
+    $(".loadmyplayer").on("click", ".musicpost", function () {
+        $(".video").html("<div class='loader'></div>");
+        $(".mediapost").removeClass("active");
+        $(".musicpost").removeClass("active");
+        $(this).addClass("active");
+        $(".video").load("music.php", {
+            postid: $(this).data("postid")
+        }, function () { });
+    });
+    $(".rselection").on("click", ".resumeselect", function () {
+        var btn = this;
+        $.post("/my-activity/selectedprofile.php", {
+            resumeid: $(this).data("resumeid"),
+            postid: $(this).data("postid"),
+            profileid: $(this).data("profileid")
+        }, function (r) {
+            $(btn).css({
+                "color": "#ea7831"
+            });
+            $(btn).attr("data-original-title", "Discard");
+            $(btn).closest(".rselection").find(".tooltip-inner").text("Discard");
+            $(btn).removeClass("resumeselect").addClass("deselect");
+        });
+    });
+    $(".rselection").on("click", ".deselect", function () {
+        var btn = this;
+        $.post("/my-activity/cancelselect.php", {
+            resumeid: $(this).data("resumeid"),
+            postid: $(this).data("postid"),
+            profileid: $(this).data("profileid")
+        }, function (r) {
+            $(btn).css({
+                "color": "gray"
+            });
+            $(btn).attr("data-original-title", "select");
+            $(btn).closest(".rselection").find(".tooltip-inner").text("Select");
+            $(btn).removeClass("deselect").addClass("resumeselect");
+        });
+    });
+    $('#coverletter').on('shown.bs.modal', function () {
+        $("#applyjob").text("Attach Resume");
+    });
+    $(".savemembership").on("click", function () {
+        $(".membershipdetail").each(function (i, e) {
+            var mname = $(e).find(".memname").val();
+            var mlimit = $(e).find(".mlimit").val();
+            var mduration = $(e).find(".mdurarion").val();
+            var mamount = $(e).find(".mamount").val();
+            var membershipid = $(e).attr("data-memid");
+            $.post("/membership/updatedetails.php", {
+                mid: membershipid,
+                mname: mname,
+                mlimit: mlimit,
+                mduration: mduration,
+                mamount: mamount
+            }, function (r) {
+                swal({
+                    title: "Membership Saved!",
+                    html: true
+                });
+            });
+        });
+    });
+    $(".resumes").on("click", function () {
+        $("#jopapp").attr("data-resumeid", $(this).data("resumeid"));
+        $("#applyjob").text($(this).text());
+    });
+    $(".previewdoc").on("click", ".preview", function () {
+        //$("#docprv").attr('src', $(this).attr('data-src'));
+        $("#previewModalLabel").text($(this).data("filetitle"));
+        $(".gdocsviewer").remove();
+        $(".resumeid").attr('href', $(this).attr('data-src'));
+        $('#previewresume.modal-body').css('overflow-y', 'auto');
+        $('#previewresume.modal-body').css('max-height', $(window).height() * 0.5);
+        $('.resumeid.embed').gdocsViewer({
+            height: $(window).height() * 0.9,
+            width: '100%'
+        });
+    });
+    $('#previewresume').on('hidden.bs.modal', function (e) {
+        $("#previewresume").find("a.embed").attr("href", "");
+        $(".gdocsviewer").remove();
+    });
+    $(".dashboard-container").on("click", "#resumenew", function () {
+        $("#resumeheadr").text("New Resume");
+        $("#mediatitle").val("");
+        $("#uploadupdate").removeClass("updateresume").addClass("uploadresume");
+    });
+    $(".dashboard-container").on("click", ".editresume", function () {
+        $("#mediatitle").val($(this).data("mediatitle"));
+        $("#mediaid").val($(this).data("mediaid"));
+        $("#resumeheadr").text("Update Resume");
+        $("#uploadupdate").removeClass("uploadresume").addClass("updateresume");
+    });
+    //Delete Resume  (FROM JOB BOARD) folder -> files
+    $(".table").on("click", ".deleteresume", function () {
+        var btn = this;
+        if (confirm("Are you sure you want to Delete?")) {
+            $.post(MAINURL + "/job-board/dashboard/deleteresume.php", {
+                mediaid: $(this).data("mediaid")
+            }, function (r) {
+                $(btn).closest(".resumeoperation").hide();
+                location.reload();
+            });
+        }
+    })
+    //Upload jobseeker Resume
+    $(".jobseeker").on("click", ".addresume", function () {
+        if ($("#adddocument").val() != "" && $("#mediatitle").val() != "") {
+            $(".media-file-data").each(function (i, e) {
+                var base64image = $(e).attr("data-media");
+                var arr = base64image.match(/data:[a-zA-Z0-9 -/]+;/);
+                var ext = arr[0].replace("data:", "");
+                $.post(MAINURL + "/job-board/dashboard/addresume.php", {
+                    spPostingMedia: base64image,
+                    ext: ext,
+                    mediatitle: $("#mediatitle").val(),
+                    profileid: $("#jobseekerpr").val(),
+                    filename: $("#adddocument").val()
+                }, function (data) {
+                    var mediaid = data;
+                    $("#nwresume").modal('hide');
+                    window.location.reload();
+                });
+            });
+        }
+        if ($("#mediatitle").val() == "" || $("#adddocument").val() == "") {
+            $(".showerror").html("<div class='alert alert-danger'>Please fill resume title and choose your resume !</div>");
+        }
+    });
+    //Upload Resume folder
+    $(".information").on("click", ".uploadresume", function () {
+        if ($("#adddocument").val() != "" && $("#mediatitle").val() != "") {
+            $(".media-file-data").each(function (i, e) {
+                var base64image = $(e).attr("data-media");
+                var arr = base64image.match(/data:[a-zA-Z0-9 -/]+;/);
+                var ext = arr[0].replace("data:", "");
+                $.post("../myjobboard/addresume.php", {
+                    spPostingMedia: base64image,
+                    ext: ext,
+                    mediatitle: $("#mediatitle").val(),
+                    profileid: $("#jobseekerpr").val(),
+                    filename: $("#adddocument").val()
+                }, function (data) {
+                    var mediaid = data;
+                    $('#tableresume > tbody:last').append("<tr class='resumeoperation'><td width='80%'>" + $("#mediatitle").val() + "</td><td width='7%'><button type='button' class='btn btn-link preview'  data-toggle='modal' data-target='#previewresume'><span class='glyphicon glyphicon-search'></span> Preview</button></td><td width='7%'><button type='button' class='btn btn-link editresume' data-toggle='modal' data-target='#nwresume'  data-mediaid='" + mediaid + "' data-mediatitle='" + $("#mediatitle").val() + "'><span class='glyphicon glyphicon-edit'></span> Edit</a></td><td width='6%'><button type='button' class='btn btn-link deleteresume' data-mediaid='" + mediaid + "'><span class='glyphicon glyphicon-trash'></span> Delete</a></td></tr>");
+                    $("#nwresume").modal('toggle');
+                });
+            });
+        }
+        if ($("#mediatitle").val() == "" || $("#adddocument").val() == "") {
+            alert("Please fill resume title and choose your resume !");
+        }
+    });
+    //Update Resume
+    $(".information").one("click", ".updateresume", function () {
+        $(".media-file-data").each(function (i, e) {
+            var base64image = $(e).attr("data-media");
+            var arr = base64image.match(/data:[a-zA-Z0-9 -/]+;/);
+            var ext = arr[0].replace("data:", "");
+            $.post("../myjobboard/addresume.php", {
+                spPostingMedia: base64image,
+                ext: ext,
+                mediatitle: $("#mediatitle").val(),
+                mediaid: $("#mediaid").val()
+            }, function (r) {
+                $("#nwresume").modal('hide');
+            });
+            //location.reload();
+        });
+    });
+    $(".years").on("click", function () {
+        $.get("/authentication/updateprofile.php", {
+            year: $(this).text(),
+            monthtext: $("#monthdet").text(),
+            monthvalue: $("#monthdet").data("monthval")
+        }, function (r) { });
+    });
+    $(".mnth").on("click", function () {
+        $.get("/authentication/updateprofile.php", {
+            monthtext: $(this).text(),
+            monthvalue: $(this).data("month"),
+            year: $("#currentyear").text()
+        }, function (r) { });
+    });
+    //delete profile
+    $(".sp-profile-det").on("click", ".deactivate", function () {
+        if (confirm("Are you sure you want to Deactivate this Profile?")) {
+            $.post("../my-profile/deactivate.php", {
+                profileid: $(this).data("profileid")
+            }, function () {
+                $("#activedeact").text("Activate");
+                $("#activedeact").removeClass("deactivate").addClass("activate");
+            });
+        }
+    });
+    $(".sp-profile-det").on("click", ".activate", function () { //Activate account
+        if (confirm("Are you sure you want to Activate this Profile?")) {
+            $.post("../my-profile/activateaccount.php", {
+                profileid: $(this).data("profileid")
+            }, function () {
+                $("#activedeact").text("Deactivate");
+                $("#activedeact").removeClass("activate").addClass("deactivate");
+            });
+        }
+    });
+    $("#button").click(function () {
+        $("#selling").slideToggle("slow");
+    });
+    $("#sell-post").click(function () {
+        $("#sellpost").animate({
+            height: "550px"
+        });
+    });
+    //Friend Searching from group , all , not in the group
+    $(".grpfriend").on("click", function (e) {
+        e.preventDefault()
+        var sample_str = $(this).data("groupname");
+        var new_str = sample_str.split(" ").join("")
+        $(".friendchat").addClass("hidden");
+        $("." + new_str).removeClass("hidden");
+    });
+    $("#grpfrnd").on("click", function (e) {
+        e.preventDefault()
+        $(".groupfriend").removeClass("hidden");
+        $(".notgroup").addClass("hidden");
+    });
+    $("#notingrp").on("click", function (e) {
+        e.preventDefault()
+        $(".groupfriend").addClass("hidden");
+        $(".notgroup").removeClass("hidden");
+    });
+    $("#allfrnd").on("click", function (e) {
+        e.preventDefault()
+        $(".groupfriend").removeClass("hidden");
+        $(".notgroup").removeClass("hidden");
+        $(".nonfriend").removeClass("hidden");
+    });
+    //COmplete
+    $(".frndfilter").on("click", function () {
+        $("#friendfilter").text($(this).text());
+    });
+    $(".sp-profile-det").on("click", ".chosedefault", function (e) {
+        $("#profilepic").attr('src', $(this).attr('src'));
+        $("#profilepic").attr("data-media", $(this).data("media"));
+    });
+    //Done
+    //COntactus-form
+    $('.contactus').find('form').click(function (e) {
+        e.stopPropagation();
+    });
+    $(".friendchatsystem").on("click", ".sendas", function () {
+        $("#myprofileasfriend").text($(this).text());
+        $("#glyphicon").removeClass().addClass("" + $(this).data("ptypeicon") + "");
+        $(".chattingsystem").load("../friendmessage/messaging.php", {
+            friendid: $(this).data("friendid"),
+            myid: $(this).data("myid"),
+            myname: $(this).text()
+        }, function () { });
+    });
+    //when event post save in drft move on dashboard
+    $("#saveindraft").on("click", function () {
+        alert("Successfully Saved in draft");
+        window.location = '../events/draft-event.php';
+    });
+    //when event post save then move on dashboard
+    $("#submitpost").on("click", function () {
+        $.post("../post-ad/updatevisibility.php", {
+            postid: $(this).data("postid"),
+            visibility: $(this).data("visibility")
+        }, function () {
+            alert("Successfully Submitted");
+            window.location = '../events/dashboard.php';
+        });
+    });
+    //Save in Draft
+    var postedit = false;
+    $("#spSaveDraft").on("click", function () {
+        var visibility = $("#spPostingVisibility").val();
+        $("#spPostingVisibility").val("0");
+        if ($(this).hasClass("editing")) postedit = true;
+        else postedit = false;
+        var btn = this;
+        var idspprofile = $("#spProfiles_idspProfiles").val();
+        var $form = $("#sp-form-post");
+        $form.submit(function (e) {
+            if (idspprofile != "") {
+                e.preventDefault();
+                $(btn).button('loading');
+                term = $form.serializeArray();
+                url = $form.attr("action");
+                $.post(url, term, function (data, status) { }).fail(function () {
+                    $(btn).effect("shake");
+                    $(btn).button('reset');
+                }).done(function (data) {
+                    var postid = data;
+                    var albumid = $(".album_id").val();
+                    // CUSTOM FIELDS 
+                    var inputs = readCustomFields($("#sp-form-post"), postid);
+                    $.each(inputs, function (i, val) {
+                        $.post(MAINURL + "/post-ad/addpostcustomfields.php", val, function (response) {
+                            //alert(response);
+                        });
+                    });
+                    //only for event module
+                    var pageEvent = $("#leftmenu").attr("data-event");
+                    if (pageEvent == 1) {
+                        //this is event page for add feature, sponsor or co-host
+                        //add feature people
+                        var Accessids = "";
+                        $(".multi_select .btn-group>ul>li input:checked").each(function (k, obj) {
+                            Accessids = Accessids + $(obj).val() + ",";
+                        });
+                        Accessids = Accessids.substring(0, Accessids.length - 1);
+                        //console.log(Accessids);
+                        //add feature profile
+                        $.post(MAINURL + "/post-ad/addpostcustomfieldsfeature.php", {
+                            Accessids: Accessids,
+                            postid: postid,
+                            postedit: postedit
+                        }, function (re) { });
+                        //======add soponsor in field start======
+                        var spon = "";
+                        $(".add_spon .btn-group>ul>li input:checked").each(function (k, obj) {
+                            spon = spon + $(obj).val() + ",";
+                            //alert("no");
+                        });
+                        spon = spon.substring(0, spon.length - 1);
+                        //console.log(spon);
+                        $.post(MAINURL + "/post-ad/addsponsor.php", {
+                            spon: spon,
+                            postid: postid,
+                            postedit: postedit
+                        }, function (re) {
+                            //alert(re);
+                        });
+                        //======add co-host========
+                        var cohost = "";
+                        $(".multi_select_cohost .btn-group>ul>li input:checked").each(function (k, obj) {
+                            cohost = cohost + $(obj).val() + ",";
+                            //alert("no");
+                        });
+                        cohost = cohost.substring(0, cohost.length - 1);
+                        //console.log(cohost);
+                        $.post(MAINURL + "/post-ad/addcohost.php", {
+                            cohost: cohost,
+                            postid: postid,
+                            postedit: postedit
+                        }, function (cohost) { });
+                    }
+                    //====end===
+                    $("#sp-form-post :input").not("#spProfiles_idspProfiles, #spPostingVisibility, #spCategories_idspCategory").val("");
+                    // IMAGE
+                    var imgCount = $(".postingimg").length;
+                    $(".postingimg").each(function (i, e) {
+                        //this is for featured image strt
+                        var fichek = $(e).attr("data-name");
+                        var isCheckeed = $('#' + fichek + ':checked').val() ? true : false;
+                        if (isCheckeed == true) {
+                            spFeatureimg = 1;
+                        } else {
+                            spFeatureimg = 0;
+                        }
+                        //this is for featured image end
+                        var base64image = $(e).attr("src");
+                        var arr = base64image.match(/data:image\/[a-z]+;/);
+                        var ext = arr[0].replace("data:image/", "");
+                        ext = ext.replace(";", "");
+                        $.post(MAINURL + "/post-ad/addpostingpic.php", {
+                            spPostings_idspPostings: postid,
+                            spPostingPic: base64image,
+                            ext: ext,
+                            spFeatureimg: spFeatureimg,
+                            postedit: postedit
+                        }, function (r) {
+                            //alert(r);
+                            //Timeline prepending
+                            if (i == imgCount - 1) {
+                                $.get(MAINURL + "/publicpost/timelineentry.php", {
+                                    js: "1",
+                                    timelineid: postid,
+                                    grouptimeline: $(btn).data("grouptimeline")
+                                }, function (r) {
+                                    $("#timeline-container").prepend(r);
+                                    //$(btn).button('reset');
+                                });
+                            }
+                        });
+                    });
+                    //Media
+                    $(".media-file-data").each(function (i, e) {
+                        var base64image = $(e).attr("data-media");
+                        var arr = base64image.match(/data:[a-zA-Z0-9 -/]+;/);
+                        var ext = arr[0].replace("data:", "");
+                        $.post("../../post-ad/addmedia.php", {
+                            spPostings_idspPostings: postid,
+                            spPostingMedia: base64image,
+                            ext: ext,
+                            spPostingAlbum_idspPostingAlbum: albumid
+                        }, function (r) {
+                            //alert(r);
+                        });
+                    });
+                    $("#dvPreview").html("");
+                    //notification message from send box
+                    $.notify({
+                        title: '<strong>Saved in the draft!</strong>',
+                        icon: 'fa fa-info',
+                        message: "<a href='../../real-estate/dashboard/draft-property.php/?flag&viewdraft=check'>View your draft </a>"
+                    }, {
+                        type: 'success',
+                        animate: {
+                            enter: 'animated fadeInUp',
+                            exit: 'animated fadeOutRight'
+                        },
+                        placement: {
+                            from: "top",
+                            align: "right"
+                        },
+                        offset: 20,
+                        spacing: 10,
+                        z_index: 1031,
+                    });
+                }).always(function () {
+                    $(btn).button('reset');
+                });
+            } else alert("Please Select profile!..");
+        });
+    });
+    //Least Expensive sorting
+    $("#freeshipping").on("click", function (e) {
+        e.preventDefault()
+        if ($(".addclass").hasClass("post-grid-item")) {
+            $(".post-grid-item.freedel").removeClass("hidden");
+            $(".post-grid-item.delcharge").addClass("hidden");
+        }
+        if ($(".addclass").hasClass("post-list-item")) {
+            $(".post-list-item.freedel").removeClass("hidden");
+            $(".post-list-item.delcharge").addClass("hidden");
+        }
+    });
+    //Least Expensive sorting
+    var $divs = $(".post");
+    $("#leastexpensive").on("click", function () {
+        var numericallyOrderedDivs = $divs.sort(function (a, b) {
+            return $(a).find(".postprice").data("price") > $(b).find(".postprice").data("price");
+        });
+        $("#posts").html(numericallyOrderedDivs);
+    });
+    //Most Expensive sorting
+    $("#mostexpensive").on("click", function () {
+        var numericallyOrderedDivs = $divs.sort(function (a, b) {
+            return $(a).find(".postprice").data("price") < $(b).find(".postprice").data("price");
+        });
+        $("#posts").html(numericallyOrderedDivs);
+    });
+    //Most Reviews
+    $("#mostreview").on("click", function () {
+        var numericallyOrderedDivs = $divs.sort(function (a, b) {
+            return $(a).find(".postreviews").data("postreviews") < $(b).find(".postreviews").data("postreviews");
+        });
+        $("#posts").html(numericallyOrderedDivs);
+    });
+    //Most Ratings
+    $("#bestrating").on("click", function () {
+        var numericallyOrderedDivs = $divs.sort(function (a, b) {
+            return $(a).find(".postrating").data("postrating") < $(b).find(".postrating").data("postrating");
+        });
+        $("#posts").html(numericallyOrderedDivs);
+    });
+    //Complete
+    //DELETE MEMBER FROM GROUP
+    $(".sp-group-details").on("click", ".addtodelete", function () {
+        var btn = this;
+        if (confirm("Are you sure you want to delete member from group?")) {
+            $.get("../my-groups/removeMember.php", {
+                pid: $(this).data("pid"),
+                gid: $(this).data("gid")
+            }, function (r) {
+                $(btn).closest("li").remove();
+                $(btn).closest(".groupmembers").find(".sp-group-details").remove();
+            });
+        }
+    });
+    //MAKE ASSISTANT ADMIN FROM GROUP
+    $(".sp-group-details").on("click", ".assistant_admin", function () {
+        var btn = this;
+        alert();
+        if (confirm("Are you sure you want to make assistant admin for this group?")) {
+            $.get("../my-groups/makeAssistant.php", {
+                pid: $(this).data("pid"),
+                gid: $(this).data("gid")
+            }, function (r) {
+                location.reload();
+            });
+        }
+    });
+    //REMOVE ASSISTANT ADMIN FROM GROUP
+    $(".sp-group-details").on("click", ".remove_assistant", function () {
+        var btn = this;
+        $.get("../my-groups/removeAssistant.php", {
+            pid: $(this).data("pid"),
+            gid: $(this).data("gid")
+        }, function (r) {
+            location.reload();
+        });
+    });
+    //add friend on group by timeline
+    $(".join_timeline_main").on("click", "#addmemontimeline", function () {
+        $("#addmemontimeline").each(function (i, e) {
+            //add date with new member
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1; //January is 0!
+            var yyyy = today.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd
+            }
+            if (mm < 10) {
+                mm = '0' + mm
+            }
+            /* alert(1);*/
+            today = yyyy + '-' + mm + '-' + dd;
+            var pid = $("#addmemontimeline").attr('data-pid');
+            var gid = $("#addmemontimeline").attr('data-gid');
+            $.post("../my-groups/addmember.php", {
+                spProfiles_idspProfiles: pid,
+                spGroup_idspGroup: gid,
+                spProfileIsAdmin: 0,
+                spApproveRegect: 0,
+                spGroup_newMember_Date: today
+            }, function (r) {
+                location.reload();
+                //$(e).closest(".hidefriend").html("");
+            });
+        });
+    });
+    //add friend on group by group
+    $(".join_timeline_main").on("click", "#addmemontimeline", function () {
+        $(".btn_group_join").each(function (i, e) {
+            //add date with new member
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1; //January is 0!
+            var yyyy = today.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd
+            }
+            if (mm < 10) {
+                mm = '0' + mm
+            }
+            /*alert(2);*/
+            today = yyyy + '-' + mm + '-' + dd;
+            var pid = $("#addmemontimeline").attr('data-pid');
+            var gid = $("#addmemontimeline").attr('data-gid');
+            $.post("../my-groups/addmember.php", {
+                spProfiles_idspProfiles: pid,
+                spGroup_idspGroup: gid,
+                spProfileIsAdmin: 1,
+                spApproveRegect: 1,
+                spGroup_newMember_Date: today
+            }, function (r) {
+                location.reload();
+                //$(e).closest(".hidefriend").html("");
+            });
+        });
+    });
+    $(".sp-group-details").on("click", "#addcheckeditem", function () {
+        $(".chekedfriend").each(function (i, e) {
+            //add date with new member
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1; //January is 0!
+            var yyyy = today.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd
+            }
+            if (mm < 10) {
+                mm = '0' + mm
+            }
+            today = yyyy + '-' + mm + '-' + dd;
+            $.post("addmember.php", {
+                spProfiles_idspProfiles: $(e).data("pid"),
+                spGroup_idspGroup: $(e).data("gid"),
+                spProfileIsAdmin: 1,
+                spApproveRegect: 1,
+                spGroup_newMember_Date: today
+            }, function (r) {
+                $("#sp-list-member").append("<li class='list-group-item'><a href='profiles.php' class='sp-profile-label' data-pid='" + $(e).data("pid") + "'>" + $(e).data("pname") + "</a><span class='glyphicon glyphicon-trash pull-right addtodelete' style='cursor:pointer;' data-pid='" + $(e).data("pid") + "' data-gid='" + $(e).data("gid") + "'></span></li>");
+                $(e).closest(".hidefriend").html("");
+            });
+        });
+    });
+    $(".sp-group-details").on("click", ".unchecked", function () {
+        var btn = this;
+        $(btn).removeClass("unchecked").addClass("chekedfriend");
+        //$("#addcheckeditem").removeClass("disabled");
+    });
+    $(".sp-group-details").on("click", ".chekedfriend", function () {
+        var btn = this;
+        $(btn).removeClass("chekedfriend").addClass("unchecked");
+    });
+    /*$("#searched").on("click" ,".sortable", function(){
+     $("#sort").text($(this).text());
+ });*/
+    $(".sortable").on("click", function () {
+        $("#sort").text($(this).text());
+    })
+    var view = $(".rightArrow");
+    var move = "650px";
+    var sliderLimit = -400
+    $(".rightarrow").click(function () {
+        var currentPosition = parseInt(view.css("left"));
+        if (currentPosition >= sliderLimit) view.stop(false, true).animate({
+            left: "-=" + move
+        }, {
+            duration: 400
+        })
+    });
+    $(".leftarrow").click(function () {
+        var currentPosition = parseInt(view.css("left"));
+        if (currentPosition < 0) view.stop(false, true).animate({
+            left: "+=" + move
+        }, {
+            duration: 400
+        })
+    });
+    //Unblock member
+    $(".sp-group-details").on("click", ".unblockMember", function () {
+        var btn = this;
+        if ($(btn).data("flag") == 1) //For Group
+        {
+            $.post("/public-group/unblockmember.php", {
+                pid: $(btn).data("profileid"),
+                gid: $(btn).data("gid")
+            }, function (r) {
+                $(btn).text("Block");
+                $(btn).removeClass("unblockMember").addClass("blockMember");
+            });
+        } else {
+            $.post("../friends/unblockmember.php", {
+                profileid: $(btn).data("profileid")
+            }, function (response) {
+                $(btn).text("Block");
+                $(btn).removeClass("unblockMember").addClass("blockMember");
+            });
+        }
+    });
+    //Block memeber 
+    $(".sp-group-details").on("click", ".blockMember", function () {
+        var btn = this;
+        if ($(btn).data("flag") == 1) //For Group
+        {
+            $.post("/public-group/blockMember.php", {
+                pid: $(btn).data("profileid"),
+                gid: $(btn).data("gid")
+            }, function (r) {
+                $(btn).text("Unblock");
+                $(btn).removeClass("blockMember").addClass("unblockMember");
+            });
+        } else //Without Group
+        {
+            $.post("../friends/blockmember.php", {
+                profileid: $(btn).data("profileid")
+            }, function (response) {
+                $(btn).text("Unblock");
+                $(btn).removeClass("blockMember").addClass("unblockMember");
+            });
+        }
+    });
+    $("#searchtx").keyup(function (e) {       
+	//alert("3333333");
+        if (e.keyCode == 27) {
+            $("#searchtx").val("");
+            $(".searchable").show();
+        } else search();
+    });
+    $(".selected-profile").on("click", function () {
+        if ($(this).hasClass("selected")) {
+            $(this).removeClass('selected');
+            $("#sendmesg").addClass("disabled");
+            $("#sendermesg").attr("data-sender", "");
+        } else {
+            $(this).addClass('selected');
+            $("#sendmesg").removeClass("disabled");
+            $("#sendermesg").attr("data-sender", $(this).data("pid"));
+        }
+    });
+    $("#unreadmessage").on("click", function () { //Unread
+        $(".myfriends").removeClass("active");
+        $(".friendchatsystem").load("unreadmessage.php", function () { });
+    });
+    $("#staredmessage").on("click", function () { //Starred Message
+        $(".myfriends").removeClass("active");
+        $(".friendchatsystem").load("starredmessage.php", function () { });
+    });
+    $("#receivedmessage").on("click", function () { //Received Message
+        $(".myfriends").removeClass("active");
+        $(".friendchatsystem").load("receivedmessage.php", function () { });
+    });
+    $("#sentmessage").on("click", function () { //Sent Message 
+        $(".myfriends").removeClass("active");
+        $(".friendchatsystem").load("mysend.php", function () { });
+    });
+    $("#archivedmessage").on("click", function () { //Archived Message
+        $(".myfriends").removeClass("active");
+        $(".friendchatsystem").load("archivedmessage.php", function () { });
+    });
+    $("#deletedmessage").on("click", function () { //Deleted Message
+        $(".myfriends").removeClass("active");
+        $(".friendchatsystem").load("deletedmessage.php", function () { });
+    });
+    $(".friendchatsystem").on("click", ".unread", function () { //unreadMessage
+        $(".myfriends").removeClass("active");
+        var btn = this;
+        $.post("/friendmessage/unread.php", {
+            messageid: $(this).data("mid")
+        }, function (r) {
+            //$(btn).css("background-color","white");
+        });
+    });
+    $(".friendchatsystem").on("click", ".restore", function () { //Restore Message
+        if (confirm("Are you sure you want to Restore Message ?")) {
+            var btn = this;
+            $.post("/friendmessage/unsetdelete.php", {
+                messageid: $(this).data("messageid"),
+                profileid: $(this).data("profileid")
+            }, function (r) {
+                $(btn).closest(".message").html("");
+            });
+        }
+    });
+    //FRIEND MESSAGE IS SAVED
+    $(".friendchatsystem").on("click", ".archive", function () { //Archive friend Message
+        var btn = this;
+        $.post("../friendmessage/archive.php", {
+            messageid: $(this).data("messageid"),
+            profileid: $(this).data("profileid")
+        }, function (r) {
+            $(btn).css("color", "yellow");
+            $(btn).removeClass('starred').addClass('unstarred');
+        });
+    });
+    //FRIEND Message IS UNSAVED
+    $(".friendchatsystem").on("click", ".unarchive", function () { //unrchive friend Message
+        var btn = this;
+        $.post("../friendmessage/unsetarchive.php", {
+            messageid: $(this).data("messageid"),
+            profileid: $(this).data("profileid")
+        }, function (r) {
+            $(btn).css("color", "green");
+            $(btn).removeClass('unstarred').addClass('starred');
+        });
+    });
+    $(".friendchatsystem").on("click", ".deletemessage", function () { //Delete friend Message
+        if (confirm("Are you sure you want to Delete Message ?")) {
+            var btn = this;
+            $.post("../friendmessage/deletemessage.php", {
+                messageid: $(this).data("messageid"),
+                profileid: $(this).data("profileid")
+            }, function (r) {
+                $(btn).closest(".message").html("");
+            });
+        }
+		});
+    /*$(".friendchatsystem").on("click" , ".deletemessage" , function(){//Delete friend Message
+     if (confirm("Are you sure you want to Restore Message ?"))
+     {
+     var btn = this;
+     $.post("/friendmessage/unsetdelete.php", {messageid:$(this).data("messageid") , profileid:$(this).data("profileid")},function(r){
+     $(btn).closest(".message").html("");
+     });
+     }
+ });*/
+    //FRIEND MSG FAVOURITE
+    $(".friendchatsystem").on("click", ".starred", function () { //Starred friend Message
+        var btn = this;
+        $.post("../friendmessage/starred.php", {
+            messageid: $(this).data("messageid"),
+            profileid: $(this).data("profileid")
+        }, function (r) {
+            $(btn).css("color", "yellow");
+            $(btn).removeClass('starred').addClass('unstarred');
+        });
+    });
+    //FRIEND MSG UNFAVOURITE
+    $(".friendchatsystem").on("click", ".unstarred", function () { //Unstarred
+        var btn = this;
+        $.post("../friendmessage/unsetstarred.php", {
+            messageid: $(this).data("messageid"),
+            profileid: $(this).data("profileid")
+        }, function (r) {
+            $(btn).css("color", "green");
+            $(btn).removeClass('unstarred').addClass('starred');
+        });
+    });
+    //Reject Request
+    $(".sp-group-details").on("click", ".gruoprej", function () {
+        if (confirm("Are you sure you want to reject request ?")) {
+            var btn = this;
+            $.post("/public-group/rejectrequest.php", {
+                gid: $(this).data("gid"),
+                pid: $(this).data("pid")
+            }, function (r) {
+                $("li[data-pid='" + $(btn).data("pid") + "']").remove();
+            });
+        }
+    });
+    //accept request
+    $(".sp-group-details").on("click", ".gruopap", function () {
+        var btn = this;
+        $.post("/public-group/acceptrequest.php", {
+            gid: $(this).data("gid"),
+            pid: $(this).data("pid")
+        }, function (r) {
+            alert(r);
+            $(btn).closest(".acptrjt").html("");
+        });
+    });
+    //send Request
+    $(".joingroup").on("click", function () {
+        var btn = this;
+        $.post("/public-group/sendrequest.php", {
+            gid: $(this).data("gid"),
+            pid: $(this).data("pid")
+        }, function (r) {
+            alert("Your request has been successfully sent to group admin for approval");
+            $(btn).text("Joined");
+            $(btn).addClass("disabled");
+        });
+    });
+    //Public group autocomplete$
+    $("#sp-auto-group").autocomplete({
+        minLength: 1,
+        source: "../mlayer/publicgroup.php",
+        focus: function (event, ui) {
+            $(this).val(ui.item.label);
+            return false;
+        },
+        select: function (event, ui) {
+            $("#sp-auto-group").val(ui.item.label);
+            var filter = ui.item.label;
+            $(".pgroup:not(:contains(" + filter + "))").closest(".pubgroup").addClass("hidden");
+            $(".pubgroup:contains(" + filter + ")").removeClass("hidden");
+            //$("#spPostingVisibility").val(ui.item.value);
+            return false;
+        }
+    });
+    $(".groupfield").on("click", ".groupflag", function () {
+        $(".spgroupflag").val($(this).data("groupflag"));
+        $(".gtype").text($(this).text());
+    });
+    $(".sp-group-details").on("click", ".groupflag", function () {
+        $(".spgroupflag").val($(this).data("groupflag"));
+        $(".gtype").text($(this).text());
+    });
+    //Image Remove Code
+    $(".closed").on("click", function () {
+        //alert('pppppppppppppppp');
+        var btn = this;
+        $.post(MAINURL + "/post-ad/deletepic.php", {
+            postingpic: $(this).data("pic"),
+            postingsrc: $(this).data("src"),
+            postingwork: $(this).data("work"),
+            awsid: $(this).data("aws")
+        }, function (r) {
+            $(btn).closest(".imagepost").html("");
+        });
+    });
+    $(".editreview").on("click", function () {
+        $("#reviewid").val($(this).data("reviewid"));
+        $("#previouesreview").text("Edit Review");
+        $("#reviewtext").val($(this).data("rvwtext"));
+        /*$.post("/customer_reviews/reviews.php", {profieid:$(this).data("profileid"),postid:$(this).data("postid")},function(r){
+         $("#reviewtext").val(r);
+     });*/
+    });
+    $(".deletereview").on("click", function () {
+        if (confirm("Are you sure you want to Delete your Review ?")) {
+            $.post("/customer_reviews/deletereview.php", {
+                profieid: $(this).data("profileid"),
+                postid: $(this).data("postid"),
+                reiviewid: $(this).data("reviewid")
+            }, function (r) {
+                location.reload();
+            });
+        }
+    });
+    $(".sp-profile-det").on("click", ".editprofile", function () {
+        var btn = this;
+        $(".sp-profile-det").load("profilefield.php", {
+            ptid: $(btn).data("ptid"),
+            pid: $(btn).data("pid"),
+            ptype: $(btn).data("profiletype")
+        }, function (response) {
+            $(".editprofile").text("Edit Profile");
+            $("#profiletypes").text($(btn).data("profiletype")).addClass("disabled").css("font-weight", "bold");
+            $("#profiletypeslabel").text("");
+            $("#iddropdown").addClass("hidden");
+            $("#dobbusiness").removeClass("hidden");
+            $("#yourAddresRemove").removeClass("hidden");
+            if ($(btn).data("ptid") == 1) {
+                $("#dobbusiness").addClass("hidden");
+                $("#yourAddresRemove").addClass("hidden");
+                $("#defaultbusiness").removeClass("hidden");
+                $("#defaultshowEmail").removeClass("hidden");
+                $("#defaultAddNews").removeClass("hidden");
+                $("#defaultShowPhone").removeClass("hidden");
+                $("#defaultLinkStore").removeClass("hidden");
+                $("#defaultLinkVideo").removeClass("hidden");
+                $("#profilefield").load("bussiness.php", {
+                    pid: $(btn).data("pid")
+                }, function (respone) { });
+            }
+            if ($(btn).data("ptid") == 2) {
+                $("#profilefield").load("freelancer.php", {
+                    pid: $(btn).data("pid")
+                }, function (respone) { });
+            }
+            if ($(btn).data("ptid") == 3) {
+                $("#profilefield").load("entertainment.php", {
+                    pid: $(btn).data("pid")
+                }, function (respone) { });
+            }
+            if ($(btn).data("ptid") == 5) {
+                $("#profilefield").load("jobseeker.php", {
+                    pid: $(btn).data("pid")
+                }, function (respone) { });
+            }
+            if ($(btn).data("ptid") == 6) {
+                $("#profilefield").load("dating.php", {
+                    pid: $(btn).data("pid")
+                }, function (respone) { });
+            }
+        })
+    });
+	
+	
+    var profileedit = false;
+    $(".sp-profile-det").on("click", ".addprofile", function (e) {
+		//alert('11111122');
+		var cat=$("#category_").val(); 
+		var aa=$("#highlights_").val(); 
+		var ac=$("#details_").val();
+        var store=$("#storeName").val();		
+		var graduate =$("#graduate_").val(); 
+		
+		
+		var agegroup =$("#agegroup_").val(); 
+		var interested =$("#interested_").val(); 
+		var idealrelationship =$("#idealrelationship_").val(); 
+		var store1 =$(".storename_").val(); 
+		//alert('==');
+			//=====professinol profile
+			//alert(store);
+			
+			if((cat==0)||(aa=='')||(ac=='')){
+			//alert(cat);	
+			if(cat==0){
+			 $("#error_c").text("This Field is Required");
+				
+			}
+			else{
+				 $("#error_c").text("");			
+			}
+			if(aa==''){
+				 $("#error_h").text("This Field is Required");
+			}
+			else{
+				 $("#error_h").text("");				
+			}
+				if(ac==''){
+				 $("#erros").text("This Field is Required");
+			}
+			else{
+				 $("#erros").text("");				
+			}
+				 return false;
+			}
+			//alert('000000');
+			//=====employment profile
+			 if(graduate==''){
+				 $("#error_com").text("This Field is Required");
+				 return false;
+			}
+			
+					//===famile profile
+			
+			else if(agegroup==''){
+				//alert(agegroup);
+				 $("#error_age").text("This Field is Required");
+				 return false;
+			}
+			else if(interested==''){
+				//alert(interested);
+				 $("#error_interest").text("This Field is Required");
+				 return false;
+			}	
+			else if(idealrelationship==''){
+				//alert(idealrelationship);
+				 $("#error_ideal").text("This Field is Required");
+				 return false;
+			}
+			else if(store1==''){
+				//alert(idealrelationship);
+				 $("#error_store").text("This Field is Required");
+				 return false;
+			}
+
+			
+			//  business profile
+			var ptid = $("#ptid_b").val();
+			//alert(ptid);
+			
+			if(ptid==1){
+			function isEmail2(email) {
+				var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+				return regex.test(email);
+			}
+			//alert('2222');
+			var comail = $("#companyEmail_").val();
+			//alert(comail);
+			if(isEmail2(comail) == ""){
+				//alert('33');
+					$(".lbl_10").text('Enter valid email');
+					return false;
+			}   
+			
+			}
+
+			
+	
+		
+		if ($("#ptypeid").val() != "") {
+			
+            if ($(this).hasClass("editing")) profileedit = true;
+            else profileedit = false;
+            var btn = this;
+            var $form = $(btn).closest("#sp-add-profile");
+			//alert('0000');
+            var isFormValid = $("#sp-add-profile").valid();
+			//alert('111');
+			 // if (isFormValid) {
+                $(btn).button('loading');
+                term = $form.serializeArray();
+                url = $form.attr("action");
+         
+                if (typeof url === "undefined") {
+					
+                    var $form = $("#sp-add-profile");
+                    term = $form.serializeArray();
+                    url = $form.attr("action");
+                }
+				
+				
+				
+				url = MAINURL + "/my-profile/addprofiles.php";  
+                $.post(url, term, function (data, status) { }).fail(function () { 
+                    //$(btn).effect("shake");
+                    $(btn).button('reset');
+                }).done(function (data) {
+                    var pid = $.trim(data);
+                    var base64image = $("#profilepic").attr("src"); 
+                    if (base64image != undefined && base64image != '') {
+                        var arr = base64image.match(/data:image\/[a-z]+;/);
+                        var ext = arr[0].replace("data:image/", "");
+                        ext = ext.replace(";", "");   
+                      //  $.post("../my-profile/uploadimage.php", {
+						  $.post(MAINURL + "/my-profile/uploadimage.php", {
+                            profileid: pid,
+                            spprofilePic: base64image,
+                            mediaid: $("#profilepic").data("media"),
+                            ext: ext
+                        }, function (r) {
+                            //alert(r);
+                        });
+                    }
+                    $(".profilefield").each(function (i, e) {
+                        var l = $("label[for='" + e.id + "']").text();
+                        var n = $(e).attr("name");
+                        var v = $(e).val();
+               
+                        $.post(MAINURL + "/my-profile/addprofilefield.php", {
+                            spProfileFieldLabel: l,
+                            spProfileFieldName: n,
+                            spProfileFieldValue: v,
+                            spprofiles_idspProfiles: pid,
+                            editing_: profileedit
+                        }, function (r) {
+                            //alert(r);
+                        });
+                    });
+                   
+                    $(".sp-user-profile-label.active").trigger("click");
+                    $(".profilefield").val("");
+                    $("input").val("");
+                 
+                    var seconds = 5;
+                    setInterval(function () {
+                        seconds--;
+                        if (seconds == 0) {
+							
+                         //   window.location.reload();
+                        }
+                    }, 1000);
+                    //====end=====
+                }).always(function () {
+                    $(btn).button('reset');
+					
+                   // window.location.reload();
+				   var id=$("#idspProfiles").val();
+						//alert(id);
+				   if(id){
+				 //  window.location.replace(MAINURL + "/my-profile/?msg=updated");
+					   
+				   }else{
+				//   window.location.replace(MAINURL + "/my-profile/?msg=created");
+				   }
+                });
+          //  }
+            /*});*/
+        } else {
+            e.preventDefault();
+            alert("Please select profile type !");  
+        }
+    });
+	
+	
+    $(".sp-profile-det").on("click", "#shippingratesbutton", function () {
+        //$(".sp-user-profile-label.active").trigger("click");
+    });
+    //Friend Chatting System
+    $(".myfriend").on("click", ".friendchat", function () {
+        // ===ADD LOADING START
+        // 
+        // $(".show_loader").css("display", "block");
+        // ===ADD LOADING END
+        var btn = this;
+        // if ($(btn).hasClass("unreadmsg"))
+        // {
+        //     var count = $("#totalunread").text();
+        //     count = count - 1;
+        //     $("#totalunread").text(count);
+        //     $(btn).removeClass("unread").addClass("read");
+        // }
+        // $(".messageing").removeClass("active");
+        // $(".friendchat").removeClass("active");
+        // $(this).addClass("active");
+        var frndidshow = $(btn).data("friendid");
+		
+        var myidshow = $(btn).data("myid");
+        //var profileimg = document.getElementById(frndidshow).src;
+var	profileimg=$('#profile_img').val();
+		
+        loadChatOfFriend(btn, profileimg);
+        //     var url = "../friendmessage/friendmessage.php"
+        //     if ($(btn).hasClass("nonfriend")){
+        //         var url = "../friendmessage/nonfriendmsg.php"
+        //     }
+        //     $(".friendchatsystem").load(
+        //         url, {friendid: $(btn).data("friendid"), myid: $(btn).data("myid")}, function () {
+        //   $("#friendlist").append("<div class='btn-group frnd' role='group' aria-label='...' style='padding-top:2px;'><img src='"+profileimg+"' class='img-responsive rightProfilepic' alt='' ><a href='../friends/?profileid=" + $(btn).data("friendid") + "' type='button' class='btnfriend' data-friendid='" + $(btn).data("friendid") + "' data-toggle='tooltip' data-placement='left' title='View profile'> " + $(btn).data("friendname") + "</a></div>&nbsp;");
+        //   $(".messages").scrollTop($(".messages").prop("scrollHeight"));
+        //   // ===REMOVE LOADING
+        //   $(".show_loader").css("display", "none");
+        // });
+        // $(".myfriends").each(function (i, e) {
+        //     if ($(e).attr("data-friendid") == $(btn).data("friendid"))
+        //     {
+        //         if ($(btn).hasClass("unreadmsg"))
+        //         {
+        //             var count = $(e).find(".totalunreadmsg").text();
+        //             count = count - 1;
+        //             $(e).find(".totalunreadmsg").text(count);
+        //             $(btn).removeClass("unread").addClass("read");
+        //         }
+        //         //totalunreadmsg
+        //         $(e).addClass("active");
+        //     }
+        // });
+    });
+    /*$(".friendchatsystem").one("click",".sendmessagetofriend", function() {
+     var btn = this;
+     var $form = $(btn).closest("form");
+     $form.submit(function(e) {
+     e.preventDefault();
+     $(btn).button('loading');
+     term = $form.serializeArray();
+     url = $form.attr("action");
+     $.post(url, term, function(data, status) {
+     }).fail(function() {
+     $(btn).effect("shake");
+     $(btn).button('reset');
+     }).done(function(data) {
+     var d = new Date();
+     var mid = data;
+     $("#sender").val();
+     //d.toDateString()
+     //+day + ', ' + monthNames[monthIndex] +
+     
+     $('#myTable > tbody:last').append("<tr class='message'><td width='10%'><a href='#' data-toggle='tooltip' data-placement='left'  title='Not Archive' data-messageid='"+mid+"' class='archive' style='color:#1a936f;' data-profileid='"+$("#sender").val()+"'><span class='glyphicon glyphicon-floppy-save'></span></a> <a href='#' data-messageid='"+mid+"' class='deletemessage' data-profileid='"+$("#sender").val()+"'><span class='glyphicon glyphicon-trash'></span></a> <a href='#' data-messageid='"+mid+"' class='starred' style='color:#1a936f;' data-toggle='tooltip' data-placement='left' title='Not Starred' data-profileid='"+$("#sender").val()+"'><span class='fa fa-star'></span></a></td><td width='15%' class='commentoverflow'><b>"+$("#myname").val()+"</b></td><td width='60%' class='commentoverflow'>"+$("#freindmessage").val()+"</td><td width='15%'>"+day+' '+monthNames[monthIndex]+' '+datetext+"</td></tr>");
+     
+     $("#freindmessage").val("");
+     
+     $(".friend_message").scrollTop($(".friend_message").prop("scrollHeight"));
+     
+     }).always(function() {
+     $(btn).button('reset');
+     });
+     });
+ });*/
+ 
+ 
+     $(".sendmessagetofriend1").click(function () {
+        // 
+	//alert("=========11111")
+	
+		var form_data = new FormData();
+		 var sender=$("#sender1").val();
+	 var receiver=$("#receiver1").val();
+form_data.append('files', $('input[type=file]')[0].files[0]);
+    form_data.append("sender", sender);
+	 form_data.append("receiver", receiver);
+	var dataaa = $('input[type=file]')[0].files[0];
+//alert(dataaa)
+if (($("#freindmessage1").val().length > 0) || (typeof(dataaa)!="undefined" )) {
+	//alert("1111111111")
+  //fd.append('message ',$('#message').val());
+ if(typeof(dataaa)!="undefined"){
+  $.ajax({
+    method:"POST",
+    url:"../friendmessage/sendmessage_files.php",     
+    data: form_data,  
+    cache: false,
+    contentType: false,
+    processData: false,   
+    success: function(data){                 
+      //alert(data);
+    },
+    error: function(xhr, status, error) {
+      //alert(xhr.responseText);
+    }  
+  });
+ }
+  
+        var btn = this;
+        var time = new Date();
+        var d = $.datepicker.formatDate("dd M", new Date());
+        var mid = "";
+        $("#sender1").val();
+        if ($("#freindmessage1").val().length > 0){
+            $(".btnfriend").each(function (i, e) {
+               // alert('=====');
+                $.post('../friendmessage/sendmessage.php', {
+                    spfriendChattingMessage: $("#freindmessage1").val(),
+                    spprofiles_idspProfilesReciver: $(e).data("friendid"),
+                    spprofiles_idspProfilesSender: $("#sender1").val(),
+					//module:$('#module').val()
+                }, function (data) {
+				
+                    mid = data;
+                });
+            });
+            $('<li class="replies"><img src="' + $("#mypic").val() + '" alt="" /><p>' + $("#freindmessage1").val() + '</p></li>').appendTo($('.messages ul'));
+            $("#freindmessage1").val("");
+            $(".messages").scrollTop($(".messages").prop("scrollHeight"));
+            reloadTheMainChatId = setInterval(reloadChatBox, 5000);
+            // you can reload main chat box by reloading here.
+            // reloadChatBox();
+		} }else {
+            alert("Please Write Something or upload any file as a Message!!!");
+        }
+        //$('#myTable > tbody:last').append("<tr class='message'><td width='10%'><a href='#' data-toggle='tooltip' data-placement='left'  title='Not Archive' data-messageid='" + mid + "' class='archive' style='color:#1a936f;' data-profileid='" + $("#sender").val() + "'><span class='glyphicon glyphicon-floppy-save'></span></a> <a href='#' data-messageid='" + mid + "' class='deletemessage' data-profileid='" + $("#sender").val() + "'><span class='glyphicon glyphicon-trash'></span></a> <a href='#' data-messageid='" + mid + "' class='starred' style='color:#1a936f;' data-toggle='tooltip' data-placement='left' title='Not Starred' data-profileid='" + $("#sender").val() + "'><span class='fa fa-star'></span></a></td><td width='15%' class='commentoverflow'><b>" + $("#myname").val() + "</b></td><td width='57%' class='commentoverflow'>" + $("#freindmessage").val() + "</td><td width='18%'>" + d + " " + time.getHours() + ":" + time.getMinutes() + "</td></tr>");
+    });
+ 
+ 
+ 
+    $(".friendchatsystem").on("click", ".sendmessagetofriend", function () {
+        // 
+		alert()
+		var form_data = new FormData();
+		 var sender=$("#sender").val();
+	 var receiver=$("#receiver").val();
+form_data.append("files", document.getElementById('upload').files[0]);
+    form_data.append("sender", sender);
+	 form_data.append("receiver", receiver);
+	var dat = document.getElementById('upload').files[0];
+	 
+  //fd.append('message ',$('#message').val());
+if(dat!=''){
+  $.ajax({
+    method:"POST",
+    url:"../friendmessage/sendmessage_files.php",     
+    data: form_data,  
+    cache: false,
+    contentType: false,
+    processData: false,   
+    success: function(data){                 
+      //alert(data);
+    },
+    error: function(xhr, status, error) {
+      //alert(xhr.responseText);
+    }  
+  });
+}
+  
+        var btn = this;
+        var time = new Date();
+        var d = $.datepicker.formatDate("dd M", new Date());
+        var mid = "";
+        $("#sender").val();
+        if ($("#freindmessage").val().length > 0) {
+            $(".btnfriend").each(function (i, e) {
+                $.post('../friendmessage/sendmessage.php', {
+                    spfriendChattingMessage: $("#freindmessage").val(),
+                    spprofiles_idspProfilesReciver: $(e).data("friendid"),
+                    spprofiles_idspProfilesSender: $("#sender1").val()
+                }, function (data) {
+				
+                    mid = data;
+                });
+            });
+            $('<li class="replies"><img src="' + $("#mypic").val() + '" alt="" /><p>' + $("#freindmessage").val() + '</p></li>').appendTo($('.messages ul'));
+            $("#freindmessage").val("");
+            $(".messages").scrollTop($(".messages").prop("scrollHeight"));
+            reloadTheMainChatId = setInterval(reloadChatBox, 3500);
+            // you can reload main chat box by reloading here.
+            // reloadChatBox();
+        } else {
+            alert("Empty message can not be sent!!!");
+        }
+        //$('#myTable > tbody:last').append("<tr class='message'><td width='10%'><a href='#' data-toggle='tooltip' data-placement='left'  title='Not Archive' data-messageid='" + mid + "' class='archive' style='color:#1a936f;' data-profileid='" + $("#sender").val() + "'><span class='glyphicon glyphicon-floppy-save'></span></a> <a href='#' data-messageid='" + mid + "' class='deletemessage' data-profileid='" + $("#sender").val() + "'><span class='glyphicon glyphicon-trash'></span></a> <a href='#' data-messageid='" + mid + "' class='starred' style='color:#1a936f;' data-toggle='tooltip' data-placement='left' title='Not Starred' data-profileid='" + $("#sender").val() + "'><span class='fa fa-star'></span></a></td><td width='15%' class='commentoverflow'><b>" + $("#myname").val() + "</b></td><td width='57%' class='commentoverflow'>" + $("#freindmessage").val() + "</td><td width='18%'>" + d + " " + time.getHours() + ":" + time.getMinutes() + "</td></tr>");
+    });
+    //Friend Chatting System Complete
+    //Accept Friend Request
+    $(".acceptrequest").on("click", function () {
+        var noti = $("#notification_count").html();
+        noti = noti - 1;
+        $.post('../friends/accept.php', {
+            sender: $(this).data("sender"),
+            receiver: $(this).data("receiver")
+        }, function (d) {
+            //alert(d);
+            if (noti == 0) {
+                $("#notification_count").addClass('hidden');
+                $("#notificationTitle").html("");
+                $("#notificationTitle").html("No Request");
+                $(".notificationsBody").remove();
+            } else {
+                $("#notification_count").html(noti);
+            }
+        });
+        $("#friend_boxx" + this.id).css("display", "none");
+    });
+	////////////
+	
+	
+	$(".rejectrequest").on("click", function () {
+        var noti = $("#notification_count").html();
+        noti = noti - 1;
+        $.post('../friends/reject.php', {
+            sender: $(this).data("sender"),
+            receiver: $(this).data("receiver")
+        }, function (d) {
+            //alert(d);
+            if (noti == 0) {
+                $("#notification_count").addClass('hidden');
+                $("#notificationTitle").html("");
+                $("#notificationTitle").html("No Request");
+                $(".notificationsBody").remove();
+            } else {
+                $("#notification_count").html(noti);
+            }
+        });
+        $("#friend_boxx" + this.id).css("display", "none");
+    });  
+    //reject Friend Request
+    $(".rejectrequest1").on("click", function () { 
+	
+        var senderId = $(this).data("sender");
+        var rcvrId = $(this).data("receiver");
+        var boxId = this.id;
+		//alert(senderId);    
+        swal({
+            title: "Are you sure to delete the request?",
+            type: "warning",
+            confirmButtonClass: "sweet_ok",
+            confirmButtonText: "Yes",
+            //cancelButtonClass: "sweet_cancel",
+            cancelButtonText: "No",
+            showCancelButton: true
+        }, function (isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    type: "POST",
+                    url: "../friends/reject.php",
+                    data: {
+                        sender: senderId,
+                        receiver: rcvrId
+                    },
+                    success: function (data) {
+                        $("#friend_boxx" + boxId).css("display", "none");
+                        var noti = $("#notification_count").html();
+                        noti = noti - 1;
+                        if (noti == 0) {
+                            $("#notification_count").addClass('hidden');
+                            $("#notificationTitle").html("");
+                            $("#notificationTitle").html("No Request");
+                            $(".notificationsBody").remove();
+                        } else {
+                            $("#notification_count").html(noti);
+                        }
+                    }
+                }).error(function (data) {
+                    swal("Error", "Something went wrong, Please try again.", "error");
+                });
+            }
+        });
+    });
+    //Getting all Friend request
+    $("#notificationLink").click(function () {
+        $("li").removeClass("active");
+        $("#notificationLink").css("background-color", "#9ab210");
+        $("#notificationContainer").fadeToggle(300);
+        //$("#notification_count").fadeOut("slow");
+        return false;
+    });
+    //Document Click hiding the popup 
+    $(document).click(function () {
+        $("#notificationContainer").hide();
+    });
+    //Popup on click
+    $("#notificationContainer").click(function (e) {
+        e.stopPropagation();
+        return true;
+    });
+    $("#notificationFooter").on("click", function () {
+        $("#footerbody").toggle();
+    });
+    //Complete
+    //friend request send
+    $("#sendrequest").click(function (i, e) {
+        var btn = this;
+        var senderId = $(this).data("sender");
+        var reciverId = $(this).data("reciver");
+        var profilename = $(this).data("profilename");
+        var flag = $(this).data("flag");
+        $.post('../friends/sendrequest.php', {
+            sender: senderId,
+            reciever: reciverId,
+            profilename: profilename,
+            flag: flag
+        }, function (d) {
+            //alert(d);
+            //$("#sendrequest").html("<span class='glyphicon glyphicon-ok'> </span> Sent");
+            window.location.reload();
+        });
+    });
+    //Searching friend for adding in friend list//
+    $("#sp-auto-friends").autocomplete({
+        minLength: 1,
+        source: MAINURL + "/mlayer/profilelist.php",
+        focus: function (event, ui) {
+            $(this).val(ui.item.label);
+            return false;
+        },
+        select: function (event, ui) {
+            $("#sp-auto-friends").val(ui.item.label);
+            // $("#sp-auto-friends").val(ui.item.value);
+            window.open(MAINURL + "/friends/?profileid=" + ui.item.value + "", "_self");
+            return false;
+        }
+    });
+    //SEARCHING PRODUCTS FOR HOME START
+    $("#sp-auto-post").autocomplete({
+        minLength: 1,
+        source: MAINURL + "/mlayer/productlist.php",
+        focus: function (event, ui) {
+            $(this).val(ui.item.label);
+            return false;
+        }
+    });
+    //SEARCHING PRODUCTS FOR HOME END
+    $(".quantity").change(function () { //Calculating price of quantity
+        //alert();
+        var quantity = $(this).val();
+        var availablequant = $(this).data("available");
+        var reamainingquant = availablequant - quantity;
+        $(this).closest(".calculatetotal").find(".sp-order").attr("data-remainingquant", reamainingquant);
+        $(this).closest(".calculatetotal").find(".sp-order").attr("data-quantity", quantity);
+        $("#checkout").attr("data-quantity", quantity);
+        /*var price = $(this).closest(".calculatetotal").find(".itemprice").data("itemprice");*/
+        var price = $(this).data("price");
+        var subtotal = quantity * price;
+        $(this).closest(".calculatetotal").find(".subtotal").text(subtotal);
+        $(this).closest(".calculatetotal").find(".subtotal").attr("data-subtotal", subtotal);
+        $(this).closest(".calculatetotal").find(".sp-order").attr("data-subtotal", subtotal);
+        //giving information inside form for payment
+        //$("." + $(this).data("postid")).val($subtotal);
+        $("#" + $(this).data("postid")).val(quantity);
+        /*        alert(quantity);
+                alert(price);
+                alert(subtotal);*/
+        //update quantity and amount
+        $.post("/cart/updateorder.php", {
+            orderid: $(this).data("oid"),
+            quantity: quantity,
+            subtotal: subtotal
+        }, function (r) { });
+        //$(this).closest(".calculatetotal").find(".subamount").val($subtotal);
+        //$(this).closest(".calculatetotal").find(".quant").val(quantity);
+        var total = 0;
+        $(".subtotal").each(function (i, e) { //calculate total
+            $sub = parseInt($(e).attr("data-subtotal"));
+            total = total + $sub;
+        });
+        location.reload();
+        //$("#totalamount").text(total);
+        /*var title = '<strong>Quantity Updated Successfully!</strong>';
+        var icon = '';*/
+        //showNofification(title, icon);
+    });
+    $(".cartproductsize").change(function () { //Calculating price of quantity
+        /* alert();*/
+        var size = $(this).val();
+        //update quantity and amount
+        $.post("/cart/updatesize.php", {
+            orderid: $(this).data("oid"),
+            size: size
+        }, function (r) { });
+        location.reload();
+    });
+    //Event Registeration
+    $(".eventregister").on("click", function () {
+        $.post('../events/eventregister.php', {
+            postid: $(this).data("postid"),
+            profileid: $(this).data("profileid"),
+            startdate: $(this).data("startdate"),
+            enddate: $(this).data("enddate"),
+            categoryid: $(this).data("categoryid")
+        }, function (d) {
+            //alert(d);
+        });
+    });
+    //Revanue Categorywise
+    var revanuecat = { // bar chart
+        chart: {
+            height: 300,
+            renderTo: 'revanuecategory',
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+        },
+        title: {
+            text: '',
+            style: {
+                fontWeight: 'normal',
+                fontSize: '13px'
+            }
+        },
+        tooltip: {
+            pointFormat: '<span style="color:{point.color}">{point.name}</span>:<b>$ {point.y:.2f}</b><br/>'
+        },
+        xAxis: {
+            type: 'category',
+            labels: {
+                rotation: -45,
+                style: {
+                    fontSize: '13px',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Revenue(Dollar)'
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        credits: {
+            enabled: false
+        },
+        series: [{
+            type: 'column',
+            innerSize: '34%',
+            name: '',
+            data: [],
+            dataLabels: {
+                enabled: true,
+                rotation: -90,
+                color: '#FFFFFF',
+                align: 'right',
+                format: '$ {point.y:.1f}', // one decimal
+                y: 10, // 10 pixels down from the top
+                style: {
+                    fontSize: '13px',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }
+        }]
+    }
+    $.getJSON(MAINURL + "/finance/revanuecategorywise.php", function (json) {
+        revanuecat.series[0].data = json;
+        //chart = new Highcharts.Chart(revanuecat);
+    });
+    //Revanue year-month wise
+    var revanueoptions = {
+        chart: {
+            height: 300,
+            renderTo: 'revanuecontainer',
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+        },
+        title: {
+            text: '',
+            style: {
+                fontWeight: 'normal',
+                fontSize: '13px'
+            }
+        },
+        tooltip: {
+            pointFormat: '<span style="color:{point.color}">{point.name}</span>:<b>$ {point.y:.2f}</b><br/>'
+        },
+        xAxis: {
+            type: 'category',
+            labels: {
+                rotation: -45,
+                style: {
+                    fontSize: '13px',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Revenue(Dollar)'
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        credits: {
+            enabled: false
+        },
+        series: [{
+            type: 'column',
+            innerSize: '34%',
+            name: '',
+            data: [],
+            dataLabels: {
+                enabled: true,
+                rotation: -90,
+                color: '#FFFFFF',
+                align: 'right',
+                format: '$ {point.y:.1f}', // one decimal
+                y: 10, // 10 pixels down from the top
+                style: {
+                    fontSize: '13px',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }
+        }]
+    }
+    $.getJSON(MAINURL + "/finance/revanue.php", function (json) {
+        revanueoptions.series[0].data = json;
+        //this is console error hide_chart
+        //chart = new Highcharts.Chart(revanueoptions);
+    }); //Bar Chart Completed
+    var mypostoptions = { // ACtive-Expired-Executed
+        chart: {
+            height: 300,
+            renderTo: 'mypostcontainer',
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+        },
+        title: {
+            text: 'Posts',
+            style: {
+                fontWeight: 'normal',
+                fontSize: '13px'
+            }
+        },
+        tooltip: {
+            pointFormat: '<span style="color:{point.color}">{point.name}</span>:<b>{point.y:.2f}%</b> of total<br/>'
+        },
+        legend: {
+            itemStyle: {
+                color: '#777',
+                fontWeight: 'normal',
+                fontSize: '9px'
+            }
+        },
+        credits: {
+            enabled: false
+        },
+        plotOptions: {
+            pie: {
+                size: 150,
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: false
+                },
+                showInLegend: true,
+                point: {
+                    events: {
+                        click: function () {
+                            window.location.href = "/my-posts/";
+                        }
+                    }
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            innerSize: '34%',
+            name: '',
+            data: []
+        }]
+    }
+    $.getJSON(MAINURL + "/my-posts/executed.php", function (json) {
+        mypostoptions.series[0].data = json;
+        //this is console error hide_chart
+        //chart = new Highcharts.Chart(mypostoptions);
+    }); //ACtive-Expired-Executed
+    var ctoptions = { // My store pi chart
+        chart: {
+            height: 300,
+            renderTo: 'container',
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+        },
+        title: {
+            text: 'Stores',
+            style: {
+                fontWeight: 'normal',
+                fontSize: '13px'
+            }
+        },
+        tooltip: {
+            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+        },
+        legend: {
+            itemStyle: {
+                color: '#777',
+                fontWeight: 'normal',
+                fontSize: '9px'
+            }
+        },
+        credits: {
+            enabled: false
+        },
+        plotOptions: {
+            pie: {
+                size: 150,
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: false
+                },
+                showInLegend: true,
+                point: {
+                    events: {
+                        click: function () {
+                            window.location.href = "/my-store/";
+                        }
+                    }
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            data: []
+        }]
+    }
+    $.getJSON(MAINURL + "/my-store/mypost.php", function (json) {
+        ctoptions.series[0].data = json;
+        //chart = new Highcharts.Chart(ctoptions);
+    }); //My store Complete
+    var favoptions = { // My favorite Pi-chart
+        chart: {
+            height: 300,
+            renderTo: 'favoritecontainer',
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+        },
+        title: {
+            text: 'Favorite',
+            style: {
+                fontWeight: 'normal',
+                fontSize: '13px'
+            }
+        },
+        tooltip: {
+            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.0f}</b><br/>'
+        },
+        legend: {
+            itemStyle: {
+                color: '#777',
+                fontWeight: 'normal',
+                fontSize: '9px'
+            }
+        },
+        credits: {
+            enabled: false
+        },
+        plotOptions: {
+            pie: {
+                size: 150,
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: false
+                },
+                showInLegend: true,
+                point: {
+                    events: {
+                        click: function () {
+                            window.location.href = "/favorite/";
+                        }
+                    }
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: '',
+            data: []
+        }]
+    }
+    $.getJSON(MAINURL + "/favorite/favorite.php", function (json) {
+        favoptions.series[0].data = json;
+        //chart = new Highcharts.Chart(favoptions);
+    }); //My Favorite
+    $(".hidegroupconversation").on("click", function () {
+        $(this).closest(".conversationmessage").find(".conversation").addClass("hidden");
+    });
+    // ADD FREELANCE CHAT
+    $(".chattingsystem").on("click", ".addfreelanceChat", function () {
+        var btn = this;
+        var $form = $(btn).closest("form");
+        term = $form.serializeArray();
+        url = $form.attr("action");
+        $.post(url, term, function (data, status) { }).fail(function () {
+            $(btn).effect("shake");
+            //$(btn).button('reset');
+        }).done(function (data) {
+            $("#loadtxtmsg").load("loadnewconversation.php", {
+                txtSendrProId: $(btn).data("senderid")
+            }, function () {
+                //Testing Complete
+                $(".messages").scrollTop($(".messages").prop("scrollHeight"));
+            });
+            $(".chat_conversation").val("");
+        }).always(function () {
+            //$(btn).button('reset');
+        });
+    });
+    // END
+    $(".chattingsystem").on("click", ".addconversation", function () {
+        var btn = this;
+        var $form = $(btn).closest("form");
+        //alert('hi');
+        //$form.submit(function(e) {
+        //e.preventDefault();
+        //$(btn).button('loading');
+        term = $form.serializeArray();
+        url = $form.attr("action");
+        $.post(url, term, function (data, status) { }).fail(function () {
+            $(btn).effect("shake");
+            //$(btn).button('reset');
+        }).done(function (data) {
+            //alert("Done !");
+            $("#loadtxtmsg").load("loadnewconversation.php", {
+                idspGroupMessage: $(btn).data("gmesgid")
+            }, function () {
+                //Testing
+                $sub = parseInt($(btn).closest(".conversationmessage").find(".totalrlpy").text());
+                $(btn).closest(".conversationmessage").find(".totalrlpy").text($sub + 1);
+                //Testing Complete
+            });
+            //$(".loadconversation").load("dynamicconver.php" ,{idspGroupMessage:$(btn).data("gmesgid")} ,function(){});
+            $(".spGroupConversationText").val("");
+        }).always(function () {
+            //$(btn).button('reset');
+        });
+        /*});*/
+    });
+    //GROUP TIMELINE CONVERSATION AJAX
+    $("#mycomment").on("click", ".commentboxpost", function () {
+        var btn = this;
+        var $form = $(btn).closest("form");
+        term = $form.serializeArray();
+        url = $form.attr("action");
+        $.post(url, term, function (data, status) {
+            //FORM SUBMIT AND SAVE THE COMMENT
+        }).fail(function () {
+            //IF FAIL THE PROCESS
+        }).done(function (data) {
+            //IN SUCCESS FORM
+            document.getElementById("comment").value = "";
+            $('#mycomment').modal('hide');
+        }).always(function () {
+            //i dont know what is this.
+        });
+    });
+    $(".grpconversation").on("click", ".alldiscuss", function () {
+        $(".hideunhide").removeClass("hidden");
+        $(this).closest(".conversation").addClass("hidden");
+    });
+    // ===FREELANCER chat load
+    $(".freelanceconversation").on("click", ".displayconversation", function () {
+        // ===ADD LOADING START
+        $(".show_loader").css("display", "block");
+        // ===ADD LOADING END
+        var btn = this;
+        $(".displayconversation").removeClass("active");
+        var txtSendrProId = $(this).attr("data-senderprofile");
+        //update the freelancer chat
+        $.post('updatechat.php', {
+            txtSendrProId: txtSendrProId
+        }, function (d) {
+            //alert(d);
+        })
+        $.post("loadconversation.php", {
+            txtSendrProId: txtSendrProId
+        }, function (r) {
+            $('#message_box').html(r);
+            //$(btn).closest(".acptrjt").html("");
+            $(".messages").scrollTop($(".messages").prop("scrollHeight"));
+            // ===REMOVE LOADING START
+            $(".show_loader").css("display", "none");
+            // ===REMOVE LOADING END
+        });
+        $(this).addClass("active");
+    });
+    // ===END
+    $(".grpconversation").on("click", ".displayconversation", function () {
+        var btn = this;
+        var txtSendrProId = $(this).attr("data-senderprofile");
+        var txtGroupMsg = $(this).attr("data-gid");
+        $.post("loadconversation.php", {
+            txtSendrProId: txtSendrProId,
+            txtGroupMsg: txtGroupMsg,
+            pid: $(this).data("gid")
+        }, function (r) {
+            $('#message_box').html(r);
+            //$(btn).closest(".acptrjt").html("");
+        });
+        //    var btn = this;
+        //    $(".hideunhide").addClass("hidden");
+        //    $(btn).closest(".hideunhide").removeClass("hidden");
+        //    $(this).closest(".conversationmessage").find(".conversation").toggleClass("hidden");
+    });
+    $(".conversationsubject").on("click", function () {
+        $("#spGroupMessage_idspGroupMessage").val($(this).data("groupmessageid"));
+    });
+    $(".editMasterDetails").on("click", function () {
+        $("#addUpdateModalLabel").text("Update " + "" + $(this).data("masterdetails"));
+        $("#masterDetails").val($(this).data("masterdetails"));
+        $(".idmasterDetails").val($(this).data("masterdetailsid"));
+    });
+    $(".deleteMasterDetails").on("click", function () {
+        var btn = this;
+        if (confirm("Are you sure you want to Delete ?")) {
+            $.post('../deleteDetails.php', {
+                masterdetailsid: $(btn).data("masterdetailsid")
+            }, function (d) {
+                $(btn).closest(".list-group-item").remove();
+            });
+        }
+    });
+    $(".master").on("click", function () {
+        $("#addUpdateModalLabel").text("Add New");
+        $(".master_idmaster").val("");
+        $("#masterDetails").val("");
+        $(".master_idmaster").val($(this).data("masterid"));
+    });
+    //Paid Training
+    $(".paid-training").on("click", function (e) {
+        e.preventDefault()
+        if ($(".addclass").hasClass("post-grid-item")) {
+            $(".post-grid-item.priced").removeClass("hidden");
+            $(".post-grid-item.free").addClass("hidden");
+        }
+        if ($(".addclass").hasClass("post-list-item")) {
+            //$(".post-list-item").removeClass("hidden");
+            $(".post-list-item.priced").removeClass("hidden");
+            $(".post-list-item.free").addClass("hidden");
+        }
+    });
+    //Free Training
+    $(".free-training").on("click", function (e) {
+        e.preventDefault()
+        if ($(".addclass").hasClass("post-grid-item")) {
+            $(".post-grid-item.free").removeClass("hidden");
+            $(".post-grid-item.priced").addClass("hidden");
+        }
+        if ($(".addclass").hasClass("post-list-item")) {
+            //$(".post-list-item").removeClass("hidden");
+            $(".post-list-item.free").removeClass("hidden");
+            $(".post-list-item.priced").addClass("hidden");
+        }
+    });
+    //Review
+    /*$(".writereview").on("click", function(){
+     var btn = this;
+     var $form = $(btn).closest("form");
+     $form.submit(function(e) {
+     //e.preventDefault();
+     $(btn).button('loading');
+     term = $form.serializeArray();
+     url = $form.attr("action");
+     $.post(url, term, function(data, status) {
+     }).fail(function() {
+     $(btn).effect("shake");
+     $(btn).button('reset');
+     }).done(function(data) {
+     
+     $("#totalreview").text("("+data+")");
+     $("#reviewtext").val("");
+     }).always(function() {
+     $(btn).button('reset');
+     });
+     });
+ });*/
+    $(".newreview").on("click", function () {
+        $("#reviewtext").val("");
+        $("#reviewtext").text("");
+    });
+    //Rating Testing
+    $("#postrating .stars").click(function () {
+        // alert('helo');
+        $("#spPostRating").val($(this).val());
+        $.post('../post-details/rating.php', {
+            rate: $(this).val(),
+            profileid: $(".dynamic-pid").val(),
+            postid: $("#spPostings_idspPostings").val()
+        }, function (d) {
+            $("#rate").text(d);
+            $("#review").text(d + " ");
+            $("#totalrating").text(d + " ");
+        });
+        $.post('../customer_reviews/updatereviewrating.php', {
+            rate: $(this).val(),
+            profileid: $(".dynamic-pid").val(),
+            postid: $("#spPostings_idspPostings").val()
+        }, function (d) { });
+    });
+    //Rating Testing
+    $("#eventrating .stars").click(function () {
+        //alert('helo');
+        $("#spPostRating").val($(this).val());
+        $.post('../post-details/eventrating.php', {
+            rate: $(this).val(),
+            profileid: $(".dynamic-pid").val(),
+            postid: $("#spPostings_idspPostings").val()
+        }, function (d) {
+            $("#rate").text(d);
+            $("#review").text(d + " ");
+            $("#totalrating").text(d + " ");
+        });
+        $.post('../customer_reviews/updatereviewrating.php', {
+            rate: $(this).val(),
+            profileid: $(".dynamic-pid").val(),
+            postid: $("#spPostings_idspPostings").val()
+        }, function (d) { });
+    });
+    //Music Rating
+    $(".postratingMusic").on("click", function () {
+        alert('ekii');
+        var pid = $(this).attr('data-pid');
+        var postid = $(this).attr('data-postid');
+        $.post('../post-details/rating.php', {
+            rate: $(this).val(),
+            profileid: pid,
+            postid: postid
+        }, function (d) { });
+        $.post('../customer_reviews/updatereviewrating.php', {
+            rate: $(this).val(),
+            profileid: pid,
+            postid: postid
+        }, function (d) { });
+    });
+    $(".cityevent").on("click", function (e) { //My City event
+        e.preventDefault()
+        var filter = $(this).data("city");
+        if ($(".addclass").hasClass("post-grid-item")) {
+            $(".city:not(:contains(" + filter + "))").closest(".post-grid-item").addClass("hidden");
+            $(".post-grid-item:contains(" + filter + ")").removeClass("hidden");
+        }
+        if ($(".addclass").hasClass("post-list-item")) {
+            $(".city:not(:contains(" + filter + "))").closest(".post-list-item").addClass("hidden");
+            $(".post-list-item:contains(" + filter + ")").removeClass("hidden");
+        }
+    });
+    $(".navside").on("click", function () {
+        //window.history.pushState('page2', 'Title', 'http://sp.localhost/grouptimelines/?groupid=163&groupname=Business_JT_Group'+$(this).data("url"));
+        window.history.pushState('page2', 'Title', MAINURL + '/grouptimelines/?groupid=' + $("#grpid").val() + '&groupname=' + $("#grpName").val() + $(this).data("url"));
+        $(".navside").css({
+            "background-color": "#f1f1f1",
+            "color": "black"
+        });
+        $(this).css({
+            "background-color": "green",
+            "color": "white"
+        });
+        $(".addevent").addClass("hidden");
+        if ($(this).data("text") == "event") {
+            $(".addevent").removeClass("hidden");
+        }
+        if ($(this).data("text") == "members") {
+            $(".addfriend").removeClass("hidden");
+        } else $(".addfriend").addClass("hidden");
+    });
+    $(".reject").on("click", function () {
+        $(this).text("Rejected").addClass("disabled");
+        $(this).closest(".messageboard").find(".approve").addClass("disabled");
+        $.post("../grouptimelines/reject.php", {
+            messageid: $(this).data("messageid")
+        }, function (r) { });
+    });
+    $(".approve").on("click", function () {
+        $(this).text("Approved").addClass("disabled");
+        $(this).closest(".messageboard").find(".reject").addClass("disabled");
+        $.post("../grouptimelines/approve.php", {
+            messageid: $(this).data("messageid")
+        }, function (r) { });
+    });
+    $(".navside").on("click", function () {
+        $(".collapse").collapse('hide');
+    });
+    $(".dashboard").on("click", function () {
+        $("#dashboardMenu").html($(this).text() + " <span class='caret'></span>");
+        $.get("/authentication/updateprofile.php", {
+            dashboardtext: $(this).text(),
+            pid: $(".dynamic-pid").val(),
+            myprofile: $("#myprofile").text()
+        }, function (r) { });
+    });
+    $(".post-share").on("click", function () {
+        $.get("/authentication/updateprofile.php", {
+            store: "Public Store",
+            pid: $(this).data("profileid"),
+            myprofile: $("#myprofile").text()
+        }, function (r) { });
+    });
+    //Group Filter
+    /*$(".groupsearch").on("click", function(e){
+     
+     e.preventDefault();
+     $("#groupMenu").html($(this).data("gname") + " <span class='caret'></span>");
+     $(".groupsearch").removeClass("active");
+     $(this).addClass("active");
+     var filter = $(this).data("gname");
+     if($(".addclass").hasClass("post-grid-item")){
+     $(".groupname:not(:contains(" + filter +"))").closest(".post-grid-item").addClass("hidden");
+     $(".post-grid-item:contains(" + filter + ")").removeClass("hidden");
+     }
+     
+     if($(".addclass").hasClass("post-list-item")){
+     $(".groupname:not(:contains(" + filter +"))").closest(".post-list-item").addClass("hidden");
+     $(".post-list-item:contains(" + filter + ")").removeClass("hidden");
+     }
+     $(".searchcategory:first-child").trigger("click");
+ });*/
+    $(".stores").on("click", function (e) {
+        $.get("/authentication/updateprofile.php", {
+            store: $(this).text(),
+            pid: $(this).data("profileid"),
+            myprofile: $("#myprofile").text()
+        }, function (r) { });
+    });
+    $("#all").on("click", function () {
+        $("#all").addClass("active");
+        $(".searchcategory").removeClass("active");
+    });
+    $("#lockcode").on("click", function () {
+        $.post("codecheck.php", {
+            code: $("#code").val()
+        }, function (r) {
+            alert(r);
+            if (r.indexOf("access") >= 0) {
+                $(".lock").removeClass("hidden");
+                $(".locker").addClass("hidden");
+            }
+        });
+    });
+    $("#browsefreelancer").on("click", function () {
+        $(".social").load("/publicpost/browsefreelancer.php", function () { });
+    });
+    $(".jobapply").on("click", function () {
+        var btn = this;
+        $.post(MAINURL + "/my-activity/jobapply.php", {
+            postid: $(this).data("postid"),
+            categoryid: $(this).data("categoryid"),
+            activitydate: $(this).data("activitydate"),
+            closingdate: $(this).data("closingdate"),
+            resumeid: $(this).data("resumeid"),
+            coverletter: $("#letter").val()
+        }, function (r) {
+            if (r.trim() == '') {
+                $("#applybtn").addClass("disabled").text("Applied");
+                $("#applybtn").removeAttr("data-target");
+            }
+            window.location.reload();
+        });
+    });
+    $(".dashboard-container").on("click", ".freelancers", function () {
+        var btn = this;
+        $.post("/my-activity/addfreelancer.php", {
+            profileid: $(this).data("freelancerid")
+        }, function (r) {
+            //alert(r);
+            $(btn).removeClass("freelancers").addClass("deletefreelancer");
+            $(btn).html("<span class='glyphicon glyphicon-heart'></span> Remove");
+        });
+    });
+    $(".dashboard-container").on("click", ".deletefreelancer", function () {
+        var btn = this;
+        $.post("/my-activity/removefreelancer.php", {
+            profileid: $(this).data("freelancerid"),
+            groupid: $(this).data("groupid")
+        }, function (r) {
+            $(btn).removeClass("deletefreelancer").addClass("freelancers");
+            $(btn).html("<span class='glyphicon glyphicon-heart'></span> Add to Favourite");
+        });
+    });
+    $(".dashboard-container").on("click", ".deletefav", function () {
+        var btn = this;
+        $.post("/my-activity/removefreelancer.php", {
+            profileid: $(this).data("freelancerid"),
+            groupid: $(this).data("groupid")
+        }, function (r) {
+            //$(btn).closest(".mfreelancer").find(".deletefreelancer").html("<span class='glyphicon glyphicon-heart'></span> Add to Favourite");
+            //$(btn).closest(".mfreelancer").find(".deletefreelancer").removeClass("deletefreelancer").addClass("freelancers");
+            $(btn).closest(".mfreelancer").remove();
+        });
+    });
+    $(".dashboard-container").on("click", ".acceptbid", function () {
+        if (confirm("Are you sure you want to accept this Bid?")) {
+            var btn = this;
+            $(btn).closest(".bidproject").fadeOut();
+            $.post("/my-activity/acceptedbid.php", {
+                postid: $(this).data("postid"),
+                profileid: $(this).data("profileid")
+            }, function (r) { }).fail(function (e) {
+                $(btn).closest(".bidproject").fadeIn();
+            });
+        }
+    });
+    $(".dashboard-container").on("click", ".rejectbid", function () {
+        var btn = this;
+        if (confirm("Are you sure you want to reject this bid?")) {
+            $(btn).closest(".bidproject").fadeOut();
+            $.post('../freelancer/rejectedbid.php', {
+                postid: $(this).data("postid"),
+                profileid: $(this).data("profileid")
+            }, function (d) { }).fail(function (e) {
+                $(btn).closest(".bidproject").fadeIn();
+            });
+        }
+    });
+    //place auction
+    $(".placebidAuction").on("click", function () {
+        var lastBid = document.getElementById("lastBid").value;
+        var currentBid = document.getElementById("AuctionPrice").value;
+        var logo = MAINURL + "/assets/images/logo/tsplogo.PNG";
+        var postid = $("#spPostings_idspPostings").val();
+        var profileid = $("#spProfiles_idspProfiles").val();
+        if (currentBid == "") {
+            swal({
+                title: 'Please Enter Your Bid.',
+                imageUrl: logo
+            });
+        } else if (parseInt(lastBid) >= parseInt(currentBid)) {
+            swal({
+                title: 'Please Enter Your Bid Greater Then Bid Price $' + lastBid,
+                imageUrl: logo
+            });
+        } else {
+            $.ajax({
+                type: 'POST',
+                url: '../store/auction-bid/checkbid.php',
+                data: {
+                    'spPostings_idspPostings': postid,
+                    'currentBid': currentBid,
+                    'spProfiles_idspProfiles': profileid,
+                    'lastBid': lastBid
+                },
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    var maximumamount = parseInt(obj.auctionPrice);
+                    var cur_bid = parseInt(currentBid);
+                    console.log(maximumamount);
+                    console.log(cur_bid);
+                    if (cur_bid > maximumamount) {
+                        $.post("../store/auction-bid/addactivity.php", {
+                            spPostings_idspPostings: postid,
+                            spProfiles_idspProfiles: profileid,
+                            auctionPrice: cur_bid,
+                            lastBid: maximumamount
+                        }, function (r) {
+                            //alert(r);
+                        });
+                        swal("Your Bid Add Successfully", "", "success");
+                        setInterval(function () {
+                            location.reload();
+                        }, 3000);
+                    } else {
+                        swal({
+                            title: 'Please Enter Your Bid Greater Then Bid Price $' + maximumamount,
+                            imageUrl: logo
+                        });
+                        setInterval(function () {
+                            location.reload();
+                        }, 3000);
+                    }
+                }
+            });
+        }
+    });
+    //place bid on freelancer
+    $(".placebid").on("click", function () {
+        var btn = this;
+        /*$.post('../freelancer/placebid.php',{postid:$(btn).data("postid"),profileid:$(btn).data("profileid"), enddate:$(btn).data("closingdate"),categoryid:$(btn).data("catid")},function(d){
+         })*/ //enddate:$(btn).data("closingdate"),
+        $.post('../freelancer/placebid.php', {
+            postid: $("#bidpost").val(),
+            profileid: $(".dynamic-pid").val(),
+            enddate: $(".closingdate").val(),
+            categoryid: $(".freelancercat").val()
+        }, function (d) {
+            //alert(d);
+        })
+        $(".activity").each(function (i, e) {
+            $.post("../my-activity/addactivity.php", {
+                spPostFieldName: $(e).attr("name"),
+                spPostFieldValue: $(e).val(),
+                spPostings_idspPostings: $("#bidpost").val(),
+                spCategories_idspCategory: $(".freelancercat").val(),
+                spPostFieldIsFilter: $(e).data("filter"),
+                spProfiles_idspProfiles: $(".dynamic-pid").val(),
+                spPostFieldBidFlag: $("#spPostFieldBidFlag").val()
+            }, function (r) {
+                //alert(r);
+            });
+        });
+        $("#bid-system").modal("hide");
+        //location.reload(true);
+    });
+    $(".bidbutton").on("click", function () {
+        $(".bidcount").removeClass("totalbid");
+        $(this).closest(".bidsys").find(".bidcount").addClass("totalbid");
+        $("#bidPrice").val("");
+        $("#totalDays").val("");
+        $("#initialPercentage").val("");
+        $("#comment").val("");
+        $("#bidpost").val($(this).data("postid"));
+        $(".freelancercat").val($(this).data("catid"));
+        $("#closingdate").val($(this).data("closingdate"));
+    });
+    $("#checkout").on("click", function () {
+        var btn = this;
+        $(".sp-order").each(function (i, e) {
+            if ($(e).data("remainingquant") == 0) {
+                debugger;
+                $.post("/cart/checkout.php", {
+                    postid: $(e).data("postid"),
+                    profileid: $(e).data("profileid")
+                }, function (r) {
+                    alert("Transaction Successfully done !");
+                });
+                debugger;
+            }
+            //Transaction done code
+            /*$.post("/cart/transaciondone.php", {orderid: $(e).data("oid"), profileid: $("#checkout").data("buyerid"),quantity:$(e).data("quantity"),subtotal:$(e).data("subtotal")},function(r){
+             //alert(r);
+             $.get("../authentication/cartcountupdate.php",{cartcount:0},function(d){
+             })
+             $("#cartbadge").text(0);
+             $("#cartbody").html("");
+             });
+             */
+            if ($(e).data("categoryid") == 9 || $(e).data("categoryid") == 15) { //Update event upcomming event in spPost_has_spProfile table
+                $.post('../events/eventregister.php', {
+                    postid: $(e).data("postid"),
+                    profileid: $(e).data("profileid"),
+                    startdate: $(e).data("startdate"),
+                    enddate: $(e).data("enddate"),
+                    categoryid: $(e).data("categoryid")
+                }, function (d) {
+                    //alert(d);
+                });
+            }
+        });
+        if (($btn).data("categoryid") == 15) //my deadline
+            $.post('../coupons/buycoupons.php', {
+                postid: $(btn).data("postid"),
+                profileid: $(btn).data("buyerid"),
+                enddate: $(btn).data("expirydate"),
+                categoryid: $(btn).data("categoryid")
+            }, function (d) {
+                alert(d);
+            })
+    });
+    $(".message").height($(window).height() - 350);
+    $('.searchtimelines').hover(function (e) {
+        $("#aboutprofile").load("../publicpost/aboutprofile.php", {
+            profileid: $(this).data("profileid")
+        }, function (response) { });
+        var moveLeft = -100;
+        var moveDown = -200;
+        $('.pop-up').show();
+        $(".pop-up").css({
+            'top': e.pageY + moveDown
+        })
+        $(".pop-up").css({
+            'left': e.pageX + moveLeft
+        })
+    }, function () {
+        $('.pop-up').hide();
+    });
+    /*$(".membershipbuy").on("click", function(){
+     $.post("/membership/addmembership.php", {membershipid: $(this).data("membershipid"),duration:$(this).data("duration"),profileid:$("#spProfiles_idspProfiles").val()},function(r){
+     //alert(r);
+     });
+ });*/
+    $("#groupmessage").one("click", function () {
+        var btn = this;
+        var $form = $(btn).closest("form");
+        $form.submit(function (e) {
+            e.preventDefault();
+            $(btn).button('loading');
+            term = $form.serializeArray();
+            url = $form.attr("action");
+            $.post(url, term, function (data, status) { }).fail(function () {
+                $(btn).effect("shake");
+                $(btn).button('reset');
+            }).done(function (data) {
+                $("#message-text").val("");
+            }).always(function () {
+                $(btn).button('reset');
+            });
+        });
+    });
+    $("#fixedPrice").on("click", function () {
+        $(".cost").html("<div class='input-group'><span class='input-group-addon'>$</span><input type='text'id='spquotationcost' class='form-control' style='width:5cm;' name='spQuotationPrice'></div>");
+        $("#fixedPrice").val(1);
+        $("#peritem").val("");
+    });
+    $("#peritem").on("click", function () {
+        $(".cost").html("<div class='input-group' style='width:5cm;'><span class='input-group-addon'>$</span><input type='text' id='spquotationcost' class='form-control' style='width:5cm;' name='spQuotationPrice'><span class='input-group-addon'>/item</span></div>");
+        //$("#spfixedPrice_").val(0);
+        $("#peritem").val(0);
+        $("#fixedPrice").val("");
+    });
+    $(".acceptquote").on("click", function () {
+        if (confirm("Are you sure you want to accept this quote?")) {
+            var btn = this;
+            $(btn).closest(".quote").fadeOut();
+            $.post("../RFQ/accepted.php", {
+                buyeremail: $(this).data("buyeremail"),
+                selleremail: $(this).data("selleremailid"),
+                quotationid: $(this).data("quoteid"),
+                sellername: $(this).data("sellername"),
+                buyername: $(this).data("buyername"),
+                buyerphone: $(this).data("buyerphone")
+            }, function (r) {
+                //$(btn).closest(".hrline").addClass("hidden");
+            }).fail(function (e) {
+                $(btn).closest(".quote").fadeIn();
+            });
+        }
+    });
+    $(".rejectedquote").on("click", function () {
+        if (confirm("Are you sure you want to add in the Archieved?")) {
+            var btn = this;
+            $(btn).closest(".quote").fadeOut();
+            $.post("../RFQ/rejected.php", {
+                buyeremail: $(this).data("buyeremail"),
+                selleremail: $(this).data("selleremailid"),
+                quotationid: $(this).data("quoteid"),
+                sellername: $(this).data("sellername"),
+                buyername: $(this).data("buyername"),
+                buyerphone: $(this).data("buyerphone")
+            }, function (r) { }).fail(function (e) {
+                $(btn).closest(".quote").fadeIn();
+            });
+        }
+    });
+    $(".deletequote").on("click", function () {
+        if (confirm("Are you sure you want to delete?")) {
+            var btn = this;
+            $(btn).closest(".quote").fadeOut();
+            $.post("../RFQ/deletequote.php", {
+                buyeremail: $(this).data("buyeremail"),
+                selleremail: $(this).data("selleremailid"),
+                quotationid: $(this).data("quoteid"),
+                sellername: $(this).data("sellername"),
+                buyername: $(this).data("buyername"),
+                buyerphone: $(this).data("buyerphone")
+            }, function (r) { }).fail(function (e) {
+                $(btn).closest(".quote").fadeIn();
+            });
+        }
+    });
+    $(".addindraft").on("click", function () {
+        var btn = this;
+        $(btn).closest(".quote").fadeOut();
+        $.post("../RFQ/adddraft.php", {
+            buyeremail: $(this).data("buyeremail"),
+            selleremail: $(this).data("selleremailid"),
+            quotationid: $(this).data("quoteid"),
+            sellername: $(this).data("sellername"),
+            buyername: $(this).data("buyername"),
+            buyerphone: $(this).data("buyerphone")
+        }, function (r) { }).fail(function (e) {
+            $(btn).closest(".quote").fadeIn();
+        });
+    });
+    $(".my-group-dd").on("click", function () {
+        $(".spCategories_idspCategory").val($(this).data("categoryid"));
+        $("#spPostSubmit").attr("data-visibility", $(this).data("gid"));
+        $("#grouptext").text($(this).text());
+        $("#spProfiles_idspProfiles").val($(this).data("profileid"));
+        $("#spPostingVisibility").val($(this).data("gid"));
+        $.get("/authentication/updateprofile.php", {
+            gid: $(this).data("gid"),
+            groupname: $(this).text(),
+            pid: $(this).data("profileid"),
+            myprofile: $("#myprofile").text()
+        }, function (r) { });
+    });
+    $(".profiledd").on("click", function () {
+        $(".postpid").val($(this).data("pid"));
+        $("#profiles").html(" <span class='" + $(this).data("profileicon") + "'></span>" + $(this).text() + " <span class='caret'></span>");
+        $("#spProfiles_idspProfiles").val($(this).data("pid"));
+        $(".profilepicture").load("../../my-profile/profilepicture.php", {
+            profileid: $(this).data("pid")
+        }, function (r) {
+            $("#spPostingCountry").val($("#profilecountry").val());
+            $("#spPostingCity").val($("#profilecity").val());
+            // alert(r);
+        });
+    });
+    $("#changepassword").one("click", function () {
+        var btn = this;
+        var $form = $(btn).closest("form");
+        $form.submit(function (e) {
+            e.preventDefault();
+            $(btn).button('loading');
+            term = $form.serializeArray();
+            url = $form.attr("action");
+            var old_pass = $("#oldpassword").val();
+            var new_pass = $("#newpassword").val();
+            var cnf_pass = $("#typenewpassword").val();
+            if (old_pass != "") {
+                if (new_pass != "") {
+                    if (cnf_pass != '') {
+                        if (new_pass == cnf_pass) {
+                            $.post(url, term, function (data, status) { }).fail(function () {
+                                $(btn).effect("shake");
+                                $(btn).button('reset');
+                            }).done(function (data) {
+                                //alert(data);
+                                notify_msg(data);
+                                $("#oldpassword").val("");
+                                $("#newpassword").val("");
+                                $("#typenewpassword").val("");
+                                $("#chagePassword").modal('hide');
+                            }).always(function () {
+                                $(btn).button('reset');
+                            });
+                        } else {
+							//alert('==');
+							$("#cnpass").text("New password does not match");
+                           
+                        }
+                    } else {
+						$("#cnpass").text("Please type confirm new password");
+                        
+                    }
+                } else {
+					$("#npass").text("Please type new password");
+                    
+                }
+            } else {
+			 $("#oldpwd").text("Please type old password");
+               
+            }
+            $(btn).button('reset');
+        });
+    });
+    $("#change_store_name").on("click", function () {
+        var btn = this;
+        var $form = $(btn).closest("form");
+        $form.submit(function (e) {
+            e.preventDefault();
+            $(btn).button('loading');
+            term = $form.serializeArray();
+            url = $form.attr("action");
+            $.post(url, term, function (data, status) { }).fail(function () {
+                $(btn).effect("shake");
+                $(btn).button('reset');
+            }).done(function (data) {
+                //alert(data);
+                notify_msg(data);
+                $("#change_store_name").modal('hide');
+                location.reload();
+            }).always(function () {
+                $(btn).button('reset');
+            });
+            $(btn).button('reset');
+        });
+    });
+    $("#all").on("click", function (r) {
+        if ($(".addclass").hasClass("post-grid-item")) $(".post-grid-item").removeClass("hidden");
+        else $(".post-list-item").removeClass("hidden");
+        $(".sub-filters").addClass("hidden");
+        $("#current_search").addClass("hidden");
+    });
+    $(".sp-profile-det").on("click", "#makedefaultprofile", function (e) {
+        var btn = this;
+        $.post(MAINURL + "/my-profile/makeprofiledefault.php", {
+            profileid: $(this).data("profileid")
+        }, function (r) {
+            $(".default").addClass("hidden");
+            $("#pfadmin-pid" + $("#idspProfiles_").val()).html("<span style='font-weight: bold;'>" + $("#spProfileName_").val() + "</span><span style='font-weight: lighter; color:#330099;'>(Default/" + $(btn).data("profiletype") + ")</span>");
+            //alert("Done!");
+            location.reload();
+            //<span style='margin-left:1cm;' class='fa fa-user-secret'>
+        });
+    });
+    $(".sp-profile-det").on("click", "#makefreelancer_defaultprofile", function (e) {
+        var btn = this;
+        $.post(MAINURL + "/my-profile/makeprofiledefault.php", {
+            profileid: $(this).data("profileid")
+        }, function (r) {
+            $(".default").addClass("hidden");
+            $("#pfadmin-pid" + $("#idspProfiles_").val()).html("<span style='font-weight: bold;'>" + $("#spProfileName_").val() + "</span><span style='font-weight: lighter; color:#330099;'>(Default/" + $(btn).data("profiletype") + ")</span>");
+            //alert("Done!");
+            location.reload();
+            //<span style='margin-left:1cm;' class='fa fa-user-secret'>
+        });
+    });
+    // THIS IS DROPDOWN BOX CHANGE PROFILE
+    $(".headProfile").on("click", function () {
+        var btn = this;
+        $.post(MAINURL + "/my-profile/makeprofiledefault.php", {
+            profileid: $(this).data("profileid")
+        }, function (r) {
+            $(".default").addClass("hidden");
+            $("#pfadmin-pid" + $("#idspProfiles_").val()).html("<span style='font-weight: bold;'>" + $("#spProfileName_").val() + "</span><span style='font-weight: lighter; color:#330099;'>(Default/" + $(btn).data("profiletype") + ")</span>");
+            //alert("Done!");
+            location.reload();
+        });
+    });
+    $(".searchcategory").on("click", function (e) {
+        $(".saveddraftpost").addClass("hidden");
+        $(".myallpostinfo").removeClass("hidden");
+        $("#mydrftflder").removeClass("active");
+        e.preventDefault();
+        var b = this;
+        if ($(b).attr("data-action") == "default") {
+            if (!$(".dashboard-container").hasClass("category-loaded")) {
+                $(".dashboard-container").html("<div class='loader'></div>");
+                $(".dashboard-container").load("categorydashboard.php", {
+                    categoryID: $(b).data("categoryid")
+                }, function (r) {
+                    $("#all").removeClass("active");
+                    var filter = $(b).data("categoryname");
+                    if ($(".addclass").hasClass("post-grid-item")) {
+                        $(".categoryname:not(:contains(" + filter + "))").closest(".post-grid-item").addClass("hidden");
+                        $(".post-grid-item:contains(" + filter + ")").removeClass("hidden");
+                    }
+                    //Searching from list Item
+                    if ($(".addclass").hasClass("post-list-item")) {
+                        $(".categoryname:not(:contains(" + filter + "))").closest(".post-list-item").addClass("hidden");
+                        $(".post-list-item:contains(" + filter + ")").removeClass("hidden");
+                    }
+                    //Testing Complete
+                    $.get("../Filter/updatecategoryid.php", {
+                        categoryID: $(b).data("categoryid"),
+                        external: 1
+                    }, function (r) {
+                        $(".sub-filters").remove();
+                        $("#searched").append(r);
+                    });
+                });
+                $(".dashboard-container").addClass("category-loaded");
+            }
+            /*else
+             {  
+             $("#all").removeClass("active");
+             var filter = $(b).data("categoryname");
+             if($(".addclass").hasClass("post-grid-item")){
+             $(".categoryname:not(:contains(" + filter +"))").closest(".post-grid-item").addClass("hidden");
+             $(".post-grid-item:contains(" + filter + ")").removeClass("hidden");
+             }
+             //Searching from list Item
+             if($(".addclass").hasClass("post-list-item")){
+             $(".categoryname:not(:contains(" + filter +"))").closest(".post-list-item").addClass("hidden");
+             $(".post-list-item:contains(" + filter + ")").removeClass("hidden");
+             }
+             //Testing Complete
+             
+             $.get("../Filter/updatecategoryid.php", {categoryID:$(b).data("categoryid"), external: 1},function(r){
+             $(".sub-filters").remove();
+             $("#searched").append(r);
+             });
+         }*/
+        } else {
+            $(".dashboard-container").html("<div class='loader'></div>");
+            $(".dashboard-container").load($(b).attr("data-action"), {
+                categoryID: $(b).data("categoryid")
+            }, function (r) {
+                $(".dashboard-container").removeClass("category-loaded");
+            });
+        }
+        $(".searchcategory").removeClass("active");
+        $(b).addClass("active");
+        //Testing
+        $("#all").removeClass("active");
+        var filter = $(b).data("categoryname");
+        if ($(".addclass").hasClass("post-grid-item")) {
+            $(".categoryname:not(:contains(" + filter + "))").closest(".post-grid-item").addClass("hidden");
+            $(".post-grid-item:contains(" + filter + ")").removeClass("hidden");
+        }
+        //Searching from list Item
+        if ($(".addclass").hasClass("post-list-item")) {
+            $(".categoryname:not(:contains(" + filter + "))").closest(".post-list-item").addClass("hidden");
+            $(".post-list-item:contains(" + filter + ")").removeClass("hidden");
+        }
+        //Testing Complete
+        $.get("../Filter/updatecategoryid.php", {
+            categoryID: $(b).data("categoryid"),
+            external: 1
+        }, function (r) {
+            $(".sub-filters").remove();
+            $("#searched").append(r);
+        });
+    });
+    $(".bidbutton").on("click", function () {
+        $("#projecttitle").text($(this).data("catname"));
+    });
+    $("#timeline-container").on("keypress", ".enterkey", function (e) {
+        var keyCode = e.keyCode || e.which;
+        if (keyCode === 13) {
+            e.preventDefault();
+            var postid = $(this).attr("data-id");
+            /*alert(postid);*/
+            var flag = 0;
+            if ($(this).val() != "") {
+                var strArr = new Array();
+                strArr = $(this).val().split("");
+                if (strArr[0] == " ") // this is the the key part. you can do whatever you want here!
+                {
+                    flag = 1;
+                }
+            }
+            //alert($(this).val().trim());
+            if ($(this).val() == "") {
+                //notification message from send box
+                var logo = MAINURL + "/assets/images/logo/tsplogo.PNG";
+                /*swal({
+                         title: "Please Enter Comment.",
+                         imageUrl: logo
+                     });*/
+                //Message after form submited
+            } else if (flag == 1) {
+                var logo = MAINURL + "/assets/images/logo/tsplogo.PNG";
+                // swal({
+                //          title: "Space not allowed in Comment.",
+                /*text: "Here's a custom image.",*/
+                //          imageUrl: logo
+                //      });
+            } else {
+                var form_data = new FormData($(this).closest('form')[0]);
+                var x = $("#comntform").serializeArray();
+                console.log(x);
+                $.each(x, function (i, field) {
+                    console.log(i);
+                });
+                $.ajax({
+                    url: "../publicpost/addcomment.php",
+                    type: "POST",
+                    data: form_data,
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    success: function (vi) {
+                        /*alert(vi);*/
+                        var obj = JSON.parse(vi);
+                        $('#timelinecmnt_' + postid).remove();
+                        $("#comments_" + postid).html(obj.comment);
+                        var logo = MAINURL + "/assets/images/logo/tsplogo.PNG";
+                        /*
+                     swal({
+                              title: "Comment Added successfully.",
+                              imageUrl: logo
+                          }); */
+                        $(".enterkey").val("");
+                        $('#comntform').each(function () {
+                            this.reset();
+                        });
+                    },
+                    error: function (error) { }
+                });
+                /*$("#comntform").submit();*/
+                /*var box = $(this);
+        var $form = $(this).closest("form");
+        $form.submit(function (e) {
+          
+          term = $form.serializeArray();
+          //url = $form.attr("action");
+
+                    url = MAINURL+"publicpost/addcomment.php";
+          $.post(url, term, function (data, status)
+          {
+            $(".timlinecmnt").load("../publicpost/loadcomment.php", {idspPostings: $("#timlinepost").val()}, function (r) {});
+
+
+                          alert("here");
+            //$(box).closest(".timlinecmnt").find(".cmnt").load("../publicpost/loadcomment.php" , {idspPostings:$("#timlinepost").val()},function(){});
+            //location.reload();
+
+            //box.closest(".timelines").find(".timlinecmnt").append(box.val());
+            box.val("");
+          })
+      });*/
+                event.stopPropagation();
+            }
+        }
+        //location.reload();
+    });
+    // ON POPUP COMMENT 
+    $("#popcoment").submit(function (e) {
+        e.preventDefault();
+        var comment = $("#comment").val();
+        if (comment.trim() == "") {
+            $(".showerrorcoment").html("Please entery any content here!");
+        } else {
+            $(".showerrorcoment").html("");
+            $("#popcoment").unbind();
+            $("#popcoment").submit();
+        }
+    });
+    //ON VIEW MORE COMMENT TIMELINE
+    $('#timeline-container').on('click', ".morecomment", function (e) {
+        $("#postcomment").val($(this).data("postid"));
+        $("#commentUploading").load("../social/comment.php", {
+            postid: $(this).data("postid")
+        }, function (r) {
+            //alert(r);
+        });
+        $("#profilepictures").load("../social/profilepic.php", {
+            profileid: $(".dynamic-pid").val()
+        }, function (r) {
+            // alert(r);
+        });
+    });
+    //ON VIEW MORE COMMENT TIMELINE END
+    //SEND EMAIL ON CLICK MULTIPLE START TIMELINE
+    $('#timeline-container').on('click', ".sendMulTimeline", function (e) {
+        var postid = $(this).attr("data-postid");
+        document.getElementById("txtPostId").value = postid;
+    });
+    $("#myTimeLinePostEmail").on("click", ".btnSendMultiEmail", function () {
+        var btn = this;
+        var $form = $(btn).closest("form");
+        term = $form.serializeArray();
+        url = $form.attr("action");
+        $.post(url, term, function (data, status) { }).fail(function () {
+            //IF FAIL THE PROCESS
+        }).done(function (data) {
+            //IN SUCCESS FORM
+            //alert(data);
+            document.getElementById("txtMulTimeEmail").value = "";
+        }).always(function () {
+            //i dont know what is this.
+        });
+    });
+    //SEND EMAIL ON CLICK MULTIPLE END TIMELINE
+    //==========on change art category
+    $(".artCategory").on("change", function () {
+        //alert(this.value);
+        var category = this.value;
+        //alert(category);
+        $.post("loadMedium.php", {
+            category: category
+        }, function (r) {
+            //alert(r);
+            $(".loadMedium").html(r);
+        });
+    });
+    //==========on change art category
+    /*$("#imgInp").on("change", function(){
+     readURL(this);
+ });*/
+    $(".sp-profile-det").on("change", "#imgInp", function () {
+        $(".firstimg").html('<img id="profilepic" data-media="" src="" alt="Profile Pic" class="img-responsive" style="width: 64px; height: 64px;" >');
+        readURLimg(this);
+        $("#profilepic").attr("data-media", "0");
+    });
+
+    function readURLimg(input) {
+        //alert(input);
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#profilepic').attr('src', e.target.result);
+                $('.grpbannerpic').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    //grid to list 
+    $(".lst").on("click", function (e) {
+        $(".addclass").removeClass("post-grid-item").addClass("post-list-item");
+        $(".grd").removeClass("active");
+        $(".lst").addClass("active");
+    });
+    $(".grd").on("click", function (e) {
+        $(".addclass").removeClass("post-list-item").addClass("post-grid-item");
+        $(".lst").removeClass("active");
+        $(".grd").addClass("active");
+    });
+    $("#searched").on("click", ".filter-dd", function (e) {
+        e.preventDefault();
+        var filter = $(this).data("fieldvalue");
+        //filter in the grid system
+        if ($(".addclass").hasClass("post-grid-item")) {
+            $(".searchingval:not(:contains(" + filter + "))").closest(".post-grid-item").addClass("hidden");
+            $("#current_search").append("<div class='btn-group active-filters' role='group' aria-label='...'><button type='button' class='btn btn-primary btn-sm '>" + $(this).data("lebal") + "</button><button type='button' class='btn btn-success btn-sm searched_element'>" + $(this).text() + "</button><button type='button' data-fieldvalue=" + $(this).data("fieldvalue") + " id='closebutton' class='btn btn-default btn-sm'>X</button></div>");
+        }
+        //Complete
+        //Search in the List Item 
+        if ($(".addclass").hasClass("post-list-item")) {
+            $(".searchingval:not(:contains(" + filter + "))").closest(".post-list-item").addClass("hidden");
+            $("#current_search").append("<div class='btn-group active-filters' role='group' aria-label='...'><button type='button' class='btn btn-primary btn-sm '>" + $(this).data("lebal") + "</button><button type='button' class='btn btn-success btn-sm searched_element'>" + $(this).text() + "</button><button type='button' data-fieldvalue=" + $(this).data("fieldvalue") + " id='closebutton' class='btn btn-default btn-sm'>X</button></div>");
+            //Complete
+        }
+    });
+    $("#current_search").on("click", "#closebutton", function () {
+        $("button[data-fieldvalue='" + $(this).data("fieldvalue") + "']").parent().remove();
+        // $(".post-grid-item").addClass("hidden");
+        if ($(".searched_element").length == 0) {
+            if ($(".addclass").hasClass("post-grid-item")) $(".post-grid-item").removeClass("hidden");
+            else $(".post-list-item").removeClass("hidden");
+            $(".searchcategory.active").trigger("click");
+        } else {
+            var filter = $(".searchcategory.active").data("categoryname");
+            $(".categoryname:contains(" + filter + ")").closest(".post-grid-item").addClass("hidden");
+            $("#current_search").find(".searched_element").each(function (i, e) {
+                if ($(".addclass").hasClass("post-grid-item")) {
+                    $(".categoryname:contains(" + filter + ")").closest(".post-grid-item").find(".searchingval:contains(" + $(e).text() + ")").closest(".post-grid-item").removeClass("hidden");
+                }
+                //For the List Item
+                if ($(".addclass").hasClass("post-list-item")) {
+                    $(".searchingval:contains(" + $(e).text() + ")").closest(".post-list-item").removeClass("hidden");
+                }
+                //Complete
+            });
+        }
+    });
+    $(".replay").on("click", function () {
+        $(".replay").removeClass("clicked");
+        $(this).addClass("clicked");
+        $("#messageid").val($(this).data("messageid"));
+        $("#senderdet").load("/enquiry/senderdet.php", {
+            mid: $(this).data("messageid")
+        }, function () { });
+    });
+    //heder coding
+    $('#conversatation').on('show.bs.modal', function (e) {
+        $.post("../enquiry/message.php", {
+            mid: $("#spMessaging_idspMessage").val()
+        }, function (r) {
+            $("#buyerEnquiry").text(r);
+        });
+    });
+    //header complete
+    $(".conv-enquire").on("click", function () {
+        $("#spMessaging_idspMessage").val($(this).data("messageid"));
+    });
+    $('#enquire').on('click', function (event) {
+        $("#message-text").val("");
+        /*$.post("../enquiry/messagetrnasfer.php", {mid: $("#spMessaging_idspMessage").val()}, function(r){
+         $("#buyerEnquiry").text(r);
+     });*/
+    });
+    //===STORE POST FAVOURITE START
+    $(".social").on("click", ".addtofavourite", function () {
+        //alert();
+        var postid = $(this).data('postid');
+        //alert(postid);
+        var pid = $(this).data('pid');
+        // alert(pid);
+        $.post("../social/addfavorites.php", {
+            'postid': postid,
+            'pid': pid
+        }, function (response) {
+            //alert();
+            //$("#addtofavouriteeve").html("<i class='fa fa-heart' aria-hidden='true'></span>");
+        });
+        $(".showfav").html('<a href="javascript:void(0)"  data-postid="' + postid + '" data-pid="' + pid + '" class="remtofavorites"><i class="fa fa-heart"></i> Unfavourite</a>');
+        var title = '<strong>Product added in favourite</strong>';
+        var icon = 'fa fa-heart';
+        showNofification(title, icon);
+        //window.location.reload();
+    });
+    //===END
+    //===STORE POST REMOVE FAVOURITE START
+    $(".social").on("click", ".remtofavorites", function () {
+        var postid = $(this).data('postid');
+        // alert(postid);
+        var pid = $(this).data('pid');
+        //  alert(pid);
+        $.post("../social/deletefavorites.php", {
+            'postid': postid,
+            'pid': pid
+        }, function (response) { });
+        $(".showfav").html('<a href="javascript:void(0)" data-postid="' + $(this).data("postid") + '" class="addtofavourite"><i class="fa fa-heart-o"></i> Favourite</a>');
+        //show notification on the page
+        var title = '<strong>Product removed from favourite</strong>';
+        var icon = 'fa fa-heart-o';
+        showNofification(title, icon);
+    });
+    //===END
+    $(".social").on("click", ".wholeselladdtofavourite", function () {
+        //alert();
+        var postid = $(this).data('postid');
+        var pid = $(this).data('pid');
+        /* alert(postid);
+
+
+        alert(pid);*/
+        $.post("../social/addfavorites.php", {
+            'postid': postid,
+            'pid': pid
+        }, function (response) {
+            //alert();
+            //$("#addtofavouriteeve").html("<i class='fa fa-heart' aria-hidden='true'></span>");
+        });
+        $(".showfav").html('<div class="wstore_P_m showfav_" style="margin: -27px 0px 0px 0px!important;"><a href="javascript:void(0)"  data-postid="' + postid + '" data-pid="' + pid + '" class="btn btn-default wholesellremtofavorites"  style="margin-left: 615px; margin-top: -10px;" ><i class="fa fa-heart"></i></a></div>');
+        var title = '<strong>Product added in favourite</strong>';
+        var icon = 'fa fa-heart';
+        showNofification(title, icon);
+        //window.location.reload();
+    });
+    $(".social").on("click", ".wholesellremtofavorites", function () {
+        var postid = $(this).data('postid');
+        // alert(postid);
+        var pid = $(this).data('pid');
+        alert(postid);
+        alert(pid);
+        $.post("../social/deletefavorites.php", {
+            'postid': postid,
+            'pid': pid
+        }, function (response) { });
+        $(".showfav").html('<div class="wstore_P_m showfav_" style="margin: -27px 0px 0px 0px!important;"><a href="javascript:void(0)" data-postid="' + $(this).data("postid") + '"class="btn btn-default wholeselladdtofavourite" style="margin-left: 615px; margin-top: -10px;" ><i class="fa fa-heart-o"></i></a></div>');
+        //show notification on the page
+        var title = '<strong>Product removed from favourite</strong>';
+        var icon = 'fa fa-heart-o';
+        showNofification(title, icon);
+    });
+    //===WHOLESALE POST FAVOURITE START
+	function wholsalefavte(){
+   // $("#wholsalefavt").on("click", "#wholsaleunfavt", function () {
+        // alert();
+        var postid = $(this).data('postid');
+        var pid = $(this).data('pid');
+        // alert(postid);
+        //alert(pid);
+        $.post("../social/addfavorites.php", {
+            'postid': postid,
+            'pid': pid
+        }, function (response) { });
+        $(".showfav_" + postid).html('<span id="wholsaleunfavt"><a href="javascript:void(0)" onclick="wholsaleunfavte()" class="wholsaleunfav" data-pid="' + $(this).data("pid") + '" data-postid="' + $(this).data("postid") + '" ><i class="fa fa-heart"></i>Favourite</a></span>');
+        //show notification on the page
+        var title = '<strong>Product added in favourite</strong>';
+        var icon = 'fa fa-heart';
+        showNofification(title, icon);
+   }
+  //  });
+    //===END
+    //===WHOLESALE POST UNFAVOURITE Start
+	
+	function wholsaleunfavte(){
+   // $("#wholsalefavt").on("click", "#wholsaleunfavt", function () {
+        var postid = $(this).data('postid');
+        // alert(postid);
+        var pid = $(this).data('pid');
+        // alert(postid);
+        //  alert(pid);
+        $.post("../social/deletefavorites.php", {
+            'postid': postid,
+            'pid': pid
+        }, function (response) { });
+        $(".showfav_" + postid).html('<span id="wholsalefavt"><a href="javascript:void(0)" onclick="wholsalefavte()"class="wholsalefav" data-pid="' + $(this).data("pid") + '" data-postid="' + $(this).data("postid") + '" ><i class="fa fa-heart-o"></i>Unfavourite</a></span>');
+        //show notification on the page
+        var title = '<strong>Product removed from favourite</strong>';
+        var icon = 'fa fa-heart-o';
+        showNofification(title, icon);
+		
+   }
+   // });
+    //===END
+    $("#groupshare").on("click", function () {
+        $("#dropdownShare").html($(this).text() + " <span class='caret'></span>");
+        $("#groupshow").removeClass("hidden");
+        $("#profileshow").addClass("hidden");
+        $("#spgroupname").val("");
+        $("#spfriendshareid").val("");
+    });
+    $("#friendshare").on("click", function () {
+        $("#dropdownShare").html($(this).text() + " <span class='caret'></span>");
+        $("#profileshow").removeClass("hidden");
+        $("#groupshow").addClass("hidden");
+        $("#spgroupshareid").val("");
+        $("#spfriendname").val("");
+    });
+    //Music Composer start===========
+    $("#spPostingMusicCmp").autocomplete({
+        minLength: 1,
+        source: "../../mlayer/listfriend.php?pid=" + $("#spProfiles_idspProfiles").val(),
+        focus: function () {
+            return false;
+        },
+        select: function (event, ui) {
+            $("#spPostingMusicCmp").val(ui.item.label);
+            $("#spPostingMusicCmpId_").val(ui.item.value);
+            return false;
+        }
+    });
+    //Music Composer end===========
+    //event select organizer start===========
+    $("#spPostingEventOrgName").autocomplete({
+        minLength: 1,
+        source: "../../mlayer/listfriend.php?pid=" + $("#spProfiles_idspProfiles").val(),
+        focus: function () {
+            return false;
+        },
+        select: function (event, ui) {
+            $("#spPostingEventOrgName").val(ui.item.label);
+            $("#spPostingEventOrgId_").val(ui.item.value);
+            return false;
+        }
+    });
+    //event select organizer end===========
+    //RealEstate select===========
+    //===primary Agent===
+    $("#spPostPrimAgt").autocomplete({
+        minLength: 1,
+        source: "../../mlayer/listfriend.php?pid=" + $("#spProfiles_idspProfiles").val(),
+        focus: function () {
+            return false;
+        },
+        select: function (event, ui) {
+            $("#spPostPrimAgt").val(ui.item.label);
+            $("#spPostPrimAgtId_").val(ui.item.value);
+            return false;
+        }
+    });
+    //===primary broker
+    $("#spPostPrimBrk").autocomplete({
+        minLength: 1,
+        source: "../../mlayer/listfriend.php?pid=" + $("#spProfiles_idspProfiles").val(),
+        focus: function () {
+            return false;
+        },
+        select: function (event, ui) {
+            $("#spPostPrimBrk").val(ui.item.label);
+            $("#spPostPrimBrkId_").val(ui.item.value);
+            return false;
+        }
+    });
+    //===Secondary Agent===
+    $("#spPostSecAgt").autocomplete({
+        minLength: 1,
+        source: "../../mlayer/listfriend.php?pid=" + $("#spProfiles_idspProfiles").val(),
+        focus: function () {
+            return false;
+        },
+        select: function (event, ui) {
+            $("#spPostSecAgt").val(ui.item.label);
+            $("#spPostSecAgtId_").val(ui.item.value);
+            return false;
+        }
+    });
+    //===Secondary Broker===
+    $("#spPostSecBrk").autocomplete({
+        minLength: 1,
+        source: "../../mlayer/listfriend.php?pid=" + $("#spProfiles_idspProfiles").val(),
+        focus: function () {
+            return false;
+        },
+        select: function (event, ui) {
+            $("#spPostSecBrk").val(ui.item.label);
+            $("#spPostSecBrkId_").val(ui.item.value);
+            return false;
+        }
+    });
+    //===tertiary Agent===
+    $("#spPostTertAgt").autocomplete({
+        minLength: 1,
+        source: "../../mlayer/listfriend.php?pid=" + $("#spProfiles_idspProfiles").val(),
+        focus: function () {
+            return false;
+        },
+        select: function (event, ui) {
+            $("#spPostTertAgt").val(ui.item.label);
+            $("#spPostTertAgtId_").val(ui.item.value);
+            return false;
+        }
+    });
+    //===tertiary Broker===
+    $("#spPostTertBrk").autocomplete({
+        minLength: 1,
+        source: "../../mlayer/listfriend.php?pid=" + $("#spProfiles_idspProfiles").val(),
+        focus: function () {
+            return false;
+        },
+        select: function (event, ui) {
+            $("#spPostTertBrk").val(ui.item.label);
+            $("#spPostTertBrkId_").val(ui.item.value);
+            return false;
+        }
+    });
+    //event select organizer end===========
+    //event Co-host Select===========
+    $("#spPostingCohostName").autocomplete({
+        minLength: 1,
+        source: "../../mlayer/listfriend.php?pid=" + $("#spProfiles_idspProfiles").val(),
+        focus: function () {
+            return false;
+        },
+        select: function (event, ui) {
+            $("#spPostingCohostName").val(ui.item.label);
+            $("#spPostingCohost_").val(ui.item.value);
+            return false;
+        }
+    });
+    //event Co-host Select end===========
+    //autocomplete profile
+    $('#myshare').on('show.bs.modal', function (event) {
+        $("#dropdownShare").text("Select group or friend");
+        $("#spfriendname").autocomplete({
+            minLength: 1,
+            source: "../mlayer/listfriend.php?pid=" + $("#sp-Profiles-idspProfiles").val(),
+            focus: function () {
+                return false;
+            },
+            select: function (event, ui) {
+                $("#spfriendname").val(ui.item.label);
+                $("#spfriendshareid").val(ui.item.value);
+                return false;
+            }
+        });
+        $("#spgroupname").autocomplete({
+            minLength: 1,
+            source: "../mlayer/listgroup.php?pid=" + $("#sp-Profiles-idspProfiles").val(),
+            focus: function () {
+                return false;
+            },
+            select: function (event, ui) {
+                $("#spgroupname").val(ui.item.label);
+                $("#spgroupshareid").val(ui.item.value);
+                return false;
+            }
+        });
+    });
+
+    function split(val) {
+        return val.split(/,\s*/);
+    }
+
+    function extractLast(term) {
+        return split(term).pop();
+    }
+    //POST LIKE
+    $(".social").on("click", ".sp-like", function () {
+        var btnLike = this;
+        var liked = $(this).attr("data-liked");
+        $.post("../social/addlike.php", {
+            postid: $(this).data("postid"),
+            pid: $(".dynamic-pid").val()
+        }, function (response) {
+            $(btnLike).attr({
+                class: 'icon-socialise fa fa-thumbs-up spunlike faa-vertical'
+            });
+            if (liked != false) {
+                if (liked > 1) {
+                    liked++;
+                    var l = "UnLike";
+                    $(btnLike).text("(" + liked + ") " + l);
+                    $(btnLike).attr("data-liked", liked);
+                    //document.getElementById("spLikePost").innerText = " Like";
+                } else {
+                    liked++;
+                    var l = "Like";
+                    $(btnLike).text("(" + liked + ") " + l);
+                    $(btnLike).attr("data-liked", liked);
+                    //document.getElementById("spLikePost").innerText = " Like";
+                }
+            } else {
+                liked++;
+                var u = "UnLike";
+                $(btnLike).text(" (" + liked + ") " + u);
+                $(btnLike).attr("data-liked", liked);
+                //document.getElementById("spLikePost").innerText = " UnLike";
+            }
+        });
+    });
+    //POST UN-LIKE
+    $(".social").on("click", ".spunlike", function () {
+        /*alert();*/
+        var btnunlike = this;
+        var liked = $(this).attr("data-liked");
+        $.post("../social/unlike.php", {
+            postid: $(this).data("postid"),
+            pid: $(".dynamic-pid").val()
+        }, function (response) {
+            $(btnunlike).attr({
+                class: 'icon-socialise sp-like fa fa-thumbs-o-up faa-vertical'
+            });
+            if (liked != false) {
+                if (liked == 1 || liked == 0) {
+                    var l = " Like";
+                    //alert(liked+"here1");
+                    $(btnunlike).text(l);
+                    $(btnunlike).attr("data-liked", 0);
+                    //document.getElementById("spLikePost").innerText = "Like";
+                } else if (liked > 1) {
+                    liked--;
+                    var l = " Like";
+                    //alert(liked+"here1");
+                    $(btnunlike).text(" (" + liked + ") " + l);
+                    $(btnunlike).attr("data-liked", liked);
+                    //document.getElementById("spLikePost").innerText = "Like";
+                } else {
+                    //alert(liked+"here2");
+                    liked--;
+                    var u = "UnLike";
+                    $(btnunlike).text(" (" + liked + ") " + u);
+                    $(btnunlike).attr("data-liked", liked);
+                    //document.getElementById("spLikePost").innerText = "UnLike";
+                }
+            }
+        });
+    });
+    //POST FAVORITES
+    $(".social").on("click", ".sp-favorites", function () {
+        // alert();
+        var Postid = $(this).data('postid');
+        var Pid = $(".dynamic-pid").val();
+        var btnfavorites = this;
+        //alert (Postid);
+        //alert (Pid);
+        $.post(MAINURL + "/social/addfavorites.php", {
+            postid: Postid,
+            pid: Pid
+        }, function (response) {
+            $(btnfavorites).attr({
+                class: 'icon-favorites fa fa-heart removefavorites faa-pulse animated'
+            });
+			 $('#spFavouritePost').attr('data-original-title', 'Unfavourite');
+            //document.getElementById("spFavouritePost").innerText = " Unfavourite";
+        });
+    });
+    //POST REMOVE FAVORITES [FREELANCE]
+    $(".social").on("click", ".removefavorites", function () {
+        /*alert("remove fav");*/
+        var Postid = $(this).data('postid');
+        // alert(Postid);
+        var btnremovefavorites = this;
+        $.post(MAINURL + "/social/deletefavorites.php", {
+            postid: Postid
+        }, function (response) {
+            //alert(response);
+            $(btnremovefavorites).attr({
+                class: 'icon-favorites fa fa-heart-o sp-favorites faa-pulse animated'
+            });
+			 $('#spFavouritePost').attr('data-original-title', 'Favourite');
+            //document.getElementById("spFavouritePost").innerText = " Favourite";
+        });
+    });
+    //=========EVENT POST FAVOURITE START===========
+    $(".bokmarktab").on("click", "#addtofavouriteevent", function () {
+        var postid = $(this).data('postid');
+        //alert(postid);
+        var pid = $(this).data('pid');
+        // alert(pid);
+        $.post(MAINURL + "/social/addfavorites.php", {
+            postid: postid,
+            pid: pid
+        }, function (response) {
+            //$("#addtofavouriteeve").html("<i class='fa fa-heart' aria-hidden='true'></span>");
+            $(".bokmarktab").html('<a href="javascript:void(0)" id="remtofavoritesevent" data-postid="' + postid + '" data-pid="' + pid + '"><span id="removetofavouriteeve"><i class="fa fa-heart"></i></span>Unfavorite4</a>');
+            //window.location.reload();
+        });
+    });
+   /* $(".jobseek").on("click", "#addtofavouritejobseek", function () {
+        var postid = $(this).data('postid');
+        //alert(postid);
+        var pid = $(this).data('pid');
+        var btnfavorites = this;
+        //alert(pid);
+        $.post(MAINURL + "/social/addfavorites.php", {
+            postid: postid,
+            pid: pid
+        }, function (response) {
+            //$("#addtofavouriteeve").html("<i class='fa fa-heart' aria-hidden='true'></span>");
+            $(btnfavorites).replaceWith('<a href="javascript:void(0)" id="remtofavoritesjobseek" data-postid="' + postid + '" data-pid="' + pid + '"><i class="fa fa-heart"></i></a>');
+            //window.location.reload();
+        });
+    });
+    $(".jobseek").on("click", "#remtofavoritesjobseek", function () {
+        var postid = $(this).data('postid');
+        var pid = $(this).data('pid');
+        // alert(pid);
+        var btnremovefavorites = this;
+        $.post(MAINURL + "/social/deletefavorites.php", {
+            postid: postid
+        }, function (response) {
+            //$("#removetofavouriteeve").html("<i class='fa fa-heart-o' aria-hidden='true'></span>");
+            //window.location.reload();
+            $(btnremovefavorites).replaceWith('<a href="javascript:void(0)" id="addtofavouritejobseek" data-postid="' + postid + '" data-pid="' + pid + '"><i class="fa fa-heart-o"></i></a>');
+        });
+    });*/
+    //=========EVENT POST FAVOURITE end=============
+    //=========EVENT POST UNFAVOURITE Start=============
+    $(".bokmarktab").on("click", "#remtofavoritesevent", function () {
+        var postid = $(this).data('postid');
+        var pid = $(this).data('pid');
+        var btnremovefavorites = this;
+        $.post(MAINURL + "/social/deletefavorites.php", {
+            postid: postid
+        }, function (response) {
+            //$("#removetofavouriteeve").html("<i class='fa fa-heart-o' aria-hidden='true'></span>");
+            //window.location.reload();
+            $(".bokmarktab").html('<a href="javascript:void(0)" id="addtofavouriteevent" data-postid="' + postid + '" data-pid="' + pid + '"><span id="addtofavouriteeve"><i class="fa fa-heart-o"></i></span>Favorite7</a>');
+        });
+    });
+    $(".classified").on("click", "#addtofavouriteevent", function () {
+        var postid = $(this).data('postid');
+        //alert(postid);
+        var pid = $(this).data('pid');
+        // alert(pid);
+        $.post(MAINURL + "/social/addfavorites.php", {
+            postid: postid,
+            pid: pid
+        }, function (response) {
+            //$("#addtofavouriteeve").html("<i class='fa fa-heart' aria-hidden='true'></span>");
+            $(".classified").html('<a href="javascript:void(0)" id="remtofavoritesevent" data-postid="' + postid + '" data-pid="' + pid + '"><span id="removetofavouriteeve"><i class="fa fa-heart"></i></span>&nbsp Unfavorite5</a>');
+            //window.location.reload();
+        });
+    });
+    $(".classified").on("click", "#remtofavoritesevent", function () {
+        var postid = $(this).data('postid');
+		//alert(postid);
+        var pid = $(this).data('pid');
+        var btnremovefavorites = this;
+        $.post(MAINURL + "/social/deletefavorites.php", {
+            postid: postid
+        }, function (response) {
+            //$("#removetofavouriteeve").html("<i class='fa fa-heart-o' aria-hidden='true'></span>");
+            //window.location.reload();
+            $(".classified").html('<a href="javascript:void(0)" id="addtofavouriteevent" data-postid="' + postid + '" data-pid="' + pid + '"><span id="addtofavouriteeve"><i class="fa fa-heart-o"></i></span>&nbsp Favorite</a>');
+        });
+    });
+    //=========EVENT POST UNFAVOURITE END=============
+    //=========ART GALLERY POST FAVOURITE START===========
+    $(".listing_fvrt_art").on("click", "#addtofavouriteart", function () {
+        var postid = $(this).data('postid');
+        var pid = $(this).data('pid');
+        $.post(MAINURL + "/social/addfavorites.php", {
+            postid: postid,
+            pid: pid
+        }, function (response) {
+            $(".listing_fvrt_art").html('<a  id="remtofavoriteart" data-postid="' + postid + '" data-pid="' + pid + '" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Add to Wish List"><span id="removetofavouriteeve"><i class="fa fa-heart" style="font-size:20px;color:red;"></i></span></a>');
+        });
+    });
+    //=========ART GALLERY POST FAVOURITE END=============
+    //=========ART GALLERY POST UNFAVOURITE Start=============
+    $(".listing_fvrt_art").on("click", "#remtofavoriteart", function () {
+        var postid = $(this).data('postid');
+        var pid = $(this).data('pid');
+        var btnremovefavorites = this;
+        $.post(MAINURL + "/social/deletefavorites.php", {
+            postid: postid
+        }, function (response) {
+            $(".listing_fvrt_art").html('<a id="addtofavouriteart" data-postid="' + postid + '" data-pid="' + pid + '"  data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Add to Wish List"><span id="addtofavouriteeve"><i class="fa fa-heart-o" style="font-size:20px;color:red;"></i></span></a>');
+        });
+    });
+    //=========ART GALLERY POST UNFAVOURITE END=============
+    //TIMELINE AGREEMENT BTN SHOW OR HIDE START
+    $("#chkAcknw").on("click", function () {
+        var chkAcknw = $(this).val();
+        //alert(chkAcknw);
+        if (chkAcknw == 1) {
+            $("#chkAcknw").val(0);
+            $("#spPostSubmitTimeline").attr("disabled", "disabled");
+        } else {
+            var chkAgree = $("#chkAgree").val();
+            if (chkAgree == 1) {
+                $("#chkAcknw").val(1);
+                $("#spPostSubmitTimeline").removeAttr("disabled", "disabled");
+            } else {
+                $("#chkAcknw").val(1);
+            }
+        }
+    });
+    $("#chkAgree").on("click", function () {
+        var chkAgree = $(this).val();
+        //alert(chkAgree);
+        if (chkAgree == 1) {
+            $("#chkAgree").val(0);
+            $("#spPostSubmitTimeline").attr("disabled", "disabled");
+        } else {
+            var chkAcknw = $("#chkAcknw").val();
+            if (chkAcknw == 1) {
+                $("#chkAgree").val(1);
+                $("#spPostSubmitTimeline").removeAttr("disabled", "disabled");
+            } else {
+                $("#chkAgree").val(1);
+            }
+        }
+    });
+    //TIMELINE AGREEMENT BTN SHOW OR HIDE END
+    $(".social").on("click", ".sp-share", function () {
+        //alert('hi');
+        $("#groupshow").addClass("hidden");
+        $("#profileshow").addClass("hidden");
+        $("#shareposting").val($(this).data("postid"));
+        $("#modalpostingpic").attr('src', $(this).attr('src'));
+    });
+    //complete
+    //Share my own post to friend START
+    $(".social").on("click", ".sp-share-timeline", function () {
+        //alert('hi');
+        if ($(this).attr('src') == " ") {
+            //console.log('hiee');
+            $("#modalpostingpic").addClass("hidden");
+        } else {
+            //console.log('hooo');
+            $("#modalpostingpic").addClass("hidden");
+        }
+        $("#groupshow").addClass("hidden");
+        $("#profileshow").addClass("hidden");
+        $("#shareposting").val($(this).data("postid"));
+    });
+    //Share my own post to friend END
+    //delete multiple images start
+    $('#select_all').on('click', function (e) {
+        if (this.checked) {
+            $('.emp_checkbox').each(function () {
+                this.checked = true;
+            });
+        } else {
+            $('.emp_checkbox').each(function () {
+                this.checked = false;
+            });
+        }
+        // set all checked checkbox count
+    });
+    $('#delete_records').on('click', function (e) {
+        var employee = [];
+        $(".emp_checkbox:checked").each(function () {
+            employee.push($(this).data('emp-id'));
+        });
+        if (employee.length <= 0) {
+            alert("Please select records.");
+        } else {
+            WRN_PROFILE_DELETE = "Are you sure you want to Unfavourite " + (employee.length > 1 ? "these" : "this") + " row?";
+            var checked = confirm(WRN_PROFILE_DELETE);
+            if (checked == true) {
+                var selected_values = employee.join(",");
+                $.ajax({
+                    type: "POST",
+                    url: "delete_action.php",
+                    cache: false,
+                    data: 'emp_id=' + selected_values,
+                    success: function (data) {
+                        //alert(data);
+                        window.location.reload();
+                    }
+                });
+            }
+        }
+    });
+    //delete multiple images end
+    //$(".addcustomfields").on("click",".my-album-dd", function(e){
+    $(".albumdroupdown").on("click", ".my-album-dd", function (e) {
+        //$("#spProfileType_idspProfileType").val($(this).data("ptid"));
+        $(".album_id").val($(this).data("albumid"));
+        $("#videoalbum_").val($(this).data("albumname"));
+        $("#musicalbum_").val($(this).data("albumname"));
+        $("#photosalbum_").val($(this).data("albumname"));
+        $("#documentalbum_").val($(this).data("albumname"));
+        $(".myalbum").html($(this).text() + "<span class='caret'></span>");
+    });
+    $(".sp-album").on("click", ".sp-album-label", function (e) {
+        $(".sp-album-label").removeClass("active")
+        $(this).addClass("active")
+        $(".sp-album-details").load("../album/albumdetails.php", {
+            albumid: $(this).data("albumid"),
+            albumname: $(this).text()
+        }, function (response) {
+            // alert(response);
+        })
+        return false;
+    });
+    //create album
+    $("#spaddalbum").on("click", function () {
+        $("#exampleModal").modal('hide');
+        /*swal({
+            title: $("#spAlbumName").val() + " Created!",
+            //text: "Vew Your <a href='/post-details/?postid="+postid+"' style='color:#F8BB86'>Post</a>",   
+            html: true
+        });*/
+        var btn = this;
+        var $form = $(btn).closest("form");
+        $form.submit(function (e) {
+            e.preventDefault();
+            $(btn).button('loading');
+            term = $form.serializeArray();
+            url = $form.attr("action");
+            $.post(url, term, function (data, status) {
+                // alert("Data: " + data + "\nStatus: " + status);
+                $(".sp-album").append("<a href='albumdetails.php' class='list-group-item sp-album-label' data-albumname='" + $("#spAlbumName").val() + "' data-albumid='" + data.trim() + "'>" + $("#spAlbumName").val() + "</a>");
+                //Adding cretaed album in the list
+                $(".albumdroupdown").prepend("<li><a href='#' class='my-album-dd' data-albumname='" + $("#spAlbumName").val() + "' data-albumid='" + data.trim() + "'>" + $("#spAlbumName").val() + "</a></li>");
+                $("#spAlbumName").val("");
+                $("#spAlbumDescription").val("");
+            }).fail(function () {
+                $(btn).effect("shake");
+                $(btn).button('reset');
+            }).done(function (data) { }).always(function () {
+                $(btn).button('reset');
+            });
+        });
+    });
+    //Rename album
+    $(".sp-album-details").on("click", "#renamealbum", function () {
+        var btn = this;
+        var $form = $(btn).closest("form");
+        $form.submit(function (e) {
+            e.preventDefault();
+            $(btn).button('loading');
+            term = $form.serializeArray();
+            url = $form.attr("action");
+            $.post(url, term, function (data, status) {
+                // alert("Data: " + data + "\nStatus: " + status);
+            }).fail(function () {
+                $(btn).effect("shake");
+                $(btn).button('reset');
+            }).done(function () {
+                $("#albumid" + $("#idspPostingAlbum").val()).text($("#spPostingAlbumName").val());
+            }).always(function () {
+                $(btn).button('reset');
+            });
+        });
+    });
+    $(".addcustomfields").on("click", ".postcost", function (r) {
+        // $("#cost").html("<div class='input-group'><span class='input-group-addon'>$</span><input type='text' id='sppostcost' class='form-control' style='' name='spPostingPrice' onKeyUp='numericFilter(this);' ></div>");
+        $("#cost").show();
+        $("#sppostingShippingCharge").attr('disabled', false);
+        $("#hidediscount").show();
+    });
+    $(".addcustomfields").on("click", ".postfree", function (r) {
+        //$(".cost").html("");
+        $("#cost").hide();
+        $("#sppostcost").val('');
+        $("#discountphoto").val('');
+        $("#hidediscount").hide();
+    });
+    //this is music cost show or discount show
+    $("#cusFieldVdo").on("click", ".postMusiccost", function (r) {
+        $(".cost").html("<div class='input-group'><span class='input-group-addon'>$</span><input type='text' id='sppostcost' class='form-control' name='spPostingPrice' onKeyUp='numericFilter(this);'></div>");
+        $("#sppostingShippingCharge").attr('disabled', false);
+        $(".discountHid").css("display", "block");
+    });
+    //this is music cost hide or discount hide
+    $("#cusFieldVdo").on("click", ".postMusicfree", function (r) {
+        $(".cost").html("<div class='input-group'><span class='input-group-addon'>$</span><input type='text' id='sppostcost' class='form-control' name='spPostingPrice' readonly value='0' ></div>");
+        $(".discountHid").css("display", "none");
+    });
+    $(".addcustomfields").on("click", ".fixedprice", function (r) {
+        $(".cost").html("<div class='input-group'><span class='input-group-addon'>$</span><input type='text'id='sppostcost' class='form-control' style='width:5cm;' name='spPostingPrice' onKeyUp='numericFilter(this);' ></div>");
+        $("#spfixedPrice_").val(1);
+        $("#sphourlyPrice_").val(0);
+        document.getElementById('sphourlyPrice_').checked = false;
+    });
+    $(".addcustomfields").on("click", ".hourlyrate", function (r) {
+        $(".cost").html("<div class='input-group' style='width:5cm;'><span class='input-group-addon'>$</span><input type='text' id='sppostcost' class='form-control' style='width:5cm;' name='spPostingPrice' onKeyUp='numericFilter(this);' ><span class='input-group-addon'>/hour</span></div>");
+        $("#spfixedPrice_").val(0);
+        $("#sphourlyPrice_").val(1);
+        document.getElementById('spfixedPrice_').checked = false;
+    });
+    $(".addcustomfields").on("click", ".postfree", function (r) {
+        $(".cost").html("");
+        $("#sppostingShippingCharge").attr('disabled', true);
+    });
+    var cartcount = 0;
+    $.get(MAINURL + "/authentication/getcartcount.php", function (r) {
+        cartcount = r;
+    });
+    $(".liveQty").on('change', function () {
+        var qty = document.getElementById("liveQty").value;
+        $("#spOrdrQty").val(qty);
+    });
+    $(".liveQty").on('keypress', function () {
+        var qty = document.getElementById("liveQty").value;
+        $("#spOrdrQty").val(qty);
+    });
+    $("#addtocart").on("click", function () {
+        //alert('pppppppppppppppp');
+        // Check the value for buying prodcut of wholesale
+        var getProductType = $("#productSellType").val();
+        if (getProductType == 'Wholesaler') {
+            var checkMinimumQuantity = $("#productMinimumQuantity").val();
+            var selectedValue = $("#liveQty").val();
+            if (selectedValue < checkMinimumQuantity) {
+                $(".wholesale_mcg").text("Minimum quantity should be " + checkMinimumQuantity);
+                $(".wholesale_mcg").show().delay(3000).fadeOut();
+                return false;
+            }
+        }
+        var btn = this;
+        var $form = $(btn).closest("form");
+        $form.submit(function (e) {
+            e.preventDefault();
+            // $(btn).button('loading');
+            term = $form.serializeArray();
+            url = $form.attr("action");
+            $.post(url, term, function (data, status) { }).fail(function () {
+                $(btn).effect("shake");
+                $(btn).button('reset');
+            }).done(function (data) {
+                //swal("Good job!", "Added To Cart", "success");
+                //setTimeout(function() {
+                swal({
+                    title: "Added To Cart!",
+                    text: "",
+                    type: "success"
+                }, function () {
+                    location.reload();
+                });
+                //}, 1000);
+                //  location.reload();
+                //$("#ssaddtcart").html("Buy Now");
+            }).always(function () {
+                //$(btn).button('reset');
+            });
+        });
+    });
+    //ADD TO CART VALUE START
+    //BUY NOW VALUE START
+    $("#buytocart").on("click", function () {
+        //  alert('pppppppppppppppp0');
+        // Check the value for buying prodcut of wholesale
+        var getProductType = $("#productSellType").val();
+        if (getProductType == 'Wholesaler') {
+            var checkMinimumQuantity = $("#productMinimumQuantity").val();
+            var selectedValue = $("#liveQty").val();
+            if (selectedValue < checkMinimumQuantity) {
+                $(".wholesale_mcg").text("Minimum quantity should be " + checkMinimumQuantity);
+                $(".wholesale_mcg").show().delay(3000).fadeOut();
+                return false;
+            }
+        }
+        var sendUrl = MAINURL + "/";
+        var btn = this;
+        var $form = $(btn).closest("form");
+        $form.submit(function (e) {
+            e.preventDefault();
+            //$(btn).button('loading');
+            term = $form.serializeArray();
+            url = $form.attr("action");
+            $.post(url, term, function (data, status) { }).fail(function () {
+                $(btn).effect("shake");
+                $(btn).button('reset');
+            }).done(function (data) {
+                //alert (data);
+                if (data != " You have already added this post") {
+                    $("#buytocart").html("Buy Now");
+                    //$("#buytocart").attr("disabled", true);
+                    cartcount++;
+                    $.get("../authentication/cartcountupdate.php", {
+                        cartcount: cartcount
+                    }, function (d) {
+                        //alert(d);
+                        window.location = sendUrl + "/cart";
+                    });
+                    $("#cartbadge").text(cartcount)
+                } else {
+                    alert("You have already added this post");
+                    //$(btn).button('reset');
+                }
+            }).always(function () {
+                //$(btn).button('reset');
+            });
+        });
+    });
+    //BUY NOW VALUE START
+    //REMOVE ORDER FROM CART
+    $(".remove_order").on("click", function () {
+        var orderId = $(this).attr("data-oid");
+        swal({
+            title: "Are you sure?",
+            type: "warning",
+            confirmButtonClass: "sweet_ok",
+            confirmButtonText: "Yes",
+            cancelButtonClass: "sweet_cancel",
+            cancelButtonText: "No",
+            showCancelButton: true,
+        }, function (isConfirm) {
+            //alert(orderId);
+            if (isConfirm) {
+                $.post("removefromcart.php", {
+                    orderId: orderId
+                }, function (data) {
+                    window.location.reload();
+                });
+            }
+        });
+    });
+    //===========END========
+    //SAVE PRODUCT FROM CART
+    /*  $("#saveproduct").on("click", function () {
+    
+
+             var orderId = $(this).attr("data-oid");
+             var savestatus = $(this).attr("data-savestatus");
+              // alert(savestatus);
+              $.post("saveforlater.php", {orderId:orderId,savestatus:savestatus}, function (data) {
+                window.location.reload();
+              });
+            
+
+    });
+    */
+    /*
+                $("#moveproducttocart").on("click", function () {
+        
+
+                 var orderId = $(this).attr("data-oid");
+                 var savestatus = $(this).attr("data-savestatus");
+                  // alert(savestatus);
+                  $.post("saveforlater.php", {orderId:orderId,savestatus:savestatus}, function (data) {
+                    window.location.reload();
+                  });
+              
+        });
+        */
+    $("#emptyorder").on("click", function () {
+        var pid = $(this).attr("data-pid");
+        // var orderId = $(this).attr("data-oid");
+        swal({
+            title: "Are you sure?",
+            type: "warning",
+            confirmButtonClass: "sweet_ok",
+            confirmButtonText: "Yes",
+            cancelButtonClass: "sweet_cancel",
+            cancelButtonText: "No",
+            showCancelButton: true,
+        }, function (isConfirm) {
+            /* alert(orderId);*/
+            if (isConfirm) {
+                $.post("emptycart.php", {
+                    buyerprofileid: pid
+                }, function (data) {
+                    window.location.reload();
+                });
+            }
+        });
+        /*$.post("emptycart.php", {buyerprofileid:pid}, function (data) {
+      window.location.reload();
+  });*/
+    });
+    //dynamic image load in post details//
+    $(".socials").on("click", ".imagehover", function (e) {
+        $("#myCarousel").carousel('pause');
+        $(".checkactive.active").find(".postingpicture").attr('src', $(this).attr('src'));
+        //$(".postingpicture").attr('src', $(this).attr('src'));
+        $(this).parent().siblings(".postpic").attr('src', $(this).attr('src'));
+        $(this).closest(".timlinepicture").find(".postpic").attr('src', $(this).attr('src'));
+        $(this).closest(".timlinepicture").find(".mag").attr('href', $(this).attr('src'));
+    });
+
+    function readCustomFields($form, $postid) {
+        var allinputs = $form.find(".spPostField");
+        var formfields = new Array();
+        var inputs = null;
+        allinputs.each(function (i, e) {
+            var l = $("label[for='" + e.id + "']").text();
+            var n = $(e).attr("name");
+            var v = $(e).val();
+            var f = $(e).data("filter");
+            inputs = {
+                spPostFieldLabel: l,
+                spPostFieldName: n,
+                spPostFieldValue: v,
+                spPostings_idspPostings: $postid,
+                spCategories_idspCategory: $(".spCategories_idspCategory").val(),
+                spPostFieldIsFilter: f,
+                editing_: postedit
+            };
+            formfields.push(inputs);
+        });
+        return formfields;
+    }
+    $('[data-toggle="tooltip"]').tooltip();
+    /*$(".profiletypes-dd").on("click", function(e){
+     $(".spProfileType_idspProfileType").val($(this).data("ptid"));
+     $("#profiletype").val($(this).data("ptid"));
+     $("#profiletypes").html($(this).text() + " <span class='caret'></span>");
+     /*if($(this).data("ptid") == 5)
+     {
+     $("#jobseeker").load("jobseeker.php",function(respone){
+     
+     });
+ }*/
+    /*});*/
+    $(".sp-profile-det").on("click", ".profiletypes-dd", function (e) {
+        $("#profilefield").html("");
+        $(".spProfileType_idspProfileType").val($(this).data("ptid"));
+        $("#profiletype").val($(this).data("ptid"));
+        $("#spProfileTypename").val($(this).data("ptypename"));
+        $("#profiletypes").html($(this).text() + " <span class='caret'></span>");
+        $("#defaultbusiness").addClass("hidden");
+        //this  is feature to show on the business profile
+        $("#defaultshowEmail").addClass("hidden");
+        $("#defaultAddNews").addClass("hidden");
+        $("#defaultShowPhone").addClass("hidden");
+        $("#defaultLinkStore").addClass("hidden");
+        $("#defaultLinkVideo").addClass("hidden");
+        $("#dobbusiness").removeClass("hidden");
+        $("#yourAddresRemove").removeClass("hidden");
+        $("#dobbusiness").removeClass("hidden");
+        if ($(this).data("ptid") == 1) {
+            $("#defaultbusiness").removeClass("hidden");
+            $("#defaultshowEmail").removeClass("hidden");
+            $("#defaultAddNews").removeClass("hidden");
+            $("#defaultShowPhone").removeClass("hidden");
+            $("#defaultLinkStore").removeClass("hidden");
+            $("#defaultLinkVideo").removeClass("hidden");
+            $("#dobbusiness").addClass("hidden");
+            $("#yourAddresRemove").addClass("hidden");
+            $("#dobbusiness").addClass("hidden");
+            $("#profilefield").load("bussiness.php", function (respone) { });
+        }
+        if ($(this).data("ptid") == 2) {
+            $("#profilefield").load("freelancer.php", function (respone) { });
+        }
+        if ($(this).data("ptid") == 3) {
+            $("#profilefield").load("entertainment.php", function (respone) { });
+        }
+		        if ($(this).data("ptid") == 4) {
+            $("#profilefield").load("personal.php", function (respone) { });
+        }
+        if ($(this).data("ptid") == 5) {
+            $("#profilefield").load("jobseeker.php", function (respone) { });
+        }
+        if ($(this).data("ptid") == 6) {
+            $("#profilefield").load("dating.php", function (respone) { });
+        }
+    });
+    $(".cost").on("click", function (e) {
+        $("#albumcost").html($(this).text() + " <span class='caret'></span>");
+    });
+    //Posting Module code
+    $(".post-category").on("click", function (e) {
+        $.get("/authentication/updateprofile.php", {
+            store: "Public Store",
+            pid: $(this).data("profileid"),
+            myprofile: $("#myprofile").text()
+        }, function (r) { });
+        /*var li = this;
+         $("#postingpic").val("");
+         $("#spPostingTitle").val("");
+         $("#spPostingNotes").val("");
+         $("#dvPreview").html("");
+         $(".spCategories_idspCategory").val($(li).data("categoryid"));
+         $("h4,#category_name").text($(li).data("categoryname"));
+         if($(li).data("categoryid")!= 1)
+         {
+         $(".addcustomfields").load($(this).data("addetails"), function(response){
+         $(".post-category").removeClass("active");
+         $(li).addClass("active");
+         //alert(response);
+         });
+         }
+         
+         if($(li).data("categoryid")==1)
+         {
+         $(".post-category").removeClass("active");
+         $(li).addClass("active");
+         $(".buy-sell").removeClass("hidden");
+         $(".addcustomfields").addClass("hidden");
+         }
+         else{
+         //$(li).removeClass("active");
+         $(".buy-sell").addClass("hidden");
+         $(".addcustomfields").removeClass("hidden");
+         }
+         $(".profilepicture").load("../my-profile/profilepic.php",{profiletype: $(this).data("profiletype")}, function(response){
+         $(".dynamic-pid").val($("#profileid").val());
+     });*/
+    });
+    $(".sell").on("click", function (r) {
+        $(".buysell").removeClass("active");
+        $(this).addClass("active");
+        $("#buyid").val("");
+        $(".addcustomfields").removeClass("hidden");
+        $(".addcustomfields").load("/post-ad/sell.php", {
+            profileid: $("#spProfiles_idspProfiles").val(),
+            flag: 1
+        }, function (response) { });
+    });
+    $(".buy").on("click", function (r) {
+        $(".buysell").removeClass("active");
+        $(this).addClass("active");
+        $(".addcustomfields").removeClass("hidden");
+        $("#buyid").val(1);
+        $(".addcustomfields").load("/post-ad/buy.php", {
+            flag: 1,
+            postid: $("#postid").val()
+        }, function (response) {
+            //slider
+            $("#slider-range").slider({
+                range: true,
+                min: 1,
+                max: 10000,
+                values: [1, 100],
+                slide: function (event, ui) {
+                    $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+                }
+            });
+            $("#amount").val("$" + $("#slider-range").slider("values", 0) + " - $" + $("#slider-range").slider("values", 1));
+        });
+    });
+    //dropdown sell type on post an add
+    $(".addcustomsell").on("click", "#sellType_", function (e) {
+        // alert($(this).val());
+        //console.log($(this).val());
+        /* if ($(this).val() == "Buynow"){
+             $(".hidbuy").load("../buynow.php", {profileid: $("#spProfiles_idspProfiles").val(), retailflag: 1, postid: $("#postid").val()}, function (response) {
+                 $("#sellflag").val(2);
+             });
+         }*/
+        if ($(this).val() == "Auction") {
+            $(".hidbuy").load("../auction.php", {
+                profileid: $("#spProfiles_idspProfiles").val(),
+                retailflag: 1,
+                postid: $("#postid").val()
+            }, function (response) {
+                $("#sellflag").val(2);
+                $("#bootomsellfrm").show(1000);
+            });
+            $("#sell_frm").show(1000);
+        } else if ($(this).val() == "Wholesaler") {
+            //$("#industry_select").show();
+            //alert($(this).val());
+            //wholesale panel
+            $(".retail-wholesheller").load("../wholesell.php", {
+                profileid: $("#spProfiles_idspProfiles").val(),
+                retailflag: 1,
+                postid: $("#postid").val()
+            }, function (response) {
+                $("#sellflag").val(0);
+                $("#bootomsellfrm").show(1000);
+            });
+            $("#sell_frm").show(1000);
+        } else if ($(this).val() == "Retail") {
+            $(".retail-wholesheller").load("../retail.php", {
+                profileid: $("#spProfiles_idspProfiles").val(),
+                retailflag: 1,
+                postid: $("#postid").val()
+            }, function (response) {
+                $("#sellflag").val(2);
+                $("#bootomsellfrm").show(1000);
+            });
+            $("#sell_frm").show(1000);
+        } else if ($(this).val() == "0") {
+            $("#bootomsellfrm").hide(1000);
+            $("#sell_frm").hide(1000);
+        }
+    });
+    $(".addcustomfields").on("click", "#industryType_", function (e) {
+        /*  $(".sell").addClass("active");
+          //retail panel
+          if ($(this).val() == "Retail"){
+              $(".retail-wholesheller").load("../retail.php", {profileid: $("#spProfiles_idspProfiles").val(), retailflag: 1, postid: $("#postid").val()}, function (response) {
+                  $("#sellflag").val(2);
+              });
+          }else if($(this).val() == "Auction"){
+              //auction panel
+              $(".retail-wholesheller").load("../auction.php", {profileid: $("#spProfiles_idspProfiles").val(), retailflag: 1, postid: $("#postid").val()}, function (response) {
+                  $("#sellflag").val(2);
+              });
+          }else if($(this).val() == "Wholesaler"){
+              //wholesale panel
+              $(".retail-wholesheller").load("../wholesell.php", {profileid: $("#spProfiles_idspProfiles").val(), retailflag: 1, postid: $("#postid").val()}, function (response) {
+                  $("#sellflag").val(0);
+              });
+          }else if($(this).val() == "Manufacturer"){
+              //wholesale panel
+              $(".retail-wholesheller").load("../manufacturer.php", {profileid: $("#spProfiles_idspProfiles").val(), retailflag: 1, postid: $("#postid").val()}, function (response) {
+                  $("#sellflag").val(0);
+              });
+          }else if($(this).val() == "Distributors"){
+              //wholesale panel
+              $(".retail-wholesheller").load("../distributors.php", {profileid: $("#spProfiles_idspProfiles").val(), retailflag: 1, postid: $("#postid").val()}, function (response) {
+                  $("#sellflag").val(0);
+              });
+          }else if($(this).val() == "PersonalSale"){
+              //wholesale panel
+              $(".retail-wholesheller").load("../personalSale.php", {profileid: $("#spProfiles_idspProfiles").val(), retailflag: 1, postid: $("#postid").val()}, function (response) {
+                  $("#sellflag").val(2);
+              });
+          }*/
+    });
+    $(".my-profile-dd").on("click", function (e) {
+        //location.reload();
+        $("#albumid").val("");
+        //$("#modalpostingpic").attr('src', $(this).attr('src'));
+        $("#checkout").attr('data-pid', $(this).data("pid"));
+        $.post("/publicpost/updatealbumid.php", {
+            pid: $(this).attr("data-pid")
+        }, function (r) {
+            //alert(r);
+            $("#albumid").val(r);
+        });
+        //$("#postlike").attr("href", "../my-store/?pid="+$(this).data("pid"));
+        $("#myprofile").html($(this).text() + " <span class='caret'></span>");
+        $(".dynamic-pid").val($(this).data("pid"));
+        $("#profilename").val($(this).text());
+        $(".sp-group-details").html("");
+        /*$(".sp-profile-Group").load("groups.php", {pid: $(this).data("pid"),ptid:$(this).data("ptid"),ptname:$(this).data("ptname")}, function(response){
+         $(".sp-grp-details").html("");
+         $(".sp-profile-Group>.sp-group-label:last-child").trigger("click");
+         // alert(reousponse);
+     });*/
+        //$(".profilepicture").load("/my-profile/profilepic.php",{profiletype: $(this).data("ptid")}, function(response){});
+        $(".sp-album").load("../album/albums.php", {
+            albumid: $(this).data("albumid")
+        }, function (response) {
+            $(".sp-album-details").html("");
+        });
+        /*$(".commentprofile").load("../social/profilepic.php", {profileid:$(this).data("pid")}, function(r){
+         // alert(r);
+     });*/
+        var ptid = $(this).attr("data-ptid");
+        if (ptid == 1 || ptid == 3 || ptid == 4) window.location.href = "/timeline";
+        else if (ptid == 2) //Freelancer
+            window.location.href = "/myfreelancerdashboard/?flag=1";
+        else if (ptid == 5) //Jobboard
+            window.location.href = "../myjobboarddashboard/?flag=1";
+        else if (ptid == 6) //Jobboard
+            window.location.href = "../my-posts/";
+        $.get("/authentication/updateprofile.php", {
+            pid: $(this).data("pid"),
+            ptname: $(this).data("ptname"),
+            myprofile: $(this).text(),
+            ptid: $(this).data("ptid"),
+            ptypeicon: $(this).data("ptypeicon")
+        }, function (r) {
+            // alert(r);
+            var cartcount = 0;
+            cartcount = r;
+            $("#cartbadge").text(cartcount);
+        });
+    });
+    $(".sp-profile-Group").on("click", ".sp-group-label", function (e) {
+        $(".nwgrp").addClass("hidden");
+        $(".sp-group-details").removeClass("hidden");
+        $(".sp-group-label").removeClass("active")
+        $(this).addClass("active")
+        $(".sp-group-details").html("<div class='loader'></div>");
+        $(".sp-group-details").load("members.php", {
+            gid: $(this).data("gid"),
+            gname: $(this).text(),
+            ptid: $(this).data("createrptid")
+        }, function (response) {
+            // alert(response);
+        })
+        return false;
+    });
+    /*$(".sp-group-details").on("click",".sp-profile-label", function(e){
+     var profile = this;
+     $(".sp-profile-label").removeClass("active")
+     $(this).addClass("active")
+     var href = $(this).attr("href");
+     $(".sp-profile-details").load(href, {pid: $(this).data("pid"), gid: $("#idspGroup").val()}, function(response){
+     $(".deleteMember").removeClass("hidden");
+     $("#sp-auto-profile").val($(profile).text());
+     // alert(response);
+     $("#spGroup_idspGroup").val($("#idspGroup").val());
+     })
+     return false;
+ });*/
+    $(".sp-group-details").on("keydown.autocomplete", "#sp-auto-profile", function () {
+        $(this).autocomplete({
+            minLength: 1,
+            source: "../mlayer/listprofile.php?ptid=" + $("#createrptid").val() + "&uid=" + $("#userid").val(),
+            focus: function () {
+                return false;
+            },
+            select: function (event, ui) {
+                $("#sp-auto-profile").val(ui.item.label);
+                $(".sp-profile-details").load("../my-groups/profiles.php", {
+                    pid: ui.item.value,
+                    gid: $("#idspGroup").val()
+                }, function (response) {
+                    // alert(response);
+                    $("#submitMember").removeClass("hidden");
+                    $(".deleteMember").addClass("hidden");
+                    $("#spProfiles_idspProfiles").val(ui.item.value);
+                    $("#spGroup_idspGroup").val($("#idspGroup").val());
+                })
+                //$("#spPostingVisibility").val(ui.item.value);
+                return false;
+            }
+        });
+    });
+    //Rename group .sp-group-details
+    $(".groupfield").on("click", "#submitRename", function () {
+
+        var btn = this;
+        var $form = $(btn).closest("form");
+        $form.submit(function (e) {
+            e.preventDefault();
+            $(btn).button('loading');
+            term = $form.serializeArray();
+            url = $form.attr("action");
+            $.post(url, term, function (data, status) {
+                //alert("Data: " + data + "\nStatus: " + status);
+            }).fail(function () {
+                $(btn).effect("shake");
+                $(btn).button('reset');
+            }).done(function () {
+                //Banner image testing
+                var base64image = $(".grpbannerpic").attr("src");
+                var arr = base64image.match(/data:image\/[a-z]+;/);
+                var ext = arr[0].replace("data:image/", "");
+                ext = ext.replace(";", "");
+                $.post("/my-groups/uploadimage.php", {
+                    groupid: $("#idspGroup").val(),
+                    groupPic: base64image,
+                    ext: ext
+                }, function (r) { });
+                //Testing complete
+                if ($(".spgroupflag").val() == 0) $(".gradmin-gid" + $("#idspGroup").val()).html("<span class='fa fa-globe'></span> " + $("#spGroupName").val());
+                else $(".gradmin-gid" + $("#idspGroup").val()).html("<span class='glyphicon glyphicon-lock'></span> " + $("#spGroupName").val());
+                $(".sp-profile-Group>.sp-group-label.active").trigger("click");
+            }).always(function () {
+                $(btn).button('reset');
+            });
+        });
+    });
+    //Delete Member 
+    $(".sp-group-details").on("click", ".deleteMember", function () {
+        if (confirm("Are you sure you want to unfriend....?")) {
+            var btn = this;
+            $(btn).text("")
+            var $a = $(btn).closest("a");
+            $(btn).button('loading');
+            var href = $(this).attr("href");
+            $.post(href, function (data, status) {
+                $("li[data-pid='" + $("#spProfiles_idspProfiles").val() + "']").remove();
+                //$("#gradmin-gid"+$("#spProfiles_idspProfiles").val()).remove();
+                $("#sp-auto-profile").val("");
+                $("#sp-profile-page").html("");
+                $(".deleteMember").closest(".friends").html("");
+                //$(btn).closest(".deletefriend").html("");
+                $.post("../friends/unfriend.php", {
+                    profileid: $(btn).data("profileid")
+                }, function (response) {
+                    //$(".frndall").text(response);
+                    window.location.reload();
+                }); //Friend-has-friend
+            }).fail(function () {
+                $(btn).effect("shake");
+                $(btn).button('reset');
+            }).done(function () { }).always(function () {
+                $(btn).button('reset');
+            });
+            return false;
+        }
+    });
+    //submit group
+    /*    $(".groupfield").one("click", "#spgroupSubmit", function () {
+            var btn = this;
+            var $form = $(btn).closest("form");
+            $form.submit(function (e) {
+                e.preventDefault();
+                $(btn).button('loading');
+                term = $form.serializeArray();
+                url = $form.attr("action");
+                var newLi;
+                $.post(url, term, function (data, status) {
+
+                    //Banner image testing
+                    var base64image = $(".grpbannerpic").attr("src");
+                    var arr = base64image.match(/data:image\/[a-z]+;/);
+                    var ext = arr[0].replace("data:image/", "");
+                    ext = ext.replace(";", "");
+                    $.post("../my-groups/uploadimage.php", {groupid: data.trim(), groupPic: base64image, ext: ext}, function (r) {
+
+                    });
+                    //Testing complete
+                    location.reload();
+                    if ($("#spgroupflag").val() == 0)
+                        $(".sp-profile-Group").append("<a href='members.php' class='list-group-item sp-group-label' data-gid='" + data.trim() + "'><span class='fa fa-globe'> </span> " + $("#spGroupName").val() + "</a>");
+                    else
+                        $(".sp-profile-Group").append("<a href='members.php' class='list-group-item sp-group-label' data-gid='" + data.trim() + "'><span class='glyphicon glyphicon-lock'> </span> " + $("#spGroupName").val() + "</a>");
+
+                    $("#spGroupTagline").val("");
+                    $("#spGroupAbout").val("");
+                    $(".sp-profile-Group>.sp-group-label:last-child").trigger("click");
+
+                    $(".addgroup").prepend("<li><a href='/grouptimelines/?groupid=" + data.trim() + "&groupname=" + $("#spGroupName").val() + "' class='gradmin-gid" + data.trim() + " my-group-dd'' data-gid='" + data.trim() + "'><span class='" + ($("#spgroupflag").val() == 1 ? "glyphicon glyphicon-lock" : "fa fa-unlock") + "'></span> " + $("#spGroupName").val() + "</a></li>");
+
+                    $("#spGroupName").val("");
+                }).fail(function () {
+                    $(btn).effect("shake");
+                    $(btn).button('reset');
+                }).done(function (data) {
+                    //alert("Group has been successfully added.");
+
+                }).always(function () {
+                    $(btn).button('reset');
+                });
+            });
+
+
+            
+        });
+
+
+        */
+    //delete group
+    /*$(".sp-group-details").on("click", "#deleteGroup",function(){
+     if (confirm("Are you sure you want to Delete Group ?")){
+     var btn = this;
+     var $a = $(btn).closest("a");
+     $(btn).button('loading');
+     var href = $(this).attr("href");
+     $.post(href, function(data, status) {
+     $("a[data-gid='"+$("#idspGroup").val()+"']").remove();
+     //$(".sp-profile-Group>.sp-group-label:last-child").trigger("click");
+     }).fail(function() {
+     $(btn).effect("shake");
+     $(btn).button('reset');
+     }).done(function() {
+     //$("#gradmin-pid"+$("#idspGroup").val()).remove();
+     $(".sp-group-details").html("");
+     //alert("Group has been successfully Deleted.");
+     }).always(function() {
+     $(btn).button('reset');
+     });
+     }
+     return false;
+ });*/
+    //Add member
+    $(".sp-group-details").on("click", "#submitMember", function () {
+        var btn = this;
+        var $form = $(btn).closest("form");
+        $form.submit(function (e) {
+            e.preventDefault();
+            $(btn).button('loading');
+            term = $form.serializeArray();
+            url = $form.attr("action");
+            $.post(url, term, function (data, status) {
+                //alert("Data: " + data + "\nStatus: " + status);
+                if (data == 0) {
+                    $("#sp-list-member").append("<li class='list-group-item'><a href='profiles.php' class='sp-profile-label' data-pid='" + $("#spProfiles_idspProfiles").val() + "'>" + $("#sp-auto-profile").val() + "</a></li>");
+                    $("#sp-auto-profile").val("");
+                    $("#sp-profile-page").html("");
+                } else alert("Canot add ,already added! ");
+            }).fail(function () {
+                $(btn).effect("shake");
+                $(btn).button('reset');
+            }).done(function () {
+                //alert("Member has been successfully added.");
+                //$("#sp-add-member :input").val("");
+            }).always(function () {
+                $(btn).button('reset');
+            });
+        });
+    });
+    /////profile releted code
+    $("#sp-list-profile").on("click", ".sp-user-profile-label", function (e) {
+        $(".sp-user-profile-label").removeClass("active");
+        $(".spProfileType_idspProfileType").val($(this).data("ptid"));
+        $(this).addClass("active");
+        $(".sp-profile-det").html("<div class='loader'></div>");
+        $(".sp-profile-det").load("profileDetails.php", {
+            pid: $(this).data("pid"),
+            pname: $(this).data("profilename"),
+            ptid: $(this).data("ptid")
+        }, function (response) {
+            // alert(response);
+        })
+        return false;
+    });
+    //delete profile
+    $(".sp-profile-det").on("click", "#deleteprofile", function () {
+        if (confirm("Are you sure you want to Delete this profile hellow i am a coder?")) {
+            var btn = this;
+            var $a = $(btn).closest("a");
+            $(btn).button('loading');
+            var href = $(this).attr("href");
+            $.post(href, function (data, status) {
+                $("a[data-pid='" + $("#idspProfiles_").val() + "']").remove();
+                //$("#gradmin-gid"+$("#spProfiles_idspProfiles").val()).remove();
+                //$("#sp-auto-profile").val("");
+                $(".sp-profile-det").html("");
+            }).fail(function () {
+                $(btn).effect("shake");
+                $(btn).button('reset');
+            }).done(function () {
+                location.reload();
+            }).always(function () {
+                $(btn).button('reset');
+            });
+        }
+        return false;
+    });
+    $(".sp-profile-det").on("click", "#sp-profile-id", function (event) {
+        var btn = this;
+        $("#spProfileName").val($("#spProfileName_").val());
+        $("#spProfileEmail").val($("#idspProfileEmail_").val());
+        $("#spProfilePhone").val($("#idspProfilePhone_").val());
+        $("#idspProfiles").val($("#idspProfiles_").val());
+        $("#spProfilesCountry").val($("#idspProfileCountry_").val());
+        $("#spProfilesCity").val($("#idspProfileCity_").val());
+        $("#profilepic").attr('src', $("#profilepicture").attr('src'));
+        $("#spProfileType_idspProfileType").val($("#idspProfilesType_").val());
+        $("#profileModalLabel").html("<h4 class='modal-title'>Edit Profile</h4>");
+        $("#profiletypes").addClass("hidden");
+        $("#iddropdown").addClass("hidden");
+        $("#profiletypeslabel").text($(this).data("profiletype"));
+        $("#spProfileAbout").val($("#idspProfileAbout_").val());
+        $("#imgInp").val($("#idspProfilepic_").val());
+        if ($(this).data("ptid") == 5) {
+            $("#jobseeker").load("jobseeker.php", function (respone) { });
+        } else $("#jobseeker").html("");
+    });
+    //profile registration
+    $("#sp-profile-register1").on("click", function () {
+        $("#spProfileName").val("");
+        $("#spProfileEmail").val("");
+        $("#spProfilePhone").val("");
+        $("#idspProfiles").val("");
+        $("#spProfileAbout").val("");
+        $("#profilepic").attr('src', "");
+        $("#imgInp").val("");
+        $("#profileModalLabel").html("<h4 class='modal-title'>New Profile</h4>");
+        $("#profiletypes").removeClass("hidden");
+        $("#iddropdown").removeClass("hidden");
+        $("#profiletypeslabel").html("<label id='profiletypeslabel' for='profiletypes' class='control-label'>Select Profile</label>");
+        $(".sp-profile-det").html("<div class='loader'></div>");
+        $(".sp-profile-det").load("profilefield.php", function (response) {
+            // alert(response);
+        })
+    });
+    //profile registration
+    $("#handle-user-address").on("click", function () {
+        $("#spProfileName").val("");
+        $("#spProfileEmail").val("");
+        $("#spProfilePhone").val("");
+        $("#idspProfiles").val("");
+        $("#spProfileAbout").val("");
+        $("#profilepic").attr('src', "");
+        $("#imgInp").val("");
+        $("#profileModalLabel").html("<h4 class='modal-title'>New Profile</h4>");
+        $("#profiletypes").removeClass("hidden");
+        $("#iddropdown").removeClass("hidden");
+        $("#profiletypeslabel").html("<label id='profiletypeslabel' for='profiletypes' class='control-label'>Select Profile</label>");
+        $(".sp-profile-det").html("<div class='loader'></div>");
+        $(".sp-profile-det").load("profileaddress.php", function (response) {
+            // alert(response);
+        })
+    });
+    $("#country_").autocomplete({
+        minLength: 2,
+        source: "../mlayer/listcountries.php",
+        focus: function () {
+            // prevent value inserted on focus
+            return false;
+        },
+        select: function (event, ui) {
+            $("#country_").val(ui.item.label);
+            $("#idspCountries_").val(ui.item.value);
+            $("#spCities_").val("");
+            $("#spCities_").focus();
+            return false;
+        }
+    });
+    $("#group_").autocomplete({
+        minLength: 1,
+        source: "../../mlayer/listgroup.php",
+        focus: function () {
+            // prevent value inserted on focus
+            return false;
+        },
+        select: function (event, ui) {
+            $("#group_").val(ui.item.label);
+            $("#spPostingVisibility").val(ui.item.value);
+            return false;
+        }
+        /*minLength: 1,
+         source: "../mlayer/listgroup.php?pid="+$("#profileid").val(),
+         focus: function() {
+         return false;
+         },
+         select: function(event, ui) {
+         $("#group_").val(ui.item.label);
+         $("#spPostingVisibility").val(ui.item.value);
+         return false;
+     }*/
+    });
+    $("#spCities_").autocomplete({
+        minLength: 2,
+        source: "../mlayer/listcities.php",
+        focus: function () {
+            // prevent value inserted on focus
+            return false;
+        },
+        select: function (event, ui) {
+            $("#spCities_").val(ui.item.label);
+            $("#spCities_idspCity").val(ui.item.value);
+            return false;
+        },
+        source: function (request, response) {
+            $.getJSON("../mlayer/listcities.php", {
+                term: $("#spCities_").val(),
+                idspCountries_: $("#idspCountries_").val()
+            }, function (data) {
+                response(data);
+            });
+        },
+        select: function (event, ui) {
+            $("#spCities_").val(ui.item.label);
+            $("#spCities_idspCity").val(ui.item.value);
+            $("#category_").focus();
+            return false;
+        }
+    });
+    $("#category_").autocomplete({
+        source: "../mlayer/listcategories.php",
+        focus: function () {
+            // prevent value inserted on focus
+            return false;
+        },
+        select: function (event, ui) {
+            $("#category_").val(ui.item.label);
+            $("#idspCategory_").val(ui.item.value);
+            $("#spSubCategories_").val("");
+            $("#spSubCategories_").focus();
+            return false;
+        }
+    });
+    $("#spSubCategories_").autocomplete({
+        source: "../mlayer/listsubcategories.php",
+        focus: function () {
+            // prevent value inserted on focus
+            return false;
+        },
+        source: function (request, response) {
+            $.getJSON("../mlayer/listsubcategories.php", {
+                term: $("#spSubCategories_").val(),
+                idspCategory_: $("#idspCategory_").val()
+            }, function (data) {
+                response(data);
+            });
+        },
+        select: function (event, ui) {
+            $("#spSubCategories_").val(ui.item.label);
+            $("#spSubCategories_idspSubCategory").val(ui.item.value);
+            $("#spPostingTitle").focus();
+            return false;
+        }
+    });
+    $("#postpublic").click(function () {
+        $("#spPostingVisibility").val("-1");
+        $("#postingtype").text("Public");
+        $("#sp-group-container").addClass("hidden");
+    });
+    $("#postgroup").click(function () {
+        $("#postingtype").text("Group");
+        $("#sp-group-container").removeClass("hidden");
+    });
+    $("#spPostingEmail").click(function () {
+        if ($(this).is(":checked")) $(this).val(1);
+        else $(this).val(0);
+    });
+    $("#spPostingPhone").click(function () {
+        if ($(this).is(":checked")) $(this).val(1);
+        else $(this).val(0);
+    });
+    //$('.dropdown-toggle').dropdown();
+    $('#collapsePost').on('show.bs.collapse', function () {
+        alert(window.location.href.toLowerCase());
+        if (!$(this).hasClass("sp-loaded")) {
+            $(this).children(".panel-body").load(window.location.href.toLowerCase() + "post.php");
+            $(this).addClass("sp-loaded");
+        }
+    });
+    var postedit = false;
+
+    function _(el) {
+        return document.getElementById(el);
+    }
+
+    function progressHandler(event) {
+        //_("loaded_n_total").innerHTML = "Uploaded "+event.loaded+" bytes of "+event.total;
+        var percent = (event.loaded / event.total) * 100;
+        _("progressBar").value = Math.round(percent);
+        _("status").innerHTML = Math.round(percent) + "% uploaded... please wait";
+    }
+
+    function completeHandler(event) {
+        _("status").innerHTML = event.target.responseText;
+        _("progressBar").value = 0;
+    }
+
+    function errorHandler(event) {
+        _("status").innerHTML = "Upload Failed";
+    }
+
+    function abortHandler(event) {
+        _("status").innerHTML = "Upload Aborted";
+    }
+  
+	
+	
+	//////////////////////////////////////////////////////////////
+
+//NEWS CODE START
+
+/////////////////////////////////////////////////////////////
+	
+	
+	
+	
+	
+    /*
+		
+		
+		
+		 $("#spPostSubmitnews").on("click", function (ev) {
+       //alert("000000000000000000");
+       // $("#youtubevideolink").text('');
+        var views_comment = document.getElementById("views_comment").value;
+		//var pid1 = document.getElementById("pid1").value;
+		//var uid1 = document.getElementById("uid1").value;
+		
+		 
+		
+		$.ajax({
+			
+			url: MAINURL+"/news/news_post_message.php",
+			type: "POST",
+			cache:false,
+			data: {
+				'post_message':views_comment 
+
+
+		},
+		
+		success: function(data) {  
+			
+              var postid = data;
+			
+				var form_data = new FormData();
+
+   //Read selected files
+          //var totalfiles = $('#addnewsDocument').files.length;
+            //for (var index = 0; index < totalfiles; index++) {
+          // form_data.append("newsPic[index]", $('#addnewsDocument')[index].files[index]);
+                //  }
+		//image sending
+		
+		
+		
+		  
+		
+		form_data.append('newsPic', $('#addimages')[0].files[0]);  
+		
+		form_data.append('newsDocument', $('#addnewsDocument')[0].files[0]);
+		form_data.append('newsMedia', $('#addvideo2')[0].files[0]);
+			//	form_data.append("newsDocument", document.getElementById('addnewsDocument').files);
+				form_data.append("lastid",postid);
+				
+				//var doc =document.getElementById('addnewsDocument').files;
+				//alert('kkkk222222555555555555555555555222222kkkkk');    
+			//	alert(doc);  
+				   
+				 
+                      $(".timelineload11").css({
+                        display: "block"
+                    });
+
+				 $.ajax({
+			     
+			url: MAINURL+"/news/news_post_media.php",
+			type: "POST",
+			cache:false,
+			   data: form_data,
+			  dataType: 'json',
+             contentType: false,
+             processData: false,
+			 complete: function (r) {
+                           //alert('aaaaaaa'); 
+						    $('#sp-form-post').each(function () {
+                                this.reset();
+                            });
+                            $(".timelineload11").css({  
+                                display: "none"
+                            });
+						   
+                           	  // //////////////location.reload()
+							  var postid = postid; 
+
+							 // alert(postid);
+							  // alert("success");
+								 $.ajax({
+								 
+						     	url: MAINURL+"/news/news_append_structure.php",    
+							   type: "POST",
+							   cache:false,
+							   data:form_data,
+							 // dataType: 'json',
+								 contentType: false,
+								 processData: false, 
+								 complete: function (hhtmlqata) { 
+									 alert('888888888'); 
+                           $('#appendStructure').html('"'+hhtmlqata+'"');            
+						   
+                           	  // location.reload()
+							     } 
+							   
+							   
+							   
+                          
+
+				 });
+							   
+							//////   
+                            }
+
+				 });
+				 
+				 
+				  
+			
+				}
+					
+                           
+              }); 
+				
+				// location.reload(); 
+				 
+		}); 
+		
+		
+		*/
+      
+  
+
+
+
+
+//////////////////////////////////////////////////////////////
+
+//NEWS CODE END
+
+/////////////////////////////////////////////////////////////
+
+
+
+
+
+	$("#spPostSubmitTimeline").on("click", function (ev) {
+        //alert('ppppppppppppppppppppppp');
+        $("#youtubevideolink").text('');
+        var grptimelinefrmtxt = document.getElementById("grptimelinefrmtxt").value;
+        var chkVideo = document.getElementById("addvideo").value;
+        var chkDocument = document.getElementById("addDocument").value;
+        var imgCount = $(".postingimg").length;
+        /* var prodata = new FormData();*/
+        var flag = 0;
+        if (grptimelinefrmtxt != "") {
+            var strArr = new Array();
+            strArr = grptimelinefrmtxt.split("");
+            if (strArr[0] == " ") // this is the the key part. you can do whatever you want here!
+            {
+                flag = 1;
+            }
+        }
+        if (grptimelinefrmtxt == "" && chkVideo == "" && chkDocument == "" && imgCount == "0") {
+            var logo = MAINURL + "/assets/images/logo/tsplogo.PNG";
+            swal({
+                title: "Please Post Something.",
+                /*text: "Here's a custom image.",*/
+                imageUrl: logo
+            });
+            /*  swal({
+                     title: "Please Select valid Video File.",
+                     imageUrl: MAINURL+'/assets/images/logo/logo-black.png'
+                     type: "warning",
+                     showCancelButton: false,
+                     showConfirmButton: true,
+                     confirmButtonClass: "btn-success",
+                     confirmButtonText: "Ok",
+                     closeOnConfirm: false
+                 });*/
+            //$('#progressBox').delay( 2000 ).fadeOut();
+        } else if (flag == 1) {
+            var logo = MAINURL + "/assets/images/logo/tsplogo.PNG";
+            swal({
+                title: "Space not allowed in Post.",
+                /*text: "Here's a custom image.",*/
+                imageUrl: logo
+            });
+        } else {
+            /*$(".timelineload").css({ display: "block" }); */
+            /*alert(grptimelinefrmtxt);
+            alert(chkVideo);
+            alert(chkDocument);
+            alert(imgCount);
+            console.log(chkDocument);
+            return false;*/
+            /*
+    var chkVideo = document.getElementById("addvideo").value;
+    if(chkVideo != ''){
+      $('#progressBox').css( "display", "block" );
+      //progress bar show on timeline; START
+      var file = _("addvideo").files[0];
+      var prodata = new FormData();
+      prodata.append("addvideo", file);
+      prodata.append("size", file.size);
+      var ajax = new XMLHttpRequest();
+      ajax.upload.addEventListener("progress", progressHandler, false);
+      ajax.addEventListener("load", completeHandler, false);
+      ajax.addEventListener("error", errorHandler, false);
+      ajax.addEventListener("abort", abortHandler, false);
+      ajax.open("POST", "../post-ad/blank-file.php");
+      ajax.send(prodata);
+      //progress bar show on timeline; END
+      $('#progressBox').delay( 2000 ).fadeOut(); //hide progress bar
+    }
+    //for document
+    var chkDocument = document.getElementById("addDocument").value;
+    //alert(chkDocument);
+    if(chkDocument != ''){
+      $('#progressBox').css( "display", "block" );
+      //progress bar show on timeline; START
+      var file = _("addDocument").files[0];
+      var prodata = new FormData();
+      prodata.append("addDocument", file);
+      prodata.append("size", file.size);
+      var ajax = new XMLHttpRequest();
+      ajax.upload.addEventListener("progress", progressHandler, false);
+      ajax.addEventListener("load", completeHandler, false);
+      ajax.addEventListener("error", errorHandler, false);
+      ajax.addEventListener("abort", abortHandler, false);
+      ajax.open("POST", "../post-ad/blank-file.php");
+      ajax.send(prodata);
+      //progress bar show on timeline; END
+      $('#progressBox').delay( 1000 ).fadeOut(); //hide progress bar
+    }
+    */
+            if ($(this).hasClass("editing")) postedit = true;
+            else postedit = false;
+            var btn = this;
+            var idspprofile = $("#spProfiles_idspProfiles").val();
+            var userid = $("#userid").val();
+            ///alert('helo');
+            var error = "Please fill out this fields!";
+            var $form = $("#sp-form-post");
+            if (idspprofile != "") {
+                //$(btn).button('loading...');
+                term = $form.serializeArray();
+                url = $form.attr("action");
+                $.post(url, term, function (data, status) { }).fail(function () {
+                    $(btn).effect("shake");
+                }).done(function (data) {
+                    //alert(data);
+                    var postid = data;
+                    var albumid = $(".album_id").val();
+                    //notification message from send box
+                    /*$.notify({
+                        title: '<strong>Job Submitted Successfully</strong>',
+                        icon: 'fa fa-info',
+                        message: ""
+                    },{
+                        type: 'success',
+                        animate: {
+                            enter: 'animated fadeInUp',
+                            exit: 'animated fadeOutRight'
+                        },
+                        placement: {
+                            from: "top",
+                            align: "right"
+                        },
+                        offset: 20,
+                        spacing: 10,
+                        z_index: 1031,
+                    }); */
+                    //Message after form submited
+                    if ($("#catname").val() != "") {
+                        swal({
+                            title: $("#spPostingTitle").val() + " Posted!",
+                            text: "View Your <a href='../post-details/?postid=" + postid + "' style='color:#F8BB86'>Post</a>",
+                            html: true
+                        });
+                    }
+                    // CUSTOM FIELDS 
+                    var inputs = readCustomFields($("#sp-form-post"), postid);
+                    $.each(inputs, function (i, val) {
+                        $.post(MAINURL + "/post-ad/addpostcustomfields.php", val, function (response) {
+                            //alert(response);
+                        });
+                    });
+                    // IMAGE
+                    var imgCount = $(".postingimg").length;
+                    $(".postingimg").each(function (i, e) {
+                        var base64image = $(e).attr("src");
+                        var arr = base64image.match(/data:image\/[a-z]+;/);
+                        var ext = arr[0].replace("data:image/", "");
+                        ext = ext.replace(";", "");
+                        var form_data = new FormData();
+                        form_data.append('spPostings_idspPostings', postid);
+                        //var totalfiles = document.getElementById('filesaaa').files.length;
+						
+						var url      = window.location.href;  
+						var str1 = url;
+						var str2 = "groupname";
+						if(str1.indexOf(str2) != -1){
+						   // console.log(str2 + " found");
+   					form_data.append('spPostingPic', $('input[type=file]')[1].files[i]);
+                        }			
+
+
+                     else {
+	
+					form_data.append('spPostingPic', $('input[type=file]')[0].files[i]);
+
+                    }			
+				/*		var groupid = getUrlVars()["groupid"];
+
+										if(groupid != ""){
+											alert('11111111111');
+																	form_data.append('spPostingPic', $('input[type=file]')[1].files[i]);
+
+										}
+										else {
+												alert('22222222222');
+																	form_data.append('spPostingPic', $('input[type=file]')[0].files[i]);
+										}
+														*/		
+						
+                        /*for (var index = 0; index < totalfiles; index++) {
+                                      form_data.append("files[]", document.getElementById('filesaaa').files[index]);
+                                 }*/
+                        $.ajax({
+                            url: MAINURL + "/post-ad/addpostingpic.php",
+                            type: 'post',
+                            data: form_data,
+                            dataType: 'json',
+                            contentType: false,
+                            processData: false,
+                            complete: function (r) {
+                             //   alert(r);  
+                                //alert(r);
+                                //console.log(r);
+                                if (i == imgCount - 1) {
+                                    //alert('bbbbbbbbb');
+                                    $.get(MAINURL + "/publicpost/timelineentry.php", {
+                                        js: "1",
+                                        timelineid: postid,
+                                        idspprofile: idspprofile,
+                                        userid: userid,
+                                        grouptimeline: $(btn).data("grouptimeline")
+                                    }, function (r) {
+										//location.reload();
+										//alert("22222222222222222");
+                                        $("#timeline-container").prepend(r);
+                                        //$(btn).button('reset');
+                                        
+                                    });
+                                }
+                                //window.location.reload();
+                            }
+                        });
+                        //$.post(MAINURL+"/post-ad/addpostingpic.php", {spPostings_idspPostings: postid, spPostingPic: base64image, ext: ext}, function (r) {
+                        //Timeline prepending
+                        //Timeline prepending complete
+                        //});
+                    });
+                    //Testing
+                    var vidCount = $("#mediaTitle").text();
+                    var docCount = $("#addDocument").length;
+                    if (imgCount == 0 && vidCount == "") {
+                        $(".timelineload").css({
+                            display: "block"
+                        });
+                        $.get(MAINURL + "/publicpost/timelineentry.php", {
+                            js: "1",
+                            timelineid: postid,
+                            idspprofile: idspprofile,
+                            userid: userid,
+                            grouptimeline: $(btn).data("grouptimeline"),
+                            idspprofile: idspprofile
+                        }, function (r) {
+                            $("#timeline-container").prepend(r);
+                            $('#sp-form-post').each(function () {
+                                this.reset();
+                            });
+                            $(".timelineload").css({
+                                display: "none"
+                            });
+                        });
+                    }
+                    //Testing Complete
+                    var chkVideo = document.getElementById("addvideo").value;
+                    //alert(chkVideo);
+                    if (chkVideo != '') {
+                        //Video post finaly
+                        ev.preventDefault();
+                        var form_data = new FormData($("#sp-form-post")[0]);
+                        //form_data.push({spPostings_idspPostings: postid, spPostingAlbum_idspPostingAlbum: albumid});
+                        form_data.append('spPostings_idspPostings', postid);
+                        form_data.append('spPostingAlbum_idspPostingAlbum_', albumid);
+                        $(".timelineload").css({
+                            display: "block"
+                        });
+                        $.ajax({
+                            url: "../post-ad/addmedia.php",
+                            type: "POST",
+                            data: form_data,
+                            contentType: false,
+                            cache: false,
+                            processData: false,
+                            success: function (vi) {
+                                /*alert(vi);*/
+                                $.get(MAINURL + "/publicpost/timelineentry.php", {
+                                    js: "1",
+                                    timelineid: postid,
+                                    idspprofile: idspprofile,
+                                    userid: userid,
+                                    grouptimeline: $(btn).data("grouptimeline")
+                                }, function (r) {
+                                    $("#timeline-container").prepend(r);
+                                    var vidCount = $("#mediaTitle").text("");
+                                    //$(btn).button('reset');
+                                    //alert(r);
+                                });
+                                $('#sp-form-post').each(function () {
+                                    this.reset();
+                                });
+                                $(".timelineload").css({
+                                    display: "none"
+                                });
+                                //window.location.reload();
+                            },
+                            error: function (error) { }
+                        });
+                    }
+                    //for document
+                    var chkDocument = document.getElementById("addDocument").value;
+                    //alert(chkDocument);
+                    if (chkDocument != '') {
+                        //Document post finaly
+                        ev.preventDefault();
+                        var form_data = new FormData($("#sp-form-post")[0]);
+                        form_data.append('spPostings_idspPostings', postid);
+                        form_data.append('spPostingAlbum_idspPostingAlbum_', albumid);
+                        $(".timelineload").css({
+                            display: "block"
+                        });
+                        $.ajax({
+                            url: "../post-ad/addmedia.php",
+                            type: "POST",
+                            data: form_data,
+                            contentType: false,
+                            cache: false,
+                            processData: false,
+                            success: function (vi) {
+                                //alert(vi);
+                                $.get(MAINURL + "/publicpost/timelineentry.php", {
+                                    js: "1",
+                                    timelineid: postid,
+                                    idspprofile: idspprofile,
+                                    userid: userid,
+                                    grouptimeline: $(btn).data("grouptimeline")
+                                }, function (r) {
+                                    $("#timeline-container").prepend(r);
+                                    var vidCount = $("#mediaTitle").text("");
+                                    //$(btn).button('reset');
+                                    //alert(r);
+                                });
+                                $("#addvideo").val("");
+                                $("#showchekbox").hide();
+                                $(".timelineload").css({
+                                    display: "none"
+                                });
+                                //window.location.reload();
+                            },
+                            error: function (error) { }
+                        });
+                    }
+                    $(".grptimeline").val("");
+                    $(".grptimeline").html("");
+                    $("#dvPreview").html("");
+                    $("#clearnow").val("");
+                    $(".grptimeline").val("");
+                    $("#postform .form-control").val("");
+                    //document.getElementById("sp-form-post").reset();
+                    //$(".timelineload").css({ display: "none" });
+                }).always(function () {
+                    //$(btn).button('reset');
+                });
+            } else {
+                alert("Please Select profile!..");
+            }
+        }
+    });
+    //goup
+    $("#spPostSubmitgroupTimeline").on("click", function (ev) {
+        $("#youtubevideolink").text('');
+        var grptimelinefrmtxt = document.getElementById("grptimelinefrmtxt").value;
+        var chkVideo = document.getElementById("addvideo").value;
+        var chkDocument = document.getElementById("addDocument").value;
+        var imgCount = $(".postingimg").length;
+        /* var prodata = new FormData();*/
+        var flag = 0;
+        if (grptimelinefrmtxt != "") {
+            var strArr = new Array();
+            strArr = grptimelinefrmtxt.split("");
+            if (strArr[0] == " ") // this is the the key part. you can do whatever you want here!
+            {
+                flag = 1;
+            }
+        }
+        if (grptimelinefrmtxt == "" && chkVideo == "" && chkDocument == "" && imgCount == "0") {
+            var logo = MAINURL + "/assets/images/logo/tsplogo.PNG";
+            swal({
+                title: "Please Post Something.",
+                /*text: "Here's a custom image.",*/
+                imageUrl: logo
+            });
+            /*  swal({
+                     title: "Please Select valid Video File.",
+                     imageUrl: MAINURL+'/assets/images/logo/logo-black.png'
+                     type: "warning",
+                     showCancelButton: false,
+                     showConfirmButton: true,
+                     confirmButtonClass: "btn-success",
+                     confirmButtonText: "Ok",
+                     closeOnConfirm: false
+                 });*/
+            //$('#progressBox').delay( 2000 ).fadeOut();
+        } else if (flag == 1) {
+            var logo = MAINURL + "/assets/images/logo/tsplogo.PNG";
+            swal({
+                title: "Space not allowed in Post.",
+                /*text: "Here's a custom image.",*/
+                imageUrl: logo
+            });
+        } else {
+            /*$(".timelineload").css({ display: "block" }); */
+            /*alert(grptimelinefrmtxt);
+            alert(chkVideo);
+            alert(chkDocument);
+            alert(imgCount);
+            console.log(chkDocument);
+            return false;*/
+            var chkVideo = document.getElementById("addvideo").value;
+            if (chkVideo != '') {
+                $('#progressBox').css("display", "block");
+                //progress bar show on timeline; START
+                var file = _("addvideo").files[0];
+                var prodata = new FormData();
+                prodata.append("addvideo", file);
+                prodata.append("size", file.size);
+                var ajax = new XMLHttpRequest();
+                ajax.upload.addEventListener("progress", progressHandler, false);
+                ajax.addEventListener("load", completeHandler, false);
+                ajax.addEventListener("error", errorHandler, false);
+                ajax.addEventListener("abort", abortHandler, false);
+                ajax.open("POST", "../post-ad/blank-file.php");
+                ajax.send(prodata);
+                //progress bar show on timeline; END
+                $('#progressBox').delay(2000).fadeOut(); //hide progress bar
+            }
+            //for document
+            var chkDocument = document.getElementById("addDocument").value;
+            //alert(chkDocument);
+            if (chkDocument != '') {
+                $('#progressBox').css("display", "block");
+                //progress bar show on timeline; START
+                var file = _("addDocument").files[0];
+                var prodata = new FormData();
+                prodata.append("addDocument", file);
+                prodata.append("size", file.size);
+                var ajax = new XMLHttpRequest();
+                ajax.upload.addEventListener("progress", progressHandler, false);
+                ajax.addEventListener("load", completeHandler, false);
+                ajax.addEventListener("error", errorHandler, false);
+                ajax.addEventListener("abort", abortHandler, false);
+                ajax.open("POST", "../post-ad/blank-file.php");
+                ajax.send(prodata);
+                //progress bar show on timeline; END
+                $('#progressBox').delay(1000).fadeOut(); //hide progress bar
+            }
+            if ($(this).hasClass("editing")) postedit = true;
+            else postedit = false;
+            var btn = this;
+            var idspprofile = $("#spProfiles_idspProfiles").val();
+            var userid = $("#userid").val();
+            ///alert('helo');
+            var error = "Please fill out this fields!";
+            var $form = $("#sp-form-post");
+            if (idspprofile != "") {
+                //$(btn).button('loading...');
+                term = $form.serializeArray();
+                url = $form.attr("action");
+                $.post(url, term, function (data, status) { }).fail(function () {
+                    $(btn).effect("shake");
+                }).done(function (data) {
+                    //alert(data);
+                    var postid = data;
+                    var albumid = $(".album_id").val();
+                    //notification message from send box
+                    /*$.notify({
+                        title: '<strong>Job Submitted Successfully</strong>',
+                        icon: 'fa fa-info',
+                        message: ""
+                    },{
+                        type: 'success',
+                        animate: {
+                            enter: 'animated fadeInUp',
+                            exit: 'animated fadeOutRight'
+                        },
+                        placement: {
+                            from: "top",
+                            align: "right"
+                        },
+                        offset: 20,
+                        spacing: 10,
+                        z_index: 1031,
+                    }); */
+                    //Message after form submited
+                    if ($("#catname").val() != "") {
+                        swal({
+                            title: $("#spPostingTitle").val() + " Posted!",
+                            text: "View Your <a href='../post-details/?postid=" + postid + "' style='color:#F8BB86'>Post</a>",
+                            html: true
+                        });
+                    }
+                    // CUSTOM FIELDS 
+                    var inputs = readCustomFields($("#sp-form-post"), postid);
+                    $.each(inputs, function (i, val) {
+                        $.post(MAINURL + "/post-ad/addpostcustomfields.php", val, function (response) {
+                            //alert(response);
+                        });
+                    });
+                    // IMAGE
+                    var imgCount = $(".postingimg").length;
+                    $(".postingimg").each(function (i, e) {
+                        var base64image = $(e).attr("src");
+                        var arr = base64image.match(/data:image\/[a-z]+;/);
+                        var ext = arr[0].replace("data:image/", "");
+                        ext = ext.replace(";", "");
+                        $.post(MAINURL + "/post-ad/addpostingpic1.php", {
+                            spPostings_idspPostings: postid,
+                            spPostingPic: base64image,
+                            ext: ext
+                        }, function (r) {
+                            //Timeline prepending
+                            if (i == imgCount - 1) {
+                                $.get(MAINURL + "/publicpost/grouptimelineentry.php", {
+                                    js: "1",
+                                    timelineid: postid,
+                                    idspprofile: idspprofile,
+                                    userid: userid,
+                                    grouptimeline: $(btn).data("grouptimeline")
+                                }, function (r) {
+                                    $("#timeline-container").prepend(r);
+                                    //$(btn).button('reset');
+                                    //alert(r);
+                                });
+                            }
+                            //Timeline prepending complete
+                        });
+                    });
+                    //Testing
+                    var vidCount = $("#mediaTitle").text();
+                    var docCount = $("#addDocument").length;
+                    if (imgCount == 0 && vidCount == "") {
+                        $(".timelineload").css({
+                            display: "block"
+                        });
+                        $.get(MAINURL + "/publicpost/grouptimelineentry.php", {
+                            js: "1",
+                            timelineid: postid,
+                            idspprofile: idspprofile,
+                            userid: userid,
+                            grouptimeline: $(btn).data("grouptimeline"),
+                            idspprofile: idspprofile
+                        }, function (r) {
+                            $("#timeline-container").prepend(r);
+                            $('#sp-form-post').each(function () {
+                                this.reset();
+                            });
+                            $(".timelineload").css({
+                                display: "none"
+                            });
+                        });
+                    }
+                    //Testing Complete
+                    var chkVideo = document.getElementById("addvideo").value;
+                    //alert(chkVideo);
+                    if (chkVideo != '') {
+                        //Video post finaly
+                        ev.preventDefault();
+                        var form_data = new FormData($("#sp-form-post")[0]);
+                        //form_data.push({spPostings_idspPostings: postid, spPostingAlbum_idspPostingAlbum: albumid});
+                        form_data.append('spPostings_idspPostings', postid);
+                        form_data.append('spPostingAlbum_idspPostingAlbum', albumid);
+                        $(".timelineload").css({
+                            display: "block"
+                        });
+                        $.ajax({
+                            url: "../post-ad/addmedia.php",
+                            type: "POST",
+                            data: form_data,
+                            contentType: false,
+                            cache: false,
+                            processData: false,
+                            success: function (vi) {
+                                /*alert(vi);*/
+                                $.get(MAINURL + "/publicpost/grouptimelineentry.php", {
+                                    js: "1",
+                                    timelineid: postid,
+                                    idspprofile: idspprofile,
+                                    userid: userid,
+                                    grouptimeline: $(btn).data("grouptimeline")
+                                }, function (r) {
+                                    $("#timeline-container").prepend(r);
+                                    var vidCount = $("#mediaTitle").text("");
+                                    //$(btn).button('reset');
+                                    //alert(r);
+                                });
+                                $('#sp-form-post').each(function () {
+                                    this.reset();
+                                });
+                                $(".timelineload").css({
+                                    display: "none"
+                                });
+                                //window.location.reload();
+                            },
+                            error: function (error) { }
+                        });
+                    }
+                    //for document
+                    var chkDocument = document.getElementById("addDocument").value;
+                    //alert(chkDocument);
+                    if (chkDocument != '') {
+                        //Document post finaly
+                        ev.preventDefault();
+                        var form_data = new FormData($("#sp-form-post")[0]);
+                        form_data.append('spPostings_idspPostings', postid);
+                        form_data.append('spPostingAlbum_idspPostingAlbum', albumid);
+                        $(".timelineload").css({
+                            display: "block"
+                        });
+                        $.ajax({
+                            url: "../post-ad/addmedia.php",
+                            type: "POST",
+                            data: form_data,
+                            contentType: false,
+                            cache: false,
+                            processData: false,
+                            success: function (vi) {
+                                //alert(vi);
+                                $.get(MAINURL + "/publicpost/grouptimelineentry.php", {
+                                    js: "1",
+                                    timelineid: postid,
+                                    idspprofile: idspprofile,
+                                    userid: userid,
+                                    grouptimeline: $(btn).data("grouptimeline")
+                                }, function (r) {
+                                    $("#timeline-container").prepend(r);
+                                    var vidCount = $("#mediaTitle").text("");
+                                    //$(btn).button('reset');
+                                    //alert(r);
+                                });
+                                $("#addvideo").val("");
+                                $("#showchekbox").hide();
+                                $(".timelineload").css({
+                                    display: "none"
+                                });
+                                //window.location.reload();
+                            },
+                            error: function (error) { }
+                        });
+                    }
+                    $(".grptimeline").val("");
+                    $(".grptimeline").html("");
+                    $("#dvPreview").html("");
+                    $("#clearnow").val("");
+                    $(".grptimeline").val("");
+                    $("#postform .form-control").val("");
+                    //document.getElementById("sp-form-post").reset();
+                    //$(".timelineload").css({ display: "none" });
+                }).always(function () {
+                    //$(btn).button('reset');
+                });
+            } else {
+                alert("Please Select profile!..");
+            }
+        }
+    });
+    // EDIT TIMLINE POST
+    $('#timeline-container').on('click', ".sendPostidEdit", function (e) {
+        /*alert();*/
+        $(".posteditloader").css({
+            display: "block"
+        });
+        var postid = $(this).attr("data-postid");
+        //alert(postid);
+        $(".sp-post-edit").load(MAINURL + "/profile/postField.php", {
+            postid: postid
+        }, function (response) {
+            //alert(response);
+            $(".posteditloader").css({
+                display: "none"
+            });
+        });
+    });
+    //post a timeline post
+    $("#spPostEditTimeline").on("click", function (ev) {
+        alert('ooooooooooooooo');
+        postedit = true;
+        var btn = this;
+        var idspPostings = $("#idspPostings").val();
+        //alert(idspPostings);
+        var logo = MAINURL + "/assets/images/logo/tsplogo.PNG";
+        var error = "Please fill out this fields!";
+        var $form = $("#sp-form-post-edit");
+        if (idspPostings != "") {
+            term = $form.serializeArray();
+            url = $form.attr("action");
+            //alert();
+            $.post(url, term, function (data, status) {
+                //window.location.reload();
+            }).fail(function () {
+                $(btn).effect("shake");
+            }).done(function (data) {
+                //alert(data);
+                var postid = data;
+                // IMAGE POST
+                var del = 0;
+                var imgCount = $(".fdgfdhgfhfg").length;
+                $(".fdgfdhgfhfg").each(function (i, e) {
+                    // alert(i);
+                    //var base64image = $(e).attr("src");
+                    /*var arr = base64image.match(/data:image\/[a-z]+;/);
+                    //var ext = arr[0].replace("data:image/", "");
+                    ext = ext.replace(";", "");*/
+                    var formData = new FormData();
+                    formData.append('spPostings_idspPostings', postid);
+                    formData.append('postedit', '1');
+                    //formData.append('del', del);
+                    // Attach file 
+                    formData.append('spPostingPic', $('input[type=file]')[0].files[i]);
+                    $.ajax({
+                        url: MAINURL + "/post-ad/addpostingpic.php",
+                        data: formData,
+                        type: 'POST',
+                        contentType: false,
+                        processData: false,
+                        success: function (r) {
+                            //window.location.reload();
+                        }
+                    });
+                    del++;
+                    //alert(del);
+                    if (del == imgCount) {
+                        // $(".timelineload").css({ display: "none" }); 
+                        swal({
+                            title: "Post Updated Successfully!",
+                            imageUrl: logo,
+                            confirmButtonClass: "sweet_ok",
+                            confirmButtonText: "Yes",
+                        }, function () {
+                            window.location.reload();
+                        });
+                        //window.location.reload();
+                    }
+                });
+                var chkVideo = '';
+                if (document.getElementById("addvideo")) var chkVideo = document.getElementById("addvideo").value;
+                //alert(chkVideo);
+                if (chkVideo != '') {
+                    //Video post finaly
+                    ev.preventDefault();
+                    var form_data = new FormData($("#sp-form-post-edit")[0]);
+                    //form_data.push({spPostings_idspPostings: postid, spPostingAlbum_idspPostingAlbum: albumid});
+                    /*  form_data.append('spPostings_idspPostings', postid);
+                    form_data.append('spPostingAlbum_idspPostingAlbum', albumid);*/
+                    $(".timelineload").css({
+                        display: "block"
+                    });
+                    $.ajax({
+                        url: "../post-ad/updatepostmedia.php",
+                        type: "POST",
+                        data: form_data,
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        success: function (vi) {
+                            /*alert(vi);*/
+                            $(".timelineload").css({
+                                display: "none"
+                            });
+                            swal({
+                                title: "Post Updated Successfully!",
+                                imageUrl: logo,
+                                confirmButtonClass: "sweet_ok",
+                                confirmButtonText: "Yes",
+                            }, function () {
+                                window.location.reload();
+                            });
+                            //window.location.reload();
+                        },
+                        error: function (error) { }
+                    });
+                }
+                var chkdoc = '';
+                if (document.getElementById("addDocument")) var chkdoc = document.getElementById("addDocument").value;
+                //alert(chkVideo);
+                if (chkdoc != '') {
+                    //Video post finaly
+                    ev.preventDefault();
+                    var form_data = new FormData($("#sp-form-post-edit")[0]);
+                    //form_data.push({spPostings_idspPostings: postid, spPostingAlbum_idspPostingAlbum: albumid});
+                    /*  form_data.append('spPostings_idspPostings', postid);
+                    form_data.append('spPostingAlbum_idspPostingAlbum', albumid);*/
+                    $(".timelineload").css({
+                        display: "block"
+                    });
+                    $.ajax({
+                        url: "../post-ad/updatepostmedia.php",
+                        type: "POST",
+                        data: form_data,
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        success: function (vi) {
+                            /*alert(vi);*/
+                            $(".timelineload").css({
+                                display: "none"
+                            });
+                            swal({
+                                title: "Post Updated Successfully!",
+                                imageUrl: logo,
+                                confirmButtonClass: "sweet_ok",
+                                confirmButtonText: "Yes",
+                            }, function () {
+                                window.location.reload();
+                            });
+                            //window.location.reload();
+                        },
+                        error: function (error) { }
+                    });
+                }
+                if (del == 0) {
+                    var logo = MAINURL + "/assets/images/logo/tsplogo.PNG";
+                    swal({
+                        title: "Post Updated Successfully!",
+                        imageUrl: logo,
+                        confirmButtonClass: "sweet_ok",
+                        confirmButtonText: "Yes",
+                    }, function () {
+                        window.location.reload();
+                    });
+                    //window.location.reload();
+                }
+                $('#myPostEdit').modal('hide');
+            }).always(function () {
+                //$(btn).button('reset');
+            });
+        } else {
+            alert("Please Select Correct Post!..");
+        }
+    });
+    //=====sponsor edit start
+    $('#sponsorTab').on('click', ".sendSponsorEdit", function (e) {
+        var sponsorId = $(this).attr("data-sponsor");
+        $(".sp-sponsor-edit").load("sponsorField.php", {
+            sponsorId: sponsorId
+        }, function (response) {
+            //alert(response);
+        })
+    });
+    //=====sponsor edit end
+    //post a store form start
+    //======Music Module Start=================
+    //post a audio
+    $("#spPostSubmitMusic").on("click", function () {
+        if ($(this).hasClass("editing")) postedit = true;
+        else postedit = false;
+        $(".loadbox").css({
+            display: "block"
+        });
+        var btn = this;
+        var idspprofile = $("#spProfiles_idspProfiles").val();
+        var $form = $("#sp-form-post");
+        if (idspprofile != "") {
+            //$(btn).button('loading...');
+            term = $form.serializeArray();
+            url = $form.attr("action");
+            $.post(url, term, function (data, status) {
+                //alert(data);
+            }).fail(function () {
+                $(btn).effect("shake");
+            }).done(function (data) {
+                //alert(data);
+                var postid = data;
+                var albumid = $(".album_id").val();
+                //notification message from send box
+                $.notify({
+                    title: '<strong>Added Successfully</strong>',
+                    icon: '',
+                    message: ""
+                }, {
+                    type: 'success',
+                    animate: {
+                        enter: 'animated fadeInUp',
+                        exit: 'animated fadeOutRight'
+                    },
+                    placement: {
+                        from: "top",
+                        align: "right"
+                    },
+                    offset: 20,
+                    spacing: 10,
+                    z_index: 1031,
+                });
+                //Message after form submited
+                // CUSTOM FIELDS 
+                var inputs = readCustomFields($("#sp-form-post"), postid);
+                $.each(inputs, function (i, val) {
+                    $.post(MAINURL + "/post-ad/addpostcustomfields.php", val, function (response) {
+                        //alert(response);
+                    });
+                });
+                //LYRICS UPDATE TEXT EDITOR START
+                var lyrics = $("#lyrics_").Editor("getText");
+                $.post(MAINURL + "/post-ad/music/updatelyric.php", {
+                    postid: postid,
+                    lyrics: lyrics
+                }, function (nte) {
+                    //alert(nte);
+                });
+                //LYRICS UPDATE TEXT EDITOR END
+                // IMAGE
+                var imgCount = $(".postingimg").length;
+                $(".postingimg").each(function (i, e) {
+                    //this is for featured image strt
+                    var fichek = $(e).attr("data-name");
+                    var isCheckeed = $('#' + fichek + ':checked').val() ? true : false;
+                    if (isCheckeed == true) {
+                        spFeatureimg = 1;
+                    } else {
+                        spFeatureimg = 0;
+                    }
+                    //this is for featured image end
+                    var base64image = $(e).attr("src");
+                    var arr = base64image.match(/data:image\/[a-z]+;/);
+                    var ext = arr[0].replace("data:image/", "");
+                    ext = ext.replace(";", "");
+                    $.post(MAINURL + "/post-ad/addpostingpic.php", {
+                        spPostings_idspPostings: postid,
+                        spPostingPic: base64image,
+                        ext: ext,
+                        spFeatureimg: spFeatureimg,
+                        postedit: postedit
+                    }, function (r) {
+                        //alert(r);
+                        //Timeline prepending
+                        if (i == imgCount - 1) {
+                            $.get(MAINURL + "/publicpost/timelineentry.php", {
+                                js: "1",
+                                timelineid: postid,
+                                grouptimeline: $(btn).data("grouptimeline")
+                            }, function (r) {
+                                $("#timeline-container").prepend(r);
+                                //$(btn).button('reset');
+                            });
+                        }
+                    });
+                });
+                //update music id from music table
+                var musicId = document.getElementById("spMusicmediaId_").value;
+                if (musicId > 0) {
+                    $.post(MAINURL + "/music/updatemusic.php", {
+                        spPostings_idspPostings: postid,
+                        musicId: musicId
+                    }, function (r) {
+                        //alert(r);
+                    });
+                }
+                //Testing
+                if (imgCount == 0) {
+                    $.get(MAINURL + "/publicpost/timelineentry.php", {
+                        js: "1",
+                        timelineid: postid,
+                        grouptimeline: $(btn).data("grouptimeline")
+                    }, function (r) {
+                        $("#timeline-container").prepend(r);
+                        //$(btn).button('reset');
+                        //alert(r);
+                    });
+                }
+                //Testing Complete
+                //Media
+                $(".media-file-data").each(function (i, e) {
+                    var base64image = $(e).attr("data-media");
+                    var arr = base64image.match(/data:[a-zA-Z0-9 -/]+;/);
+                    var ext = arr[0].replace("data:", "");
+                    $.post("../addmedia.php", {
+                        spPostings_idspPostings: postid,
+                        spPostingMedia: base64image,
+                        ext: ext,
+                        spPostingAlbum_idspPostingAlbum: albumid
+                    }, function (r) {
+                        //alert(r);
+                    });
+                });
+                $("#dvPreview").html("");
+                $("#spPreview").html("");
+                $("#clearnow").val("");
+                $(".grptimeline").val("");
+                $("#postform .form-control").val("");
+                document.getElementById("sp-form-post").reset();
+                //this script for delay a redirect page for another page.
+                var seconds = 10;
+                setInterval(function () {
+                    seconds--;
+                    if (seconds == 0) {
+                        window.location.href = MAINURL + '/music/dashboard.php';
+                        //window.location.reload();
+                    }
+                }, 1000);
+                //====end=====
+                if (postedit == true) {
+                    //window.location.reload();
+                }
+            }).always(function () {
+                //$(btn).button('reset');
+            });
+            //location.reload();
+        } else alert("Please Select profile!..");
+    });
+    //======Real Estate start======
+    /*  $("#spPostSubmitReal").on("click", function () {
+        $(".loadbox").css({ display: "block" });
+
+       
+
+            if ($(this).hasClass("editing"))
+                postedit = true;
+            else
+                postedit = false;
+
+        //post preview code
+        if ($(this).hasClass("previewReal")){
+          $(".loadbox").css({ display: "block" });
+                previewPost = true;
+          var typepage = $(this).attr("data-type");
+            }else{
+                previewPost = false;
+        }
+
+            var btn = this;
+            var idspprofile = $("#spProfiles_idspProfiles").val();
+            var $form = $("#sp-form-post");
+            
+            if (idspprofile != ""){
+                //$(btn).button('loading...');
+                term = $form.serializeArray();
+                url = $form.attr("action");
+                $.post(url, term, function (data, status) {
+            //alert(data);
+                }).fail(function () {
+                    $(btn).effect("shake");
+                }).done(function (data) {
+                    //alert(data);
+            var postid = data;
+                    var albumid = $(".album_id").val();
+            //notification message from send box
+            $.notify({
+              title: '<strong>Added Successfully</strong>',
+              icon: '',
+              message: ""
+            },{
+              type: 'success',
+              animate: {
+                enter: 'animated fadeInUp',
+                exit: 'animated fadeOutRight'
+              },
+              placement: {
+                from: "top",
+                align: "right"
+              },
+              offset: 20,
+              spacing: 10,
+              z_index: 1031,
+            });
+                    // CUSTOM FIELDS 
+                    var inputs = readCustomFields($("#sp-form-post"), postid);
+                    $.each(inputs, function (i, val) {
+                        $.post(MAINURL+"/post-ad/addpostcustomfields.php", val, function (response) {
+                            //alert(response);
+                        });
+                    });
+            
+            //add Highlights
+            var Highlights = "";
+            $(".highlit .btn-group>ul>li input:checked").each(function(k,obj){
+              Highlights=Highlights+$(obj).val()+",";
+            });
+            Highlights = Highlights.substring(0,Highlights.length - 1);
+            //console.log(Accessids);
+            $.post(MAINURL+"/post-ad/addpostHightlight.php",{Highlights:Highlights,postid:postid,postedit:postedit}, function (re) {
+              //alert(re);
+            });
+                      
+            // IMAGE
+                    var imgCount = $(".postingimg").length;
+                    $(".postingimg").each(function (i, e){
+              //this is for featured image strt
+              var fichek = $(e).attr("data-name");
+              var isCheckeed = $('#'+fichek+':checked').val()?true:false;
+              if(isCheckeed == true){
+                spFeatureimg = 1;
+              }else{
+                spFeatureimg = 0;
+              }
+              //this is for featured image end
+              var base64image = $(e).attr("src");
+              var arr = base64image.match(/data:image\/[a-z]+;/);
+                        var ext = arr[0].replace("data:image/", "");
+                        ext = ext.replace(";", "");
+                        $.post(MAINURL+"/post-ad/addpostingpic.php", {spPostings_idspPostings: postid, spPostingPic: base64image, ext: ext, spFeatureimg:spFeatureimg, postedit:postedit}, function (r) {
+                            //alert(r);
+                //Timeline prepending
+                            if (i == imgCount - 1) {
+                                $.get(MAINURL+"/publicpost/timelineentry.php", {js: "1", timelineid: postid, grouptimeline: $(btn).data("grouptimeline")}, function (r) {
+                                    $("#timeline-container").prepend(r);
+                                    //$(btn).button('reset');
+                                });
+                            }
+                        });
+                    });
+            //=======Add video start=======
+            
+            //=======Add video end=======
+                    //Testing
+                    if (imgCount == 0){
+                        $.get(MAINURL+"/publicpost/timelineentry.php", {js: "1", timelineid: postid, grouptimeline: $(btn).data("grouptimeline")}, function (r) {
+                            $("#timeline-container").prepend(r);
+                            //$(btn).button('reset');
+                            //alert(r);
+                        });
+                    }
+                    //Testing Complete
+                    //Media
+                    $(".media-file-data").each(function (i, e){
+                        
+                        var base64image = $(e).attr("data-media");
+                        var arr = base64image.match(/data:[a-zA-Z0-9 -/]+;/);
+                        var ext = arr[0].replace("data:", "");
+
+                        $.post("../addmedia.php", {spPostings_idspPostings: postid, spPostingMedia: base64image, ext: ext, spPostingAlbum_idspPostingAlbum: albumid}, function (r) {
+                            //alert(r);
+                        });
+                    });
+            
+              $("#dvPreview").html("");
+              $("#spPreview").html("");
+              $("#clearnow").val("");
+              $(".grptimeline").val("");
+              $("#postform .form-control").val("");
+              if(postedit == true){
+                //window.location.reload();
+                //no page refresh because form is too large
+
+                if(previewPost == true){
+                  document.getElementById("sp-form-post").reset();
+                  //this script for delay a redirect page for another page.
+                  var seconds = 25;
+                  setInterval(function () {
+                    seconds--;
+                    if (seconds == 0) {
+                      if(typepage == 0){
+                        window.location = "../../real-estate/property-detail.php?postid="+(postid.trim());
+                      }else{
+                        window.location = "../../real-estate/room-detail.php?postid="+(postid.trim());
+                      }
+                      
+                    }
+                  }, 1000);
+                  //====end=====
+                }
+              }else{
+                document.getElementById("sp-form-post").reset();
+                //this script for delay a redirect page for another page.
+                var seconds = 15;
+                setInterval(function () {
+                  seconds--;
+                  if (seconds == 0) {
+                    window.location.reload();
+                  }
+                }, 1000);
+                //====end=====
+              }
+            
+          
+                }).always(function () {
+                    //$(btn).button('reset');
+                });
+                //location.reload();
+            } else
+                alert("Please Select profile!..");
+            });*/
+    //======Real Estate End========
+    //======post preview=====
+    $("#preview").on("click", function () {
+        var visibility = $("#spPostingVisibility").val();
+        $("#spPostingVisibility").val("0");
+        postedit = false;
+        var btn = this;
+        var idspprofile = $("#spProfiles_idspProfiles").val();
+        var $form = $("#sp-form-post");
+        $form.submit(function (e) {
+            if (idspprofile != "") {
+                e.preventDefault();
+                $(btn).button('loading');
+                term = $form.serializeArray();
+                url = $form.attr("action");
+                $.post(url, term, function (data, status) { }).fail(function () {
+                    $(btn).effect("shake");
+                    $(btn).button('reset');
+                }).done(function (data) {
+                    var postid = data;
+                    var albumid = $(".album_id").val();
+                    // CUSTOM FIELDS 
+                    var inputs = readCustomFields($("#sp-form-post"), postid);
+                    $.each(inputs, function (i, val) {
+                        $.post(MAINURL + "/post-ad/addpostcustomfields.php", val, function (response) {
+                            //alert(response);
+                        });
+                    });
+                    //$("#sp-form-post :input").not("#spProfiles_idspProfiles, #spPostingVisibility, #spCategories_idspCategory").val("");
+                    //add new fields on preview button
+                    var pageEvent = $("#leftmenu").attr("data-event");
+                    if (pageEvent == 1) {
+                        //alert("yes");
+                        var Accessids = "";
+                        $(".multi_select .btn-group>ul>li input:checked").each(function (k, obj) {
+                            Accessids = Accessids + $(obj).val() + ",";
+                        });
+                        Accessids = Accessids.substring(0, Accessids.length - 1);
+                        //console.log(Accessids);
+                        //add feature profile
+                        $.post(MAINURL + "/post-ad/addpostcustomfieldsfeature.php", {
+                            Accessids: Accessids,
+                            postid: postid,
+                            postedit: postedit
+                        }, function (re) {
+                            //alert(re);
+                        });
+                        //======add soponsor in field start======
+                        var spon = "";
+                        $(".add_spon .btn-group>ul>li input:checked").each(function (k, obj) {
+                            spon = spon + $(obj).val() + ",";
+                            //alert("no");
+                        });
+                        spon = spon.substring(0, spon.length - 1);
+                        //console.log(spon);
+                        $.post(MAINURL + "/post-ad/addsponsor.php", {
+                            spon: spon,
+                            postid: postid,
+                            postedit: postedit
+                        }, function (re) {
+                            //alert(re);
+                        });
+                        //======add soponsor in field end========
+                        //======add co-host========
+                        var cohost = "";
+                        $(".multi_select_cohost .btn-group>ul>li input:checked").each(function (k, obj) {
+                            cohost = cohost + $(obj).val() + ",";
+                            //alert("no");
+                        });
+                        cohost = cohost.substring(0, cohost.length - 1);
+                        //console.log(cohost);
+                        $.post(MAINURL + "/post-ad/addcohost.php", {
+                            cohost: cohost,
+                            postid: postid,
+                            postedit: postedit
+                        }, function (cohost) { });
+                    } else {
+                        //alert(multi);
+                        var multi = $(".multiselect").attr("title");
+                        if (multi == 'None selected' || multi == '') { } else {
+                            $.post(MAINURL + "/post-ad/addpostcustomfieldssize.php", {
+                                multi: multi,
+                                postid: postid
+                            }, function (re) {
+                                //alert(re);
+                            });
+                        }
+                    }
+                    //for dell image
+                    // IMAGE
+                    var imgCount = $(".postingimg").length;
+                    $(".postingimg").each(function (i, e) {
+                        //this is for featured image strt
+                        var fichek = $(e).attr("data-name");
+                        var isCheckeed = $('#' + fichek + ':checked').val() ? true : false;
+                        if (isCheckeed == true) {
+                            spFeatureimg = 1;
+                        } else {
+                            spFeatureimg = 0;
+                        }
+                        //this is for featured image end
+                        var base64image = $(e).attr("src");
+                        var arr = base64image.match(/data:image\/[a-z]+;/);
+                        var ext = arr[0].replace("data:image/", "");
+                        ext = ext.replace(";", "");
+                        $.post(MAINURL + "/post-ad/addpostingpic.php", {
+                            spPostings_idspPostings: postid,
+                            spPostingPic: base64image,
+                            ext: ext,
+                            spFeatureimg: spFeatureimg,
+                            postedit: postedit
+                        }, function (r) {
+                            //alert(r);
+                            //Timeline prepending
+                            if (i == imgCount - 1) {
+                                $.get(MAINURL + "/publicpost/timelineentry.php", {
+                                    js: "1",
+                                    timelineid: postid,
+                                    grouptimeline: $(btn).data("grouptimeline")
+                                }, function (r) {
+                                    $("#timeline-container").prepend(r);
+                                    //$(btn).button('reset');
+                                });
+                            }
+                        });
+                    });
+                    //=======Add video start=======
+                    var chkVideo = document.getElementById("addvideo").value;
+                    if (chkVideo != '') {
+                        //Video post finaly
+                        //ev.preventDefault();
+                        var form_data = new FormData($("#sp-form-post")[0]);
+                        //form_data.push({spPostings_idspPostings: postid, spPostingAlbum_idspPostingAlbum: albumid});
+                        form_data.append('spPostings_idspPostings', postid);
+                        form_data.append('spPostingAlbum_idspPostingAlbum', albumid);
+                        $.ajax({
+                            url: MAINURL + "/post-ad/addpostmedia.php",
+                            type: "POST",
+                            data: form_data,
+                            contentType: false,
+                            cache: false,
+                            processData: false,
+                            success: function (vi) {
+                                //alert(vi);
+                                //window.location.reload();
+                                $("#dvPreview").html("");
+                                $("#spPreview").html("");
+                                $("#clearnow").val("");
+                                $(".grptimeline").val("");
+                                $("#postform .form-control").val("");
+                                document.getElementById("sp-form-post").reset();
+                                if (postedit == true) {
+                                    window.location.reload();
+                                }
+                            },
+                            error: function (error) {
+                                //alert(error);
+                            }
+                        });
+                    }
+                    //=======Add video end=======
+                    //Testing
+                    if (imgCount == 0) {
+                        $.get(MAINURL + "/publicpost/timelineentry.php", {
+                            js: "1",
+                            timelineid: postid,
+                            grouptimeline: $(btn).data("grouptimeline")
+                        }, function (r) {
+                            $("#timeline-container").prepend(r);
+                            //$(btn).button('reset');
+                            //alert(r);
+                        });
+                    }
+                    //Testing Complete
+                    //Media
+                    $(".media-file-data").each(function (i, e) {
+                        var base64image = $(e).attr("data-media");
+                        var arr = base64image.match(/data:[a-zA-Z0-9 -/]+;/);
+                        var ext = arr[0].replace("data:", "");
+                        $.post("../addmedia.php", {
+                            spPostings_idspPostings: postid,
+                            spPostingMedia: base64image,
+                            ext: ext,
+                            spPostingAlbum_idspPostingAlbum: albumid
+                        }, function (r) {
+                            //alert(r);
+                        });
+                    });
+                    if (chkVideo == '') {
+                        $("#dvPreview").html("");
+                        $("#spPreview").html("");
+                        $("#clearnow").val("");
+                        $(".grptimeline").val("");
+                        $("#postform .form-control").val("");
+                        document.getElementById("sp-form-post").reset();
+                        //this script for delay a redirect page for another page.
+                        var seconds = 8;
+                        setInterval(function () {
+                            seconds--;
+                            if (seconds == 0) {
+                                window.location = "../../events/event-detail.php?postid=" + (postid.trim()) + "&visibility=-1";
+                            }
+                        }, 1000);
+                        //====end=====
+                        if (postedit == true) {
+                            //window.location.reload();
+                        }
+                    }
+                    //========end=====================
+                    $("#dvPreview").html("");
+                }).always(function () {
+                    $(btn).button('reset');
+                });
+            } else alert("Please Select profile!..");
+        });
+    });
+    //======post preview
+    //update feature image start
+    $(".updateFeature").click(function () {
+        if ($(this).attr("data-picid")) {
+            var picid = $(this).attr("data-picid");
+            var postid = $(this).attr("data-postid");
+            $.post(MAINURL + "/post-ad/updatepostfeat.php", {
+                picid: picid,
+                postid: postid
+            }, function (r) {
+                //alert(r);
+            });
+        }
+    });
+    //update feature image end
+    //onclick get feature name======
+    $('#leftmenu').on('change', function () {
+        var proId = $(this).val();
+        $.post(MAINURL + "/post-ad/events/loadfeatur.php", {
+            proId: proId
+        }, function (r) {
+            $(".showName").html(r);
+        });
+    });
+    //onclick get feature name======
+    //======event intrested start===
+    $(".intrestArea").on("click", function () {
+        var postid = $(this).attr("data-postid");
+        var pid = $(this).attr("data-pid");
+        var area = $(this).attr("data-area");
+        var classhtml = "ie_" + postid;
+        $.post(MAINURL + "/events/addEventintrest.php", {
+            postid: postid,
+            pid: pid,
+            area: area
+        }, function (r) {
+            //alert(r);
+            $("." + classhtml).html(r);
+            window.location.reload();
+        });
+    });
+    //======event intrested end===
+    //======event intrested start===
+    $(".intestDetail").on("click", function () {
+        var postid = $(this).attr("data-postid");
+        var pid = $(this).attr("data-pid");
+        var area = $(this).attr("data-area");
+        var classhtml = "ie_" + postid;
+        $.post(MAINURL + "/events/addEventintrestTwo.php", {
+            postid: postid,
+            pid: pid,
+            area: area
+        }, function (r) {
+            //alert(r);
+            $("." + classhtml).html(r);
+            //window.location.reload();
+        });
+    });
+    //======event intrested end===
+    //post a jop form
+    $("#spPostSubmit").on("click", function () {
+        if ($(this).hasClass("editing")) postedit = true;
+        else postedit = false;
+        $(".loadbox").css({
+            display: "block"
+        });
+        var btn = this;
+        var idspprofile = $("#spProfiles_idspProfiles").val();
+        var title = $("#spPostingTitle").val();
+        var description = document.getElementById('spPostingNotes').value;
+        var skill = $("#spPostingSkill_").val();
+        var closDate = $("#spClosingDate_").val();
+        var pricing = $("#sppostcost").val();
+        var error = "Please fill out this fields!";
+        var $form = $("#sp-form-post");
+        if (idspprofile != "") {
+            if (title != "") {
+                if (description != ' ') {
+                    if (skill != "") {
+                        if (closDate != "") {
+                            if (pricing != "") {
+                                //$(btn).button('loading...');
+                                term = $form.serializeArray();
+                                url = $form.attr("action");
+                                $.post(url, term, function (data, status) { }).fail(function () {
+                                    $(btn).effect("shake");
+                                }).done(function (data) {
+                                    //alert(data);
+                                    var postid = data;
+                                    var albumid = $(".album_id").val();
+                                    //notification message from send box
+                                    $.notify({
+                                        title: '<strong>Job Submitted Successfully</strong>',
+                                        icon: 'fa fa-info',
+                                        message: ""
+                                    }, {
+                                        type: 'success',
+                                        animate: {
+                                            enter: 'animated fadeInUp',
+                                            exit: 'animated fadeOutRight'
+                                        },
+                                        placement: {
+                                            from: "top",
+                                            align: "right"
+                                        },
+                                        offset: 20,
+                                        spacing: 10,
+                                        z_index: 1031,
+                                    });
+                                    //Message after form submited
+                                    /* old version of send data
+                                    if ($("#catname").val() != ""){
+                                        swal({
+                                            title: $("#spPostingTitle").val() + " Posted!",
+                                            text: "View Your <a href='../post-details/?postid=" + postid + "' style='color:#F8BB86'>Post</a>",
+                                            html: true
+                                        });
+                                    }*/
+                                    // CUSTOM FIELDS 
+                                    var inputs = readCustomFields($("#sp-form-post"), postid);
+                                    $.each(inputs, function (i, val) {
+                                        $.post(MAINURL + "/post-ad/addpostcustomfields.php", val, function (response) {
+                                            //alert(response);
+                                        });
+                                    });
+                                    //$("#sp-form-post :input").not("#spProfiles_idspProfiles, #spPostingVisibility, #spCategories_idspCategory").val("");
+                                    // IMAGE
+                                    var imgCount = $(".postingimg").length;
+                                    $(".postingimg").each(function (i, e) {
+                                        var base64image = $(e).attr("src");
+                                        var arr = base64image.match(/data:image\/[a-z]+;/);
+                                        var ext = arr[0].replace("data:image/", "");
+                                        ext = ext.replace(";", "");
+                                        $.post(MAINURL + "/post-ad/addpostingpic.php", {
+                                            spPostings_idspPostings: postid,
+                                            spPostingPic: base64image,
+                                            ext: ext
+                                        }, function (r) {
+                                            //Timeline prepending
+                                            if (i == imgCount - 1) {
+                                                $.get(MAINURL + "/publicpost/timelineentry.php", {
+                                                    js: "1",
+                                                    timelineid: postid,
+                                                    grouptimeline: $(btn).data("grouptimeline")
+                                                }, function (r) {
+                                                    $("#timeline-container").prepend(r);
+                                                    //$(btn).button('reset');
+                                                    //alert(r);
+                                                });
+                                            }
+                                            //Timeline prepending complete
+                                        });
+                                    });
+                                    $(".postingvideo").each(function (i, e) {
+                                        var base64image = $(e).attr("data-media");
+                                        //alert(base64image);
+                                        var arr = base64image.match(/data:[a-zA-Z0-9 -/]+;/);
+                                        var ext = arr[0].replace("data:", "");
+                                        $.post("../post-ad/addpostingvideo.php", {
+                                            spPostings_idspPostings: postid,
+                                            spPostingVids: base64image,
+                                            ext: ext
+                                        }, function (r) {
+                                            //alert(r);
+                                        });
+                                    });
+                                    //Testing
+                                    if (imgCount == 0) {
+                                        $.get(MAINURL + "/publicpost/timelineentry.php", {
+                                            js: "1",
+                                            timelineid: postid,
+                                            grouptimeline: $(btn).data("grouptimeline")
+                                        }, function (r) {
+                                            $("#timeline-container").prepend(r);
+                                            //$(btn).button('reset');
+                                            //alert(r);
+                                        });
+                                    }
+                                    //Testing Complete
+                                    //Media
+                                    $(".media-file-data").each(function (i, e) {
+                                        var base64image = $(e).attr("data-media");
+                                        var arr = base64image.match(/data:[a-zA-Z0-9 -/]+;/);
+                                        var ext = arr[0].replace("data:", "");
+                                        $.post("../post-ad/addmedia.php", {
+                                            spPostings_idspPostings: postid,
+                                            spPostingMedia: base64image,
+                                            ext: ext,
+                                            spPostingAlbum_idspPostingAlbum: albumid
+                                        }, function (r) {
+                                            //alert(r);
+                                        });
+                                    });
+                                    $("#dvPreview").html("");
+                                    $("#clearnow").val("");
+                                    $(".grptimeline").val("");
+                                    $("#postform .form-control").val("");
+                                    document.getElementById("sp-form-post").reset();
+                                    window.location.href = "posting.php?postid=" + postid.trim();
+                                }).always(function () {
+                                    //$(btn).button('reset');
+                                });
+                                //location.reload();
+                                document.getElementById("errorPrice").innerHTML = "";
+                                document.getElementById("errorCloseDate").innerHTML = "";
+                                document.getElementById("errorSkill").innerHTML = "";
+                                document.getElementById("errorDesc").innerHTML = "";
+                                document.getElementById("errorTitle").innerHTML = "";
+                            } else {
+                                document.getElementById("errorPrice").innerHTML = "Enter a price";
+                                document.getElementById("errorCloseDate").innerHTML = "";
+                                document.getElementById("errorSkill").innerHTML = "";
+                                document.getElementById("errorDesc").innerHTML = "";
+                                document.getElementById("errorTitle").innerHTML = "";
+                            }
+                        } else {
+                            document.getElementById("errorCloseDate").innerHTML = "select closing date";
+                            document.getElementById("errorSkill").innerHTML = "";
+                            document.getElementById("errorDesc").innerHTML = "";
+                            document.getElementById("errorTitle").innerHTML = "";
+                        }
+                    } else {
+                        document.getElementById("errorSkill").innerHTML = "Enter at least one skill";
+                        document.getElementById("errorDesc").innerHTML = "";
+                        document.getElementById("errorTitle").innerHTML = "";
+                    }
+                } else {
+                    //alert("Please write notes.");
+                    document.getElementById("errorDesc").innerHTML = " Please enter description";
+                    document.getElementById("errorTitle").innerHTML = "";
+                }
+            } else {
+                document.getElementById("errorTitle").innerHTML = " Please enter a title";
+            }
+        } else {
+            alert("Please Select profile!..");
+        }
+    });
+    $("#previewPost").on("show.bs.modal", function (event) {
+        $("#preCountries").text($("#country_").val());
+        $("#preCities").text($("#spCities_").val());
+        $("#preCategory").text($("#category_").val());
+        $("#preSubCategory").text($("#spSubCategories_").val());
+        $("#prePostingTitle").text($("#spPostingTitle").val());
+        $("#prePostingNotes").text($("#spPostingNotes").val());
+    });
+    // THIS IS COUNTRY CODE SELECTED START
+    $(".country").click(function () {
+        // alert();
+        var code = $(this).attr('data-dial-code');
+        //console.log('+'+code);
+        $("#txtCountryCode").val('+' + code);
+    });
+    $("#buresetpass").one("click", function () {
+        var $form = $("#buResetForm");
+        $form.submit(function (e) {
+            e.preventDefault();
+            $("#buresetpass").button('loading');
+            if ($form.find("span").hasClass("glyphicon-remove")) {
+                $("#buresetpass").effect("shake");
+                $("#buresetpass").button('reset');
+                return false;
+            }
+            term = $form.serializeArray();
+            url = $form.attr("action");
+            var posting = $.post(url, term, function (data, status) {
+                if (data == 0) window.location.href = "/profiles/";
+                else {
+                    alert("STOP! You don't have a valid reset code. Write to member@webarrister.com or call 93 429 72000 for support.");
+                }
+                $("#buresetpass").button('reset');
+            });
+        });
+    });
+    // FORGET PASSWORD LINK
+    $("#forreset").one("click", function () {
+        //alert('helo');
+        var $form = $("#formgot");
+        $form.submit(function (e) {
+            e.preventDefault();
+            var spfregemail = document.getElementById("spfregemail").value;
+            if (spfregemail.trim() == "") {
+                $(".spfregemail").html("Please enter your email");
+            } else {
+                // CHEK EMAIL IS VALID OR Not
+                var isemailvalid = IsEmail(spfregemail);
+                if (isemailvalid == true) {
+                    $(".spfregemail").html("");
+                    $("#forreset").button('loading');
+                    term = $form.serializeArray();
+                    url = $form.attr("action");
+                    var posting = $.post(url, term, function (data, status) {
+                        if (data == 0) {
+                            $('.help-block').html("We have sent an email with a reset link, please check your email and reset the password.");
+                            $(".emailNotValid").html("");
+                        } else {
+                            $('.help-block').html('');
+                            $(".emailNotValid").html("This email does not exist, please enter a valid email.");
+                        }
+                        $("#forreset").button('reset');
+                    });
+                } else {
+                    $(".spfregemail").html("Please enter correct email.");
+                    $('.help-block').html('');
+                    $('.emailNotValid').html('');
+                }
+            }
+            // MESSAGE HIDE AFTER SPECIFIC TIME
+            var seconds = 3;
+            setInterval(function () {
+                seconds--;
+                if (seconds == 0) {
+                    $(".spfregemail").html("");
+                }
+            }, 1000);
+            //====end=====
+        });
+    });
+    $("#msend").one("click", function () {
+        var $form = $("#conform");
+        $form.submit(function (e) {
+            e.preventDefault();
+            $("#msend").button('loading');
+            term = $form.serializeArray();
+            url = $form.attr("action");
+            var posting = $.post(url, term, function (data, status) {
+                $("#msend").button('reset');
+                $(".bcontact").html("<h3>Message Sent.</h3>");
+                setTimeout(function () {
+                    $(".bcontact").fadeOut();
+                    $(".curr").hide();
+                    $("li").removeClass("active");
+                    $(".bhome").addClass("curr").fadeIn();
+                }, 1500);
+            });
+        });
+    });
+    $("#bpass").on("focus", function () {
+        if ($(this).val().length == 0) {
+            $(this).closest(".has-feedback").removeClass("has-error").removeClass("has-success");
+            $(this).parent().siblings(".form-control-feedback").removeClass("glyphicon-ok").removeClass("glyphicon-remove");
+        }
+    });
+    $("#bpass").on("keydown", function () {
+        $(this).closest(".has-feedback").removeClass("has-error").removeClass("has-success");
+        $(this).parent().siblings(".form-control-feedback").removeClass("glyphicon-ok").removeClass("glyphicon-remove");
+    });
+    $(".spUserName").on("keydown", function () {
+        $(this).closest(".has-feedback").removeClass("has-error").removeClass("has-success");
+        $(this).parent().siblings(".form-control-feedback").removeClass("glyphicon-ok").removeClass("glyphicon-remove");
+    });
+    $(".spUserName").on("change", function () {
+        var ip = this;
+        if ($(ip).val().length > 4) {
+            $.get("authentication/availableuser.php?uname=" + $(ip).val(), function (ucheck) {
+                ucheck = ucheck - $(ip).data("lo");
+                if (ucheck == 0) {
+                    $(ip).closest(".has-feedback").addClass("has-error").removeClass("has-success");
+                    $(ip).parent().siblings(".form-control-feedback").removeClass("hidden").removeClass("glyphicon-ok").addClass("glyphicon-remove");
+                } else {
+                    $(ip).closest(".has-feedback").addClass("has-success").removeClass("has-error");
+                    $(ip).parent().siblings(".form-control-feedback").removeClass("hidden").removeClass("glyphicon-remove").addClass("glyphicon-ok");
+                }
+            });
+        } else {
+            $(ip).closest(".has-feedback").removeClass("has-success").removeClass("has-error");
+            $(ip).parent().siblings(".form-control-feedback").addClass("hidden").removeClass("glyphicon-remove").removeClass("glyphicon-ok");
+        }
+    });
+    $("#checkemail").text("");
+    $("#spUserEmail").on("click", function () {
+        if ($("#spUserEmail").val() != "") { } else $("#spUserEmail").val("");
+        $("#checkemail").text("");
+    });
+    $(".spRegisterEmail").on("input", function () {
+        var emailField = $(".spRegisterEmail").val();
+        // $("#checkemail").text("");
+        if (emailField.length > 4) {
+            $.get("authentication/availableemail.php?uemail=" + emailField, function (echeck) {
+                if (echeck == 0) {
+                    $(".spRegisterEmail").closest(".has-feedback").addClass("has-error").removeClass("has-success");
+                    $(".spRegisterEmail").parent().siblings(".form-control-feedback").removeClass("hidden").removeClass("glyphicon-ok").addClass("glyphicon-remove");
+                    $("#checkemail").text(emailField + " is already registered!");
+                    $(".spRegisterEmail").val("");
+                } else {
+                    $("#checkemail").text("");
+                    $(".spRegisterEmail").closest(".has-feedback").addClass("has-success").removeClass("has-error");
+                    $(".spRegisterEmail").parent().siblings(".form-control-feedback").removeClass("hidden").removeClass("glyphicon-remove").addClass("glyphicon-ok");
+                }
+            });
+        }
+    });
+    $("#respUserEnpass").on("change", function () {
+        $ip = $("#respUserEnpass");
+        if ($ip.val() != "") {
+            if ($ip.val() != $("#bpass").val()) {
+                $ip.closest(".has-feedback").addClass("has-error").removeClass("has-success");
+                $ip.parent().siblings(".form-control-feedback").removeClass("hidden").removeClass("glyphicon-ok").addClass("glyphicon-remove");
+            } else {
+                $ip.closest(".has-feedback").addClass("has-success").removeClass("has-error");
+                $ip.parent().siblings(".form-control-feedback").removeClass("hidden").removeClass("glyphicon-remove").addClass("glyphicon-ok");
+            }
+        }
+    });
+    $("#bpass").on("change", function () {
+        $ip = $("#bpass");
+        if ($ip.val() != "") {
+            if ($ip.val() != $("#respUserEnpass").val()) {
+                $ip.closest(".has-feedback").addClass("has-error").removeClass("has-success");
+                $ip.parent().siblings(".form-control-feedback").removeClass("hidden").removeClass("glyphicon-ok").addClass("glyphicon-remove");
+            } else {
+                $ip.closest(".has-feedback").addClass("has-success").removeClass("has-error");
+                $ip.parent().siblings(".form-control-feedback").removeClass("hidden").removeClass("glyphicon-remove").addClass("glyphicon-ok");
+            }
+        }
+    });
+    $(".backhome").on("click", function () {
+        $(".curr").hide();
+        $("li").removeClass("active");
+        $(".bhome").addClass("curr").fadeIn();
+    });
+    $(".logi").on("click", function () {
+        $(".curr").hide();
+        $("#invalid").html("");
+        $("#loginame").val("");
+        $("#lpass").val("");
+        $("#liLog").parent().siblings().removeClass("active");
+        $("#liLog").parent().addClass("active");
+        $(".blog").addClass("curr").fadeIn();
+        $("#loginame").focus();
+    });
+    $("#liCon").on("click", function () {
+        $(".curr").hide();
+        $("li").removeClass("active");
+        $(".bcontact").addClass("curr").fadeIn();
+    });
+    $("#btmore").on("click", function () {
+        $(".curr").hide();
+        $("li").removeClass("active");
+        $(".lmore").addClass("curr").fadeIn();
+    });
+    $(".regi").on("click", function () {
+        $(".curr").hide();
+        $("#spUserName").val("");
+        $("#spUserEmail").val("");
+        $("#bpass").val("");
+        $("#liRegi").parent().siblings().removeClass("active");
+        $("#liRegi").parent().addClass("active");
+        $(".breg").addClass("curr").fadeIn();
+        $("#spUserName").focus();
+    });
+    $("#bforpass").on("click", function () {
+        $(".curr").hide();
+        $(".bforgot").addClass("curr").fadeIn();
+    });
+    $(".roleSel").on("click", function () {
+        $("#btRole").html($(this).text() + "  <span class='caret'></span>");
+        $("#uType").val($(this).data("ut"));
+    });
+    $('.spitems').hover(function () {
+        $(this).css({
+            "font-weight": "bold"
+        });
+    }, function () {
+        $(this).css({
+            "font-weight": "normal"
+        });
+    });
+    $('#spprofiletab a').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+    });
+    $("#prosavemain").on("click", function () {
+        var $form = $("#frmpromain");
+        $form.submit(function (e) {
+            e.preventDefault();
+            $("#prosavemain").button('loading');
+            term = $form.serializeArray();
+            url = $form.attr("action");
+            $.post(url, term, function (data, status) { }).always(function () {
+                $("#prosavemain").button('reset');
+            });
+        });
+    });
+    $("#proaddnew").one("click", function () {
+        var $form = $("#frmpronew");
+        $form.submit(function (e) {
+            e.preventDefault();
+            $("#proaddnew").button('loading');
+            term = $form.serializeArray();
+            url = $form.attr("action");
+            $.post(url, term, function (data, status) {
+                alert("Data: " + data + "\nStatus: " + status);
+            }).done(function () {
+                window.location.href = "/profiles/";
+            }).always(function () {
+                $("#proaddnew").button('reset');
+            });
+        });
+    });
+    $(".proupdate").on("click", function () {
+        var btn = this;
+        var $form = $(btn).closest("form");
+        $form.submit(function (e) {
+            e.preventDefault();
+            $(btn).button('loading');
+            term = $form.serializeArray();
+            url = $form.attr("action");
+            $.post(url, term, function (data, status) {
+                alert("Data: " + data + "\nStatus: " + status);
+            }).fail(function () {
+                $(btn).effect("shake");
+                $(btn).button('reset');
+            }).done(function () {
+                window.location.href = "/profiles/";
+            }).always(function () {
+                $(btn).button('reset');
+            });
+        });
+    });
+    $(".prodel").on("click", function () {
+        var btn = this;
+        var $form = $(btn).closest("form");
+        $(btn).button('loading');
+        var posting = $.post("deletepro.php", {
+            pid: $(btn).data("pid")
+        }, function (data, status) {
+            alert("Data: " + data + "\nStatus: " + status);
+        }).fail(function () {
+            $(btn).effect("shake");
+            $(btn).button('reset');
+        }).done(function (data) {
+            window.location.href = "/profiles/";
+        }).always(function () {
+            $(btn).button('reset');
+        });
+    });
+    //my new functions
+    $('.ordrSave').on('change', function () {
+        //alert( this.value );
+        var orderBy = this.value;
+        var txtProfileId = document.getElementById("txtProfileId").value;
+        var txtPagid = document.getElementById("txtPagid").value;
+        if (txtPagid == 1) {
+            url = "../profile/loadgallery.php";
+        } else if (txtPagid == 2) {
+            url = "../profile/loadaudio.php";
+        } else if (txtPagid == 3) {
+            url = "../profile/loadvideo.php";
+        } else if (txtPagid == 4) {
+            url = "../profile/loaddocument.php";
+        } else if (txtPagid == 5) {
+            url = "../profile/loadfav.php";
+        } else if (txtPagid == 6) {
+            url = "../profile/loadsavepost.php";
+        }
+        //alert(url);
+        //alert(txtProfileId);
+        //alert(orderBy);
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: 'orderBy=' + orderBy + '&txtProfileId=' + txtProfileId,
+            success: function (vi) {
+                //alert(vi);
+                $('#update_gallery').html(vi);
+            },
+            error: function (error) { }
+        });
+    });
+    //my timeline filters
+    $('.timelinedate').on('change', function () {
+        //alert( this.value );
+        var orderdate = this.value;
+        var spProfiles_idspProfiles = document.getElementById("spProfiles_idspProfiles").value;
+        //alert(spProfiles_idspProfiles);
+        if (orderdate > 0) {
+            $(".timelineload").css({
+                display: "block"
+            });
+            url = "../publicpost/sortdata.php";
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: 'orderdate=' + orderdate + '&spProfiles_idspProfiles=' + spProfiles_idspProfiles,
+                success: function (vi) {
+                    //alert(vi);
+                    //alert('we');
+                    $('#timelinechange').html(vi);
+                    $(".timelineload").css({
+                        display: "none"
+                    });
+                },
+                error: function (error) { }
+            });
+        }
+    });
+    //atach a profile id to group
+    $('#frndadd').on('click', ".addtogroup", function (e) {
+        var profileid = $(this).attr("data-pid");
+        //alert(profileid);
+        document.getElementById("txtidspProfile").value = profileid;
+    });
+    //send sms from profile
+    $('#frndadd').on('click', ".sendasms", function (e) {
+        var receiver = $(this).attr("data-receiver");
+        var sender = $(this).attr("data-sender");
+        //alert(profileid);
+        document.getElementById("spProfiles_idspProfilesSender").value = sender;
+        document.getElementById("spprofiles_idspProfilesReciver").value = receiver;
+    });
+    //on change event on art gallery
+    $(".artType").on("change", function () {
+        //alert($(this).val());
+        var type = $(this).val();
+        if (type == -3) {
+            document.getElementById('leftArtFrm').style.height = "1140px";
+            document.getElementById('eventDiv').style.display = "block";
+            document.getElementById('spPostingVisibility').value = -3;
+            //this is for event load
+            $("#eventDiv").load("eventload.php", {
+                type: type
+            }, function (response) {
+                //alert(response);
+            })
+        } else if (type == -2) {
+            document.getElementById('leftArtFrm').style.height = "1140px";
+            document.getElementById('eventDiv').style.display = "block";
+            document.getElementById('spPostingVisibility').value = -2;
+            //this is for exhibition load
+            $("#eventDiv").load("exhibitionload.php", {
+                type: type
+            }, function (response) {
+                //alert(response);
+            })
+        } else {
+            document.getElementById('leftArtFrm').style.height = "900px";
+            document.getElementById('eventDiv').style.display = "none";
+            $("#innerEventDiv").remove();
+            document.getElementById('spPostingVisibility').value = -1;
+        }
+    });
+    //upload image on exhibition
+    $(".postExhibitionpic").change(function () {
+        if (typeof (FileReader) != "undefined") {
+            var dvPreview = $("#dvPreviewexhi");
+            //dvPreview.html("");
+            var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
+            $($(this)[0].files).each(function () {
+                var file = $(this);
+                //alert(file[0].size);
+                if (file[0].size <= 2097152) {
+                    if (regex.test(file[0].name.toLowerCase())) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            document.getElementById("spExhibitionImage").value = e.target.result;
+                            var img = $("<div class='col-md-2 imagepost'><span class='fa fa-remove dynamicimg closed'></span><img class='postingimg overlayImage' style='width:100px; height: 100px; margin-right:14px;' src='" + e.target.result + "'/></div>");
+                            //img.attr("style", "width:72px; height: 80px; 
+							//margin-right:5px;");
+                            //img.attr("src", e.target.result);
+                            dvPreview.append(img);
+                            document.getElementById("dvPreview").classList.remove('hidden');
+                        } 
+                        reader.readAsDataURL(file[0]);
+                    } else {
+                        alert(file[0].name + " is not a valid image file.");
+                        //dvPreview.html("");
+                        return false;
+                    }
+                } else {
+                    alert(file[0].name + " is too large. Please upload image less then 2Mb.");
+                    return false;
+                }
+            });
+        } else {
+            alert("This browser does not support HTML5 FileReader.");
+        }
+    });
+    //create exhibition
+    $("#spaddexhibition").on("click", function () {
+        $("#newExhibition").modal('hide');
+        swal({
+            title: $("#spExhibitionTitle").val() + " Created!",
+            html: true
+        });
+        var btn = this;
+        var $form = $(btn).closest("form");
+        $form.submit(function (e) {
+            e.preventDefault();
+            $(btn).button('loading');
+            term = $form.serializeArray();
+            url = $form.attr("action");
+            $.post(url, term, function (data, status) {
+                //alert(data);
+                //Adding cretaed album in the list
+                $(".exedroupdown").prepend("<li><a href='#' class='my-album-ee' data-exhibitionTitle='" + $("#spExhibitionTitle").val() + "' data-exhibitionid='" + data.trim() + "'>" + $("#spExhibitionTitle").val() + "</a></li>");
+                $("#spExhibitionTitle").val("");
+                $("#spExhibitionDesc").val("");
+            }).fail(function () {
+                $(btn).effect("shake");
+                $(btn).button('reset');
+            }).done(function (data) { }).always(function () {
+                $(btn).button('reset');
+            });
+        });
+    });
+    //===send event sms
+    $("#sendEventSms").on("click", function () {
+        $("#sendAsms").modal('hide');
+        var btn = this;
+        var $form = $(btn).closest("form");
+        $form.submit(function (e) {
+            e.preventDefault();
+            $(btn).button('loading');
+            term = $form.serializeArray();
+            url = $form.attr("action");
+            $.post(url, term, function (data, status) {
+                //alert(data);
+            }).fail(function () {
+                $(btn).effect("shake");
+                $(btn).button('reset');
+            }).done(function (data) { }).always(function () {
+                $(btn).button('reset');
+            });
+        });
+    });
+    //===send event sms
+    //add to board on art gallery
+    $(".addtoboard").on("click", function () {
+        //alert($(this).attr("data-pid"));
+        //alert($(this).attr("data-postid"));
+        var pid = $(this).attr("data-pid");
+        var postid = $(this).attr("data-postid");
+        $.post("../artandcraft/addtoboard.php", {
+            spPosting_idspPosting: postid,
+            spProfile_idspProfile: pid
+        }, function (r) {
+            //alert(r);
+            //alert(postid);
+            //$("#adremovetoboard"+postid).html("<a class='removetoboard' data-postid='"+postid+"' data-pid='"+pid+"' data-toggle='tooltip' title='Remove to board'><img src='"+MAINURL+"/assets/images/art/icon-add.png' alt='' class='img-responsive'></a>");   
+            //document.getElementById("adremovetoboard"+postid).innerHTML = '<a class="removetoboard" data-postid="'+postid+'" data-pid="'+pid+'" data-toggle="tooltip" title="Remove to board"><img src="'+MAINURL+'/assets/images/art/icon-add.png" alt="" class="img-responsive"></a>';
+            //notification message from send box
+            $.notify({
+                title: '<strong>Added to board</strong>',
+                icon: '',
+                message: "",
+				
+            }, {
+                type: 'info',
+                animate: {
+                    enter: 'animated fadeInUp',
+                    exit: 'animated fadeOutRight'
+                },
+                placement: {
+                    from: "top",
+                    align: "right"
+                },
+                offset: 20,
+                spacing: 10,
+                z_index: 1031,
+            });
+            //alert('hii');
+           // location.reload();
+		   setTimeout(function(){ location.reload(); }, 2000);
+            // location.href=MAINURL+"/artandcraft/board.php";
+        });
+    });
+    //Remove to board on art gallery
+    $(".removetoboard").on("click", function () {
+        //alert($(this).attr("data-pid"));
+        //alert($(this).attr("data-postid"));
+        var pid = $(this).attr("data-pid");
+        var postid = $(this).attr("data-postid");
+        $("." + postid).addClass("hidden");
+        $.post(MAINURL + "/artandcraft/addtoboard.php", {
+            remove: 1,
+            spPosting_idspPosting: postid,
+            spProfile_idspProfile: pid
+        }, function (r) {
+            //alert(r);
+            //document.getElementById("adremovetoboard"+postid).innerHTML = '<a class="addtoboard" data-postid="'+postid+'" data-pid="'+pid+'" data-toggle="tooltip" title="Add to board"><img src="'+MAINURL+'/assets/images/art/icon-add.png" alt="" class="img-responsive"></a>';
+            //notification message from send box
+            $.notify({
+                title: '<strong>Removed to board</strong>',
+                icon: '',
+                message: ""
+            }, {
+                type: 'info',
+                animate: {
+                    enter: 'animated fadeInUp',
+                    exit: 'animated fadeOutRight'
+                },
+                placement: {
+                    from: "top",
+                    align: "right"
+                },
+                offset: 20,
+                spacing: 10,
+                z_index: 1031,
+            });
+			setTimeout(function(){ location.reload(); }, 2000);
+           // location.reload();
+        });
+    });
+    $(".removetoboardashboard").on("click", function () {
+        //alert($(this).attr("data-pid"));
+        //alert($(this).attr("data-postid"));
+        var pid = $(this).attr("data-pid");
+        var postid = $(this).attr("data-postid");
+        $("." + postid).addClass("hidden");
+        $.post(MAINURL + "/artandcraft/addtoboard.php", {
+            remove: 1,
+            spPosting_idspPosting: postid,
+            spProfile_idspProfile: pid
+        }, function (r) {
+            //alert(r);
+            //document.getElementById("adremovetoboard"+postid).innerHTML = '<a class="addtoboard" data-postid="'+postid+'" data-pid="'+pid+'" data-toggle="tooltip" title="Add to board"><img src="'+MAINURL+'/assets/images/art/icon-add.png" alt="" class="img-responsive"></a>';
+            //notification message from send box
+            $.notify({
+                title: '<strong>Removed to board</strong>',
+                icon: '',
+                message: ""
+            }, {
+                type: 'info',
+                animate: {
+                    enter: 'animated fadeInUp',
+                    exit: 'animated fadeOutRight'
+                },
+                placement: {
+                    from: "top",
+                    align: "right"
+                },
+                offset: 20,
+                spacing: 10,
+                z_index: 1031,
+            });
+            // location.reload();
+        });
+    });
+    //add to playlist on music
+    $(".addtoplaylist").on("click", function () {
+        var pid = $(this).attr("data-pid");
+        var postid = $(this).attr("data-postid");
+        $.post("../music/addtoplaylist.php", {
+            spPosting_idspPosting: postid,
+            spProfile_idspProfile: pid,
+            spCategory_idspCategory: 14
+        }, function (r) {
+            //alert(r);
+            //notification message from send box
+            $.notify({
+                title: '<strong>Added to board</strong>',
+                icon: '',
+                message: ""
+            }, {
+                type: 'info',
+                animate: {
+                    enter: 'animated fadeInUp',
+                    exit: 'animated fadeOutRight'
+                },
+                placement: {
+                    from: "top",
+                    align: "right"
+                },
+                offset: 20,
+                spacing: 10,
+                z_index: 1031,
+            });
+            location.href = MAINURL + "/music/category.php";
+        });
+    });
+    //Remove to PLAYLIST MUSIC
+    $(".removetoplaylist").on("click", function () {
+        var baseurl = MAINURL + "/music/dashboard";
+        var pid = $(this).attr("data-pid");
+        var songid = $(this).attr("data-songid");
+        $("." + songid).addClass("hidden");
+        $.post(baseurl + "/addtoplaylist.php", {
+            remove: 1,
+            idaddtomusic: songid,
+            spProfile_idspProfile: pid
+        }, function (r) {
+            //notification message from send box
+            $.notify({
+                title: '<strong>Remove to playlist</strong>',
+                icon: '',
+                message: ""
+            }, {
+                type: 'info',
+                animate: {
+                    enter: 'animated fadeInUp',
+                    exit: 'animated fadeOutRight'
+                },
+                placement: {
+                    from: "top",
+                    align: "right"
+                },
+                offset: 20,
+                spacing: 10,
+                z_index: 1031,
+            });
+            //location.reload();
+        });
+    });
+    //POST SHARE ON GROUP OR FRIEND ART GALLERY
+    $(".social").on("click", ".sp-share-art", function () {
+        //alert("helo");
+        $("#shareposting").val($(this).data("postid"));
+        $("#modalpostingpic").attr('src', $(this).attr('src'));
+    });
+    //===Send SMS contact Organizer===
+    $(".getCntactid").on("click", function () {
+        $("#spprofiles_idspProfilesReciver").val($(this).data("receiver"));
+    });
+    //===Send SMS contact Organizer===
+    //=======Add sponsor=======
+    $("#spaddSponsor").on("click", function () {
+        if ($(this).hasClass("editing")) {
+            $("#sponsorEdit").modal('hide');
+            var reload = true;
+        } else {
+            $("#sponsorAddModal").modal('hide');
+            var reload = false;
+        }
+        var btn = this;
+        var $form = $(btn).closest("form");
+        $form.submit(function (e) {
+            e.preventDefault();
+            $(btn).button('loading');
+            term = $form.serializeArray();
+            url = $form.attr("action");
+            $.post(url, term, function (data, status) {
+                var SponorId = data;
+                //alert(SponorId);
+                var imgCount = $(".sponsorimg").length;
+                if (imgCount != 0) {
+                    var base64image = $(".sponsorimg").attr("src");
+                    var arr = base64image.match(/data:image\/[a-z]+;/);
+                    var ext = arr[0].replace("data:image/", "");
+                    ext = ext.replace(";", "");
+                    $.post(MAINURL + "/post-ad/addsponsorpic.php", {
+                        spPostingPic: base64image,
+                        ext: ext,
+                        SponorId: SponorId
+                    }, function (t) {
+                        //alert("pass");
+                        if (reload == true) {
+                            window.location.reload();
+                        }
+                        $(".add_spon").load("loadEvent.php");
+                    });
+                }
+                if (reload == true) {
+                    window.location.reload();
+                }
+            }).fail(function () {
+                $(btn).effect("shake");
+                $(btn).button('reset');
+            }).done(function (data) { }).always(function () {
+                $(btn).button('reset');
+            });
+        });
+    });
+    //=============ADD SPONSOR ON EVENT FORM DASHBOARD=========
+    /* $("#addSponser").on("click", function () {
+       alert();
+       
+       var BaseUrl = MAINURL+"/";
+
+           var btn = this;
+           var $form = $(btn).closest("form");
+           $form.submit(function (e) {
+               e.preventDefault();
+               $(btn).button('loading');
+               term = $form.serializeArray();
+
+               //alert(term);
+
+               url = $form.attr("action"); 
+
+             // alert(url);
+
+
+         $.post(url, term, function (data, status) {
+           //alert(data);
+
+           var SponorId = data;
+
+           //alert(SponorId);
+
+           var imgCount = $(".sponsorimg").length;
+           if(imgCount != 0){
+             var base64image = $(".sponsorimg").attr("src");
+             var arr = base64image.match(/data:image\/[a-z]+;/);
+             var ext = arr[0].replace("data:image/", "");
+             ext = ext.replace(";", "");
+
+             $.post(BaseUrl+"/events/dashboard/addsponsorpic.php", {spPostingPic: base64image, ext:ext, SponorId: SponorId}, function (t) {
+               //window.location.reload();
+             });
+           }
+               }).fail(function () {
+                   $(btn).effect("shake");
+                   $(btn).button('reset');
+               }).done(function (data) {
+           
+               }).always(function () {
+                   $(btn).button('reset');
+               });
+           });
+       });*/
+    //=======End sponsor=======
+    //=============ADD SPONSOR ON EVENT FORM DASHBOARD=========
+    $("#addSponser").on("click", function () {
+       // alert('ppppppppppppppppppppppppp');
+        var company = $("#sponsorTitle").val()
+        var Website = $("#sponsorWebsite").val()
+        var Price = $("#spsponsorPrice").val()
+        var category = $("#sponsorCategory").val()
+        var Description = $("#spsponsorDesc").val()
+        var sponsorImage = $("#sponsorImg").val()
+		var str2=".";
+        if (company == "" || Website == "" || Price == "" || category.length == 0 || Description == "" || (Website.indexOf(str2) == -1) ) {
+           /* $("#sponsorTitle_error").text("Please Enter Company Name .");
+            $("#sponsorTitle").focus();
+            $("#sponsorWebsite_error").text("Please Enter Website.");
+            $("#sponsorWebsite").focus();
+            $("#spsponsorPrice_error").text("Please Enter Price.");
+            $("#spsponsorPrice").focus();
+            $("#sponsorCategory_error").text("Please select Category.");
+            $("#sponsorCategory").focus();
+            $("#spsponsorDesc_error").text("Please Enter Description.");
+            $("#spsponsorDesc").focus();*/
+            //$("#sponsorImg_error").text("");
+            //$("#sponsorImg").focus();
+            //return false;
+         if (company == "") {   
+            $("#sponsorTitle_error").text("Please Enter Company Name .");
+            $("#sponsorTitle").focus();
+        }else{
+			$("#sponsorTitle_error").text("");
+			 }
+		 if (Website == "") {
+            $("#sponsorWebsite_error").text("Please Enter Website.");
+            $("#sponsorWebsite").focus();
+        } else{
+			$("#sponsorWebsite_error").text("");
+			 }
+	    if (Price == "") {
+            $("#spsponsorPrice_error").text("Please Enter Price.");
+            $("#spsponsorPrice").focus();
+            
+        } else{
+			$("#spsponsorPrice_error").text("");
+			 }
+		 if (category.length == 0) {
+            $("#sponsorCategory_error").text("Please select Category.");
+            $("#sponsorCategory").focus();
+        }else{
+			$("#sponsorCategory_error").text("");
+			 }
+	   if (Description == "") {
+            $("#spsponsorDesc_error").text("Please Enter Description.");
+            $("#spsponsorDesc").focus();
+           
+        } else{
+			$("#spsponsorDesc_error").text("");
+			 }
+			 
+	 if(Website.indexOf(str2) == -1){
+		
+		 $("#sponsorWebsite_error").text("Please Enter Legal Website.");
+            $("#sponsorWebsite").focus();
+		} else{
+			$("#sponsorWebsite_error").text("");
+			 }
+			 return false;
+		}
+		else {
+            var BaseUrl = MAINURL;
+            var btn = this;
+            var $form = $(btn).closest("form");
+            $form.submit(function (e) {
+                e.preventDefault();
+                $(".loadbox").css({
+                    display: "block"
+                });
+                $(btn).button('loading...');
+                term = $form.serializeArray();
+                url = $form.attr("action");
+				//alert(url);
+                $.post(url, term, function (data, status) {
+                    //alert(data);
+                    var SponorId = data;
+                    //alert(SponorId);
+                    var imgCount = $(".sponsorimg").length;
+                    //alert(imgCount);
+                    if (imgCount != 0) {
+						//alert('ss');
+						//alert(BaseUrl);	
+                        var base64image = $(".sponsorimg").attr("src");
+						//alert(base64image);	
+                        var arr = base64image.match(/data:image\/[a-z]+;/);
+						//alert(arr);	
+                        var ext = arr[0].replace("data:image/", "");
+						//alert(ext);	
+                        ext = ext.replace(";", "");
+						
+						
+						
+                        var formData = new FormData();
+						//alert(formData);	
+                        formData.append('ext', ext);
+                        formData.append('SponorId', SponorId);
+                        // Attach file 
+                   formData.append('spPostingPic', $('input[type=file]')[0].files[0]);
+											
+						//alert('sss');						
+                        $.ajax({
+							//alert('nnn');
+                            url: BaseUrl + "/events/dashboard/addsponsorpic.php",
+                            data: formData,
+                            type: 'POST',
+                            contentType: false,
+                            processData: false,
+                            success: function (data) {
+								//alert('nnn');
+					window.location.reload();
+                                
+                            }
+                        });
+                        /*$.post(BaseUrl+"/events/dashboard/addsponsorpic.php", {spPostingPic: base64image, ext:ext, SponorId: SponorId}, function (t) {
+          window.location.reload();
+      });*/
+                    }else{
+					window.location.reload();
+
+					}
+					
+
+                }).fail(function () {
+                    $(btn).effect("shake");
+                    $(btn).button('reset');
+                }).done(function (data) { }).always(function () {
+                    $(btn).button('reset');
+                });
+            });
+        }
+    });
+    //=======End sponsor=======
+    //=============ADD SPONSOR ON EVENT FORM DASHBOARD=========
+    $(".spaddSponsor").on("click", function () {
+        //alert();
+        var company = $("#sponsorTitle1").val()
+        var Website = $("#sponsorWebsite1").val()
+        var Price = $("#spsponsorPrice1").val()
+        var category = $("#sponsorCategory1").val()
+        var Description = $("#spsponsorDesc1").val()
+        // var sponsorImage = $("#sponsorImg").val()
+        //alert(company);
+        /*alert(Website);
+        alert(Price);
+        alert(category);
+        alert(Description);
+        alert(sponsorImage);*/
+        //alert();
+        if (company == "" && Website == "" && Price == "" && category.length == 0 && Description == "") {
+            $("#sponsorTitle_error1").text("Please Enter Company Name .");
+            $("#sponsorTitle1").focus();
+            $("#sponsorWebsite_error1").text("Please Enter Website.");
+            $("#sponsorWebsite1").focus();
+            $("#spsponsorPrice_error1").text("Please Enter Price.");
+            $("#spsponsorPrice1").focus();
+            $("#sponsorCategory_error1").text("Please select Category.");
+            $("#sponsorCategory1").focus();
+            $("#spsponsorDesc_error1").text("Please Enter Description.");
+            $("#spsponsorDesc1").focus();
+            /*$("#sponsorImg_error").text("Choose File.");
+             $("#sponsorImg").focus();
+             */
+            return false;
+        } else if (company == "") {
+            //alert(company); 
+            $("#sponsorTitle_error1").text("Please Enter Company Name .");
+            $("#sponsorTitle1").focus();
+            return false;
+        } else if (Website == "") {
+            //alert(Website);
+            $("#sponsorWebsite_error1").text("Please Enter Website.");
+            $("#sponsorWebsite1").focus();
+            return false;
+        } else if (Price == "") {
+            $("#spsponsorPrice_error1").text("Please Enter Price.");
+            $("#spsponsorPrice1").focus();
+            return false;
+        } else if (category.length == 0) {
+            //alert(category);
+            $("#sponsorCategory_error1").text("Please select Category.");
+            $("#sponsorCategory1").focus();
+            return false;
+        } else if (Description == "") {
+            //alert(Description);
+            $("#spsponsorDesc_error1").text("Please Enter Description.");
+            $("#spsponsorDesc1").focus();
+            return false;
+        }
+        /*else if (sponsorImage == "") {
+               alert(sponsorImage);
+               
+                    
+                      $("#sponsorImg_error").text("Choose File.");
+                     $("#sponsorImg").focus();
+
+
+                     return false;
+                 }*/
+        else {
+            var BaseUrl = MAINURL + "/";
+            //  alert(BaseUrl);
+            var btn = this;
+            //alert(btn);
+            var $form = $(btn).closest("form");
+            // alert($form); 
+            $form.submit(function (e) {
+                e.preventDefault();
+                $(".loadbox").css({
+                    display: "block"
+                });
+                $(btn).button('loading...');
+                term = $form.serializeArray();
+                // alert(term);
+                url = $form.attr("action");
+                // alert(url);
+                $.post(url, term, function (data, status) {
+                    //  alert(data);
+                    var SponorId = data;
+                    // alert(SponorId);
+                    var imgCount = $(".sponsorimg").length;
+                    //alert(imgCount);
+                    if (imgCount != 0) {
+                        var base64image = $(".sponsorimg").attr("src");
+                        var arr = base64image.match(/data:image\/[a-z]+;/);
+                        var ext = arr[0].replace("data:image/", "");
+                        ext = ext.replace(";", "");
+                        $.post(BaseUrl + "/events/dashboard/addsponsorpic.php", {
+                            spPostingPic: base64image,
+                            ext: ext,
+                            SponorId: SponorId
+                        }, function (t) {
+                            window.location.reload();
+                        });
+                    }
+                }).fail(function () {
+                    $(btn).effect("shake");
+                    $(btn).button('reset');
+                }).done(function (data) { }).always(function () {
+                    $(btn).button('reset');
+                });
+            });
+        }
+    });
+    //=======End sponsor=======
+    //create sizes
+    $("#spaddSize").on("click", function () {
+        $("#sizeAddModal").modal('hide');
+        swal({
+            title: $("#spSizeTitle").val() + " Created!",
+            //text: "Vew Your <a href='/post-details/?postid="+postid+"' style='color:#F8BB86'>Post</a>",   
+            html: true
+        });
+        var btn = this;
+        var $form = $(btn).closest("form");
+        $form.submit(function (e) {
+            e.preventDefault();
+            $(btn).button('loading');
+            term = $form.serializeArray();
+            url = $form.attr("action");
+            $.post(url, term, function (data, status) {
+                //alert(data);
+                // alert("Data: " + data + "\nStatus: " + status);
+                //$(".sp-album").append("<a href='albumdetails.php' class='list-group-item sp-album-label' data-albumname='" + $("#spAlbumName").val() + "' data-albumid='" + data.trim() + "'>" + $("#spAlbumName").val() + "</a>");
+                //Adding cretaed album in the list
+                //$(".imgSizeSelect").prepend("<option value='" + data.trim() + "' id='" + data.trim() + "'>" + $("#spSizeTitle").val() + "</option>");
+                window.location.reload();
+                $("#spSizeTitle").val("");
+            }).fail(function () {
+                $(btn).effect("shake");
+                $(btn).button('reset');
+            }).done(function (data) { }).always(function () {
+                $(btn).button('reset');
+            });
+        });
+    });
+    //delete event
+    $(".deleteevent").on("click", function () {
+        if (confirm("Are you sure you want to delete?")) {
+            var btn = this;
+            var postid = $(this).data("postid")
+            $.post("../events/deleteevent.php", {
+                postid: postid
+            }, function (r) {
+                //alert(r);
+                window.location.reload();
+            }).fail(function (e) { });
+        }
+    });
+    //===Real-Estate-New-Form-Rent/Sale===
+    $('.chkForm').on('click', function () {
+        var listName = this.value;
+        $('.chkForm').attr('data-filter', '0');
+        //alert(listName);
+        if (listName == 'Sell') {
+            $('.realDataFrmType1').attr('data-filter', '1');
+            //show all custom fields
+            $(".addcustomfields").load("loadSell.php", function () { });
+            //show the Agent detail
+            $(".showAgentDetail").load("loadAgentDetail.php", function () { });
+        } else if (listName == 'Rent') {
+            $('.realDataFrmType2').attr('data-filter', '1');
+            $(".addcustomfields").load("loadRent.php", function () { });
+            //show the other Rent Info
+            $(".showAgentDetail").load("loadOtherInfo.php", function () { });
+        }
+    });
+    //===Real-Estate-New-Form-Rent/Sale===============
+    //===Real-Estate-Agent-Sold By====================
+    $("#spPostingSoldBy_").on("change", function () {
+        var SoldBy = this.value;
+        if (SoldBy == 'Owner') {
+            $(".showAgentBoxAdd").html("");
+        } else {
+            $(".showAgentBoxAdd").load("loadAgentName.php", function () { });
+        }
+    });
+    //===Real-Estate-Agent-Sold By====================
+    //------------------------------------------------
+    //===show box on click of room on the home page===
+    $(".showDivRoomBox").click(function () {
+        $(".showDivRoom").css("display", "block");
+    });
+    $(".closeRoom").click(function () {
+        $(".showDivRoom").css("display", "none");
+    });
+    //===show box on click of room on the home page===
+    //===onkeyup price calculate in real-Estate===
+    $("#spDays").keyup(function () {
+        //console.log('helo');
+        if (!$("#spDays").val()) {
+            day = 1;
+        } else {
+            var days = document.getElementById("spDays").value;
+            day = days;
+        }
+        $("#daysCount").html(days);
+        var spPrice = $('#spPrice').attr("data-price");
+        //var spPrice = document.getElementById("spPrice").value;
+        var txtCleaningChrg = document.getElementById("txtCleaningChrg").value;
+        var txtServiceChrg = document.getElementById("txtServiceChrg").value;
+        var total = parseInt(spPrice) * parseInt(day) + parseInt(txtCleaningChrg) + parseInt(txtServiceChrg);
+        $("#updatePrice").html(total);
+        var totalPrice = parseInt(spPrice) * parseInt(day);
+        $("#spPrice").val(totalPrice);
+    });
+    $("#txtPriceChk").on("change", function () {
+        var txtPrice = this.value;
+        var ChekMonth = $('#txtPriceChk :selected').attr("data-month");
+        //console.log(ChekMonth);
+        //var txtPrice = document.getElementById("txtPrice").value;
+        var txtCleaningChrg = document.getElementById("txtCleaningChrg").value;
+        var txtServiceChrg = document.getElementById("txtServiceChrg").value;
+        $("#txtPrice").val(txtPrice);
+        $("#bookMonth").val(ChekMonth);
+        var total = parseInt(txtPrice) + parseInt(txtCleaningChrg) + parseInt(txtServiceChrg);
+        $("#updatePrice").html(total);
+    });
+    //===onkeyup price calculate in real-Estate===
+    //===ON CHANGE MUSIC MODULE FILE UPLOAD=======
+    // Upload btn on change call function
+    $(".uploadlogo").change(function () {
+        var filename = readURL(this);
+        if (filename == "wrong") {
+            alert("Only mp3 formats are allowed!");
+        } else {
+            $(".loadbox").css({
+                display: "block"
+            });
+            //alert(filename);
+            var chkAudio = document.getElementById("addmusic").value;
+            if (chkAudio != '') {
+                var form_data = new FormData($("#sp-music-form-post")[0]);
+                $.ajax({
+                    url: MAINURL + "/music/addmusic.php",
+                    type: "POST",
+                    data: form_data,
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    success: function (vi) {
+                        //alert(vi);
+                        //window.location.reload();
+                        var seconds = 5;
+                        setInterval(function () {
+                            seconds--;
+                            if (seconds == 0) {
+                                window.location.href = MAINURL + '/post-ad/music/?post=' + $.trim(vi);
+                            }
+                        }, 1000);
+                    },
+                    error: function (error) {
+                        //alert(error);
+                    }
+                });
+            }
+        }
+        //$(this).parent().children('span').html(filename);
+    });
+    // Read File and return value  
+    function readURL(input) {
+        var url = input.value;
+        var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
+        if (input.files && input.files[0] && (ext == "mp3")) {
+            var path = $(input).val();
+            var filename = path.replace(/^.*\\/, "");
+            // $('.fileUpload span').html('Uploaded Proof : ' + filename);
+            return filename;
+        } else {
+            $(input).val("");
+            return "wrong";
+        }
+    }
+    // Upload btn end
+    //===ON CHANGE MUSIC MODULE FILE UPLOAD=======
+    //===ON CHANGE PLAYLIST TO SHOW OR HIDE=======
+    $("#txtPlayListCheck").change(function () {
+        var playList = this.value;
+        if (playList == 1) {
+            $("#PlayListHide").css("display", "none");
+            $("#PlayListShow").css("display", "block");
+        } else {
+            $("#PlayListHide").css("display", "block");
+            $("#PlayListShow").css("display", "none");
+        }
+    });
+    //===ON CHANGE PLAYLIST TO SHOW OR HIDE=======
+    $(".adtodetailMusic").on("click", function () {
+        var pid = $(this).attr("data-pid");
+        var postid = $(this).attr("data-postid");
+        //console.log(pid+'-'+postid);
+        $("#postingId").val(postid);
+        $("#profileId").val(pid);
+    });
+    //===UPDATE MY ALBUM ON MusiC=================
+    //MODEL VALUE
+    $(".editalbum").on("click", function () {
+        var albumName = $(this).data("albumname");
+        var albumId = $(this).data("albumid");
+        var ispublic = $(this).data("ispublic");
+        $("#txtAlbumName").val(albumName);
+        $("#txtAlbumId").val(albumId);
+        $("#spPostingPublic").val(ispublic);
+    });
+    // music album search on dashboard
+    $('#AlbumChange').on('change', function () {
+        //console.log( this.value );
+        var albumName = this.value;
+        var pid = $("#txtSpProfile").val();
+        //alert(pid);
+        if (albumName == '') {
+            //do not show any thing
+        } else {
+            console.log('testing');
+            $.post("../dashboard/loadAlbum.php", {
+                albumName: albumName,
+                pid: pid
+            }, function (r) {
+                //alert(r);
+                $('#showAlbum').html(r);
+            }).fail(function (e) {
+                //alert(e);
+            });
+        }
+    });
+    // video album search on dashboard
+    $('#AlbumChangevdo').on('change', function () {
+        //console.log( this.value );
+        var albumName = this.value;
+        var pid = $("#txtSpProfile").val();
+        //alert(pid);
+        if (albumName == '') {
+            //do not show any thing
+        } else {
+            console.log('testing');
+            $.post("../videos/loadAlbum.php", {
+                albumName: albumName,
+                pid: pid
+            }, function (r) {
+                //alert(r);
+                $('#showMysong').html(r);
+            }).fail(function (e) {
+                //alert(e);
+            });
+        }
+    });
+    // music album search on MY UPLOADED SONGS
+    $('#MyUploadSong').on('change', function () {
+        //console.log( this.value );
+        var albumName = this.value;
+        var pid = $("#txtSpProfile").val();
+        //alert(pid);
+        if (albumName == '') {
+            //do not show any thing
+        } else {
+            console.log('testing');
+            $.post("../music/loadMysong.php", {
+                albumName: albumName,
+                pid: pid
+            }, function (r) {
+                //console.log(r);
+                $('#showMysong').html(r);
+            }).fail(function (e) {
+                //alert(e);
+            });
+        }
+    });
+    //===ON CHANGE VIDEO MODULE FILE UPLOAD=======
+    // Upload btn on change call function
+    $(".uploadlogovideo").change(function () {
+        var filename = readURLVideo(this);
+        if (filename == "wrong") {
+            alert("Only mp4 formats are allowed!");
+        } else {
+            $(".loadbox").css({
+                display: "block"
+            });
+            //alert(filename);
+            var chkAudio = document.getElementById("addmusic").value;
+            if (chkAudio != '') {
+                var form_data = new FormData($("#sp-music-form-post")[0]);
+                $.ajax({
+                    url: MAINURL + "/videos/addmusic.php",
+                    type: "POST",
+                    data: form_data,
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    success: function (vi) {
+                        //alert(vi);
+                        //window.location.reload();
+                        var seconds = 7;
+                        setInterval(function () {
+                            seconds--;
+                            if (seconds == 0) {
+                                window.location.href = MAINURL + '/post-ad/videos/?post=' + $.trim(vi);
+                            }
+                        }, 1000);
+                    },
+                    error: function (error) {
+                        //alert(error);
+                    }
+                });
+            }
+        }
+        //$(this).parent().children('span').html(filename);
+    });
+    // Read File and return value  
+    function readURLVideo(input) {
+        var url = input.value;
+        var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
+        if (input.files && input.files[0] && (ext == "mp4")) {
+            var path = $(input).val();
+            var filename = path.replace(/^.*\\/, "");
+            // $('.fileUpload span').html('Uploaded Proof : ' + filename);
+            return filename;
+        } else {
+            $(input).val("");
+            return "wrong";
+        }
+    }
+    // Upload btn end
+    //===ON CHANGE MUSIC MODULE FILE UPLOAD=======
+    //======Music Module Start=================
+    //post a audio
+    $("#spPostSubmitVideo").on("click", function () {
+        if ($(this).hasClass("editing")) postedit = true;
+        else postedit = false;
+        $(".loadbox").css({
+            display: "block"
+        });
+        var btn = this;
+        var idspprofile = $("#spProfiles_idspProfiles").val();
+        var $form = $("#sp-form-post");
+        if (idspprofile != "") {
+            //$(btn).button('loading...');
+            term = $form.serializeArray();
+            url = $form.attr("action");
+            $.post(url, term, function (data, status) {
+                //alert(data);
+            }).fail(function () {
+                $(btn).effect("shake");
+            }).done(function (data) {
+                //alert(data);
+                var postid = data;
+                var albumid = $(".album_id").val();
+                //notification message from send box
+                $.notify({
+                    title: '<strong>Added Successfully</strong>',
+                    icon: '',
+                    message: ""
+                }, {
+                    type: 'success',
+                    animate: {
+                        enter: 'animated fadeInUp',
+                        exit: 'animated fadeOutRight'
+                    },
+                    placement: {
+                        from: "top",
+                        align: "right"
+                    },
+                    offset: 20,
+                    spacing: 10,
+                    z_index: 1031,
+                });
+                //Message after form submited
+                // CUSTOM FIELDS 
+                var inputs = readCustomFields($("#sp-form-post"), postid);
+                $.each(inputs, function (i, val) {
+                    $.post(MAINURL + "/post-ad/addpostcustomfields.php", val, function (response) {
+                        //alert(response);
+                    });
+                });
+                //LYRICS UPDATE TEXT EDITOR START
+                var lyrics = $("#lyrics_").Editor("getText");
+                $.post(MAINURL + "/post-ad/videos/updatelyric.php", {
+                    postid: postid,
+                    lyrics: lyrics
+                }, function (nte) {
+                    //alert(nte);
+                });
+                //LYRICS UPDATE TEXT EDITOR END
+                // IMAGE
+                var imgCount = $(".postingimg").length;
+                $(".postingimg").each(function (i, e) {
+                    //this is for featured image strt
+                    var fichek = $(e).attr("data-name");
+                    var isCheckeed = $('#' + fichek + ':checked').val() ? true : false;
+                    if (isCheckeed == true) {
+                        spFeatureimg = 1;
+                    } else {
+                        spFeatureimg = 0;
+                    }
+                    //this is for featured image end
+                    var base64image = $(e).attr("src");
+                    var arr = base64image.match(/data:image\/[a-z]+;/);
+                    var ext = arr[0].replace("data:image/", "");
+                    ext = ext.replace(";", "");
+                    $.post(MAINURL + "/post-ad/addpostingpic.php", {
+                        spPostings_idspPostings: postid,
+                        spPostingPic: base64image,
+                        ext: ext,
+                        spFeatureimg: spFeatureimg,
+                        postedit: postedit
+                    }, function (r) {
+                        //alert(r);
+                        //Timeline prepending
+                        if (i == imgCount - 1) {
+                            $.get(MAINURL + "/publicpost/timelineentry.php", {
+                                js: "1",
+                                timelineid: postid,
+                                grouptimeline: $(btn).data("grouptimeline")
+                            }, function (r) {
+                                $("#timeline-container").prepend(r);
+                                //$(btn).button('reset');
+                            });
+                        }
+                    });
+                });
+                //update music id from music table
+                var musicId = document.getElementById("spMusicmediaId_").value;
+                if (musicId > 0) {
+                    $.post(MAINURL + "/videos/updatevideo.php", {
+                        spPostings_idspPostings: postid,
+                        musicId: musicId
+                    }, function (r) {
+                        //alert(r);
+                    });
+                }
+                //Testing
+                if (imgCount == 0) {
+                    $.get(MAINURL + "/publicpost/timelineentry.php", {
+                        js: "1",
+                        timelineid: postid,
+                        grouptimeline: $(btn).data("grouptimeline")
+                    }, function (r) {
+                        $("#timeline-container").prepend(r);
+                        //$(btn).button('reset');
+                        //alert(r);
+                    });
+                }
+                //Testing Complete
+                $("#dvPreview").html("");
+                $("#spPreview").html("");
+                $("#clearnow").val("");
+                $(".grptimeline").val("");
+                $("#postform .form-control").val("");
+                document.getElementById("sp-form-post").reset();
+                //this script for delay a redirect page for another page.
+                var seconds = 10;
+                setInterval(function () {
+                    seconds--;
+                    if (seconds == 0) {
+                        window.location.href = MAINURL + '/videos/links.php?postid=' + $.trim(postid);
+                        //window.location.reload();
+                    }
+                }, 1000);
+                //====end=====
+                if (postedit == true) {
+                    //window.location.reload();
+                }
+            }).always(function () {
+                //$(btn).button('reset');
+            });
+            //location.reload();
+        } else alert("Please Select profile!..");
+    });
+    //THIS IS FOLLOWER VIDEO SONGS
+    $(".followVide").on("click", function () {
+        var pid = $(".followVide").attr("data-pid");
+        var follower = $(".followVide").attr("data-flowid");
+        var catid = $(".followVide").attr("data-catid");
+        $.post(MAINURL + "/videos/addtofolow.php", {
+            pid: pid,
+            follower: follower,
+            catid: catid
+        }, function (r) {
+            //alert(r);
+            window.location.reload();
+        });
+    });
+    //THIS IS FOLLOWER VIDEO SONGS
+    $(".UnfollowVidemdl").on("click", function () {
+        var pid = $(".UnfollowVidemdl").attr("data-pid");
+        var follower = $(".UnfollowVidemdl").attr("data-flowid");
+        var catid = $(".UnfollowVidemdl").attr("data-catid");
+        var unfollow = 1;
+        $.post(MAINURL + "/videos/addtofolow.php", {
+            unfollow: unfollow,
+            pid: pid,
+            follower: follower,
+            catid: catid
+        }, function (r) {
+            //alert(r);
+            window.location.reload();
+        });
+    });
+    // MUSIC PLAYLIST ONCHANGE SHOW SONGS START
+    $('#MyPlayList').on('change', function () {
+        var catid = $('#MyPlayList').attr("data-catid");
+        var playlist = this.value;
+        var pid = $("#txtSpProfile").val();
+        //alert(pid);
+        if (playlist == '') {
+            //do not show any thing
+        } else {
+            $.post("../videos/loadMyplaylist.php", {
+                playlist: playlist,
+                pid: pid,
+                catid: catid
+            }, function (r) {
+                //console.log(r);
+                $('#showMysong').html(r);
+            }).fail(function (e) {
+                //alert(e);
+            });
+        }
+    });
+    // MUSIC PLAYLIST ONCHANGE SHOW SONGS END
+    //======Video Module End=================
+    //======Training Module Start=================
+    //POST A TRAINING VIDEO
+    $("#spPostSubmitTrain").on("click", function () {
+        $(".loadbox").css({
+            display: "block"
+        });
+        if ($(this).hasClass("editing")) postedit = true;
+        else postedit = false;
+        var btn = this;
+        var idspprofile = $("#spProfiles_idspProfiles").val();
+        var $form = $("#sp-form-post");
+        if (idspprofile != "") {
+            //$(btn).button('loading...');
+            term = $form.serializeArray();
+            url = $form.attr("action");
+            $.post(url, term, function (data, status) {
+                //alert(data);
+            }).fail(function () {
+                $(btn).effect("shake");
+            }).done(function (data) {
+                //alert(data);
+                var postid = data;
+                var albumid = $(".album_id").val();
+                //notification message from send box
+                $.notify({
+                    title: '<strong>Added Successfully</strong>',
+                    icon: '',
+                    message: ""
+                }, {
+                    type: 'success',
+                    animate: {
+                        enter: 'animated fadeInUp',
+                        exit: 'animated fadeOutRight'
+                    },
+                    placement: {
+                        from: "top",
+                        align: "right"
+                    },
+                    offset: 20,
+                    spacing: 10,
+                    z_index: 1031,
+                });
+                //Message after form submited
+                // CUSTOM FIELDS 
+                var inputs = readCustomFields($("#sp-form-post"), postid);
+                $.each(inputs, function (i, val) {
+                    $.post(MAINURL + "/post-ad/addpostcustomfields.php", val, function (response) {
+                        //alert(response);
+                    });
+                });
+                //DESCRIPTION UPDATE OF THE TEXT BOX
+                var postingNotes = $("#spPostingNotes").Editor("getText");
+                var postOutline = $("#outline_").Editor("getText");
+                $.post(MAINURL + "/post-ad/trainings/updatenote.php", {
+                    postid: postid,
+                    postingNotes: postingNotes,
+                    postOutline: postOutline
+                }, function (nte) {
+                    //alert(nte);
+                });
+                //DESCRIPTION UPDATE TEXT EDITOR END
+                //VIDEOS UPDATE OF THE FORM START
+                var pid = $("#spProfiles_idspProfiles").val();
+                var featuredVdo = $('.featuredVdo:checked').attr("data-musicid");
+                if (featuredVdo > 0) {
+                    featvdo = featuredVdo;
+                } else {
+                    featvdo = 0;
+                }
+                $.post(MAINURL + "/post-ad/trainings/updatevdo.php", {
+                    postid: postid,
+                    pid: pid,
+                    featvdo: featvdo
+                }, function (vdo) {
+                    //alert(vdo);
+                });
+                //VIDEOS UPDATE OF THE FORM END
+                // IMAGE
+                var imgCount = $(".postingimg").length;
+                $(".postingimg").each(function (i, e) {
+                    //this is for featured image strt
+                    var fichek = $(e).attr("data-name");
+                    var isCheckeed = $('#' + fichek + ':checked').val() ? true : false;
+                    if (isCheckeed == true) {
+                        spFeatureimg = 1;
+                    } else {
+                        spFeatureimg = 0;
+                    }
+                    //this is for featured image end
+                    var base64image = $(e).attr("src");
+                    var arr = base64image.match(/data:image\/[a-z]+;/);
+                    var ext = arr[0].replace("data:image/", "");
+                    ext = ext.replace(";", "");
+                    $.post(MAINURL + "/post-ad/addpostingpic.php", {
+                        spPostings_idspPostings: postid,
+                        spPostingPic: base64image,
+                        ext: ext,
+                        spFeatureimg: spFeatureimg,
+                        postedit: postedit
+                    }, function (r) {
+                        //alert(r);
+                        //Timeline prepending
+                        if (i == imgCount - 1) {
+                            $.get(MAINURL + "/publicpost/timelineentry.php", {
+                                js: "1",
+                                timelineid: postid,
+                                grouptimeline: $(btn).data("grouptimeline")
+                            }, function (r) {
+                                $("#timeline-container").prepend(r);
+                                //$(btn).button('reset');
+                            });
+                        }
+                    });
+                });
+                //Testing
+                if (imgCount == 0) {
+                    $.get(MAINURL + "/publicpost/timelineentry.php", {
+                        js: "1",
+                        timelineid: postid,
+                        grouptimeline: $(btn).data("grouptimeline")
+                    }, function (r) {
+                        $("#timeline-container").prepend(r);
+                        //$(btn).button('reset');
+                        //alert(r);
+                    });
+                }
+                //Testing Complete
+                $("#dvPreview").html("");
+                $("#spPreview").html("");
+                $("#clearnow").val("");
+                $(".grptimeline").val("");
+                $("#postform .form-control").val("");
+                document.getElementById("sp-form-post").reset();
+                //this script for delay a redirect page for another page.
+                var seconds = 10;
+                setInterval(function () {
+                    seconds--;
+                    if (seconds == 0) {
+                        window.location.href = MAINURL + '/trainings';
+                        //window.location.reload();
+                    }
+                }, 1000);
+                //====end=====
+                if (postedit == true) {
+                    //window.location.reload();
+                }
+            }).always(function () {
+                //$(btn).button('reset');
+            });
+            //location.reload();
+        } else alert("Please Select profile!..");
+    });
+    //SUBMIT FORM OF VIDEO MODULE
+    //ONCHANGE VIDEO UPLOAD
+    $(".spmediaTrain").change(function () {
+        var filename = readURLVideo(this);
+        if (filename == "wrong") {
+            alert("Only mp4 formats are allowed!");
+        } else {
+            //$(".loadbox").css({ display: "block" });
+            //alert(filename);
+            var addvideo = document.getElementById("addvideo").value;
+            //alert(addvideo);
+            if (addvideo != '') {
+                var form_data = new FormData($("#sp-form-post")[0]);
+                //var form_data = new FormData($("#sp-create-album")[0]);
+                $.ajax({
+                    url: MAINURL + "/post-ad/trainings/addvideo.php",
+                    type: "POST",
+                    data: form_data,
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    success: function (vi) {
+                        //alert(vi);
+                        $("#preview-container1").append(vi);
+                    },
+                    error: function (error) {
+                        //alert(error);
+                    }
+                });
+            }
+        }
+    });
+    //TRAINING MODULE VIDEO UPLOAD END
+    //=========VIDEO POST FAVOURITE START===========
+    $("#addtofavouritevdo").click(function () {
+        alert('helo');
+        $.post("../social/addfavorites.php", {
+            postid: $(this).data("postid"),
+            pid: $(this).data("pid")
+        }, function (response) {
+            $("#addtofavouriteeve").html("<i class='fa fa-heart' aria-hidden='true'></span>");
+            window.location.reload();
+        });
+    });
+	
+	
+		
+    //=========VIDEO POST UNFAVOURITE END=============
+    //======Training Module End=================
+    //ONCHANGE ATTACHMENT UPLOAD ON TRAINING
+    $(".spmediAttach").change(function () {
+        var filename = readURLAttach(this);
+        if (filename == "wrong") {
+            alert("Only pdf formats are allowed!");
+        } else {
+            //$(".loadbox").css({ display: "block" });
+            //alert(filename);
+            var addattachment = document.getElementById("addattachment").value;
+            //alert(addvideo);
+            if (addattachment != '') {
+                var form_data = new FormData($("#sp-form-post")[0]);
+                //var form_data = new FormData($("#sp-create-album")[0]);
+                $.ajax({
+                    url: MAINURL + "/post-ad/trainings/addattach.php",
+                    type: "POST",
+                    data: form_data,
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    success: function (vi) {
+                        //alert(vi);
+                        $("#attach-container").append(vi);
+                        //$(".loadbox").css({ display: "none" });
+                    },
+                    error: function (error) {
+                        //alert(error);
+                    }
+                });
+            }
+        }
+    });
+    //TRAINING MODULE ATTACHMENT UPLOAD END
+    // Read File and return value  
+    function readURLAttach(input) {
+        var url = input.value;
+        var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
+        if (input.files && input.files[0] && (ext == "pdf" || ext == "docx" || ext == "xls" || ext == 'doc')) {
+            var path = $(input).val();
+            var filename = path.replace(/^.*\\/, "");
+            // $('.fileUpload span').html('Uploaded Proof : ' + filename);
+            return filename;
+        } else {
+            $(input).val("");
+            return "wrong";
+        }
+    }
+    // Upload btn end
+    //ONCHANGE VIDEO PREVIEW UPLOAD
+    $(".spmediaTrainPrev").change(function () {
+        var filename = readURLVideo(this);
+        if (filename == "wrong") {
+            alert("Only mp4 formats are allowed!");
+        } else {
+            $(".loadbox").css({
+                display: "block"
+            });
+            //alert(filename);
+            var prevideo = document.getElementById("prevideo").value;
+            //alert(addvideo);
+            if (prevideo != '') {
+                var form_data = new FormData($("#sp-form-post")[0]);
+                //var form_data = new FormData($("#sp-create-album")[0]);
+                $.ajax({
+                    url: MAINURL + "/post-ad/trainings/prevideo.php",
+                    type: "POST",
+                    data: form_data,
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    success: function (vi) {
+                        //alert(vi);
+                        $("#preview-container").append(vi);
+                        $(".loadbox").css({
+                            display: "none"
+                        });
+                    },
+                    error: function (error) {
+                        //alert(error);
+                    }
+                });
+            }
+        }
+    });
+    //TRAINING MODULE VIDEO UPLOAD END
+    //====SERVICE MODULE START===============
+    //POST A SERVICE START
+    $("#spPostSubmitServ").on("click", function () {
+        $(".loadbox").css({
+            display: "block"
+        });
+        if ($(this).hasClass("editing")) postedit = true;
+        else postedit = false;
+        var btn = this;
+        var idspprofile = $("#spProfiles_idspProfiles").val();
+        var $form = $("#sp-form-post");
+        if (idspprofile != "") {
+            //$(btn).button('loading...');
+            term = $form.serializeArray();
+            url = $form.attr("action");
+            $.post(url, term, function (data, status) {
+                //alert(data);
+            }).fail(function () {
+                $(btn).effect("shake");
+            }).done(function (data) {
+                //alert(data);
+                var postid = data;
+                var albumid = $(".album_id").val();
+                //notification message from send box
+                $.notify({
+                    title: '<strong>Added Successfully</strong>',
+                    icon: '',
+                    message: ""
+                }, {
+                    type: 'success',
+                    animate: {
+                        enter: 'animated fadeInUp',
+                        exit: 'animated fadeOutRight'
+                    },
+                    placement: {
+                        from: "top",
+                        align: "right"
+                    },
+                    offset: 20,
+                    spacing: 10,
+                    z_index: 1031,
+                });
+                //Message after form submited
+                // CUSTOM FIELDS 
+                var inputs = readCustomFields($("#sp-form-post"), postid);
+                $.each(inputs, function (i, val) {
+                    $.post(MAINURL + "/post-ad/addpostcustomfields.php", val, function (response) {
+                        //alert(response);
+                    });
+                });
+                //DESCRIPTION UPDATE OF THE TEXT BOX
+                var postingNotes = $("#spPostingNotes").Editor("getText");
+                $.post(MAINURL + "/post-ad/services/updatenote.php", {
+                    postid: postid,
+                    postingNotes: postingNotes
+                }, function (nte) {
+                    //alert(nte);
+                });
+                //DESCRIPTION UPDATE TEXT EDITOR END
+                // IMAGE
+                var imgCount = $(".postingimg").length;
+                $(".postingimg").each(function (i, e) {
+                    //this is for featured image strt
+                    var fichek = $(e).attr("data-name");
+                    var isCheckeed = $('#' + fichek + ':checked').val() ? true : false;
+                    if (isCheckeed == true) {
+                        spFeatureimg = 1;
+                    } else {
+                        spFeatureimg = 0;
+                    }
+                    //this is for featured image end
+                    var base64image = $(e).attr("src");
+                    var arr = base64image.match(/data:image\/[a-z]+;/);
+                    var ext = arr[0].replace("data:image/", "");
+                    ext = ext.replace(";", "");
+                    $.post(MAINURL + "/post-ad/addpostingpic.php", {
+                        spPostings_idspPostings: postid,
+                        spPostingPic: base64image,
+                        ext: ext,
+                        spFeatureimg: spFeatureimg,
+                        postedit: postedit
+                    }, function (r) {
+                        //alert(r);
+                        //Timeline prepending
+                        if (i == imgCount - 1) {
+                            $.get(MAINURL + "/publicpost/timelineentry.php", {
+                                js: "1",
+                                timelineid: postid,
+                                grouptimeline: $(btn).data("grouptimeline")
+                            }, function (r) {
+                                $("#timeline-container").prepend(r);
+                                //$(btn).button('reset');
+                            });
+                        }
+                    });
+                });
+                //Testing
+                if (imgCount == 0) {
+                    $.get(MAINURL + "/publicpost/timelineentry.php", {
+                        js: "1",
+                        timelineid: postid,
+                        grouptimeline: $(btn).data("grouptimeline")
+                    }, function (r) {
+                        $("#timeline-container").prepend(r);
+                        //$(btn).button('reset');
+                        //alert(r);
+                    });
+                }
+                //Testing Complete
+                $("#dvPreview").html("");
+                $("#spPreview").html("");
+                $("#clearnow").val("");
+                $(".grptimeline").val("");
+                $("#postform .form-control").val("");
+                document.getElementById("sp-form-post").reset();
+                //this script for delay a redirect page for another page.
+                var seconds = 10;
+                setInterval(function () {
+                    seconds--;
+                    if (seconds == 0) {
+                        window.location.href = MAINURL + '/services';
+                        //window.location.reload();
+                    }
+                }, 1000);
+                //====end=====
+                if (postedit == true) {
+                    //window.location.reload();
+                }
+            }).always(function () {
+                //$(btn).button('reset');
+            });
+            //location.reload();
+        } else alert("Please Select profile!..");
+    });
+    //POST A SERVICE END
+    //==========ON CHANGE LOAD COUNTRY=======
+    $("#spPostCountry_").on("change", function () {
+        $("#spPostPostalCode_").val(" ");
+        $("#spPostCity_").val(" ");
+        //alert(this.value);
+        var countryId = this.value;
+        $.post("loadstate.php", {
+            countryId: countryId
+        }, function (r) {
+            //alert(r);
+            $(".loadState").html(r);
+        });
+    });
+    //==========ON CHANGE LOAD COUNTRY=======
+    //==========ON CHANGE LOAD SERVICES=======
+    $("#spPostSelection_").on("change", function () {
+        //alert(this.value);
+        var serv = this.value;
+        $.post("loadService.php", {
+            serv: serv
+        }, function (r) {
+            //alert(r);
+            $(".loadserv").html(r);
+        });
+    });
+    //==========ON CHANGE LOAD SERVICES=======
+    //==========ON CLICK ADD PHONE FILTER YES OR No
+    $("#spPostShowPhone_").click(function () {
+        if ($('#spPostShowPhone_').attr("data-filter") == 0) {
+            $('#spPostShowPhone_').attr('data-filter', '1');
+            $('#spPostShowPhone_').val(1);
+        } else {
+            $('#spPostShowPhone_').attr('data-filter', '0');
+            $('#spPostShowPhone_').val(0);
+        }z
+    });
+    //==========ON CLICK ADD PHONE FILTER YES OR No
+    //==========ON CLICK ADD EMAIL FILTER YES OR No
+    $("#spPostShowEmail_").click(function () {
+        if ($('#spPostShowEmail_').attr("data-filter") == 0) {
+            $('#spPostShowEmail_').attr('data-filter', '1');
+            $('#spPostShowEmail_').val(1);
+        } else {
+            $('#spPostShowEmail_').attr('data-filter', '0');
+            $('#spPostShowEmail_').val(0);
+        }
+    });
+    //==========ON CLICK ADD EMAIL FILTER YES OR No
+    // SERVICE POST SAVE AS DRAFT
+    var postedit = false;
+    $("#spSaveDraftServ").on("click", function () {
+        $(".loadbox").css({
+            display: "block"
+        });
+        var visibility = $("#spPostingVisibility").val();
+        $("#spPostingVisibility").val("0");
+        if ($(this).hasClass("editing")) postedit = true;
+        else postedit = false;
+        var btn = this;
+        var idspprofile = $("#spProfiles_idspProfiles").val();
+        var $form = $("#sp-form-post");
+        $form.submit(function (e) {
+            if (idspprofile != "") {
+                e.preventDefault();
+                $(btn).button('loading');
+                term = $form.serializeArray();
+                url = $form.attr("action");
+                $.post(url, term, function (data, status) { }).fail(function () {
+                    $(btn).effect("shake");
+                    $(btn).button('reset');
+                }).done(function (data) {
+                    //alert(data);
+                    var postid = data;
+                    var albumid = $(".album_id").val();
+                    //notification message from send box
+                    $.notify({
+                        title: '<strong>Added Successfully</strong>',
+                        icon: '',
+                        message: ""
+                    }, {
+                        type: 'success',
+                        animate: {
+                            enter: 'animated fadeInUp',
+                            exit: 'animated fadeOutRight'
+                        },
+                        placement: {
+                            from: "top",
+                            align: "right"
+                        },
+                        offset: 20,
+                        spacing: 10,
+                        z_index: 1031,
+                    });
+                    //Message after form submited
+                    // CUSTOM FIELDS 
+                    var inputs = readCustomFields($("#sp-form-post"), postid);
+                    $.each(inputs, function (i, val) {
+                        $.post(MAINURL + "/post-ad/addpostcustomfields.php", val, function (response) {
+                            //alert(response);
+                        });
+                    });
+                    // IMAGE
+                    var imgCount = $(".postingimg").length;
+                    $(".postingimg").each(function (i, e) {
+                        //this is for featured image strt
+                        var fichek = $(e).attr("data-name");
+                        var isCheckeed = $('#' + fichek + ':checked').val() ? true : false;
+                        if (isCheckeed == true) {
+                            spFeatureimg = 1;
+                        } else {
+                            spFeatureimg = 0;
+                        }
+                        //this is for featured image end
+                        var base64image = $(e).attr("src");
+                        var arr = base64image.match(/data:image\/[a-z]+;/);
+                        var ext = arr[0].replace("data:image/", "");
+                        ext = ext.replace(";", "");
+                        $.post(MAINURL + "/post-ad/addclassifiedpic.php", {
+                            spPostings_idspPostings: postid,
+                            spPostingPic: base64image,
+                            ext: ext,
+                            spFeatureimg: spFeatureimg,
+                            postedit: postedit
+                        }, function (r) {
+                            //alert(r);
+                            //Timeline prepending
+                            if (i == imgCount - 1) {
+                                $.get(MAINURL + "/publicpost/timelineentry.php", {
+                                    js: "1",
+                                    timelineid: postid,
+                                    grouptimeline: $(btn).data("grouptimeline")
+                                }, function (r) {
+                                    $("#timeline-container").prepend(r);
+                                    //$(btn).button('reset');
+                                });
+                            }
+                        });
+                    });
+                    //Testing
+                    if (imgCount == 0) {
+                        $.get(MAINURL + "/publicpost/timelineentry.php", {
+                            js: "1",
+                            timelineid: postid,
+                            grouptimeline: $(btn).data("grouptimeline")
+                        }, function (r) {
+                            $("#timeline-container").prepend(r);
+                            //$(btn).button('reset');
+                            //alert(r);
+                        });
+                    }
+                    //Testing Complete
+                    $("#dvPreview").html("");
+                    $("#spPreview").html("");
+                    $("#clearnow").val("");
+                    $(".grptimeline").val("");
+                    $("#postform .form-control").val("");
+                    document.getElementById("sp-form-post").reset();
+                    //this script for delay a redirect page for another page.
+                    var seconds = 10;
+                    setInterval(function () {
+                        seconds--;
+                        if (seconds == 0) {
+                            window.location.href = MAINURL + '/services/draft.php';
+                            //window.location.reload();
+                        }
+                    }, 1000);
+                    //====end=====
+                    if (postedit == true) {
+                        //window.location.reload();
+                    }
+                }).always(function () {
+                    $(btn).button('reset');
+                });
+            } else alert("Please Select profile!..");
+        });
+    });
+    // SERVICE MODULE ADD TO DRAFT END===
+    //=========BUSINESS DIRECTORY ADD TO FAVOURITE START===========
+    $(".addToProfileFav").click(function () {
+        //alert('helo');
+        var idspProfiles_spProfileCompany = $(this).data("company");
+        var spProfiles_idspProfiles = $(this).data("pid");
+        var isfavourite = $(this).data("favourite");
+        //alert(isfavourite);
+        $.post("../social/addfavdir.php", {
+            idspProfiles_spProfileCompany: idspProfiles_spProfileCompany,
+            spProfiles_idspProfiles: spProfiles_idspProfiles,
+            isfavourite: isfavourite
+        }, function (response) {
+            window.location.reload();
+        });
+    });
+    //=========BUSINESS DIRECTORY ADD TO FAVOURITE end=============
+    //=========BUSINESS DIRECTORY REMOVE TO FAVOURITE START===========
+    $(".removeToProfileFav").click(function () {
+        //alert('helo');
+        var idspProfiles_spProfileCompany = $(this).data("company");
+        var spProfiles_idspProfiles = $(this).data("pid");
+        var isfavourite = $(this).data("favourite");
+        //alert(isfavourite);
+        $.post("../social/remfavdir.php", {
+            idspProfiles_spProfileCompany: idspProfiles_spProfileCompany,
+            spProfiles_idspProfiles: spProfiles_idspProfiles,
+            isfavourite: isfavourite
+        }, function (response) {
+            //alert(response);
+            window.location.reload();
+        });
+    });
+    //=========BUSINESS DIRECTORY REMOVE TO FAVOURITE end=============
+    //=========BUSINESS DIRECTORY ADD TO RESOURCE START===========
+    $(".addtoResorc").click(function () {
+        var idspProfiles_spProfileCompany = $(this).data("company");
+        var spProfiles_idspProfiles = $(this).data("pid");
+        var isfavourite = $(this).data("favourite");
+        //alert(isfavourite);
+        $.post("../social/addfavdir.php", {
+            idspProfiles_spProfileCompany: idspProfiles_spProfileCompany,
+            spProfiles_idspProfiles: spProfiles_idspProfiles,
+            isfavourite: isfavourite
+        }, function (response) {
+            window.location.reload();
+        });
+    });
+    //=========BUSINESS DIRECTORY ADD TO RESOURCE end=============
+    //=========BUSINESS DIRECTORY REMOVE TO FAVOURITE START===========
+    $(".removeToResorc").click(function () {
+        var idspProfiles_spProfileCompany = $(this).data("company");
+        var spProfiles_idspProfiles = $(this).data("pid");
+        var isfavourite = $(this).data("favourite");
+        $.post("../social/remfavdir.php", {
+            idspProfiles_spProfileCompany: idspProfiles_spProfileCompany,
+            spProfiles_idspProfiles: spProfiles_idspProfiles,
+            isfavourite: isfavourite
+        }, function (response) {
+            //alert(response);
+            window.location.reload();
+        });
+    });
+    //=========BUSINESS DIRECTORY REMOVE TO FAVOURITE end=============
+    //=========ADD RESOURCE ID ON THE BUSINESS DIRECTORY==============
+    $(".addnotesresource").click(function () {
+        //alert($(this).data("resourceid"));
+        var resourceid = $(this).data("resourceid");
+        $("#idspFavbus").val(resourceid);
+        $.post("readNotes.php", {
+            resourceid: resourceid
+        }, function (response) {
+            //alert(response);
+            //document.getElementById("#txtResourceNotes").value = resourceid.trim();
+            $("#txtResourceNotes").val(response);
+        });
+    });
+    //=========ADD RESOURCE ID ON THE BUSINESS DIRECTORY==============
+    // SHOW MY ALL FAVOURITE SONGE WITH SPECIFIC CATEGORY
+    $('#businesscategory').on('change', function () {
+        var category = this.value;
+        if (category == '') {
+            //do not show any thing
+        } else {
+            $.post("../business-directory/loadFav.php", {
+                category: category
+            }, function (r) {
+                $('#showMyFav').html(r);
+            }).fail(function (e) {
+                //alert(e);
+            });
+        }
+    });
+    // SHOW MY ALL FAVOURITE SONGE WITH SPECIFIC CATEGORY
+    // SHOW MY ALL FAVOURITE SONGE WITH SPECIFIC CATEGORY
+    $('#busCatResouce').on('change', function () {
+        var category = this.value;
+        if (category == '') {
+            //do not show any thing
+        } else {
+            $.post("../business-directory/loadResource.php", {
+                category: category
+            }, function (r) {
+                $('#showMyRes').html(r);
+            }).fail(function (e) {
+                //alert(e);
+            });
+        }
+    });
+    // SHOW MY ALL FAVOURITE SONGE WITH SPECIFIC CATEGORY
+    //==========ON CHANGE LOAD COUNTRY IN ACCOUNT SETTING=======
+    $("#spUserCountry").on("change", function () {
+		//alert('===1');
+        var countryId = this.value;
+        $.post("loadUserState.php", {
+            countryId: countryId
+        }, function (r) {
+            //alert(r);
+            $(".loadUserState").html(r);
+        });
+        var state = 0;
+        $.post("loadUserCity.php", {
+            state: state
+        }, function (r) {
+            //alert(r);
+            $(".loadCity").html(r);
+        });
+    });
+    //==========ON CHANGE LOAD COUNTRY IN ACCOUNT SETTING=======
+    //==========ON CHANGE LOAD COUNTRY IN Real State SETTING=======
+    $("#spUserCountry_real_estate").on("change", function () {
+        // alert(this.value);
+        var countryId = this.value;
+        $.post("loadUserState.php", {
+            countryId: countryId
+        }, function (r) {
+            // alert(r);
+            $(".loadUserState").html(r);
+        });
+        var state = 0;
+        $.post("loadUserCity.php", {
+            state: state
+        }, function (r) {
+            // alert(r);
+            $(".loadCity").html(r);
+        });
+    });
+    //==========Handle the my address section of profile update module =======
+    $("#spUserCountry_default_address").on("change", function () {
+        var countryId = this.value;
+        $.post("loadUserState.php", {
+            countryId: countryId
+        }, function (r) {
+            //alert(r);
+            $(".loadUserState").html(r);
+        });
+        var state = 0;
+        $.post("loadUserCity.php", {
+            state: state
+        }, function (r) {
+            //alert(r);
+            $(".loadCity").html(r);
+        });
+    });
+    //==========ON CHANGE LOAD COUNTRY IN SERVICES SETTING=======
+    $("#spUserCountry_services").on("change", function () {
+        // alert(this.value);
+        var countryId = this.value;
+        $.post("loadUserState.php", {
+            countryId: countryId
+        }, function (r) {
+            // alert(r);
+            $(".loadUserState").html(r);
+        });
+        var state = 0;
+        $.post("loadUserCity.php", {
+            state: state
+        }, function (r) {
+            // alert(r);
+            $(".loadCity").html(r);
+        });
+    });
+    //=========READ NEWS ABOUT ANY PROFILE==============
+    $(".readCmpnyNews").click(function () {
+        //alert($(this).data("resourceid"));
+        var newsId = $(this).data("newsid");
+        $.post("readNews.php", {
+            newsId: newsId
+        }, function (response) {
+            //alert(response);
+            //document.getElementById("#txtResourceNotes").value = resourceid.trim();
+            $("#loadNews").html(response);
+        });
+    });
+    //=========READ NEWS ABOUT ANY PROFILE==============
+    //=========READ NEWS ABOUT ANY PROFILE==============
+    $(".editNews").click(function () {
+        //alert($(this).data("resourceid"));
+        var newsId = $(this).data("newsid");
+        $.post("loadNews.php", {
+            newsId: newsId
+        }, function (response) {
+            //alert(response);
+            //document.getElementById("#txtResourceNotes").value = resourceid.trim();
+            $("#updateNews").html(response);
+        });
+    });
+    //=========READ NEWS ABOUT ANY PROFILE==============
+    //=========STORE ENQUIRY MESSAGE DELETE START=======
+    $(".en_st_del").on("click", function () {
+        if (confirm("Are you sure you want to Delete this Message?")) {
+            var msgid = $(this).data("msgid");
+            $.post("delEnquiry.php", {
+                msgid: msgid
+            }, function (response) {
+                window.location.reload();
+            });
+        }
+        return false;
+    });
+    //=========STORE ENQUIRY MESSAGE DELETE END=========
+    //=========STORE FAVOURITES DELETE START============
+    $(".fav_st_del").on("click", function () {
+        if (confirm("Are you sure you want to Delete this?")) {
+            var postid = $(this).data("postid");
+            var pid = $(this).data("pid");
+            $.post("delFavourite.php", {
+                postid: postid,
+                pid: pid
+            }, function (response) {
+                window.location.reload();
+            });
+        }
+        return false;
+    });
+    //=========STORE FAVOURITES DELETE END==============
+    //=========STORE QUOTE DELETE START============
+    $(".quote_stor_del").on("click", function () {
+        if (confirm("Are you sure you want to Delete this?")) {
+            var strid = $(this).data("strid");
+            $.post("delQuote.php", {
+                strid: strid
+            }, function (response) {
+                window.location.reload();
+            });
+        }
+        return false;
+    });
+    //=========STORE QUOTE DELETE END==============
+    //=========FREELANCE SUB CATEGORY START========
+    $('#spPostingCategory_').change(function () {
+        if (this.value != 0) {
+            $('#spPostInSubCategory_').removeAttr("disabled");
+            var categoryId = $("#spPostingCategory_ option:selected").attr('data-id');
+            $.post("loadInSubCat.php", {
+                categoryId: categoryId
+            }, function (r) {
+                $("#spPostInSubCategory_").html(r);
+            });
+        } else {
+            // IF THE VALUE IS 0 THEN ADD SUB CATEGORY
+            $("#spPostInSubCategory_").html("<option value='0'>Sub Category</option>");
+            $("#spPostInSubCategory_").attr('disabled', 'disabled');
+        }
+    });
+    //=========FREELANCE SUB CATEGORY END==========
+    //=========STORE RFQ LOAD USER START============
+    $("#rfqCategory").on("change", function () {
+        var catid = this.value;
+        if (catid == 0) {
+            alert("Please Select Any Category!");
+            //$("#users").html("<option value='0'>Sub Category</option>");
+        } else {
+            $.post("loadUsers.php", {
+                catid: catid
+            }, function (re) {
+                //alert(re);
+                $("#rfq_wholesale").html(re);
+            });
+        }
+    });
+    //=========STORE RFQ LOAD USER END==============
+    //=========MORTAGE FORMULA PROPERTY START======
+    //STEP 1
+    $("#txtPercntage").keyup(function (e) {
+        var principal = $("#txtPurchasePrice").val();
+        var newPrinc = principal.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '');
+        var percntage = $("#txtPercntage").val();
+        if (percntage > 100) {
+            var per = 100;
+            $("#txtPercntage").val(100);
+            $("#txtDownPaymnt").val(newPrinc);
+        } else {
+            var per = (percntage / 100) * newPrinc;
+            $("#txtDownPaymnt").val(per);
+        }
+        var down = $("#txtDownPaymnt").val();
+        var interest_rate = $("#txtIntrstRate").val();
+        var years = $("#txtAmortaztion").val();
+        $.post("loan.php", {
+            principal: newPrinc,
+            down: down,
+            interest_rate: interest_rate,
+            years: years
+        }, function (response) {
+            $("#calMorggae").html(response);
+        });
+    });
+    //STEP 2
+    $('#txtAmortaztion').change(function () {
+        var principal = $("#txtPurchasePrice").val();
+        var newPrinc = principal.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '');
+        var down = $("#txtDownPaymnt").val();
+        var interest_rate = $("#txtIntrstRate").val();
+        var years = $("#txtAmortaztion").val();
+        $.post("loan.php", {
+            principal: newPrinc,
+            down: down,
+            interest_rate: interest_rate,
+            years: years
+        }, function (response) {
+            $("#calMorggae").html(response);
+        });
+    });
+    //STEP 3
+    $('#txtTypeTerm').change(function () {
+        var principal = $("#txtPurchasePrice").val();
+        var newPrinc = principal.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '');
+        var down = $("#txtDownPaymnt").val();
+        var interest_rate = $("#txtIntrstRate").val();
+        var years = $("#txtAmortaztion").val();
+        $.post("loan.php", {
+            principal: newPrinc,
+            down: down,
+            interest_rate: interest_rate,
+            years: years
+        }, function (response) {
+            $("#calMorggae").html(response);
+        });
+    });
+    //STEP 1
+    $("#txtIntrstRate").keyup(function (e) {
+        var principal = $("#txtPurchasePrice").val();
+        var newPrinc = principal.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '');
+        var down = $("#txtDownPaymnt").val();
+        var interest_rate = $("#txtIntrstRate").val();
+        if (interest_rate > 0) {
+            var interst = 1;
+        } else {
+            var interst = interest_rate;
+        }
+        var years = $("#txtAmortaztion").val();
+        $.post("loan.php", {
+            principal: newPrinc,
+            down: down,
+            interest_rate: interst,
+            years: years
+        }, function (response) {
+            $("#calMorggae").html(response);
+        });
+    });
+    //=========MORTAGE FORMULA PROPERTY END========
+    //=========BOOKING NOW FORM UPDATE DISCOUNT====
+    $(".book").on("click", ".sp-book-room", function () {
+        //alert("helo");
+        $("#txtBokId").val($(this).data("bokid"));
+        $("#txtBokTitle").val($(this).data("title"));
+        $("#txtDiscountPrice").val($(this).data("price"));
+        $("#txtOrgPrice").val($(this).data("price"));
+    });
+    $("#txtDiscount").keyup(function (e) {
+        var discount = $("#txtDiscount").val();
+        var oldPrice = $("#txtOrgPrice").val();
+        var newDiscount = discount / 100;
+        var origPrice = oldPrice * newDiscount;
+        var disPrice = oldPrice - origPrice;
+        $("#txtDiscountPrice").val(disPrice);
+    });
+    //=========BOOKING NOW FORM UPDATE DISCOUNT====
+    //=========REMOVE PLAYLIST FROM THE MUSIC======
+    $(".removePlayList").on("click", function () {
+        var baseurl = MAINURL + "/music/dashboard/";
+        var pid = $(this).attr("data-pid");
+        var listId = $(this).attr("data-listId");
+        $("." + listId).addClass("hidden");
+        $.post(baseurl + "/removePlaylist.php", {
+            remove: 1,
+            idspPlayList: listId,
+            spProfile_idspProfile: pid
+        }, function (r) {
+            //notification message from send box
+            $.notify({
+                title: '<strong>Playlist has been removed.</strong>',
+                icon: '',
+                message: ""
+            }, {
+                type: 'success',
+                animate: {
+                    enter: 'animated fadeInUp',
+                    exit: 'animated fadeOutRight'
+                },
+                placement: {
+                    from: "top",
+                    align: "right"
+                },
+                offset: 20,
+                spacing: 10,
+                z_index: 1031,
+            });
+            //location.reload();
+        });
+    });
+    //=========REMOVE PLAYLIST FROM THE MUSIC======
+    //=========PLAYLIST START PLAYER===============
+    $(".playSong").on("click", function () {
+        $(".playSong").html("<i class='fa fa-play'></i>");
+        $(this).html("<i class='fa fa-stop-circle'></i>");
+        var listid = $(this).attr("data-listid");
+        //load music 
+        $.post("loadPlaylist.php", {
+            listid: listid
+        }, function (data) {
+            $("#loadsong").html(data);
+        });
+    });
+    //=========PLAYLIST END PLAYER=================
+    //STORE POST REMOVE FAVOURITE START============
+    $(".remtofavalbm").on("click", function () {
+        var baseurl = MAINURL + "/";
+        var btnremovefavorites = this;
+        $.post(baseurl + "/social/deletefavorites.php", {
+            postid: $(this).data("postid")
+        }, function (response) {
+            window.location.reload();
+        });
+    });
+    //STORE POST REMOVE FAVOURITE END==============
+    //PLAY LIST PLAY ALL PLAYLIST SONGS============
+    $(".allPlayList").on("click", function () {
+        $(this).addClass("hidden");
+        $(".stopAllPlayList").removeClass("hidden");
+        //load playlist 
+        $.post("loadCmPlaylist.php", {}, function (data) {
+            $("#loadsong").html(data);
+        });
+    });
+    //PLAY LIST PLAY ALL PLAYLIST SONGS============
+    //PLAY LIST STOP ALL PLAYLIST SONGS============
+    $(".stopAllPlayList").on("click", function () {
+        $(this).addClass("hidden");
+        $(".allPlayList").removeClass("hidden");
+        //load playlist 
+        $("#loadsong").html("");
+    });
+    //PLAY LIST STOP ALL PLAYLIST SONGS============
+    //GENERAL DASHBOARD CHECKBOX===================
+    $('#txtPhonePublic').change(function () {
+        var pid = $("#spProfile_idspProfile").val();
+        var uid = $("#spUser_idspUser").val();
+        if ($(this).is(":checked")) {
+            $.post("loadgeneral.php", {
+                pid: pid,
+                uid: uid,
+                phone: "1",
+                mod: "sms"
+            }, function (data) {
+                //console.log(data);
+            });
+        } else {
+            $.post("loadgeneral.php", {
+                pid: pid,
+                uid: uid,
+                phone: "0",
+                mod: "sms"
+            }, function (data) {
+                //console.log(data);
+            });
+        }
+    });
+    $('#txtEmailPublic').change(function () {
+        var pid = $("#spProfile_idspProfile").val();
+        var uid = $("#spUser_idspUser").val();
+        if ($(this).is(":checked")) {
+            $.post("loadgeneral.php", {
+                pid: pid,
+                uid: uid,
+                email: "1",
+                mod: "email"
+            }, function (data) {
+                //console.log(data);
+            });
+        } else {
+            $.post("loadgeneral.php", {
+                pid: pid,
+                uid: uid,
+                email: "0",
+                mod: "email"
+            }, function (data) {
+                //console.log(data);
+            });
+        }
+    });
+    //GENERAL DASHBOARD CHECKBOX===================
+    //MODULE SHOW DASHBOARD========================
+    $(".moduleshow").change(function () {
+        var pid = $("#spProfile_idspProfile").val();
+        var uid = $("#spUser_idspUser").val();
+        var mod = $(this).attr("data-mod");
+        //console.log(mod);
+        if ($(this).is(":checked")) {
+            $.post("loadmodule.php", {
+                pid: pid,
+                uid: uid,
+                mod: mod,
+                show: '0'
+            }, function (data) {
+                //console.log(data);
+            });
+        } else {
+            $.post("loadmodule.php", {
+                pid: pid,
+                uid: uid,
+                mod: mod,
+                show: '1'
+            }, function (data) {
+                //console.log(data);
+            });
+        }
+    });
+    //==============END============================
+    //==============DELETE POSTING=================
+    $(".delpost").click(function () {
+        // alert();
+        var postid = $(this).attr("data-postid");
+        //alert(postid);
+        swal({
+            title: "Are you sure you want to delete ?",
+            type: "warning",
+            confirmButtonClass: "sweet_ok",
+            confirmButtonText: "Yes",
+            cancelButtonClass: "sweet_cancel",
+            cancelButtonText: "No",
+            showCancelButton: true,
+        }, function (isConfirm) {
+            if (isConfirm) {
+                if (postid > 0) {
+                    $.post("delpro.php", {
+                        postid: postid
+                    }, function (data) {
+                        // window.location.href = MAINURL+'/post-ad/sell/?post';
+                        window.location.reload();
+                    });
+                }
+                /*else{
+                                        alert("Select the correct post.");
+                                    }*/
+            }
+        });
+        /*  if (confirm("Are you sure you want to Delete ?")){
+            if(postid > 0){
+              $.post("delpro.php", {postid:postid}, function (data) {
+                //console.log(data);
+                window.location.reload();
+              });
+            }else{
+              alert("Select the correct post.");
+            }
+        }*/
+    });
+    $(".delopname").click(function () {
+        // alert();
+        var postid = $(this).attr("data-postid");
+        //alert(postid);
+        swal({
+            title: "Are you sure you want to delete ?",
+            type: "warning",
+            confirmButtonClass: "sweet_ok",
+            confirmButtonText: "Yes",
+            cancelButtonClass: "sweet_cancel",
+            cancelButtonText: "No",
+            showCancelButton: true,
+        }, function (isConfirm) {
+            if (isConfirm) {
+                if (postid > 0) {
+                    $.post("delopname.php", {
+                        postid: postid
+                    }, function (data) {
+                        window.location.reload();
+                    });
+                }
+            }
+        });
+    });
+     
+    $(".delsortlist").click(function () {
+        // alert();
+        var postid = $(this).attr("data-postid");
+        //alert(postid);
+        swal({
+            title: "Are you sure you want to delete ?",
+            type: "warning",
+            confirmButtonClass: "sweet_ok",
+            confirmButtonText: "Yes",
+            cancelButtonClass: "sweet_cancel",
+            cancelButtonText: "No",
+            showCancelButton: true,
+        }, function (isConfirm) {
+            if (isConfirm) {
+                if (postid > 0) {
+                    $.post("removesortlist.php", {
+                        sort: postid
+                    }, function (data) {
+                        // window.location.href = MAINURL+'/post-ad/sell/?post';
+                        window.location.reload();
+                    });
+                }
+                /*else{
+                                        alert("Select the correct post.");
+                                    }*/
+            }
+        });
+        /*  if (confirm("Are you sure you want to Delete ?")){
+            if(postid > 0){
+              $.post("delpro.php", {postid:postid}, function (data) {
+                //console.log(data);
+                window.location.reload();
+              });
+            }else{
+              alert("Select the correct post.");
+            }
+        }*/
+    });
+    $(".deljobpost").click(function () {
+        // alert();
+        var postid = $(this).attr("data-postid");
+        //alert(postid);
+        swal({
+            title: "Are you sure you want to delete ?",
+            type: "warning",
+            confirmButtonClass: "sweet_ok",
+            confirmButtonText: "Yes",
+            cancelButtonClass: "sweet_cancel",
+            cancelButtonText: "No",
+            showCancelButton: true,
+        }, function (isConfirm) {
+            if (isConfirm) {
+                if (postid > 0) {
+                    $.post("delpro.php", {
+                        postid: postid
+                    }, function (data) {
+                        // window.location.href = MAINURL+'/post-ad/sell/?post';
+                        window.location.reload();
+                    });
+                }
+                /*else{
+                                        alert("Select the correct post.");
+                                    }*/
+            }
+        });
+        /*  if (confirm("Are you sure you want to Delete ?")){
+            if(postid > 0){
+              $.post("delpro.php", {postid:postid}, function (data) {
+                //console.log(data);
+                window.location.reload();
+              });
+            }else{
+              alert("Select the correct post.");
+            }
+        }*/
+    });
+    //==============DELETE SPONSOR POSTING=================
+    $(".delgroupsponsor").click(function () {
+        // alert();
+        var postid = $(this).attr("data-postid");
+        // alert(postid);
+        swal({
+            title: "Are you sure to Remove?",
+            type: "warning",
+            confirmButtonClass: "sweet_ok",
+            confirmButtonText: "Yes",
+            cancelButtonClass: "sweet_cancel",
+            cancelButtonText: "No",
+            showCancelButton: true, 
+        }, function (isConfirm) {
+            if (isConfirm) {
+                if (postid > 0) {
+                    $.post("/post-ad/events/deletegroup_sponsor.php", {
+                        postid: postid
+                    }, function (data) {
+                        // window.location.href = MAINURL+'/post-ad/sell/?post';
+                        window.location.reload();
+                    });
+                }
+                /*else{
+                                        alert("Select the correct post.");
+                                    }*/
+            }
+        });
+        /*  if (confirm("Are you sure you want to Delete ?")){
+            if(postid > 0){
+              $.post("delpro.php", {postid:postid}, function (data) {
+                //console.log(data);
+                window.location.reload();
+              });
+            }else{
+              alert("Select the correct post.");
+            }
+        }*/
+    });
+    //==============DELETE SPONSOR POSTING=================
+    $(".deldiscussion").click(function () {
+        //alert('aasas');
+        var postid = $(this).attr("data-postid");
+         //alert(postid);
+		  Swal.fire({
+      title: 'Are you sure to Remove?',
+      text: "It will Remove permanently !",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+		 // alert('yes');
+		  
+         $.post("delete_discussresult.php", {
+                        postid: postid
+                    }, function (data) {
+                        // window.location.href = MAINURL+'/post-ad/sell/?post';
+                        window.location.reload();
+                    });
+      }
+    })  
+	});
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+		 
+      
+        /*  if (confirm("Are you sure you want to Delete ?")){
+            if(postid > 0){
+              $.post("delpro.php", {postid:postid}, function (data) {
+                //console.log(data);
+                window.location.reload();
+              });
+            }else{
+              alert("Select the correct post.");
+            }
+        }*/
+    
+    //==============DELETE SPONSOR POSTING=================
+    $(".delsponsor").click(function () {
+        // alert();
+        var postid = $(this).attr("data-postid");
+        // alert(postid);
+        swal({
+            title: "Are you sure to Remove?",
+            type: "warning",
+            confirmButtonClass: "sweet_ok",
+            confirmButtonText: "Yes",
+            cancelButtonClass: "sweet_cancel",
+            cancelButtonText: "No",
+            showCancelButton: true,
+        }, function (isConfirm) {
+            if (isConfirm) {
+                if (postid > 0) {
+                    $.post("deletesponsor.php", {
+                        postid: postid
+                    }, function (data) {
+                        // window.location.href = MAINURL+'/post-ad/sell/?post';
+                        window.location.reload();
+                    });
+                }
+                /*else{
+                                        alert("Select the correct post.");
+                                    }*/
+            }
+        });
+        /*  if (confirm("Are you sure you want to Delete ?")){
+            if(postid > 0){
+              $.post("delpro.php", {postid:postid}, function (data) {
+                //console.log(data);
+                window.location.reload();
+              });
+            }else{
+              alert("Select the correct post.");
+            }
+        }*/
+    });
+    //delpreview post
+    $(".delpreviewdraft").click(function () {
+        var postid = $(this).attr("data-postid");
+        swal({
+            title: "Are you sure to Remove?",
+            type: "warning",
+            confirmButtonClass: "sweet_ok",
+            confirmButtonText: "Yes",
+            cancelButtonClass: "sweet_cancel",
+            cancelButtonText: "No",
+            showCancelButton: true,
+        }, function (isConfirm) {
+            if (isConfirm) {
+                if (postid > 0) {
+                    $.post("dashboard/delpro.php", {
+                        postid: postid
+                    }, function (data) {
+                        window.location.href = MAINURL + '/post-ad/sell/?post';
+                    });
+                }
+                /*else{
+                                        alert("Select the correct post.");
+                                    }*/
+            }
+        });
+        /*if (confirm("Are you sure you want to Delete ?")){
+          if(postid > 0){
+            $.post("delpro.php", {postid:postid}, function (data) {
+              //console.log(data);
+              window.location.reload();
+            });
+          }else{
+            alert("Select the correct post.");
+          }
+        }
+        */
+    });
+    //==============RESTORE POSTING================
+    $(".reStorepost").click(function () {
+        var postid = $(this).attr("data-postid");
+        if (confirm("Are you sure you want to Re-Store?")) {
+            if (postid > 0) {
+                $.post("restorepro.php", {
+                    postid: postid
+                }, function (data) {
+                    //console.log(data);
+                    window.location.reload();
+                });
+            } else {
+                alert("Select the correct post.");
+            }
+        }
+    });
+    //==============END============================
+    //===WHOLESALE ENQUIRY MODEL RECORD SHOW
+    $(".wholeenqirymdl").click(function () {
+        var title = $(this).attr("data-title");
+        var postid = $(this).attr("data-postid");
+        var selerid = $(this).attr("data-selrid");
+		var quantityyy = $(this).attr("data-quantity");
+		// alert('22211');
+	    //$('#spQuotationTotalQty').attr('min', quantityyy);
+$("#minquantity").val(quantityyy);
+        $("#productname").val(title);
+        $("#spPosting").val(postid);
+        $("#spQuotationSellerid").val(selerid);
+		
+    });
+    //===END
+    //===ADD SHIPPING INFO
+    $("#btnAddShip").on("click", function () {
+        var name = document.getElementById("txtFullName").value;
+        var mobile = document.getElementById("txtMobNum").value;
+        var email = document.getElementById("txtEmail").value;
+        var country = document.getElementById("spUserCountry").value;
+        var state = document.getElementById("spUserState").value;
+        var city = document.getElementById("spUserCity").value;
+        var address = document.getElementById("txtaddress").value;
+        var txtUser = document.getElementById("txtUser").value;
+        if (name == "") {
+            var title = '<strong>Fill all required fields</strong>';
+            var icon = '';
+            showNofification(title, icon);
+        } else {
+            if (mobile == "") {
+                var title = '<strong>Fill all required fields</strong>';
+                var icon = '';
+                showNofification(title, icon);
+            } else {
+                if (email == "") {
+                    var title = '<strong>Fill all required fields</strong>';
+                    var icon = '';
+                    showNofification(title, icon);
+                } else {
+                    if (country < 1) {
+                        var title = '<strong>Fill all required fields</strong>';
+                        var icon = '';
+                        showNofification(title, icon);
+                    } else {
+                        if (state < 1) {
+                            var title = '<strong>Fill all required fields</strong>';
+                            var icon = '';
+                            showNofification(title, icon);
+                        } else {
+                            if (city < 1) {
+                                var title = '<strong>Fill all required fields</strong>';
+                                var icon = '';
+                                showNofification(title, icon);
+                            } else {
+                                if (address == "") {
+                                    var title = '<strong>Fill all required fields</strong>';
+                                    var icon = '';
+                                    showNofification(title, icon);
+                                } else {
+                                    //===START FORM SUBMIT
+                                    $.post("addship.php", {
+                                        name: name,
+                                        mobile: mobile,
+                                        email: email,
+                                        country: country,
+                                        state: state,
+                                        city: city,
+                                        address: address,
+                                        txtUser: txtUser
+                                    }, function (data) {
+                                        var title = '<strong>Shipping Info Saved Successfully!</strong>';
+                                        var icon = '';
+                                        showNofification(title, icon);
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    });
+    //===END
+    // REFRESH CODE ON CONTACT US PAGE
+    $(".refresh").on("click", function () {
+        var length = 6;
+        var result = '';
+        var characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for (var i = 0; i < length; i++) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        $("#txtCaptcha").val(result);
+        $(".captchatext").html(result);
+    });
+    // END
+    // POST DELETE
+    $(".postdel").on("click", function () {
+        var postid = $(this).attr("data-id");
+        swal({
+            title: "Are you sure?",
+            type: "warning",
+            confirmButtonClass: "sweet_ok",
+            confirmButtonText: "Yes",
+            cancelButtonClass: "sweet_cancel",
+            cancelButtonText: "No",
+            showCancelButton: true,
+        }, function (isConfirm) {
+            if (isConfirm) {
+                $.post(MAINURL + "/post-ad/deltimelinepost.php", {
+                    postid: postid
+                }, function (data) { });
+                $(".deldiv_" + postid).html("");
+                $(".deldiv_" + postid).removeClass('searchable');
+                $(".deldiv_" + postid).removeClass('post_timeline');
+            }
+        });
+    });
+    // END
+    // SAVE POST DELETE
+    $(".savepostdel").on("click", function () {
+        var postid = $(this).attr("data-id");
+        var flag = 1;
+        swal({
+            title: "Are you sure to delete?",
+            type: "warning",
+            confirmButtonClass: "sweet_ok",
+            confirmButtonText: "Yes",
+            cancelButtonClass: "sweet_cancel",
+            cancelButtonText: "No",
+            showCancelButton: true,
+        }, function (isConfirm) {
+            if (isConfirm) {
+                $.post(MAINURL + "/post-ad/deletePost.php", {
+                    postid: postid,
+                    flag: flag
+                }, function (data) {
+                    console.log(data);
+                });
+                $(".deldiv_" + postid).html("");
+                $(".deldiv_" + postid).removeClass('searchable');
+                $(".deldiv_" + postid).removeClass('post_timeline');
+            }
+        });
+    });
+    // END
+    $(".Group_delete").on("click", function () {
+        var groupid = $(this).attr("data-id");
+        /*alert(groupid);*/
+        /* alert(postid);*/
+        var flag = 1;
+        swal({
+            title: "Are you sure to delete?",
+            type: "warning",
+            confirmButtonClass: "sweet_ok",
+            confirmButtonText: "Yes",
+            cancelButtonClass: "sweet_cancel",
+            cancelButtonText: "No",
+            showCancelButton: true,
+        }, function (isConfirm) {
+            if (isConfirm) {
+                $.get("../my-groups/deletegroup.php", {
+                    groupid: groupid
+                }, function (data) {
+                    //console.log(data);
+                    window.location = '../my-groups';
+                });
+                $(".groupdiv_" + groupid).html("");
+                /* $(".groupdiv_"+postid).removeClass('searchable');
+                $(".deldiv_"+postid).removeClass('post_timeline');*/
+            }
+        });
+    });
+});
+
+function reloadChatBox() {
+    // check the chatbox loaded or not
+    isLoaded = $(".friendchatsystem").find(".inboxFriend").length;
+    if (isLoaded > 0) {
+        var chatWithId = $(".btnfriend").data("friendid");
+        var profileimg = document.getElementById(chatWithId).src;
+        // Check if the sender is here.
+        isSenderHere = $(".friendchatsystem").find("#sender").length;
+        findElement = $('.friendchat[data-friendid="' + chatWithId + '"]');
+        if (isSenderHere > 0) {
+            chatById = $("#sender").val();
+            loadChatOfFriend(findElement, profileimg);
+        }
+    }
+}
+
+function loadChatOfFriend(element, profileimg) {
+	//alert(profileimg);
+    $(".show_loader").css("display", "block");
+    if ($(element).hasClass("unreadmsg")) {
+        var count = $("#totalunread").text();
+        count = count - 1;
+        $("#totalunread").text(count);
+        $(element).removeClass("unread").addClass("read");
+    }
+    $(".messageing").removeClass("active");
+    $(".friendchat").removeClass("active");
+    $(element).addClass("active");
+    var url = "../friendmessage/friendmessage.php"
+    if ($(element).hasClass("nonfriend")) {
+        var url = "../friendmessage/nonfriendmsg.php"
+    }
+    $(".friendchatsystem").load(url, {
+        friendid: $(element).data("friendid"),
+        myid: $(element).data("myid")
+    }, function () {
+        $("#friendlist").append("<div class='btn-group frnd' role='group' aria-label='...' style='padding-top:2px;'><img src='" + profileimg + "' class='img-responsive rightProfilepic' alt='' ><a href='../friends/?profileid=" + $(element).data("friendid") + "' type='button' class='btnfriend' data-friendid='" + $(element).data("friendid") + "' data-toggle='tooltip' data-placement='left' title='View profile'> " + $(element).data("friendname") + "</a></div>&nbsp;");
+        $(".messages").scrollTop($(".messages").prop("scrollHeight"));
+        // ===REMOVE LOADING
+        $(".show_loader").css("display", "none");
+    });
+    $(".myfriends").each(function (i, e) {
+        if ($(e).attr("data-friendid") == $(element).data("friendid")) {
+            if ($(element).hasClass("unreadmsg")) {
+                var count = $(e).find(".totalunreadmsg").text();
+                count = count - 1;
+                $(e).find(".totalunreadmsg").text(count);
+                $(element).removeClass("unread").addClass("read");
+            }
+            //totalunreadmsg
+            $(e).addClass("active");
+        }
+    });
+}
+
+function getUrlVars()
+{
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
+}

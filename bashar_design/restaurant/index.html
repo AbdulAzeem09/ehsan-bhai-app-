@@ -1,0 +1,255 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title> Food Online Ordering </title>
+
+    <meta name="author" content="">
+    
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.ico">
+
+    <!-- Bootstrap-ecommerce -->
+    <link href="assets/css/bootstrap.css?v=3.0" rel="stylesheet" type="text/css"/>
+    <link href="assets/css/ui.css?v=3.0" rel="stylesheet" type="text/css"/>
+    <link href="assets/css/responsive.css?v=3.0" rel="stylesheet" />
+
+    <!-- Font awesome 5 -->
+    <link rel="preload" href="assets/fonts/fontawesome/webfonts/fa-solid-900.woff2" as="font" type="font/woff" crossorigin>
+    <!-- <link href="assets/fonts/fontawesome/css/all.min.css" type="text/css" rel="stylesheet"> -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" rel="stylesheet" media="all">
+
+    <!-- Custom CSS -->
+    <link href="assets/css/style.css" rel="stylesheet" />    
+</head>
+<body> 
+    <section class="">        
+        <!-- =================== COMPONENT 1 ====================== -->
+        <div class="card bg-primary p-5" style="min-height: 450px; background-size: cover; background-image: url('assets/images/banners/intro-bg.jpg');">
+            <header class=" mt-5">
+                <h1 class="display-4 text-white">Order food online now</h1>
+                <p class="lead text-white">Discover the best food and drinks in your area</p>
+            </header>
+            <form class="w-100 mb-3" style="max-width: 800px;">
+                <div class="row g-2 w-100">
+                    <div class="col flex-grow">
+                        <div class="input-group">
+                            <select class="form-select" style="max-width: 20%;">
+                                <option>Delivery</option>
+                                <option>Pick Up</option>
+                            </select>
+                            <input type="text" placeholder="or Type Location" class="form-control location" name="location" id="locationAddress" value=""/>
+                        </div>
+                    </div>
+                    <!-- col.// -->
+                    <div class="col-auto"><button class="btn btn-warning btn-search" id="showMe" onclick="getLocation()"><i class="fa me-1 fa-map-marker"></i> Find Me</button></div>
+                    <!-- col.// -->
+                </div>
+                <!-- row.// -->
+            </form>
+            <article class="">                 
+                <p class="lead text-white">Login or Register to detect your nearest location fastly</p> 
+                <a href="#" class="btn btn-light btn-lg"> Register</a> <a href="main.html" class="btn btn-warning btn-lg"> Login </a> 
+            </article>
+        </div>       
+    </section>
+    <br/>
+    <br/>
+    <section class="">
+        <div class="container">
+            <div class="row align-items-center" style="min-height: 520px;">
+                <div class="col-lg-6 col-md-6">
+                    <article class="my-5">
+                        <h1 class="display-4">
+                            Register Restaurant
+                        </h1>
+                        <p class="lead">Create Restaurant start increasing your revenue</p>
+                        <a href="reg-restaurant.html" class="btn btn-primary btn-lg"> Register </a> <a href="learnmore.html" class="btn btn-light btn-lg"> Learn more </a>
+                    </article>
+                </div>
+                <!-- col.// -->
+                <div class="col-lg-6 col-md-6 order-lg-1"><img src="assets/images/banners/intro-item2.jpg" class="mw-100 rounded-circle" /></div>
+                <!-- col.// -->
+            </div>
+            <!-- row.// -->
+        </div>
+        <!-- container end.// -->
+    </section>
+    <br/>
+    <hr/>
+    <section class="">
+        <div class="container">
+            <div class="row align-items-center" style="min-height: 520px;">
+                <div class="col-lg-6 order-lg-2">
+                    <article class="my-5 ms-lg-5">
+                        <h1 class="display-4">
+                            Become Deliverer
+                        </h1>
+                        <p class="lead">Join the ever best team of delivery</p>
+                        <a href="reg-deliverer.html" class="btn btn-primary btn-lg"> Register </a> <a href="learnmore.html" class="btn btn-light btn-lg"> Learn more </a>
+                    </article>
+                </div>
+                <!-- col.// -->
+                <div class="col-lg-6 col-md-6 order-lg-1"><img src="assets/images/banners/intro-item1.jpg" class="mw-100 rounded-circle" height="500" /></div>
+                <!-- col.// -->
+            </div>
+            <!-- row.// -->
+        </div>
+        <!-- container end.// -->
+    </section>
+    <footer class="section-footer bg-primary footer-dark shadow mt-4"> 
+        <div class="container"> 
+            <section class="footer-main py-5"> 
+                <div class="row"> 
+                    <aside class="col-lg-4 col-12"> 
+                        <article class="me-lg-4 mb-4"> 
+                            <h6 class="title">Contact us</h6> 
+                            <ul class="list-icon"> 
+                                <li class="mb-2"> <i class="icon fa fa-map-marker"></i> Moscow, Russia, Fake Street, <br> Area name, PO 10021 </li> 
+                                <li class="mb-2"> <i class="icon fa fa-phone"></i> (800) 060-0730, (800) 060-0730 </li> 
+                                <li class="mb-2"> <i class="icon fa fa-envelope"></i> info@mywebsite.com </li> 
+                            </ul> 
+                        </article> 
+                    </aside> <!-- col end.// --> 
+                    <aside class="col-lg col-6"> 
+                        <h6 class="title">Company</h6> 
+                        <ul class="list-menu mb-4"> 
+                            <li> <a href="#"> About us </a> </li> 
+                            <li> <a href="#"> Career </a> </li> 
+                            <li> <a href="#"> Find a store </a> </li> 
+                            <li> <a href="#"> Rules and terms </a> </li> 
+                            <li> <a href="#"> Sitemap </a> </li> 
+                        </ul> 
+                    </aside> <!-- col end.// --> 
+                    <aside class="col-lg col-6"> 
+                        <h6 class="title"> Services 
+                        </h6> <ul class="list-menu mb-4"> 
+                            <li> <a href="#"> Help Center </a> </li> 
+                            <li> <a href="#"> Money refund </a> </li> 
+                            <li> <a href="#"> Order status </a> </li> 
+                            <li> <a href="#"> Shipping info </a> </li> 
+                            <li> <a href="#"> Open dispute </a> </li> 
+                        </ul> 
+                    </aside> <!-- col end.// --> 
+                    <aside class="col-lg col-6"> 
+                        <h6 class="title"> User center </h6> 
+                        <ul class="list-menu mb-4"> 
+                            <li> <a href="#"> Register </a> </li> 
+                            <li> <a href="#"> Sign in </a> </li> 
+                            <li> <a href="#"> Restore account </a> </li> 
+                            <li> <a href="#"> Track order </a> </li> 
+                        </ul> 
+                    </aside> <!-- col end.// --> 
+                    <aside class="col-lg col-6"> 
+                        <h6 class="title">Social</h6> 
+                        <ul class="list-icon list-menu mb-4"> 
+                            <li><a href="#"> <i class="icon fab fa-facebook"></i> Facebook </a></li> 
+                            <li><a href="#"> <i class="icon fab fa-twitter"></i> Twitter </a></li> 
+                            <li><a href="#"> <i class="icon fab fa-instagram"></i> Instagram </a></li> 
+                            <li><a href="#"> <i class="icon fab fa-youtube"></i> Youtube </a></li> 
+                        </ul> 
+                    </aside> 
+                </div> <!-- row end.// --> 
+            </section> 
+            <hr class="my-0"> 
+            <section class="footer-bottom d-flex justify-content-between"> 
+                <p class="text-white-50 mb-0"> © 2021 theSharePage. All rights reserved. </p> 
+                <div> <i class="fab fa-lg fa-cc-visa"></i> 
+                    <i class="fab fa-lg fa-cc-amex"></i> 
+                    <i class="fab fa-lg fa-cc-mastercard"></i> 
+                    <i class="fab fa-lg fa-cc-paypal"></i> 
+                </div> 
+            </section> 
+        </div> <!-- container end.// --> 
+    </footer>
+
+
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" tabindex="-1" id="modal_hire" role="dialog">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Support by author</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="list-check">
+                        
+                        <li>UI/UX designing for Web &amp; Mobile </li>
+                        <li>Converting your design into valid HTML5/CSS code</li>
+                        <li>Customize this UI kit for your project</li>
+                        <li>Have touble with downloading?</li>
+                    </ul>
+                    <p>Portfolio: <a href="http://dribbble.com/vosidiy" target="_blank">Dribbble.com/vosidiy</a> <br>
+                        Email me: vosidiy@gmail.com <br>
+                        Telegram chat: <a href="https://t.me/vosidiy" target="_blank">@vosidiy</a>
+                    </p>
+                    <p class="text-success">I will reply during the day</p>
+                </div>
+            </div>
+        </div>
+    </div> 
+    <!-- modal.// -->
+
+    <!-- JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="assets/js/bootstrap.bundle.min.js?v=3" type="text/javascript"></script>
+    <script src="assets/js/script.js?v=3" type="text/javascript"></script>
+
+
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        const x = document.getElementById('locationAddress');
+        function getLocation() {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition, showError);
+        } else {
+            x.value = "Geolocation is not supported by this browser.";
+        }
+    }
+
+    function showPosition(position) {
+  //x.value = "Latitude: " + position.coords.latitude + "Longitude: " + position.coords.longitude;
+  var locAPI = "https://maps.googleapis.com/maps/api/geocode/json?latlng="+ position.coords.latitude +","+ position.coords.longitude+"&sensor=true&key=AIzaSyDKGZArvKOnv0npdLA1C9W2NOq-rIM8w1M";
+  //x.value = locAPI;
+  fetch(locAPI)
+  .then(result => result.json())
+  .then((output) => {
+        //console.log('Output: ', output);
+        x.value = output.results[4].formatted_address;
+        
+    });
+
+
+
+}
+function showError(error) {
+  switch(error.code) {
+    case error.PERMISSION_DENIED:
+    x.value = "User denied the request for Geolocation."
+    break;
+    case error.POSITION_UNAVAILABLE:
+    x.value = "Location information is unavailable."
+    break;
+    case error.TIMEOUT:
+    x.value = "The request to get user location timed out."
+    break;
+    case error.UNKNOWN_ERROR:
+    x.value = "An unknown error occurred."
+    break;
+}
+}
+</script>
+
+<noscript><div><img src="https://mc.yandex.ru/watch/87410011" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+</body>
+</html>

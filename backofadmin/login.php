@@ -1,0 +1,146 @@
+<?php
+require_once 'library/config.php';
+require_once 'library/functions.php';
+
+
+$errorMessage = '';
+
+if (isset($_POST['txtUserName'])) {
+$result = doLogin($dbConn);
+
+if ($result != '') {
+$errorMessage = $result;
+}
+}
+
+?>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Log in</title>
+<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+<!-- Bootstrap 3.3.4 -->
+<link href="<?php echo WEB_ROOT_TEMPLATE; ?>/assets/admin/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<!-- Font Awesome Icons -->
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<!-- Theme style -->
+<link href="<?php echo WEB_ROOT_TEMPLATE; ?>/assets/admin/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+<!-- iCheck -->
+<link href="<?php echo WEB_ROOT_TEMPLATE; ?>/assets/admin/plugins/iCheck/square/blue.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo WEB_ROOT_TEMPLATE; ?>/assets/admin/dist/css/custom.css" rel="stylesheet" type="text/css" />
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+<body class="login-page" id="loginPage">
+<div class="login-box">
+
+<div class="login-box-body">
+<h3>The SharePage</h3>
+<?php 
+if ($errorMessage != '') { ?>
+<p class="alert alert-danger"><?php echo $errorMessage;  ?></p>
+<?php 
+} ?>
+
+<?php //echo $_SERVER['PHP_SELF']; ?>
+
+<form id="login-form" action="<?php $_SERVER['PHP_SELF']; ?>" method="post" >
+<div class="form-group has-feedback">
+<input type="text" id="txtUserName" placeholder="Username" name="txtUserName" class="form-control" />
+<span class="glyphicon glyphicon-user form-control-feedback"></span>
+
+<span id=user_error style="padding-top: 10px;color:red;" class="danger"></span>
+</div>
+<div class="form-group has-feedback">
+<input type="password" placeholder="Password" id="password" name="txtPassword" class="form-control"  />
+<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+
+<span id=pass_error class="danger" style="padding-top: 10px;color:red;"></span>
+</div>
+<div class="row">
+
+<div class="col-xs-12">
+<button type="submit" id="login" class="btn btn-success btn-block btn-flat">Sign In</button>
+</div><!-- /.col -->
+
+</div>
+
+<div class="row">
+
+<div class="col-xs-12">
+<br>
+<a href="../backforgot-password.php">
+Forgot Password?
+</a>
+</div><!-- /.col -->
+
+</div>
+
+</form>
+
+
+</div><!-- /.login-box-body -->
+</div><!-- /.login-box -->
+<!-- jQuery 2.1.4 -->
+<script src="<?php echo WEB_ROOT_TEMPLATE; ?>/assets/admin/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+<!-- Bootstrap 3.3.2 JS -->
+<script src="<?php echo WEB_ROOT_TEMPLATE; ?>/assets/admin/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<!-- iCheck -->
+<script src="<?php echo WEB_ROOT_TEMPLATE; ?>/assets/admin/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+
+$( document ).ready(function() {
+$("#login").on("click", function(){
+
+
+var txtUserName = $("#txtUserName").val();
+var password = $("#password").val();
+
+
+
+
+if(txtUserName == "" && password == ""){
+$("#user_error").text("Please Enter User Name.");
+$("#pass_error").text("Please Enter Password.");
+return false;
+
+}else if(txtUserName != "" && password == ""){
+$("#user_error").text("");
+$("#pass_error").text("Please Enter Password.");
+return false;
+
+}else if(txtUserName == "" && password != ""){
+$("#user_error").text("Please Enter User Name.");
+$("#pass_error").text("");
+return false;
+
+}else if(txtUserName == ""){
+$("#user_error").text("Please Enter User Name.");
+return false;
+
+}else if(password == ""){
+
+$("#pass_error").text("Please Enter Password.");
+return false;
+
+}else{
+
+return true;
+}
+
+});
+});
+
+</script>
+
+
+</body>
+</html>

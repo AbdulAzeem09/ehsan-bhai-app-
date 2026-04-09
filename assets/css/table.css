@@ -1,0 +1,17 @@
+
+
+.tbl_account thead{
+  background-color: #EDEEF0;
+}
+.tbl_account thead tr th:first-child{
+  width: 60px;
+}
+.tbl_account thead tr th:last-child{
+  width: 100px;
+}
+.tbl_account thead tr th{
+  text-align: center;
+}
+.tbl_account thead tr th:nth-child(2), .tbl_account tbody tr td:nth-child(2){
+  text-align: left;
+}

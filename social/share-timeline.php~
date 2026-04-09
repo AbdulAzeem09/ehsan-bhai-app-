@@ -1,0 +1,47 @@
+<?php
+
+	function sp_autoloader($class){
+		include '../mlayer/' . $class . '.class.php';
+	}
+	spl_autoload_register("sp_autoloader");
+	//spShareByWhom,spPostings_idspPostings,spShareToGroup,spShareToWhom
+	$pl = new _postshare;
+	$re = new _redirect; 
+
+	$flag = 0;
+	$result = $pl->read();
+	if (isset($_POST['btnshare'])) {
+		//echo $pl->ta->sql;
+		if($result != false){
+
+			if($_POST["spShareToWhom"]== null){
+				$_POST["spShareToWhom"]=0;
+			}
+
+			if($_POST["spShareToGroup"]== null){
+				$_POST["spShareToGroup"]=0;
+			}	
+		
+			while($row = mysqli_fetch_assoc($result)){	
+				if( $row["spPostings_idspPostings"] == $_POST['spPostings_idspPostings'] && $row['spShareByWhom'] == $_POST["spShareByWhom"] &&  $row["spShareToWhom"] == $_POST["spShareToWhom"] && $row["spShareToGroup"] == $_POST["spShareToGroup"]){
+					$url = "../timeline";
+					$re->redirect($url);
+					//header("Location:../timeline");
+					$flag++;
+				}
+			}
+		}
+		if($flag == 0){
+			$pl->share($_POST);
+			$url = "../timeline";
+			$re->redirect($url);
+			//header("Location:../timeline");
+		}
+	}else{
+		$url = "../timeline";
+		$re->redirect($url);
+	}
+	
+	
+	
+?>

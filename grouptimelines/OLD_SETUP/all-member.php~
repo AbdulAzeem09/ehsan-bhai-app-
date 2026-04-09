@@ -1,0 +1,142 @@
+ <link rel="stylesheet" type="text/css" href="<?php echo $BaseUrl;?>/assets/css/design.css">
+
+<?php
+    $p = new _spgroup;
+    $rpvt = $p->members($_GET["groupid"]);
+    //echo $p->ta->sql;
+    if ($rpvt != false) {
+        while ($row = mysqli_fetch_assoc($rpvt)) {
+            if ($row['spApproveRegect'] == 1) {
+                if ($row['spProfileIsAdmin'] == 0) { ?>
+                    <div class="col-md-4">
+                        <div class="member_box" id="ip2"   style="background-color: #202548">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <?php
+                                    if(isset($row['spProfilePic'])){ ?>
+                                        <img src='<?php echo ($row['spProfilePic']); ?>' class="img-responsive profilePic" alt="" /> <?php
+                                    }else{ ?>
+                                        <img src='<?php echo $BaseUrl;?>/assets/images/icon/member/member_blank.jpg' class="img-responsive" alt="" /> <?php
+                                    }
+                                    ?>
+                                </div>
+                                <div class="col-md-8 no-padding">
+                                    <h3><a href="<?php echo $BaseUrl.'/friends/?profileid='.$row['idspProfiles'];?>"><?php echo ucwords($row['spProfileName'])?> </a></h3>
+                                   <!--  <h4><?php echo $row['spProfilesCity']." , ".$row['spProfilesCountry'];?></h4> -->
+                                    <h5>
+                                        Joined
+                                        <span class="pll-right" style="float: right;">
+                                        <img src="<?php echo $BaseUrl;?>/assets/images/icon/member/group_admin.png" class="img-responsive" alt="">
+                                        </span>
+                                    </h5>
+                                    <p>Added on <?php echo $row['spGroup_newMember_Date'];?></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <?php
+                    //src=' ".($row['spProfilePic'])."'                                                                
+                }else{
+
+                    //if admin = 0  and spAssistantAdmin = 0 then make assistent admin
+                    if (isset($admin) && $row['spAssistantAdmin'] == 0) {?>
+                        <div class="col-md-4">
+                            <div class="member_box " id="ip2" style="background-color: #202548">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <?php
+                                        if(isset($row['spProfilePic'])){ ?>
+                                            <img src='<?php echo ($row['spProfilePic']); ?>' class="img-responsive profilePic" alt="" /> <?php
+                                        }else{ ?>
+                                            <img src='<?php echo $BaseUrl;?>/assets/images/icon/member/member_blank.jpg' class="img-responsive" alt="" /> <?php
+                                        }
+                                        ?>
+                                    </div>
+                                    <div class="col-md-8 no-padding sp-group-details">
+                                        <h3><a href="<?php echo $BaseUrl.'/friends/?profileid='.$row['idspProfiles'];?>"><?php echo ucwords($row['spProfileName']);?>
+                                            </a></h3>
+                                        <!-- <h4><?php echo $row['spProfilesCity']." , ".$row['spProfilesCountry'];?></h4> -->
+                                        <h5>Joined<span class="pull-right">
+                                                <img style="margin-right: 10px;" src="<?php echo $BaseUrl;?>/assets/images/icon/member/group_sub_admin.png" class="img-responsive" alt="">
+                                            <?php
+                                            if ($admin_Id == $_SESSION['pid']) {
+                                                ?>
+                                                <a data-toggle="popover" data-placement="top" data-html="true" data-content="<div class='popover_content'><a class='addtodelete' data-pid='<?php echo $row['idspProfiles']; ?>' data-gid='<?php echo $_GET["groupid"];?>' ><i class='fa fa-trash'></i> Delete Member</a><a href='javascript:void(0);' class='assistant_admin' style='font-size:14px!important;' data-pid='<?php echo $row['idspProfiles']; ?>' data-gid='<?php echo $_GET["groupid"];?>'><i class='fa fa-user' aria-hidden='true'></i> Make Admin Assistant</a> </div>"><i class="fa fa-cog"></i></a>
+                                                <?php
+                                               /* echo "<a href='#' class='btn btn-success assistant_admin' data-pid='" . $row['idspProfiles'] . "' data-gid='" . $_GET["groupid"] . "'>Make Admin Assistant</a><span style='".(($row['spAssistantAdmin'] == 0) ? "margin:0px -8px 0px 8px" : "")."' class='separator1'></span>";*/
+                                            }
+                                            ?>
+                                        </span></h5>
+                                        <p>Added on <?php echo $row['spGroup_newMember_Date'];?></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                        
+                    } elseif (isset($admin) && $row['spAssistantAdmin'] == 1) {
+                        ?>
+                        <div class="col-md-4">
+                            <div class="member_box " id="ip2" style="background-color: #202548">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <?php
+                                        if(isset($row['spProfilePic'])){ ?>
+                                            <img src='<?php echo ($row['spProfilePic']); ?>' class="img-responsive profilePic" alt="" /> <?php
+                                        }else{ ?>
+                                            <img src='<?php echo $BaseUrl;?>/assets/images/icon/member/member_blank.jpg' class="img-responsive" alt="" /> <?php
+                                        }
+                                        ?>
+                                    </div>
+                                    <div class="col-md-8 no-padding sp-group-details">
+                                        <h3><a href="<?php echo $BaseUrl.'/friends/?profileid='.$row['idspProfiles'];?>"><?php echo ucwords($row['spProfileName']);?></a></h3>
+                                      
+                                        <h5>Joined<span class="pull-right">
+                                            <?php
+                                            if ($admin_Id == $_SESSION['pid']) {
+                                                ?>
+                                                <a data-toggle="popover" data-placement="top" data-html="true" data-content="<div class='popover_content'><a class='addtodelete' data-pid='<?php echo $row['idspProfiles']; ?>' data-gid='<?php echo $_GET["groupid"];?>' ><i class='fa fa-trash'></i> Delete Member</a> </div>"><i class="fa fa-cog"></i></a>
+                                                <?php
+                                            }
+                                            ?>
+                                        </span></h5>
+                                        <p>Added on <?php echo $row['spGroup_newMember_Date'];?></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                        
+                    } 
+
+                }
+            }
+        }
+    }
+    ?>
+    <script type="text/javascript">
+        
+   $(".sp-group-details").on("click", ".assistant_admin", function () {
+        var btn = this;
+       /* alert();*/
+        if (confirm("Are you sure you want to make assistant admin for this group?")){
+            $.get("../my-groups/makeAssistant.php", {pid: $(this).data("pid"), gid: $(this).data("gid")}, function (r) {
+                location.reload();
+            });
+        }
+    });
+
+
+   $(".sp-group-details").on("click", ".addtodelete", function () {
+        var btn = this;
+        if (confirm("Are you sure you want to delete member from group?"))
+        {
+            $.get("../my-groups/removeMember.php", {pid: $(this).data("pid"), gid: $(this).data("gid")}, function (r) {
+                $(btn).closest("li").remove();
+                $(btn).closest(".groupmembers").find(".sp-group-details").remove();
+                location.reload();
+            });
+        }
+    });
+    </script>
+
+

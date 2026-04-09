@@ -1,0 +1,1079 @@
+<?php
+
+include('../univ/baseurl.php');
+session_start();
+if (!isset($_SESSION['pid'])) {
+$_SESSION['afterlogin'] = "job-board/";
+include_once ("../authentication/check.php");
+
+}else{
+
+function sp_autoloader($class) {
+include '../mlayer/' . $class . '.class.php';
+}
+spl_autoload_register("sp_autoloader");
+
+
+$_GET["categoryid"] = "2";
+$_GET["categoryName"] = "Job Board";
+
+
+
+?>
+
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+<?php include('../component/links.php');?>
+<!-- owl carousel -->
+<link href="<?php echo $BaseUrl;?>/assets/css/owl.carousel.min.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo $BaseUrl;?>/assets/css/owl.theme.default.min.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo $BaseUrl;?>/assets/css/design.css" rel="stylesheet" type="text/css" />
+
+<!-- <link rel="stylesheet" type="text/css" href="<?php echo $BaseUrl;?>/assets/css/percentage.css"> -->
+
+<!-- responsive tabs -->
+<link rel="stylesheet" type="text/css" href="<?php echo $BaseUrl;?>/assets/css/easy-responsive-tabs.css">
+<link href="<?php echo $BaseUrl;?>/assets/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+
+<!--This script for posting timeline data Start-->
+<script src="<?php echo $BaseUrl; ?>/assets/js/jquery-2.1.4.min.js"></script>
+
+<script src="<?php echo $BaseUrl; ?>/assets/js/jquery-1.11.4-ui.min.js"></script>
+<!--This script for posting timeline data End-->
+
+<script src="<?php echo $BaseUrl;?>/assets/js/owl.carousel.min.js"></script>
+<script src="<?php echo $BaseUrl;?>/assets/js/easy-responsive-tabs.js"></script>
+<script src="<?php echo $BaseUrl;?>/assets/js/dropzone.min.js"></script>
+<link rel="stylesheet" href="<?php echo $BaseUrl;?>/assets/css/dropzone.min.css">
+<script src="<?php echo $BaseUrl;?>/assets/js/bootstrap.js"></script>
+
+<style media="screen">
+
+.midjob {
+margin: 10px 0px;
+}
+.midjob form.job_search {
+box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.12), 0 4px 10px 0 rgba(0, 0, 0, 0.16);
+background-color: #fff !important;
+padding: 16px;
+}
+.midjob form.job_search .form-group input {
+height: 48px;
+border-radius: 50px;
+}
+.midjob form.job_search button#btnJobSearch {
+padding: 12px 30px !important;
+border-radius: 0 !important;
+width: 100%;
+}
+section.landing_page.bg_white {
+margin-bottom: 16px;
+}
+.whiteboardmain {
+padding: 15px 15px 30px 15px;
+margin-bottom: 20px;
+}
+.whiteboardmain h4 {
+margin-bottom: 20px;
+margin-top: 30px;
+font-size: 20px;
+}
+.whiteboardmain p {
+margin-bottom: 6px;
+}
+.right_main_top .row:hover {
+background-color: #f1f1f1f1;
+cursor: pointer;
+}
+.right_main_top h4 {
+margin-top: 10px;
+line-height: 26px;
+}
+.right_main_top h4 a {
+font-size: 18px;
+color: #000;
+}
+.right_main_top button.jobbutton.btn-primary {
+margin-top: 20px !important;
+}
+.right_main_top span {
+padding: 0px 4px;
+margin-right: 2px;
+margin-left: 8px;
+}
+.right_main_top button.jobbutton.btn-primary {
+margin-top: 20px !important;
+padding: 5px 10px;
+border: 1px solid #fff;
+}
+.skilllink {
+margin-right: 10px !important;
+}
+
+/* --------new-job-list-css----------- */
+
+.right-job-listing {
+margin-top: 10px;
+background-color: #fff;
+}
+.job-content {
+padding: 0 16px;
+border-bottom: 1px solid #DEDEDE;
+}
+.job-content .job-card {
+padding: 24px 0;
+}
+.job-content .job-card .card-primary .pri-head {
+margin-bottom: 16px;
+}
+.job-content .job-card .card-primary .pri-head .head-link {
+font-size: 16px;
+line-height: 1.5;
+color: #0e1724;
+font-weight: 700;
+margin-right: 4px;
+}
+.job-content .job-card .card-primary .pri-head .head-days {
+margin-right: 12px;
+}
+.job-content .job-card .card-primary .pri-head .new-head {
+background-color: #4fb55d;
+color: #fff;
+padding: 2px 4px;
+font-size: 12px;
+margin-right: 3px;
+border: 1px solid #4fb55d;
+margin-bottom: 3px;
+display: inline-block;
+}
+.job-content .job-card .card-primary .pri-head .new-head {
+padding: 0px 4px;
+margin-right: 2px;
+margin-left: 2px;
+}
+.job-content .job-card .card-primary .pri-para {
+margin-bottom: 16px;
+font-size: 14px;
+line-height: 1.4;
+color: #0e1724;
+max-width: 84%;
+}
+.job-content .job-card .card-primary .pri-tags a {
+margin-bottom: 8px;
+margin-right: 8px;
+text-decoration: none;
+color: #007fed !important;
+}
+.job-content .job-card .card-secondary .price {
+font-size: 16px;
+line-height: 1.5;
+font-weight: 700;
+margin-bottom: 8px;
+color: #0e1724;
+}
+.job-content .job-card .card-secondary .price .avg {
+font-size: 13px;
+font-weight: 400;
+line-height: 1.2;
+font-weight: 400;
+}
+.job-content .job-card .card-secondary .entry {
+font-size: 14px;
+line-height: 1.43;
+color: #0e1724;
+}
+.job-content .job-card .card-secondary .avg-btn {
+display: block;
+margin-top: 10px;
+}
+.job-content .job-card .card-secondary .avg-btn .avg-bid {
+background: #337ab7;
+border: 1px solid #337ab7;
+color: #F7F7F7;
+font-weight: 700;
+text-shadow: 0 -1px transparent;
+padding: 4px 12px;
+font-size: 13px;
+border-radius: 50px;
+}
+.job-content:hover {
+background-color: #F7F7F7;
+cursor: pointer;
+}
+.job-content:hover .avg-btn {
+display: block !important;
+margin-top: 12px;
+}
+.avg-bid {
+background: #5dc26a;
+border-color: #5dc26a;
+color: #F7F7F7;
+}
+.location-btn {
+margin-top: 20px;
+margin-left: 10px;
+float: right;
+}
+.location-btn a.loc-btn {
+color: #000;
+font-size: 15px;
+}
+
+/* ----start-media-query-css----- */
+
+@media only screen and (max-width: 767px) {
+
+.home_top_job {
+padding: 0px;
+}
+.midjob form.job_search button#btnJobSearch {
+margin-top: 20px;
+}
+.job-content .job-card .card-primary .pri-para {
+max-width: 100%;
+}
+
+}
+
+</style>
+<script>
+
+
+$(document).ready(function(){
+
+
+var
+filters = {
+user: null,
+status: null,
+milestone: null,
+priority: null,
+tags: null
+};
+
+
+function updateFilters() {
+$('.task-list-row').hide().filter(function() {
+var
+self = $(this),
+result = true; // not guilty until proven guilty
+
+Object.keys(filters).forEach(function (filter) {
+if (filters[filter] && (filters[filter] != 'None') && (filters[filter] != 'Any')) {
+result = result && filters[filter] === self.data(filter);
+}
+});
+
+return result;
+}).show();
+
+tableRowCount()
+}
+
+function tableRowCount()
+{
+var numOfVisibleRows = $('tr:visible').length;
+if(numOfVisibleRows==0)
+{
+document.getElementById('no_result').style.display='';
+
+}
+else {
+document.getElementById('no_result').style.display='none';
+
+}
+
+}
+
+
+function changeFilter(filterName) {
+filters[filterName] = this.value;
+updateFilters();
+}
+
+// Assigned User Dropdown Filter
+$('#job-level-filter').on('change', function() {
+changeFilter.call(this, 'user');
+});
+
+// Task Status Dropdown Filter
+$('#job-type-filter').on('change', function() {
+changeFilter.call(this, 'status');
+});
+
+// Task Milestone Dropdown Filter
+$('#salary-filter').on('change', function() {
+changeFilter.call(this, 'milestone');
+});
+
+
+/*alert();*/
+
+$("#btnJobSearch").click(function(){
+
+// alert("heree");
+
+
+var txtJobTitle = $("#txtJobTitle").val();
+var txtJobLoc = $("#txtJobLoc").val();
+
+
+//alert(desc);
+
+if (txtJobTitle == "" && txtJobLoc == "" ) {
+
+$("#title_err").text("Please Enter Title.");
+$("#loc_err").text("Please Enter Location.");
+
+return false;
+
+}else{
+$("#job_search").submit();
+}
+
+
+
+});
+
+});
+
+
+
+
+
+
+
+$(document).ready(function() {
+$('.owl-carousel').owlCarousel({
+loop: true,
+autoPlay: true,
+responsiveClass: true,
+responsive: {
+0: {
+items: 1,
+nav: false
+},
+600: {
+items: 3,
+nav: false
+},
+1000: {
+items: 7,
+nav: false
+}
+}
+});
+$('#horizontalTab').easyResponsiveTabs({
+type: 'default', //Types: default, vertical, accordion
+width: 'auto', //auto or any width like 600px
+fit: true,   // 100% fit in a container
+closed: 'accordion', // Start closed if in accordion view
+activate: function(event) { // Callback function if tab is switched
+var $tab = $(this);
+var $info = $('#tabInfo');
+var $name = $('span', $info);
+$name.text($tab.text());
+$info.show();
+}
+});
+});
+
+</script>
+
+</head>
+<style media="screen">
+
+</style>
+<body class="bg_gray">
+
+<?php
+
+$header_jobBoard = "header_jobBoard";
+include_once("../header.php");
+?>
+<section class="jobboard">
+<div class="container">
+<div class="row text-center">
+<div class="col-sm-12">
+<div class="home_top_job">
+<h1>Its Time TO <img src="<?php echo $BaseUrl;?>/assets/images/jobboard/heart.png" class="img-responsive" alt="heart" /> <span>love</span> Mondays</h1>
+
+<?php
+if($_SESSION['ptid'] == 1){
+$u = new _spuser;
+$p_result = $u->isverify($_SESSION['uid']);
+if ($p_result == 1) {
+$pv = new _postingview;
+$reuslt_vld = $pv->chekposting(2,$_SESSION['pid']);
+if ($reuslt_vld == false) {
+?>
+<a href="<?php echo $BaseUrl.'/post-ad/job-board/?post';?>" class="btn butn_jobboard">Post a job</a>
+<?php
+}
+}
+} ?>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="midjob">
+<div class="container">
+<form class="job_search" id="job_search" method="post" action="">
+<div class="row">
+<div class="col-md-10">
+<div class="row">
+<div class="col-md-6">
+<div class="form-group no-margin">
+<input type="text" name="txtJobTitle" id="txtJobTitle" class="form-control" value="<?php echo $_POST['txtJobTitle']; ?>"  placeholder="Job Title" />
+<span id="title_err" style="color: red;"></span>
+</div>
+</div>
+<div class="col-md-6">
+<div class="form-group no-margin">
+<input type="text" id="txtJobLoc"  name="txtJobLoc" class="form-control" list="suggested_address" onkeyup="getaddress();" value="<?php echo $_POST['txtJobLoc']; ?>"  placeholder="Location" />
+<datalist id="suggested_address">
+</datalist>
+
+<span id="loc_err" style="color: red;"></span>
+</div>
+</div>
+
+<script type="text/javascript">
+
+
+function getaddress(){
+
+var address = $("#txtJobLoc").val();
+
+$.ajax({
+type: "POST",
+url: "../address.php",
+cache:false,
+data: {'address':address},
+success: function(data) {
+
+var obj = JSON.parse(data);
+
+$("#suggested_address").html('<option value="' + obj.address + '" class="op_address">' + obj.address + '</option>');
+
+
+$("#latitude").val(obj.latitude);
+$("#longitude").val(obj.longitude);
+
+}
+});
+}
+
+
+</script>
+<!--  <div class="col-md-3">
+<div class="form-group no-margin">
+<select class="form-control" name="txtJobLevel" >
+<option value="">Select Job Level</option>
+<?php
+$m = new _masterdetails;
+$masterid = 2;
+$result = $m->read($masterid);
+if($result != false){
+while($rows = mysqli_fetch_assoc($result)){
+echo "<option value='".$rows["masterDetails"]."'>".$rows["masterDetails"]."</option>";
+}
+}
+?>
+</select>
+</div>
+</div> -->
+
+</div>
+</div>
+<div class="col-md-2">
+<button type="button" id="btnJobSearch" name="btnJobSearch" class="btn btnPosting db_btn ">Search</button>
+</div>
+
+</div>
+</form>
+</div>
+</section>
+<section class="landing_page bg_white" style="border-top: 1px solid #CCC">
+<div class="container">
+<div class="row">
+<div class="col-sm-12">
+<ul class="dashboardlink hv" id="jobboardDashHome">
+<?php if($_SESSION['ptid'] == 1){ ?>
+
+<li><a href="<?php echo $BaseUrl.'/job-board/all-jobseeker.php?cat=ALL&offset=0';?>">Browse all Job Seekers</a></li>
+<li><span>|</span></li>
+
+<li><a href="<?php echo $BaseUrl.'/job-board/dashboard';?>">My Dashboard</a></li> <?php
+}else{?>
+<li><a href="<?php echo $BaseUrl.'/job-board/all-jobs.php';?>">Browse all Jobs</a></li>
+<li><span>|</span></li>
+<li><a href="<?php echo $BaseUrl.'/job-board/forward-jobs.php';?>">Forwarded Jobs</a></li>
+
+
+<?php
+
+if($_SESSION['ptid'] == 5 ){ ?>
+<li><span>|</span></li>
+
+<li><a href="<?php echo $BaseUrl.'/job-board/dashboard/emp_dashboard.php';?>">Dashboard</a></li> <?php
+}
+}
+
+?>
+
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section>
+<div class="container">
+<div class="row">
+<!-- <div class="col-md-3 jobboardleft no-padding top_margin" > -->
+<!--  <div class="panel-group" id="accordion">
+<div class="panel panel-default">
+<div class="panel-heading">
+<h4 class="panel-title ">
+<a class="accordion-toggle hv" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+Job Level
+</a>
+</h4>
+</div>
+<div id="collapseOne" class="panel-collapse collapse ">
+<div class="panel-body">
+<ul>
+<?php
+$m = new _masterdetails;
+$masterid = 2;
+$result = $m->read($masterid);
+if($result != false){
+while($rows = mysqli_fetch_assoc($result)){ ?>
+<li><a href="<?php echo $BaseUrl.'/job-board/search.php?level='.$rows["masterDetails"];?>"><?php echo $rows["masterDetails"];?></a></li>
+<?php
+//echo "<option value='".$rows["masterDetails"]."'>".$rows["masterDetails"]."</option>";
+}
+}
+?>
+
+</ul>
+</div>
+</div>
+</div>
+
+<div class="panel panel-default">
+<div class="panel-heading">
+<h4 class="panel-title hv">
+<a href="<?php echo $BaseUrl.'/job-board/find-a-job.php'?>">Find a job</a>
+</h4>
+</div>
+
+</div>
+
+
+</div> -->
+<!--      <div class="left_main_btm text-center">
+
+<img src="<?php echo $BaseUrl;?>/assets/images/jobboard/hiring.png" class="img-responsive center-block">
+<h4>SINCE 2017.</h4>
+<p>We’ve connected thousands of creative professionals with great companies and outstanding work opportunities.</p>
+</div> -->
+<!-- <div class="space-lg"></div> -->
+<!-- </div> -->
+<div class="col-md-4" style="margin-top:10px;">
+<div class="whiteboardmain">
+<h3 style="text-align: center;" >My Recent searches</h3>
+<hr>
+<h4 >Filter By</h4>
+<p> <b>Salary Range</b></p>
+<div class="row">
+<div class="col-md-6">
+<div class="form-group no-margin">
+<input type="text"  class="form-control"   placeholder="Min" />
+</div>
+
+</div>
+
+<div class="col-md-6">
+<div class="form-group no-margin">
+<input type="text"class="form-control"   placeholder="Max" />
+
+</div>
+</div>
+
+</div>
+<p style="margin-top: 15px;" ><b>Job Level</b> </p>
+<div class="form-group no-margin">
+<select class="form-control job_level"  id="job-level-filter"  name="" data-filter="job_level">
+<option value="Full Time"  >Full Time</option>
+<option value="Parmanent"  >Parmanent</option>
+<option value="Senior"  >Senior</option>
+<option value="Intermediate"  >Intermediate</option>
+<option value="Entry / Junior"  >Entry / Junior</option>
+<option value="Lead"  >Lead</option>
+<option value="Volunteer Opportunity"  >Volunteer Opportunity</option>
+<option value="Part Time"  >Part Time</option>
+<option value="Internship"  >Internship</option>
+
+</select>
+</div>
+<p style="margin-top: 15px;" ><b>Job Type</b> </p>
+<div class="form-group no-margin">
+<select class="form-control"  id="job-type-filter" name="">
+<option value='ACCOUNTING/FINANCE' >Accounting/finance</option>
+<option value='ADMINISTRATION' >Administration</option>
+<option value='ARCHITECTURE' >Architecture</option>
+<option value='ART/MEDIA' >Art/media</option>
+<option value='BEAUTY SERVICES' >Beauty Services</option>
+<option value='BIOTECHNOLOGY/SCIENCE' >Biotechnology/science</option>
+<option value='BUSINESS MANAGEMENT' >Business Management</option>
+<option value='CUSTOMER SERVICE' >Customer Service</option>
+<option value='EDUCATION/TRAINING' >Education/training</option>
+<option value='ENGINEERING' >Engineering</option>
+<option value='FILM/ACTING' >Film/acting</option>
+<option value='GENERAL LABOUR' >General Labour</option>
+<option value='GOVERNMENT/PUBLIC SERVICE' >Government/public Service</option>
+<option value='HEALTH FITNESS' >Health Fitness</option>
+<option value='HOSPITALITY BUSINESS' >Hospitality Business</option>
+<option value='HUMAN RESOURCES' >Human Resources</option>
+<option value='INFORMATION TECHNOLOGY' >Information Technology</option>
+<option value='LEGAL SERVICES' >Legal Services</option>
+<option value='MANUFACTURING BUSINESS' >Manufacturing Business</option>
+<option value='Marketing Advertising' >Marketing Advertising</option>
+<option value='MEDICAL / HEALTH SERVICES' >Medical / Health Services</option>
+<option value='REAL ESTATE' >Real Estate</option>
+<option value='Regions' >Regions</option>
+<option value='RETAIL BUSINESS' >Retail Business</option>
+<option value='SKILLED TRADES' >Skilled Trades</option>
+<option value='TRANSPORT' >Transport</option>
+<option value='WRITING/EDITING' >Writing/editing</option>
+
+</select>
+</div>
+<p style="margin-top: 15px;" ><b>Salary Type</b></p>
+<select class="form-control" id="salary-filter"  name="">
+<option value="Hourly">Hourly</option>
+<option value="Monthly">Monthly</option>
+<option value="Yearly">Yearly</option>
+</select>
+
+</div>
+</div>
+<div class="col-md-8">
+<div class="right-job-listing">
+<h3 id="no_result" style='display:none;text-align: center;padding-top: 16px;min-height: 300px;'>No Jobs Found!</h3>
+<table  id="task-list-tbl" >
+
+
+<?php
+$limit = 10;
+/*$p   = new _postingview;*/
+$p   = new _jobpostings;
+$pf  = new _postfield;
+
+$txtJobTitle = $_POST['txtJobTitle'];
+$txtJobLoc = $_POST['txtJobLoc'];
+
+if(!empty($txtJobTitle) || !empty($txtJobLoc)){
+
+$res = $p->readJobSearch($txtJobTitle,$txtJobLoc);
+
+}else{
+
+$res = $p->publicpost_jobBoard($limit, 2);
+
+}
+
+//echo $p->ta->sql;
+if($res){
+while ($row = mysqli_fetch_assoc($res)) {
+// echo "<pre>";
+// print_r($row);
+/*$postingDate = $p-> spPostingDate($row["spPostingDate"]);*/
+$postingDate = $row["spPostingDate"];
+
+//$cmpnyName = $row["spPostingDate"];
+
+$skill = $row["spPostingSkill"];
+//read posting field
+/*  $result_pf = $pf->read($row['idspPostings']);
+//echo $pf->ta->sql."<br>";
+if($result_pf){
+$skill = "";
+while ($row2 = mysqli_fetch_assoc($result_pf)) {
+if($skill == ''){
+if($row2['spPostFieldName'] == 'spPostingSkill_'){
+$skill = explode(',', $row2['spPostFieldValue']);
+}
+}
+}
+$postingDate = $p-> spPostingDate($row["spPostingDate"]);
+}
+// company profile information
+$u = new _profilefield;
+$result3 = $u->read($row['idspProfiles']);
+if ($result3) {
+$cmpnyName = "";
+while ($row3 = mysqli_fetch_assoc($result3)) {
+if($cmpnyName == ''){
+if($row3['spProfileFieldName'] == 'companyname_'){
+$cmpnyName = $row3['spProfileFieldValue'];
+}
+}
+}*/
+/* }*/
+// ========================END======================
+?>
+
+<tr  id="task-<?php echo $row['idspPostings']; ?>"   class="task-list-row"
+data-task-id="<?php echo $row['idspPostings']; ?>" data-user="<?php echo $row['spPostingJoblevel']; ?>"
+data-status="<?php echo $row['spPostingJobType']; ?>"
+data-milestone="<?php echo $row['spPostingJobAs']; ?>">
+<td>
+<div class="job-content">
+<div class="job-card">
+<div class="row">
+<div class="col-md-9 col-sm-12">
+<div class="card-primary">
+<div class="pri-head">
+<a href="<?php echo $BaseUrl.'/job-board/job-detail.php?postid='.$row['idspPostings'];?>" class="head-link"><?php echo ucfirst($row['spPostingTitle']);?></a>
+<span class="head-days">9 days left</span>
+<span class="new-head">New</span>
+</div>
+<?php
+$string = strip_tags($row['spPostingNotes']);
+if (strlen($string) > 200) {
+
+// truncate string
+$stringCut = substr($string, 0, 200);
+$endPoint = strrpos($stringCut, ' ');
+
+//if the string doesn't contain any space then it will cut without word basis.
+$string = $endPoint? substr($stringCut, 0, $endPoint) : substr($stringCut, 0);
+$string .= '... <a href='.$BaseUrl.'/job-board/job-detail.php?postid='.$row['idspPostings'].'>Read More</a>';
+}
+
+?>
+<p class="pri-para"><?php echo ucfirst($string); ?></p>
+<div class="pri-tags">
+<?php
+$skills=explode(',',$row['spPostingSkill']);
+foreach ($skills as $key => $value) {
+?>
+<a><?php echo ucfirst($value); ?></a>
+
+<?php
+} ?>
+
+</div>
+</div>
+</div>
+<div class="col-md-3 col-sm-12">
+<div class="card-secondary">
+<div class="price">
+<?php if($row['spPostingSlryRngFrm']>0){echo $row['spPostingSlryRngFrm'].' $ - '. $row['spPostingSlryRngTo'].' $';} ?>
+</div>
+<div class="avg-btn">
+<a href="<?php echo $BaseUrl.'/job-board/job-detail.php?postid='.$row['idspPostings'];?>" class="avg-bid btn">Apply now </a>
+</div>
+<div class="location-btn">
+<a href="#" class="loc-btn"><?php echo ucfirst($row["spPostingLocation"]);?> </a>
+</div>
+</div></div>
+</div>
+</div>
+</div>
+</td>
+
+<?php
+}
+}else{
+
+echo "<h3 style='text-align: center;padding-top: 16px;min-height: 300px;'>No Jobs Found!</h3>";
+}
+?>
+</tr>
+
+</div>
+</div>
+
+
+</div>
+
+
+
+</div>
+</section>
+<div class="space"></div>
+<!--     <section class="bg_white job_search">
+<div class="container">
+<div class="row">
+<div class="col-md-6 right_left_jobboard">
+<h1>Trending Companies (<a href="<?php echo $BaseUrl.'/job-board/trend-cmpany.php';?>">View All</a>)</h1>
+<div class="space-lg"></div>
+<?php
+$limitpr = 3;
+$p = new _jobpostings;
+$pro = new _spprofiles;
+$result3 = $pro->readBusProfiles($limitpr);
+//echo $pro->ta->sql;
+if($result3){
+while ($row3 = mysqli_fetch_assoc($result3)) {
+
+//get company
+$c = new _profilefield;
+$r = $c->read($row3['idspProfiles']);
+if($r){
+$cmpnyName = '';
+$CmpnySize = '';
+while ($row4 = mysqli_fetch_assoc($r)) {
+if($cmpnyName == ''){
+if($row4['spProfileFieldName'] == 'companyname_'){
+$cmpnyName = $row4['spProfileFieldValue'];
+}
+}
+if($CmpnySize == ''){
+if($row4['spProfileFieldName'] == 'CompanySize_'){
+$CmpnySize = $row4['spProfileFieldValue'];
+}
+}
+}
+}else{
+$cmpnyName = "Not Define";
+}
+
+//get the total post which is open
+$result5 = $p->readOpenJobs($row3['idspProfiles']);
+//echo $p->ta->sql;
+if($result5){
+$totalJob = $result5->num_rows;
+}else{
+$totalJob = 0;
+}
+
+?>
+<div class="trndpost">
+<?php
+$result4 = $pro->read($row3['idspProfiles']);
+if ($result4 != false) {
+$row4 = mysqli_fetch_assoc($result4);
+if (isset($row4["spProfilePic"])){
+echo "<img alt='profile pic' class='img-responsive' src=' " . ($row4["spProfilePic"]) . "'  >";
+}else{
+echo "<img alt='profilepic' class='img-responsive' src='".$BaseUrl."/assets/images/icon/blank-img.png' >";
+}
+}
+?>
+<div class="">
+<p class="titlejob">
+<a href="<?php echo $BaseUrl.'/job-board/company.php?cmpyid='.$row4['idspProfiles'];?>"><?php echo $cmpnyName;?></a>
+<span class="pull-right">
+<a href="<?php echo $BaseUrl.'/job-board/company.php?cmpyid='.$row4['idspProfiles'];?>"><?php echo $totalJob; ?> Position openings </a>
+</span>
+</p>
+<p class="postingng">Company Size: <?php echo ($CmpnySize == '')? "Not Define": $CmpnySize;?></p>
+</div>
+</div><?php
+}
+}
+?>
+
+
+
+</div>
+<div class="col-md-6 right_left_jobboard">
+<h1>Recent Job Offers (<a href="<?php echo $BaseUrl.'/job-board/all-jobs.php';?>">View All</a>)</h1>
+<div class="space-lg"></div>
+<?php
+$limit = 3;
+$p   = new _jobpostings;
+$pf  = new _postfield;
+$res = $p->publicpost_jobBoard($limit, 2);
+//echo $p->ta->sql;
+if($res){
+while ($row = mysqli_fetch_assoc($res)) {
+$postingDate = $p-> spPostingDate($row["spPostingDate"]);
+$exdt = new DateTime($row['spPostingExpDt']);
+
+$result6 = $p->readPostCmpnySize($row['idspPostings']);
+// echo $p->ta->sql;
+if($result6){
+$row6 = mysqli_fetch_assoc($result6);
+$CmpnySize = "Over".$row6['spPostFieldValue'];
+}else{
+$CmpnySize = "Not Define";
+}
+?>
+<div class="trndpost">
+<?php
+$result4 = $pro->read($row['idspProfiles']);
+if ($result4 != false) {
+$row4 = mysqli_fetch_assoc($result4);
+if (isset($row4["spProfilePic"])){
+echo "<img alt='profile pic' class='img-responsive' src=' " . ($row4["spProfilePic"]) . "' style='display:inline'; >";
+}else{
+echo "<img alt='profilepic' class='img-responsive' src='".$BaseUrl."/assets/images/icon/blank-img.png' style='display:inline'; >";
+}
+}
+?>
+
+<p class="aplyjob pull-right"><?php echo $exdt->format('d M, Y') ?></p>
+<div class="">
+<p class="titlejob"><a href="<?php echo $BaseUrl.'/job-board/job-detail.php?postid='.$row['idspPostings'];?>"><?php echo $row['spPostingtitle'];?></a> <span class="pull-right">Apply</span></p>
+<p class="postingng">Company Size: <?php echo $CmpnySize;?></p>
+</div>
+</div>
+<?php
+}
+}
+?>
+
+
+
+
+</div>
+</div>
+</div>
+</section> -->
+<section class="jobbox">
+<div class="container">
+<div class="row text-center">
+<div class="col-md-offset-1 col-md-5 no-padding">
+<div class="blue_left">
+<h1>Hire an employee</h1>
+<?php
+$all = new _spAllStoreForm;
+$result4 = $all->readContent(2);
+if ($result4) {
+$row4 = mysqli_fetch_assoc($result4);
+echo "<p>".$row4['contDesc']."</p>";
+}
+?>
+
+<a href="<?php echo $BaseUrl.'/job-board/all-jobseeker.php';?>" >Hire Today</a>
+</div>
+</div>
+<div class="col-md-5 no-padding">
+<div class="darkblue_right">
+<h1>Looking for a job</h1>
+<?php
+$all = new _spAllStoreForm;
+$result4 = $all->readContent(3);
+if ($result4) {
+$row4 = mysqli_fetch_assoc($result4);
+echo "<p>".$row4['contDesc']."</p>";
+}
+?>
+
+<a href="<?php echo $BaseUrl.'/job-board/all-jobs.php';?>" >Find Job</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="findCandidate">
+<div class="container">
+<div class="row">
+<h2>Find your <span>Best Candidate</span> at Sharepage</h2>
+<div class="col-xs-12 search-freelancer" id="jobboard">
+<div class="">
+<p class="desc">Donec tincidunt felis quam, eu tempus purus finibus in. Curabitur hendrerit, odio in viverra interdum, lorem velit scelerisque ipsum, a sagittis ligula leo in dolor. Etiam vestibulum.</p>
+<div class="col-xs-12 freelancers-ids">
+<div class="owl-carousel owl-theme">
+<?php
+$pro = new _spprofiles;
+$result7 = $pro->profileTypePerson(5, $_SESSION['uid']);
+//echo $pro->ta->sql;
+if($result7){
+while($rows = mysqli_fetch_assoc($result7)){ ?>
+<div class="item">
+<div class="freelancer-content">
+<div class="avatar">
+<a href="<?php echo $BaseUrl.'/job-board/user-profile.php?pid='.$rows['idspProfiles'];?>">
+<?php
+$picture = $rows['spProfilePic'];
+if(isset($picture)){
+echo "<img  alt='Posting Pic' class='img-responsive' src=' ".($picture)."' >" ;
+}else{
+echo "<img  alt='Posting Pic' class='img-responsive' src='../img/default-profile.png' >" ;
+}
+
+?>
+</a>
+</div>
+<div class="col-xs-12 nopadding">
+<h5 class="freelancer-name" id="jobseaker-name"><a href="<?php echo $BaseUrl.'/job-board/user-profile.php?pid='.$rows['idspProfiles'];?>"><?php echo $rows["spProfileName"];?></a></h5>
+<?php
+$fi = new _profilefield;
+$result_fi = $fi->getType($rows['idspProfiles']);
+//echo $fi->ta->sql;
+if($result_fi){
+$row_fi = mysqli_fetch_assoc($result_fi);
+$pro = new _projecttype;
+$result_pro = $pro->getProjectName($row_fi['spProfileFieldValue']);
+//echo $pro->ta->sql;
+if($result_pro){
+$row_pr = mysqli_fetch_assoc($result_pro);
+$ProjectName = $row_pr['project_title'];
+}else{
+$ProjectName = "Not Define";
+}
+}else{
+$ProjectName = "Not Define";
+}
+//gettotal skills
+$result_sk = $fi->getSkill($rows['idspProfiles']);
+if($result_sk){
+$row_sk = mysqli_fetch_assoc($result_sk);
+$string_sk = explode(',', $row_sk['spProfileFieldValue']);
+$totalSkil = count($string_sk);
+//print_r($string_sk);
+}else{
+$totalSkil = 0;
+}
+?>
+<p class="freelancer-designation"><?php echo $ProjectName;?></p>
+<p class="skill-rating">Skills: (<span><?php echo $totalSkil;?> Skills</span>)</p>
+<div class="progress-wrap progress" data-progress-percent="25">
+<div class="progress-bar progress"></div>
+</div>
+<!--<p class="job-success">Job Success <span>70%</span></p>
+<div class="progress-wrap progress">
+<div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:70%">
+<span class="sr-only">70% Complete</span>
+</div>
+</div>-->
+
+</div>
+</div>
+</div>
+<?php
+}
+}
+?>
+
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+
+
+
+<?php
+include('../component/f_footer.php');
+include('../component/f_btm_script.php');
+?>
+</body>
+
+</html>
+<?php
+}
+?>

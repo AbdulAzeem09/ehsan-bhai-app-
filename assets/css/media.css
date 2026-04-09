@@ -1,0 +1,253 @@
+@media screen and (max-width: 1271px){
+    
+    .col-md-3.logo .a{
+        font-size: 20px;
+    }
+    
+}
+@media screen and (max-width: 1200px){
+    
+    .career_login {
+        padding: 150px 0 10px 0;
+    }
+    .all_vancour_card h2 ,
+    .all_vancour_card h2 span{
+         font-size: 24px;
+    }
+    .all_vancour_card h4 {
+        font-size:18px;
+    }
+    .all_vancour_card a{
+        margin-bottom: 20px;
+    }
+    .career_cards_third{
+       padding: 22px 16px 20px;
+    }
+    .career_cards_first{
+        padding:0;
+    }
+    .career_cards_seconds {
+        padding-left: 0;
+    }
+    .career_cards_third {
+        padding: 22px 0px 20px;
+    }
+    .bookings_card_spons.career_cards_fifth .nav-tabs .nav-item .nav-link{
+        padding: 16px 10px;
+        font-size: 16px;
+    }
+    #register .modal-dialog.modal-dialog-centered, #sponsor .modal-dialog.modal-dialog-centered{
+            max-width: 60%;
+    }
+    #register .modal-dialog.modal-dialog-centered .modal-content, #sponsor .modal-dialog.modal-dialog-centered .modal-content{
+            max-width: 95%;
+    }
+    .pops_btm_para{
+        width: 95%;
+        margin: auto;
+    }
+}
+
+@media screen and (max-width: 1024px){
+    
+    .career_cards_third a{
+       max-width: 170px;
+    }
+    .career_cards_fourth{
+            max-width: 360px;
+    }
+    .all_vancour_card{
+        padding: 20px 12px 20px;
+    }
+    .all_vancour_card h2, .all_vancour_card h2 span {
+        font-size: 18px;
+    }
+    .all_vancour_card h4 {
+        font-size: 16px;
+        margin-bottom: 16px;
+    }
+    .all_vancour_card p {
+        font-size: 14px;
+        margin-bottom: 24px;
+    }
+    .image iframe{
+            width: 100%;
+    }
+    
+}
+
+@media screen and (max-width: 991px){
+    
+    .career_cards_third a {
+        max-width: 120px;
+        font-size: 14px;
+        padding: 14px 14px;
+    }
+    .career_and_expo_columns p{
+        font-size: 16px;
+        line-height: 24px;
+        margin-bottom: 30px;
+    }
+    .bookings_card_spons.career_cards_fifth .nav-tabs .nav-item .nav-link {
+        padding: 16px 3px;
+        font-size: 14px;
+    }
+    #step_2 .card_payment_sec .form-group{
+        flex-direction: column;
+          align-items: baseline;
+    }
+     #step_2 .card_payment_sec .form-group.form-check{
+         flex-direction: row;
+         align-items: center;
+    }
+    #sponsor .spon_packages .form-group{
+            flex-direction: column;
+    }
+    
+}
+
+
+@media screen and (max-width: 767px){
+    
+    .container {
+        padding: 0 16px !important;
+    }
+        
+    .career_cards_third{
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+    .career_cards_first h2 {
+            font-size: 26px;
+    }
+    .career_cards_fifth .nav-tabs .nav-link{
+              width: 100%;
+    }
+    .career_and_expo_columns .row.left{
+        flex-direction: column-reverse;
+        gap: 40px;
+    }
+    .career_and_expo_columns .row.right .content {
+            text-align: left;
+    }
+    .career_and_expo_columns .row.right{
+          gap: 40px;
+    }
+    .platinum_owl_box h2{
+        margin: 12px auto 10px;
+    }
+    .recruiters_tabs .platinum_owl_box>a{
+        margin: 0 auto 30px;
+    }
+    .platinum_inner_box p{
+            text-align: center;
+    }
+    .specification_tabs_areas .form-control{
+            min-height: 230px;
+    }
+    .date_and_time.map  .row{
+        gap: 40px;
+    }
+    .date_and_time .row.align-items-end{
+          gap: 40px;
+    }
+    .speakers_tabs .platinum_inner_box h2 {
+        text-align: center;
+    }
+    #organizer .organizer_tabs .row{
+        gap: 40px;
+    }
+    .right_organizer_tabs .form-group{
+            flex-direction: column;
+    }
+    .right_organizer_tabs .btn.btn-primary{
+            margin: 47px auto auto;
+    }
+    .organizer_tabs,
+    .specification_tabs,
+    .recruiters_tabs,
+    .fllor_palning,
+    .speakers_tabs.freelancers_tabs,
+    .strat_ups_tabs,
+    .sponsors_secss:first-child,
+    .speakers_tabs{
+        margin: 50px 0 0 0;
+    }
+    .freelancers_tabs_select{
+            max-width: 100%;
+    }
+    .name_specific_opacty {
+        display: none;
+    }
+    .career_cards_first{
+       flex-direction: column;
+       text-align: left;
+       gap: 12px;
+       align-items: baseline;
+    }
+    .date_and_time {
+        padding: 25px 0;
+    }
+}
+
+
+@media screen and (max-width: 576px){
+    .career_cards_first h2 {
+            font-size: 20px;
+    }
+    .career_cards_fourth {
+        max-width: 100%;
+        text-align: left;
+    }
+    .career_cards_fifth .nav-item{
+        width: 50%;
+    }
+    .career_login_div{
+            gap: 40px;
+    }
+    .career_login {
+        padding: 100px 0 10px 0;
+    }
+    #register .modal-dialog.modal-dialog-centered, #sponsor .modal-dialog.modal-dialog-centered {
+        max-width: 95%;
+    }
+    .register_type {
+            padding: 20px 15px;
+    }
+    .register_popup h4, .register_pops_first_title h4{
+            font-size: 16px;
+    }
+    .register_popup h2, .register_pops_first_title h2{
+            font-size: 24px;
+    }
+    .register_popup h3, .register_pops_first_title h3{
+            font-size: 18px;
+    }
+    .registrate_booth.register_popup h5{
+            font-size: 16px;
+    }
+    
+}
+
+
+@media screen and (max-width: 425px){
+    .career_cards_fifth .nav-tabs .nav-link{
+            padding: 10px 18px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

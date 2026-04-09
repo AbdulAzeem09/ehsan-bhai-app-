@@ -1,0 +1,654 @@
+<?php 
+class _productposting
+{
+    public $dbclose = false;
+    private $conn;
+    public $ta;
+    function __construct() { 
+        $this->ta = new _tableadapter("spProduct");//spShipping
+        $this->ta->dbclose = false;
+    } 
+    
+    function create($data){
+        $postid = $this->ta->create($data);
+
+        return $postid;
+    }
+    
+    function read($uid)
+    {
+        //return $this->ta->read("WHERE spProfiles_idspProfiles =".$pid);
+        return $this->ta->read("WHERE idspPostings =".$uid);
+    }
+
+    function publicpost_two(){
+        return $this->ta->read("WHERE spCategories_idspCategory = 1 ", " ORDER BY idspPostings DESC LIMIT 2");
+    }
+    
+    function activate_product($postid) {
+        return $this->ta->update(array("spPostingVisibility" => "-1"), " WHERE idspPostings ='" . $postid . "'");
+    }
+
+      function myActPost($pid, $visilty, $catid){
+        return $this->ta->read("WHERE t.spPostingVisibility = ".$visilty." AND spProfiles_idspProfiles = " . $pid . " AND t.idspCategory = $catid", "AND t.spPostingExpDt >= CURDATE() ORDER BY spPostingDate DESC");
+    }
+
+
+       function refferaluserproduct($uid){
+        return $this->ta->read("WHERE t.spPostingVisibility = -1 AND spProfiles_idspProfiles in(Select idspProfiles from spProfiles where spUser_idspUser=" . $uid . ") " , "ORDER BY spPostingDate DESC");
+    }
+
+
+
+    // SHOW SINGLE FRIEND STORE
+    function singlefriendstore($pid) {
+        return $this->ta->read("WHERE t.spPostingVisibility = -1 AND t.spCategories_idspCategory = 1 AND t.spProfiles_idspProfiles =" . $pid, "ORDER BY spPostingDate DESC");
+    }
+
+        //show only single profile data
+    function getAllStoreProduct($pid){
+        return $this->ta->read("INNER JOIN spprofiles_has_spgroup AS g ON g.spProfiles_idspProfiles = t.spProfiles_idspProfiles WHERE t.spPostingVisibility = -1 AND t.spCategories_idspCategory = 1 AND t.spProfiles_idspProfiles =" . $pid, "GROUP BY idspPostings ORDER BY spPostingDate DESC");
+    }
+
+     function readprofile($pid)
+    {
+        //return $this->ta->read("WHERE spProfiles_idspProfiles =".$pid);
+        return $this->ta->read("WHERE spProfiles_idspProfiles =".$pid);
+    }
+    function update($data, $pid){
+        $this->ta->update($data, $pid);
+    }
+
+    function auctionproductpost($catid) {
+
+
+        return $this->ta->read("WHERE spPostingVisibility=0 AND spCategories_idspCategory = " . $catid . " AND spPostingExpDt >= CURDATE() AND sellType = 'Auction' AND spPostingExpDt >= CURDATE()");
+    }
+
+ function activeprevpost($postid) {
+        return $this->ta->update(array("spPostingVisibility" => "-1"), "WHERE idspPostings ='" . $postid . "'");
+    }
+
+
+ function allauctionproduct($catid) {
+        return $this->ta->read("WHERE spPostingVisibility=-1 AND spCategories_idspCategory = " . $catid . " AND spPostingExpDt >= CURDATE() AND sellType = 'Auction' AND spPostingExpDt >= CURDATE()");
+    }
+
+ function allretailproduct($catid,$pid) {
+        return $this->ta->read("WHERE spPostingVisibility=-1 AND spCategories_idspCategory = " . $catid . " AND spProfiles_idspProfiles != " . $pid . " AND spPostingExpDt >= CURDATE() AND sellType = 'Retail' AND spPostingExpDt >= CURDATE()");
+    }
+
+   function allretaillimitedproduct($catid) {
+        return $this->ta->read("WHERE spPostingVisibility=-1 AND spCategories_idspCategory = " . $catid . " AND spPostingExpDt >= CURDATE() AND sellType = 'Retail' AND spPostingExpDt >= CURDATE() ORDER BY idspPostings DESC LIMIT 15");
+    }
+
+function allwholesaleproduct($catid) {
+        return $this->ta->read("WHERE spPostingVisibility=-1 AND spCategories_idspCategory = " . $catid . " AND spPostingExpDt >= CURDATE() AND sellType = 'Wholesaler' AND spPostingExpDt >= CURDATE()");
+    }
+
+ function allwholeSaleProfiles(){
+        return $this->ta->read("INNER JOIN spprofiles as f ON t.spProfiles_idspProfiles = f.idspprofiles where t.spPostingVisibility=-1 and t.spCategories_idspCategory = 1 and t.spPostingsFlag = 0 AND t.sellType = 'wholesaler' group by t.spProfiles_idspProfiles");     
+    }
+
+ function limitallauctionproduct($catid,$pid) {
+           
+           $date =date('Y-m-d');
+
+        return $this->ta->read("WHERE spPostingVisibility=-1 AND spCategories_idspCategory = " . $catid . " AND spProfiles_idspProfiles != " . $pid . " AND spPostingExpDt > '$date' AND sellType = 'Auction'  ORDER BY idspPostings DESC LIMIT 5");
+    }
+
+ function limitallretailproduct($catid,$pid) {
+
+        return $this->ta->read("WHERE spPostingVisibility=-1 AND spCategories_idspCategory = " . $catid . " AND spProfiles_idspProfiles != " . $pid . " AND spPostingExpDt >= CURDATE() AND sellType = 'Retail' AND spPostingExpDt >= CURDATE() ORDER BY idspPostings DESC LIMIT 5");
+    }
+
+function limitallwholesaleproduct($catid,$pid) {
+        return $this->ta->read("WHERE spPostingVisibility=-1 AND spCategories_idspCategory = " . $catid . " AND spProfiles_idspProfiles != " . $pid . " AND spPostingExpDt >= CURDATE() AND sellType = 'Wholesaler' AND spPostingExpDt >= CURDATE() ORDER BY idspPostings DESC LIMIT 5");
+    }
+
+
+    function limitDESCretailsort($catid,$pid) {
+
+        return $this->ta->read("WHERE spPostingVisibility=-1 AND spCategories_idspCategory = " . $catid . " AND spProfiles_idspProfiles != " . $pid . " AND spPostingExpDt >= CURDATE() AND sellType = 'Retail' ORDER BY spPostingPrice DESC LIMIT 5");
+    }
+
+     function limitASCretailsort($catid,$pid) {
+        
+        return $this->ta->read("WHERE spPostingVisibility=-1 AND spCategories_idspCategory = " . $catid . " AND spProfiles_idspProfiles != " . $pid . " AND spPostingExpDt >= CURDATE() AND sellType = 'Retail' ORDER BY spPostingPrice ASC LIMIT 5");
+    }
+
+     function limitDESCwholesellsort($catid) {
+
+        return $this->ta->read("WHERE spPostingVisibility=-1 AND spCategories_idspCategory = " . $catid . " AND spPostingExpDt >= CURDATE() AND sellType = 'Wholesaler' ORDER BY spPostingPrice DESC LIMIT 5");
+    }
+
+     function limitASCwholesellsort($catid) {
+        
+        return $this->ta->read("WHERE spPostingVisibility=-1 AND spCategories_idspCategory = " . $catid . " AND spPostingExpDt >= CURDATE() AND sellType = 'Wholesaler' ORDER BY spPostingPrice ASC LIMIT 5");
+    }
+
+      function limitDESCauctionsort($catid) {
+
+        return $this->ta->read("WHERE spPostingVisibility=-1 AND spCategories_idspCategory = " . $catid . " AND spPostingExpDt >= CURDATE() AND sellType = 'Auction' ORDER BY spPostingPrice DESC LIMIT 5");
+    }
+
+     function limitASCauctionsort($catid) {
+        
+        return $this->ta->read("WHERE spPostingVisibility=-1 AND spCategories_idspCategory = " . $catid . " AND spPostingExpDt >= CURDATE() AND sellType = 'Auction' ORDER BY spPostingPrice ASC LIMIT 5");
+    }
+
+
+
+    /*yadnn*/
+
+    function readDESCretailsort($catid,$pid) {
+
+        return $this->ta->read("WHERE spPostingVisibility=-1 AND spCategories_idspCategory = " . $catid . " AND spProfiles_idspProfiles != " . $pid . " AND spPostingExpDt >= CURDATE() AND sellType = 'Retail' ORDER BY spPostingPrice DESC");
+    }
+
+     function readASCretailsort($catid,$pid) {
+        
+        return $this->ta->read("WHERE spPostingVisibility=-1 AND spCategories_idspCategory = " . $catid . " AND spProfiles_idspProfiles != " . $pid . " AND spPostingExpDt >= CURDATE() AND sellType = 'Retail' ORDER BY spPostingPrice ASC");
+    }
+
+     function readDESCwholesellsort($catid,$pid) {
+
+        return $this->ta->read("WHERE spPostingVisibility=-1 AND spCategories_idspCategory = " . $catid . " AND spProfiles_idspProfiles != " . $pid . " AND spPostingExpDt >= CURDATE() AND sellType = 'Wholesaler' ORDER BY spPostingPrice DESC");
+    }
+
+     function readASCwholesellsort($catid,$pid) {
+        
+        return $this->ta->read("WHERE spPostingVisibility=-1 AND spCategories_idspCategory = " . $catid . " AND spProfiles_idspProfiles != " . $pid . " AND spPostingExpDt >= CURDATE() AND sellType = 'Wholesaler' ORDER BY spPostingPrice ASC");
+    }
+
+      function readDESCauctionsort($catid,$pid) {
+
+        return $this->ta->read("WHERE spPostingVisibility=-1 AND spCategories_idspCategory = " . $catid . "AND spProfiles_idspProfiles != " . $pid . " AND spPostingExpDt >= CURDATE() AND sellType = 'Auction' ORDER BY spPostingPrice DESC");
+    }
+
+     function readASCauctionsort($catid,$pid) {
+        
+        return $this->ta->read("WHERE spPostingVisibility=-1 AND spCategories_idspCategory = " . $catid . " AND spProfiles_idspProfiles != " . $pid . " AND spPostingExpDt >= CURDATE() AND sellType = 'Auction' ORDER BY spPostingPrice ASC");
+    }
+
+      function myretailDESCproduct($catid,$pid) {
+        return $this->ta->read("WHERE spPostingVisibility=-1 AND spCategories_idspCategory = " . $catid . " AND spProfiles_idspProfiles = ".$pid." AND sellType = 'Retail' AND spPostingExpDt >= CURDATE() ORDER BY spPostingPrice DESC");
+    }
+
+ function myretailASCproduct($catid,$pid) {
+        return $this->ta->read("WHERE spPostingVisibility=-1 AND spCategories_idspCategory = " . $catid . " AND spProfiles_idspProfiles = ".$pid." AND sellType = 'Retail' AND spPostingExpDt >= CURDATE() ORDER BY spPostingPrice ASC");
+    }
+
+
+  function myWholesalerDESCproduct($catid,$pid) {
+        return $this->ta->read("WHERE spPostingVisibility=-1 AND spCategories_idspCategory = " . $catid . " AND spProfiles_idspProfiles = ".$pid." AND sellType = 'Wholesaler' AND spPostingExpDt >= CURDATE() ORDER BY spPostingPrice DESC");
+    }
+
+ function myWholesalerASCproduct($catid,$pid) {
+        return $this->ta->read("WHERE spPostingVisibility=-1 AND spCategories_idspCategory = " . $catid . " AND spProfiles_idspProfiles = ".$pid." AND sellType = 'Wholesaler' AND spPostingExpDt >= CURDATE() ORDER BY spPostingPrice ASC");
+    }
+
+  function myAuctionDESCproduct($catid,$pid) {
+        return $this->ta->read("WHERE spPostingVisibility=-1 AND spCategories_idspCategory = " . $catid . " AND spProfiles_idspProfiles = ".$pid." AND sellType = 'Auction' AND spPostingExpDt >= CURDATE() ORDER BY spPostingPrice DESC");
+    }
+
+ function myAuctionASCproduct($catid,$pid) {
+        return $this->ta->read("WHERE spPostingVisibility=-1 AND spCategories_idspCategory = " . $catid . " AND spProfiles_idspProfiles = ".$pid." AND sellType = 'Auction' AND spPostingExpDt >= CURDATE() ORDER BY spPostingPrice ASC");
+    }
+
+
+
+
+    
+
+      function myallretailproduct($catid,$pid) {
+        return $this->ta->read("WHERE spPostingVisibility=-1 AND spCategories_idspCategory = " . $catid . " AND spProfiles_idspProfiles = " . $pid . " AND spPostingExpDt >= CURDATE() AND sellType = 'Retail' AND spPostingExpDt >= CURDATE() ORDER BY idspPostings DESC LIMIT 5");
+    }
+
+ function getproductlist($catid,$sell_type,$offset,$limit) {
+        return $this->ta->read("WHERE spPostingVisibility=-1 AND spCategories_idspCategory = " . $catid . " AND spPostingExpDt >= CURDATE() AND sellType = '" . $sell_type . "' AND spPostingExpDt >= CURDATE() ORDER BY idspPostings DESC LIMIT ".$offset.", ".$limit."");
+    }
+
+     function getallproductlist($catid,$offset,$limit) {
+        return $this->ta->read("WHERE spPostingVisibility=-1 AND spCategories_idspCategory = " . $catid . " AND spPostingExpDt >= CURDATE()  ORDER BY idspPostings DESC LIMIT ".$offset.", ".$limit."");
+    }
+
+
+function myallwholesaleproduct($catid,$pid) {
+        return $this->ta->read("WHERE spPostingVisibility=-1 AND spCategories_idspCategory = " . $catid . "  AND spProfiles_idspProfiles = " . $pid . " AND spPostingExpDt >= CURDATE() AND sellType = 'Wholesaler' AND spPostingExpDt >= CURDATE() ORDER BY idspPostings DESC LIMIT 5");
+    }
+
+ function myallauctionproduct($catid,$pid) {
+        return $this->ta->read("WHERE spPostingVisibility=-1 AND spCategories_idspCategory = " . $catid . " AND spProfiles_idspProfiles = " . $pid . " AND spPostingExpDt >= CURDATE() AND sellType = 'Auction' AND spPostingExpDt >= CURDATE() ORDER BY idspPostings DESC LIMIT 5");
+    }
+
+
+   /*  function allretailfavrouiteproduct($catid,$postid) {
+        return $this->ta->read("WHERE spPostingVisibility=-1 AND spCategories_idspCategory = " . $catid . " AND idspPostings = " . $postid . "  AND spPostingExpDt >= CURDATE() AND sellType = 'Retail' AND spPostingExpDt >= CURDATE()");
+    }*/
+    
+
+    /* function allretailfavrouiteproduct($catid,$postid) {
+        
+        return $this->ta->read("INNER JOIN spstorefavorites as d ON t.spProfiles_idspProfiles  = d.spProfiles_idspProfiles WHERE t.spPostingVisibility=-1 AND t.spCategories_idspCategory = " . $catid . " AND d.spPostings_idspPostings = " . $postid . "  AND t.spPostingExpDt >= CURDATE() AND t.sellType = 'Retail' AND t.spPostingExpDt >= CURDATE()");
+
+
+    }*/
+
+    
+function readallfavrouiteproduct($catid,$pid) {
+        
+        return $this->ta->read("INNER JOIN spstorefavorites as d ON t.idspPostings  = d.spPostings_idspPostings WHERE d.spProfiles_idspProfiles =  " . $pid . " AND t.spCategories_idspCategory = " . $catid . " AND t.spPostingExpDt >= CURDATE()");
+   
+    }
+
+
+function allretailfavrouiteproduct($catid,$pid) {
+        
+        return $this->ta->read("INNER JOIN spstorefavorites as d ON t.idspPostings  = d.spPostings_idspPostings WHERE d.spProfiles_idspProfiles =  " . $pid . " AND t.spCategories_idspCategory = " . $catid . " AND t.sellType = 'Retail' AND t.spPostingExpDt >= CURDATE()");
+
+      
+    }
+
+function myallfavrouiteproduct($catid,$pid) {
+        
+        return $this->ta->read("INNER JOIN spstorefavorites as d ON t.idspPostings  = d.spPostings_idspPostings WHERE d.spProfiles_idspProfiles =  " . $pid . " AND t.spCategories_idspCategory = " . $catid . "  AND t.spPostingExpDt >= CURDATE()");
+
+      
+    }
+
+
+function allwholesalefavrouiteproduct($catid,$pid) {
+        
+        return $this->ta->read("INNER JOIN spstorefavorites as d ON t.idspPostings  = d.spPostings_idspPostings WHERE d.spProfiles_idspProfiles =  " . $pid . " AND t.spCategories_idspCategory = " . $catid . " AND t.sellType = 'Wholesaler' AND t.spPostingExpDt >= CURDATE()");
+
+    }
+
+
+function allauctionfavrouiteproduct($catid,$pid) {
+        
+        return $this->ta->read("INNER JOIN spstorefavorites as d ON t.idspPostings  = d.spPostings_idspPostings WHERE d.spProfiles_idspProfiles =  " . $pid . " AND t.spCategories_idspCategory = " . $catid . " AND t.sellType = 'Auction' AND t.spPostingExpDt >= CURDATE()");
+
+      
+    }
+
+
+    function myactiveauctionbid($pid) {
+        
+        return $this->ta->read("INNER JOIN spbid as d ON t.idspPostings  = d.spPostings_idspPostings WHERE d.spProfiles_idspProfiles =  " . $pid . " AND t.sellType = 'Auction' AND t.spPostingExpDt >= CURDATE()");
+
+      
+    }
+
+      function myallactiveproduct($pid) {
+        
+        return $this->ta->read(" WHERE t.spProfiles_idspProfiles =  " . $pid . " AND t.spPostingVisibility=-1 AND t.spPostingExpDt >= CURDATE()");
+
+      
+    }
+
+
+
+        function mydeactiveauctionbid($pid) {
+        
+        /*return $this->ta->read("INNER JOIN spbid as d ON t.idspPostings  = d.spPostings_idspPostings WHERE  d.auctionPrice = (SELECT MAX(auctionPrice) FROM spbid WHERE t.idspPostings  = d.spPostings_idspPostings) AND t.sellType = 'Auction' AND t.spPostingExpDt < CURDATE()");*/
+
+        return $this->ta->read("INNER JOIN spbid as d ON t.idspPostings  = d.spPostings_idspPostings WHERE  d.auctionPrice = (SELECT MAX(auctionPrice) FROM spbid WHERE t.idspPostings  = d.spPostings_idspPostings) AND t.sellType = 'Auction' AND t.spPostingExpDt < CURDATE()");
+
+      
+    }
+
+
+    function getexpiredproductbid($pid) {
+        
+       
+        return $this->ta->read("INNER JOIN spbid as d ON t.idspPostings = d.spPostings_idspPostings WHERE d.spProfiles_idspProfiles =  " . $pid . " AND t.sellType = 'Auction' AND t.spPostingExpDt < CURDATE() AND  d.status = 0");
+      
+    }
+
+
+
+
+
+    function auctionquantity($postid)
+    {
+        return $this->ta->read("WHERE idspPostings = " . $postid ." AND (spPostFieldLabel = 'Limited Quantity' OR spPostFieldLabel ='Ticket Capacity' OR spPostFieldLabel ='Supply Ability' OR spPostFieldName ='retailQuantity_')");
+        
+    }
+
+  function retailquantity($postid)
+    {
+        return $this->ta->read("WHERE idspPostings = " . $postid ." AND (spPostFieldLabel = 'Limited Quantity' OR spPostFieldLabel ='Ticket Capacity' OR spPostFieldLabel ='Supply Ability' OR spPostFieldName ='retailQuantity_')");
+        
+    }
+
+    function wholesalequantity($postid)
+    {
+        return $this->ta->read("WHERE idspPostings = " . $postid ." AND (spPostFieldLabel = 'Limited Quantity' OR spPostFieldLabel ='Ticket Capacity' OR spPostFieldLabel ='Supply Ability' OR spPostFieldName ='retailQuantity_')");
+        
+    }
+
+ // TOTAL NUMBER OF PRODUCT WHICH USER POST
+    function publicpost_count($pid){
+        return $this->ta->read("WHERE spPostingVisibility = -1 AND spCategories_idspCategory = 1 AND spProfiles_idspProfiles = " . $pid, "ORDER BY spPostingDate DESC");
+    }
+
+    function seller_product($sellerid){
+        return $this->ta->read("where spPostingVisibility=-1 and spProfiles_idspProfiles ='$sellerid' AND spCategories_idspCategory = 1 GROUP BY idspPostings ORDER BY RAND() LIMIT 3");
+    }
+
+      function moreseller_product($sellerid,$postid){
+        return $this->ta->read("where spPostingVisibility=-1 and spProfiles_idspProfiles ='$sellerid' AND spCategories_idspCategory = 1 and idspPostings != '$postid' GROUP BY idspPostings ORDER BY RAND() LIMIT 3");
+    }
+
+ function myretailgroupproduct($catid,$gname) {
+        return $this->ta->read("WHERE spCategories_idspCategory = " . $catid . " AND spgroup = 
+            '$gname' AND sellType = 'Retail' AND spPostingExpDt >= CURDATE()");
+    }
+
+     function myretailgroupproductlimit($catid,$gname) {
+        return $this->ta->read("WHERE spCategories_idspCategory = " . $catid . " AND spgroup = 
+            '$gname' AND sellType = 'Retail' AND spPostingExpDt >= CURDATE()", "ORDER BY spPostingDate DESC LIMIT 5");
+    }
+
+    function mywholesalegroupproduct($catid,$gname) {
+        return $this->ta->read("WHERE spCategories_idspCategory = " . $catid . " AND spgroup = 
+            '$gname' AND sellType = 'Wholesaler' AND spPostingExpDt >= CURDATE()");
+    }
+
+
+      function mywholesalegroupproductlimit($catid,$gname) {
+        return $this->ta->read("WHERE spCategories_idspCategory = " . $catid . " AND spgroup = 
+            '$gname' AND sellType = 'Wholesaler' AND spPostingExpDt >= CURDATE()", "ORDER BY spPostingDate DESC LIMIT 5");
+    }
+
+    function myauctiongroupproduct($catid,$gname) {
+        return $this->ta->read("WHERE spCategories_idspCategory = " . $catid . " AND spgroup = 
+            '$gname' AND sellType = 'Auction' AND spPostingExpDt >= CURDATE()");
+    }
+
+        function myauctiongroupproductlimit($catid,$gname) {
+        return $this->ta->read("WHERE spCategories_idspCategory = " . $catid . " AND spgroup = 
+            '$gname' AND sellType = 'Auction' AND spPostingExpDt >= CURDATE()", "ORDER BY spPostingDate DESC LIMIT 5");
+    }
+
+
+
+
+
+
+    function myretailproduct($catid,$pid) {
+        return $this->ta->read("WHERE spPostingVisibility=-1 AND spCategories_idspCategory = " . $catid . " AND spProfiles_idspProfiles = ".$pid." AND sellType = 'Retail' AND spPostingExpDt >= CURDATE()");
+    }
+
+ function myretailproductlimit($catid,$pid) {
+        return $this->ta->read("WHERE spPostingVisibility=-1 AND spCategories_idspCategory = " . $catid . " AND spProfiles_idspProfiles = ".$pid." AND sellType = 'Retail' AND spPostingExpDt >= CURDATE()", "ORDER BY spPostingDate DESC LIMIT 5");
+    }
+
+    function mywholesaleproduct($catid,$pid) {
+        return $this->ta->read("WHERE spPostingVisibility=-1 AND spCategories_idspCategory = " . $catid . " AND spProfiles_idspProfiles = ".$pid." AND sellType = 'Wholesaler' AND spPostingExpDt >= CURDATE()");
+    }
+
+
+    function myauctionproduct($catid,$pid) {
+        return $this->ta->read("WHERE spPostingVisibility=-1 AND spCategories_idspCategory = " . $catid . " AND spProfiles_idspProfiles = ".$pid." AND sellType = 'Auction' AND spPostingExpDt >= CURDATE()");
+    }
+
+    function readprice($postid)
+    {
+        return $this->ta->read("WHERE t.spPostings_idspPostings =" .$postid. " AND spPostFieldName ='spPostingPriceHourly_ ' AND spPostFieldValue = 1");
+    }
+
+    //my sote product with specefic profile
+    function myStoreProduct($pid){
+        return $this->ta->read("WHERE t.spPostingVisibility = -1 AND t.spProfiles_idspProfiles = " . $pid . " AND t.spCategories_idspCategory = 1", "AND t.spPostingExpDt >= CURDATE() ORDER BY spPostingDate DESC");
+    }
+
+     function reatilactiveProduct($pid){
+        return $this->ta->read("WHERE t.spPostingVisibility = -1 AND t.spProfiles_idspProfiles = " . $pid . " AND t.sellType = 'Retail' AND t.spCategories_idspCategory = 1", "AND t.spPostingExpDt >= CURDATE() ORDER BY spPostingDate DESC");
+    }
+
+     function wholesaleactiveProduct($pid){
+        return $this->ta->read("WHERE t.spPostingVisibility = -1 AND t.spProfiles_idspProfiles = " . $pid . " AND t.sellType = 'Wholesaler' AND t.spCategories_idspCategory = 1", "AND t.spPostingExpDt >= CURDATE() ORDER BY spPostingDate DESC");
+    }
+
+ function auctionactiveProduct($pid){
+        return $this->ta->read("WHERE t.spPostingVisibility = -1 AND t.spProfiles_idspProfiles = " . $pid . " AND t.sellType = 'Auction' AND t.spCategories_idspCategory = 1", "AND t.spPostingExpDt >= CURDATE() ORDER BY spPostingDate DESC");
+    }
+
+
+
+     function auctionexpiredProduct($pid){
+        return $this->ta->read("WHERE t.spPostingVisibility = -1 AND t.spProfiles_idspProfiles = " . $pid . " AND t.sellType = 'Auction' AND t.spCategories_idspCategory = 1", "AND t.spPostingExpDt < CURDATE() ORDER BY spPostingDate DESC");
+    }
+
+
+
+
+
+     // SHOW ALL PRODUCT BY VISIBITLTY AND MODULE WISE
+    function myProductVis($pid, $visilty, $catid){
+        return $this->ta->read("WHERE t.spPostingVisibility = ".$visilty." AND t.spProfiles_idspProfiles = " . $pid . " AND t.spCategories_idspCategory = $catid", "ORDER BY spPostingDate DESC");
+    }
+
+   // MY DRAFT PRODUCTS PROFILE AND CATEGORY WISE
+    function readMyDraftprofile($catid, $pid) {
+        //return $this->ta->read("WHERE t.idspProfiles = " . $profileid . " AND t.spPostingVisibility=0");
+        return $this->ta->read("WHERE t.spProfiles_idspProfiles =" . $pid . " AND t.spCategories_idspCategory = $catid AND t.spPostingVisibility = 0", "ORDER BY spPostingDate DESC");
+    }
+
+
+    // MY EXPIRE PRODUCT
+    function myExpireProduct($catId, $pid){
+       /* return $this->ta->read("WHERE t.spProfiles_idspProfiles = $pid AND t.spCategories_idspCategory = $catId AND t.spPostingVisibility != -3 OR t.spPostingExpDt < CURDATE() ORDER BY spPostingDate DESC");*/
+        return $this->ta->read("WHERE t.spProfiles_idspProfiles = $pid AND t.spCategories_idspCategory = $catId AND t.spPostingVisibility != -3 AND t.spPostingExpDt < CURDATE() ORDER BY spPostingDate DESC");
+    }
+
+
+
+
+ function allwholesellpost($pid){
+        return $this->ta->read("where t.sppostingvisibility=-1 AND t.spCategories_idspCategory = 1 AND t.spProfiles_idspProfiles != " . $pid . "  AND t.sppostingsflag = 0 AND t.sellType = 'Wholesaler' GROUP BY idspPostings ORDER BY spPostingDate DESC ");
+    }
+
+          // ==============END=================
+    function auction($type, $uid ,$pid){
+        if($type == 'auction'){
+            return $this->ta->read(" where t.sppostingvisibility=-1 and t.spCategories_idspCategory = 1 AND t.spProfiles_idspProfiles != " . $pid . " AND t.sellType = '$type' GROUP BY idspPostings ORDER BY spPostingDate DESC");
+        }else if($type == 'buypost'){
+            return $this->ta->read("where t.spProfiles_idspProfiles = '$uid' AND t.sppostingvisibility=-1 and AND t.spProfiles_idspProfiles != " . $pid . "t.spCategories_idspCategory = 1 AND t.sellType <> 'auction' GROUP BY idspPostings ORDER BY spPostingDate DESC");
+        }
+    }
+
+
+      function readitemcondtion_product($folder, $condition, $pid){
+        
+return $this->ta->read("where t.sppostingvisibility=-1 AND spProfiles_idspProfiles != " . $pid . " AND t.spCategories_idspCategory = 1 AND t.retailStatus = '$condition' OR t.sellType = '$folder'AND t.spPostingExpDt < CURDATE() ORDER BY spPostingDate DESC"); 
+               
+     }
+
+
+ function readitemcondtion_auctionproduct($type,$condition,$pid){
+        
+return $this->ta->read("where t.sppostingvisibility=-1 AND t.spCategories_idspCategory = 1 AND t.auctionStatus = '$condition' OR t.sellType = '$type' AND  t.spProfiles_idspProfiles != " . $pid . " AND 
+             t.spPostingExpDt < CURDATE() ORDER BY spPostingDate DESC"); 
+               
+     }
+
+
+
+      function readitemauction_product($type,$pid){
+
+        $date = date('Y-m-d');
+        
+   return $this->ta->read("where t.sppostingvisibility=-1 AND t.spProfiles_idspProfiles != " . $pid . " AND t.spCategories_idspCategory = 1 AND t.sellType = '$type' AND t.spPostingExpDt > '$date'  GROUP BY idspPostings ORDER BY spPostingDate DESC");
+            
+     }
+
+
+   
+  function updateQty($postid, $newQty){
+        $this->ta->update(array("retailQuantity" => $newQty), "WHERE  idspPostings = $postid");
+    }
+
+
+      function updateQtywholesaler($postid, $newQty){
+        $this->ta->update(array("supplyability" => $newQty), "WHERE  idspPostings = $postid");
+    }
+
+     function trashpost($postid) {
+        $this->ta->update(array("spPostingVisibility" => -3),"WHERE t.idspPostings = " . $postid);
+    }
+
+
+   //MY ALL STORE SEARCCH
+    function search_myall_store($uid, $txtSearch) {
+        return $this->ta->read("WHERE d.spUser_idspUser = " . $uid . " AND t.spPostingTitle  like ('%" . $txtSearch . "%') AND t.spCategories_idspCategory =1", "ORDER BY spPostingDate DESC");
+    }
+
+
+    //friend store SEARCH
+    function search_store_friends_Posting($uid, $txtSearch) {
+        return $this->ta->read("WHERE t.spPostingVisibility=-1 AND t.spPostingTitle  like ('%" . $txtSearch . "%')  AND t.spCategories_idspCategory = 1 AND t.spProfiles_idspProfiles in(select spProfiles_idspProfiles from spProfiles_has_spGroup where spGroup_idspGroup in (select  spGroup_idspGroup from spProfiles_has_spGroup where spProfiles_idspProfiles in(Select idspProfiles from spProfiles where spUser_idspUser=" . $uid . ")))", "ORDER BY spPostingDate DESC");
+    }
+
+    //All group store search
+    function search_all_group_store($pid, $txtSearch) {
+        return $this->ta->read("WHERE t.spCategories_idspCategory = 1 AND t.spPostingTitle  like ('%" . $txtSearch . "%') AND t.idspPostings in (select spPostings_idspPostings from spShare where spShareToGroup in (select spGroup_idspGroup from spProfiles_has_spGroup where spProfiles_idspProfiles = " . $pid . "))", "ORDER BY spPostingDate DESC");
+    }
+
+    //PUBLIC POST SEARCH
+    function search_publicpost($start, $category, $txtSearch) {
+        return $this->ta->read("WHERE t.spPostingVisibility=-1 AND t.spPostingTitle  like ('%" . $txtSearch . "%') AND t.spCategories_idspCategory = " . $category, "ORDER BY spPostingDate DESC");
+    }
+
+ function search_store($type, $category, $txtSearch) {
+        return $this->ta->read("WHERE t.spPostingVisibility=-1 AND t.spPostingTitle  like ('%" . $txtSearch . "%') AND t.spCategories_idspCategory = " . $category . " AND sellType = '".$type."'", "ORDER BY spPostingDate DESC");
+    }
+
+
+    function search_mystore($type, $category, $txtSearch,$pid) {
+        return $this->ta->read("WHERE t.spPostingVisibility=-1 AND t.spPostingTitle  like ('%" . $txtSearch . "%') AND t.spCategories_idspCategory = " . $category . " AND spProfiles_idspProfiles = ".$pid." AND sellType = '".$type."'", "ORDER BY spPostingDate DESC");
+    }
+
+
+  function singletimelines($pid) {
+        //return $this->ta->read("WHERE idspCategory = 16 AND t.idspPostings = " . $postid);
+        return $this->ta->read("WHERE spProfiles_idspProfiles =  $pid");
+    }
+
+
+       function myretail_store_prange($condition, $start, $end,$exp) {
+        return $this->ta->read("WHERE spPostingPrice BETWEEN $start AND $end AND sellType = 'Retail' AND retailStatus = '".$condition."' AND spPostingExpDt > '".$exp."'", "ORDER BY spPostingDate DESC");
+    }
+
+      function myretailall_store_prange( $start, $end,$exp) {
+        return $this->ta->read("WHERE spPostingPrice BETWEEN $start AND $end AND sellType = 'Retail' AND spPostingExpDt > '".$exp."'", "ORDER BY spPostingDate DESC");
+    }
+
+        function myauction_store_prange($condition, $start, $end,$exp) {
+        return $this->ta->read("WHERE spPostingPrice BETWEEN $start AND $end AND sellType = 'Auction' AND auctionStatus = '".$condition."' AND spPostingExpDt > '".$exp."'", "ORDER BY spPostingDate DESC");
+    }
+
+      function myauctionall_store_prange( $start, $end,$exp) {
+        return $this->ta->read("WHERE spPostingPrice BETWEEN $start AND $end AND sellType = 'Auction' AND spPostingExpDt > '".$exp."'", "ORDER BY spPostingDate DESC");
+    }
+    
+    function spPostingDate($firstTime,$lastTime = ''){
+        date_default_timezone_set('Asia/Karachi');
+        //date_default_timezone_set('Asia/Kolkata');
+    //echo date_default_timezone_get();
+        if ($lastTime) {
+            $now = new DateTime(date('Y-m-d h:i:s', strtotime($lastTime)));
+        }else{
+            $now = new DateTime(date('Y-m-d h:i:s'));
+        }
+        $then = new DateTime(date('Y-m-d h:i:s', strtotime($firstTime)));
+        $diff = $then->diff($now);
+        $time_ago = array('years' => $diff->y, 'months' => $diff->m, 'days' => $diff->d, 'hours' => $diff->h, 'minutes' => $diff->i, 'seconds' => $diff->s);
+        
+        if ($time_ago['years'] > 0) {
+            return $time_ago['years']. ' year ago';
+        }else if ($time_ago['months'] > 0) {
+            return $time_ago['months']. ' month ago';
+        }else if ($time_ago['days'] > 0) {
+            if($time_ago['days'] == 1){
+                return $time_ago['days']. ' day ago';
+            }else{
+                return $time_ago['days']. ' days ago';
+            }
+        }else if ($time_ago['hours'] > 0) {
+            return $time_ago['hours']. ' hours ago';
+        }else if ($time_ago['minutes'] > 0) {
+            return $time_ago['minutes']. ' min ago';
+        }else{
+            return $time_ago['seconds']. ' sec just now';
+        }
+    }
+
+    function get_timeago( $ptime ){
+        date_default_timezone_set('Asia/Karachi');
+
+        $estimate_time = time() - $ptime;
+        if( $estimate_time < 1 ){
+            return 'less than 1 second ago';
+        }
+        $condition = array( 
+                    12 * 30 * 24 * 60 * 60  =>  'year',
+                    30 * 24 * 60 * 60       =>  'month',
+                    24 * 60 * 60            =>  'day',
+                    60 * 60                 =>  'hour',
+                    60                      =>  'minute',
+                    1                       =>  ' second'
+        );
+        foreach( $condition as $secs => $str ){
+            $d = $estimate_time / $secs;
+            if( $d >= 1 ){
+                $r = round( $d );
+                return '' . $r . ' ' . $str . ( $r > 1 ? 's' : '' ) . ' ago';
+            }
+        }
+    }
+
+      function turnUrlIntoHyperlink($string){
+        //The Regular Expression filter
+        $reg_exUrl = "/(?i)\b((?:https?:\/\/|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}\/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'\".,<>?«»“”‘’]))/";
+
+        // Check if there is a url in the text
+        if(preg_match_all($reg_exUrl, $string, $url)) {
+            // Loop through all matches
+            foreach($url[0] as $newLinks){
+                if(strstr( $newLinks, ":" ) === false){
+                    $link = 'http://'.$newLinks;
+                }else{
+                    $link = $newLinks;
+                }
+
+                // Create Search and Replace strings
+                $search  = $newLinks;
+                $replace = '<a href="'.$link.'" title="'.$newLinks.'" target="_blank">'.$link.'</a>';
+
+                $isyoutube = $this->videoType($newLinks);
+                if ($isyoutube) {
+                    // ===SHOW YOUTUBE VIDEO
+                    parse_str( parse_url($newLinks, PHP_URL_QUERY ), $my_array_of_vars );
+                    $string = str_replace($search, '', $string);
+                    $string .= '<iframe style="width: 100%;" height="315" src="https://www.youtube.com/embed/'.$my_array_of_vars['v'].'" frameborder="0" allowfullscreen></iframe>';
+                }else{
+                    // ===SHOW ONLY LINKS
+                    $string = str_replace($search, $replace, $string);
+                }
+
+            }
+        }
+        //Return result
+        return $string;
+    }
+
+
+
+
+
+}
+
+?>

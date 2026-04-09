@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<link rel="stylesheet" href="css/bootstrap.min.css" >
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+
+	
+	<!-- <link rel="stylesheet" type="text/css" href="css/docs.theme.min.css"> -->
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/video.css">
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>	
+</head>
+
+<body cz-shortcut-listen="true"> 
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="wrapper">
+				<!-- Sidebar Holder -->
+					<div id="sidebar">
+						<nav class="">
+							<div class="sidebar-header">
+								<div class="profile" style="margin: 0 27%; text-align: center;">
+									<img src="https://dummyimage.com/100x100/000/fff" class="img-circle">
+									<h4>Kim Jhone</h4>
+									<p>Vloger</p>
+								</div>
+
+								<div class="input-group">
+									<input type="text" class="form-control" placeholder="Search for...">
+									<span class="input-group-btn">
+										<button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+									</span>
+								</div><!-- /input-group -->
+								<div class="input-group">
+									<button type="button" onclick="window.location.href='dashboard.htm'" class="btn btn-success btn-block"><i class="fa fa-dashboard"></i> Dashboard</button>	
+								</div>
+								<div class="input-group">
+									<button type="button" onclick="window.location.href='upload.htm'" class="btn btn-primary btn-block"><i class="fa fa-upload"></i> Upload</button>	
+								</div>
+							</div>
+							<ul>
+								<li><a href="index.htm"><i class="fa fa-home"></i> Home</a></li>				            
+								<li><a href="myuploads.htm"><i class="fa fa-video-camera"></i> My Videos </a></li>
+								<li><a href="myvideos.htm"><i class="fa fa-list"></i> My Playlist </a></li>
+								<li><a href="myvideos.htm"><i class="fa fa-file-video-o"></i> My Album </a></li>
+								<li><a href="myvideos.htm"><i class="fa fa-heart"></i> My Favourites </a></li>
+								<li><a href="myearning.htm"><i class="fa fa-dollar"></i> My Earning </a></li>
+								<li><a href="myvideos.htm"><i class="fa fa-file-video-o"></i> My Purchased Video </a></li>
+								<li><a href="myvideos.htm"><i class="fa fa-handshake-o"></i> Contributions </a></li>
+								<li><a href="myvideos.htm"><i class="fa fa-flag"></i> Flagged Videos </a></li>
+								<li><a href="history.htm"><i class="fa fa-history"></i> History </a></li>
+							</ul>  						
+						</nav>
+					</div>
+					
+
+					<div class="col-sm-12 col-md-12 main">
+						<!-- Page Content Holder -->
+					<div id="content">
+						<button type="button" id="sidebarCollapse" class="btn btn-primary navbar-btn"><i class="fa fa-bars"></i></button>						
+					</div>
+					<ol class="breadcrumb">
+						<li><a href="#">Video Home</a></li>  
+						<li><a href="#">Dashboard</a></li>          
+					</ol>
+					<div class="well">
+						<div class="row">
+							<form>
+								<div class="col-md-12">
+									<div class="form-group">
+										<label for="videoTitle">Video Tile</label>
+										<input type="title" class="form-control" id="videoTitle" placeholder="Title here">
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="form-group">
+										<label for="videoDescription">Description</label>
+										<textarea class="form-control" id="videoDescription" rows="3"></textarea>
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="form-group">
+										<label for="videoKeywords">Keywords</label>
+										<input type="title" class="form-control" id="videoKeywords" placeholder="Keywords separated by comma ,">
+									</div>
+								</div>
+								<div class="col-md-12">
+									<label for="videoCategories">Select Category</label>
+									<select class="form-select" aria-label="Default select example">
+										<option selected>Select Category</option>
+										<option value="1">Darama</option>
+										<option value="2">Games</option>
+										<option value="3">Funny</option>
+									</select>
+								</div>
+								<div class="col-md-6">
+									<div class="radio ">
+										<label>
+											<input type="radio" name="optionsRadios" id="optionsRadios1" value="public" checked>
+											Public
+										</label>
+									</div>
+
+									<div class="radio">
+										<label>
+											<input type="radio" name="optionsRadios" id="optionsRadios1" value="private">
+											Private
+										</label>
+									</div>
+								</div>
+								<div class="col-md-6">							
+									<div class="checkbox">
+										<label>
+											<input type="checkbox"> Are You selling this Video?
+										</label>
+									</div>							
+									<div class="form-group form-inline">
+										<label for="videoTitle">Price</label>
+										<div class="input-group">									
+											<!-- <div class="input-group-addon">$</div> -->
+											<input type="text" class="form-control" id="exampleInputAmount" placeholder="Amount">
+											<div class="input-group-addon">$</div>									
+										</div>
+										<label for="videoTitle">Discount</label>
+										<div class="input-group">									
+											<!-- <div class="input-group-addon">%</div> -->
+											<input type="text" class="form-control" id="exampleInputAmount" placeholder="%">
+											<div class="input-group-addon">%</div>
+										</div>
+									</div>								
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="exampleInputFile">Video Thumbnail</label>
+										<input type="file" id="exampleInputFile">
+										<p class="help-block">Thumbnail image should in jpg formate with size of 1:1 500x500</p>
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<div class="checkbox">
+										<label>
+											<input type="checkbox"> Allow Public Comments
+										</label>
+									</div>	
+									</div>
+								</div>
+								<div class="col-md-12">
+									<button type="submit" class="btn btn-success btn-block">Submit</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--================================================== -->
+
+	<script type="text/javascript" src="js/video.js"></script>	
+</body>
+</html>

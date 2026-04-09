@@ -1,0 +1,106 @@
+<?php
+	include('../univ/baseurl.php');
+	session_start();
+	function sp_autoloader($class){
+		include '../mlayer/' . $class . '.class.php';
+	}
+	spl_autoload_register("sp_autoloader");
+
+	$u = new _spuser;
+
+//print_r($_REQUEST);
+
+	if(isset($_REQUEST["userid"]) && $_REQUEST['userid'] > 0){
+
+		$userId = $_REQUEST['userid'];
+		$result = $u->read($userId);
+		
+		if($result){
+			$row = mysqli_fetch_assoc($result);
+
+			$genratecode = $row['phone_verify_code'];
+
+			$mobile = $row["spUserCountryCode"].$row['spUserPhone'];
+
+			if ($genratecode == "" || $genratecode == 0) {
+				//GENERATE ALPHA NUMARIC RANDOM NUMBERS UNIQUE START
+				$size = 6;
+				$alpha_key = '';
+				$keys = range('A', 'Z');
+				for ($i = 0; $i < 2; $i++) {
+					$alpha_key .= $keys[array_rand($keys)];
+				}
+
+				$length = $size - 2;
+				$key = '';
+				$keys = range(0, 9);
+
+				for ($i = 0; $i < $length; $i++) {
+					$key .= $keys[array_rand($keys)];
+				}
+
+				$randCode = $alpha_key . $key;
+				//GENERATE ALPHA NUMARIC RANDOM NUMBERS UNIQUE END
+				// UPDATE CODE ON USER PROFILE START
+				//$u->updateCode($userId, $randCode);
+				$u->updateEmailCode($userId, $randCode, 1);
+				//echo $u->ta->sql;
+				// UPDATE CODE ON USER PROFILE END
+				//$message = "Verification code for online account registration is:" .urlencode($randCode)." Okease verify at www.thesharepage.com";
+
+				$message = urlencode($randCode)." is your code to login to TheSharePage.com . Do not share it with anyone.";
+			
+			}else{
+				//$message = "Verification code for online account registration is:" .$row['phone_verify_code']." Okease verify at www.thesharepage.com";
+
+				$message = $row['phone_verify_code']." is your code to login to TheSharePage.com . Do not share it with anyone.";
+				
+				//$message = $row['phone_verify_code'];
+			}
+			//SEND SMS TO SPECIFIC USER WHO REGISTER START
+			//$sms = new _sms; 
+			//$sms->send_any_sms($mobile, $message);
+			//SEND SMS TO SPECIFIC USER WHO REGISTER END
+			//echo "SMS Sent Succefully";
+
+
+			// Include the bundled autoload from the Twilio PHP Helper Library
+
+			require '../twilio-php-main/src/Twilio/autoload.php';
+
+
+		// Your Account SID and Auth Token from twilio.com/console
+		$account_sid = 'AC133edde2cd4eb04a187b23785b9acf65';
+		$auth_token = 'c34c43a63c60436330b906ebf35a75c7';
+		// In production, these should be environment variables. E.g.:
+		// $auth_token = $_ENV["TWILIO_ACCOUNT_SID"]
+		// A Twilio number you own with SMS capabilities
+		$twilio_number = "+16042002975";
+		$client = new Twilio\Rest\Client($account_sid, $auth_token);
+		$client->messages->create(
+			// Where to send a text message (your cell phone?) +917769899889
+			$mobile,
+			array(
+				'from' => $twilio_number,
+				'body' => $message
+			)
+		);
+
+
+			$userdata = array("userid"=>$userId,"phone_verify_code" =>$randCode);
+
+			$data = array("status" => 200, "message" => "success","data"=> $userdata);
+		
+		}else{
+			
+			$data = array("status" => 1, "message" => "User Not Found.");
+			//echo "user not found";
+		}
+	}else{
+
+		$data = array("status" => 1, "message" => "Enter user Id.");
+		//echo "user not found";
+	}
+
+echo json_encode($data);
+?>

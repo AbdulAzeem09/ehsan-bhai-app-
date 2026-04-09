@@ -1,0 +1,27 @@
+<div class="left_Entertain">
+    <div class="head_left_enter text-center">
+        <h2><img src="<?php echo $BaseUrl;?>/assets/images/entertain/filter.png" alt="" /> Filter</h2>
+    </div>
+    <div class="body_left_ser">
+		<h3>Category</h3>
+		<ul>
+            <?php
+                //echo "<option value='' disabled selected>".$row["Business Category"]."</option>";
+                $m = new _masterdetails;
+                $masterid = 8;
+                $result = $m->read($masterid);
+                if($result != false){
+                    while($rows = mysqli_fetch_assoc($result)){ ?>
+                        <li><label><a href="<?php echo $BaseUrl.'/business-directory/business.php?business='.strtolower(str_replace(' ', '_', trim($rows["masterDetails"])));?>"><i class="fa fa-square-o"></i> <?php echo ucwords(strtolower($rows["masterDetails"]));?></a></label></li>
+                        <?php
+                    }
+                }
+            ?>
+            
+      
+
+        </ul>
+        
+        <hr>
+    </div>
+</div>

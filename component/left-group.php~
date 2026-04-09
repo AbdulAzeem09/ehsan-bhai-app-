@@ -1,0 +1,347 @@
+    <link rel="stylesheet" type="text/css" href="<?php echo $BaseUrl;?>/assets/css/style.css">  
+    <link rel="stylesheet" type="text/css" href="<?php echo $BaseUrl;?>/assets/css/design.css">  
+
+
+    <link href="<?php echo $BaseUrl; ?>/assets/css/sweetalert.css" rel="stylesheet" media="screen">
+    <script type="text/javascript" src="<?php echo $BaseUrl;?>/assets/js/sweetalert.min.js"></script>        
+    <div class="w-100">
+
+    <?php
+    $g = new _spgroup;
+    if(isset($_GET['groupid'])){
+        $result_grp_admin = $g->readgroupAdmin($_GET["groupid"]);
+        //echo $g->ta->sql;
+        if($result_grp_admin != false){
+
+           
+
+            $row_grp_admin = mysqli_fetch_assoc($result_grp_admin);
+
+          //  print_r($row_grp_admin);
+
+          
+            $admin_Id = $row_grp_admin['idspProfiles'];
+            $admin_Name = $row_grp_admin['spProfileName'];
+
+               $admin_ptype = $row_grp_admin['spProfileType_idspProfileType'];
+
+            
+
+        }
+
+        $result_ismember = $g->ismember($_GET["groupid"],$_SESSION['pid']);
+        //echo $g->ta->sql;
+        if($result_ismember != false){
+
+           
+
+            $row_ismember = mysqli_fetch_assoc($result_ismember);
+
+           /* print_r($row_ismember);*/
+
+          
+          /*  $admin_Id = $row_ismember['idspProfiles'];
+              $admin_Name = $row_ismember['spProfileName'];
+
+              $admin_ptype = $row_ismember['spProfileType_idspProfileType'];*/
+
+              $profile_exist = $row_ismember['spProfiles_idspProfiles']; 
+              $approve =   $row_ismember['spApproveRegect'];
+
+            /*spApproveRegect*/
+
+        }
+
+
+    }
+    
+
+      $p      = new _spgroup_event;
+
+                    
+                    $res  = $p->publicgroup_event($_GET["groupid"]);
+           //      echo $p->ta->sql;
+                    //echo $p->ta->sql;
+                    if($res != false){
+                        $row = mysqli_fetch_assoc($res);
+
+                   $adminprofileid = $row['spProfiles_idspProfiles'];
+                    }
+
+// print_r($admin_Id);
+    ?>
+
+
+                   <div class="topstatus timeline-topstatus right_sidebar">
+                       <style>
+                           .previous  {
+                               text-decoration: none;
+                               display: inline-block;
+                               padding: 8px 16px;
+                           }
+
+                           .previous :hover {
+                               background-color: #ddd;
+                               color: black;
+                           }
+
+                           .previous {
+                               background-color: #f1f1f1;
+                               color: black;
+                           }
+                       </style>
+                       <a href="<?php echo $baseurl; ?>/my-groups" class="previous-btn">&laquo; Back To Home</a>
+                    <div class="left_grid left_group_gray">
+
+
+        <?php if(isset($_GET['groupname'])){ ?>
+<?php if($admin_Id == $_SESSION['pid']){ ?>
+          <div class="dropdown">
+    <button class="btn dropdown-toggle pull-right bg-white" type="button" id="menu1" data-toggle="dropdown" style="margin-top: -10px;">
+      <span class="pull-right "  ><img src="<?php echo $BaseUrl;?>/assets/images/icon/group/cog.png" class="img-responsive"  alt=""></span>
+    </button>
+    <ul class="dropdown-menu pull-right mr-30" role="menu" aria-labelledby="menu1">
+      <li role="presentation" class="<?php if($row['spgroupflag'] == 1){echo "active_drp";} ?>"><a role="menuitem" class="Group_status_private"  data-id="<?php echo $row['idspGroup']; ?>" href="javascript:void(0);">
+        <i class="fa fa-lock" aria-hidden="true"></i>&nbsp;&nbsp;Private</a></li>
+      <li role="presentation" class="<?php if($row['spgroupflag'] != 1){echo "active_drp";} ?>"><a role="menuitem" class="Group_status_public"  data-id="<?php echo $row['idspGroup']; ?>" href="javascript:void(0);"><i class="fa fa-users" aria-hidden="true"></i>&nbsp;Public</a></li>
+
+        <li role="presentation" ><a role="menuitem" data-id="<?php echo $row['idspGroup']; ?>" href="javascript:void(0);" class="" onclick="popp()"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;Setting</a></li>
+
+        <li role="presentation" ><a role="menuitem" data-id="<?php echo $row['idspGroup']; ?>" href="javascript:void(0);" class="Group_delete"><i class="fa fa-trash" aria-hidden="true"></i>&nbsp;&nbsp;Delete</a></li>
+    
+    </ul>
+  </div>
+
+<?php  } ?>
+
+
+
+
+           <span class="no_margin " style="font-weight: bold;font-size: 17px;color: #202548;"><?php echo strtoupper ($_GET['groupname']); ?></span><?php if($spGroupflag == 1){echo '<small><i class="fa fa-lock"></i> Private</h6>';}else{echo '<h6><i class="fa fa-globe"></i> Public</small>';}?> <?php
+        }?>
+         
+
+           
+
+
+
+        <ul class="top_margin">
+
+
+              <li ><a href="javascript:void(0);"><img src="<?php echo $BaseUrl;?>/assets/images/icon/group/profileicons.png" class="img-responsive" alt="admin" />
+            <a href="<?php echo $BaseUrl.'/friends/?profileid='.$admin_Id;?>"><p class="top_margin text_size1"><?php echo ucfirst ($admin_Name);?></p><small><?php if($admin_ptype == 1){ echo "Business Profile"; } ?>(Admin)</small></a></a>
+            </li>
+
+
+
+
+<!-- 
+            <li><a href="javascript:void(0);"><img src="<?php echo $BaseUrl;?>/assets/images/icon/group/public_icon.png" class="img-responsive" alt="" /><p>Public</p></a></li>
+            -->
+
+            <?php  
+             
+              if(empty($profile_exist)){
+?>
+<li  class="join_timeline_main"><button class="join_timeline btn view_right_joinbtn" style="float: left;padding-left: 30px!important;padding-right: 30px!important;margin-left: 28px;" data-pid="<?php echo $_SESSION['pid'] ?>" data-gid="<?php echo $_GET['groupid'] ?>" id="addmemontimeline"> Join </button></li>
+
+
+
+<?php
+              }else if(!empty($profile_exist) &&  $approve == 0){
+
+            ?>
+
+             <li  class="join_timeline_main"><button class=" btn view_right_joinbtn" style="float: left;padding-left: 30px!important;padding-right: 30px!important;" data-pid="<?php echo $_SESSION['pid'] ?>" data-gid="<?php echo $_GET['groupid'] ?>" id=""> Sent Request </button></li>
+
+
+            <?php
+              }else{
+
+            ?>
+
+              <li><a href="<?php echo $BaseUrl?>/grouptimelines/group_notification.php?groupid=<?php echo $_GET['groupid']?>&groupname=<?php echo $_GET['groupname'];?>&notification"><img src="<?php echo $BaseUrl;?>/assets/images/icon/group/notifiction.png" class="img-responsive" alt="" /> 
+                        <p class="text_size1"> Notification</p></a></li>
+
+
+            <?php
+              }
+
+            ?>           
+
+      
+
+
+
+
+        </ul>
+         </div>
+     </div>
+        
+<?php if(!empty($profile_exist) &&  $approve == 1){ ?>
+        <div class="topstatus timeline-topstatus right_sidebar top_margin" >
+
+        <div class="left_grid left_group_gray">
+        <ul>
+            <li <?php if(isset($_GET['timeline'])){echo "class='active_group'"; }?> ><a href="<?php echo $BaseUrl?>/grouptimelines/?groupid=<?php echo $_GET['groupid']?>&groupname=<?php echo $_GET['groupname'];?>&timeline"><img src="<?php echo $BaseUrl;?>/assets/images/icon/group/timeline_icon_enable.png" class="img-responsive" alt="" /><p>Timeline</p></a></li>
+
+            <li <?php if(isset($_GET['pendingtimeline'])){echo "class='active_group'"; }?> ><a href="<?php echo $BaseUrl?>/grouptimelines/?groupid=<?php echo $_GET['groupid']?>&groupname=<?php echo $_GET['groupname'];?>&pendingtimeline"><img src="<?php echo $BaseUrl;?>/assets/images/icon/group/timeline_icon_enable.png" class="img-responsive" alt="" /><p>Pending Timeline</p></a></li>
+            
+            
+
+            <li <?php if(isset($_GET['members'])){echo "class='active_group'"; }?> ><a href="<?php echo $BaseUrl?>/grouptimelines/member.php?groupid=<?php echo $_GET['groupid']?>&groupname=<?php echo $_GET['groupname'];?>&members"><img src="<?php echo $BaseUrl;?>/assets/images/icon/group/members_icon_enable.png" class="img-responsive" alt="" /><p>Members</p></a></li>
+              <?php
+            if ($admin_Id == $_SESSION['pid']) {
+                ?>
+                <li <?php if(isset($_GET['smsCampaigns'])){echo "class='active_group'"; }?>><a href="<?php echo $BaseUrl?>/grouptimelines/addSms.php?groupid=<?php echo $_GET['groupid']?>&groupname=<?php echo $_GET['groupname'];?>&smsCampaigns"><img src="<?php echo $BaseUrl;?>/assets/images/icon/group/smscamp_icon_enable.png" class="img-responsive" alt="" /><p>SMS Campaigns</p></a></li>            
+                <li <?php if(isset($_GET['emailCampaigns'])){echo "class='active_group'"; }?>><a href="<?php echo $BaseUrl?>/grouptimelines/addEmail.php?groupid=<?php echo $_GET['groupid']?>&groupname=<?php echo $_GET['groupname'];?>&emailCampaigns"><img src="<?php echo $BaseUrl;?>/assets/images/icon/group/emailcamp_icon_enable.png" class="img-responsive" alt="" /><p>Email Campaigns</p></a></li>
+           
+                <?php
+            }
+            ?>
+             
+            <li <?php if(isset($_GET['disc'])){echo "class='active_group'"; }?> ><a href="<?php echo $BaseUrl?>/grouptimelines/discussion-board.php?groupid=<?php echo $_GET['groupid']?>&groupname=<?php echo $_GET['groupname'];?>&disc"><img src="<?php echo $BaseUrl;?>/assets/images/icon/group/discussionboard_icon_enable.png" class="img-responsive" alt="" /><p>Discussion Board</p></a></li>
+            <li <?php if(isset($_GET['photo'])){echo "class='active_group'"; }?>><a href="<?php echo $BaseUrl?>/grouptimelines/group-photo.php?groupid=<?php echo $_GET['groupid']?>&groupname=<?php echo $_GET['groupname'];?>&photo"><img src="<?php echo $BaseUrl;?>/assets/images/icon/group/photos_icon_enable.png" class="img-responsive" alt="" /><p>Photos</p></a></li>
+            <li <?php if(isset($_GET['video'])){echo "class='active_group'"; }?>><a href="<?php echo $BaseUrl?>/grouptimelines/group-video.php?groupid=<?php echo $_GET['groupid']?>&groupname=<?php echo $_GET['groupname'];?>&video"><img src="<?php echo $BaseUrl;?>/assets/images/icon/group/videos_icon__enable.png" class="img-responsive" alt="" /><p>Videos</p></a></li>
+            
+            <li <?php if(isset($_GET['event'])){echo "class='active_group'"; }?> ><a href="<?php echo $BaseUrl?>/grouptimelines/group-event.php?groupid=<?php echo $_GET['groupid']?>&groupname=<?php echo $_GET['groupname'];?>&event"><img src="<?php echo $BaseUrl;?>/assets/images/icon/group/events_icon_enable.png" class="img-responsive" alt="" /><p>Events</p></a></li>
+
+     
+     <?php
+            if ($adminprofileid == $_SESSION['pid']) {
+                ?>
+     <li <?php if(isset($_GET['sponsor'])){echo "class='active_group'"; }?> ><a href="<?php echo $BaseUrl?>/grouptimelines/group-sponsorlist.php?groupid=<?php echo $_GET['groupid']?>&groupname=<?php echo $_GET['groupname'];?>&sponsor"><img src="<?php echo $BaseUrl;?>/assets/images/icon/group/sponsor.png" class="img-responsive" alt="" /><p>Sponsor</p></a></li>
+
+                <li <?php if(isset($_GET['bookedevent'])){echo "class='active_group'"; }?> ><a href="<?php echo $BaseUrl?>/grouptimelines/group-bookedevent.php?groupid=<?php echo $_GET['groupid']?>&groupname=<?php echo $_GET['groupname'];?>&bookedevent"><img src="<?php echo $BaseUrl;?>/assets/images/icon/group/booked-event.png" class="img-responsive" alt="" /><p>Booked Event</p></a></li>
+
+            <?php }?>
+                    
+             <li <?php if(isset($_GET['eventhistory'])){echo "class='active_group'"; }?> ><a href="<?php echo $BaseUrl?>/grouptimelines/group-activeevent.php?groupid=<?php echo $_GET['groupid']?>&groupname=<?php echo $_GET['groupname'];?>&eventhistory"><img src="<?php echo $BaseUrl;?>/assets/images/icon/group/event-history.png" class="img-responsive" alt="" /><p>Event History</p></a></li>
+
+          
+                    
+
+            <li <?php if(isset($_GET['files'])){echo "class='active_group'"; }?> ><a href="<?php echo $BaseUrl?>/grouptimelines/group-folder.php?groupid=<?php echo $_GET['groupid']?>&groupname=<?php echo $_GET['groupname'];?>&files"><img src="<?php echo $BaseUrl;?>/assets/images/icon/group/files_icon_enable.png" class="img-responsive" alt="" /><p>Files</p></a></li>  
+
+            <li <?php if(isset($_GET['store'])){echo "class='active_group'"; }?> ><a href="<?php echo $BaseUrl?>/grouptimelines/group-store.php?groupid=<?php echo $_GET['groupid']?>&groupname=<?php echo $_GET['groupname'];?>&store"><img src="<?php echo $BaseUrl;?>/assets/images/icon/group/stores_icon_enable.png" class="img-responsive" alt="" /><p>Store</p></a></li>
+            <li <?php if(isset($_GET['about'])){echo "class='active_group'"; }?> ><a href="<?php echo $BaseUrl?>/grouptimelines/about.php?groupid=<?php echo $_GET['groupid']?>&groupname=<?php echo $_GET['groupname'];?>&about"><img src="<?php echo $BaseUrl;?>/assets/images/icon/group/about_icon_enable.png" class="img-responsive" alt="" /><p>About</p></a></li>
+        </ul>
+
+      
+    </div>
+</div>
+
+        <?php } ?>           <!-- <div class="topstatus timeline-topstatus right_sidebar " style="margin-top: 10px;">
+                    <div class="left_grid left_group_gray">
+
+        <form class="group_search ">
+            <div class="form-group ">
+                <input type="text" class="form-control " id="bg_cl" placeholder="Search this group" / >
+            </div>
+          
+        </form>
+
+       <span style="text-transform:uppercase; font-size:16px;">Favorites</span>
+        <ul>
+            <li><a href=""><img src="<?php echo $BaseUrl;?>/assets/images/icon/group/favpurite_icon.png" class="img-responsive" alt="" /><p>Lego World</p></a></li>
+            <li><a href=""><img src="<?php echo $BaseUrl;?>/assets/images/icon/group/favpurite_icon.png" class="img-responsive" alt="" /><p>Nature</p></a></li>
+            <li><a href=""><img src="<?php echo $BaseUrl;?>/assets/images/icon/group/favpurite_icon.png" class="img-responsive" alt="" /><p>Photography</p></a></li>
+            
+        </ul>
+    </div>
+         
+     </div>
+ -->
+</div>
+  <script type="text/javascript">
+    
+                $(".Group_delete").on("click", function(){
+                    var groupid = $(this).attr("data-id");
+
+           /* alert(groupid);*/
+                 
+                    var flag = 1;
+                    swal({
+                        title: "Are you sure to delete?",
+                        type: "warning",
+                        confirmButtonClass: "sweet_ok",
+                        confirmButtonText: "Yes",
+                        cancelButtonClass: "sweet_cancel",
+                        cancelButtonText: "No",
+                        showCancelButton: true,
+                    },
+                    function(isConfirm) {
+                        if (isConfirm) {
+                            $.get("../my-groups/deletegroup.php", {groupid:groupid}, function (data) {
+                                //console.log(data);
+                              window.location = '../my-groups';
+
+                            });
+                            $(".groupdiv_"+groupid).html("");
+                          
+                        }
+                    });
+                });
+
+$(".Group_status_private").on("click", function(){
+        var groupid = $(this).attr("data-id");
+        var type = 1;
+/*alert(groupid);*/
+       /* alert(postid);*/
+        var flag = 1;
+        swal({
+            title: "Are you sure to Make this group Private?",
+            type: "warning",
+            confirmButtonClass: "sweet_ok",
+            confirmButtonText: "Yes",
+            cancelButtonClass: "sweet_cancel",
+            cancelButtonText: "No",
+            showCancelButton: true,
+        },
+        function(isConfirm) {
+            if (isConfirm) {
+                $.get("../my-groups/updategrouptype.php", {groupid:groupid,type:type}, function (data) {
+                    //console.log(data);
+                      window.location.reload();
+                });
+                $(".groupdiv_"+groupid).html("");
+               /* $(".groupdiv_"+postid).removeClass('searchable');
+                $(".deldiv_"+postid).removeClass('post_timeline');*/
+            }
+        });
+    });
+
+
+$(".Group_status_public").on("click", function(){
+        var groupid = $(this).attr("data-id");
+        var type = 0;
+/*alert(groupid);*/
+       /* alert(postid);*/
+        var flag = 1;
+        swal({
+            title: "Are you sure to make this group Public?",
+            type: "warning",
+            confirmButtonClass: "sweet_ok",
+            confirmButtonText: "Yes",
+            cancelButtonClass: "sweet_cancel",
+            cancelButtonText: "No",
+            showCancelButton: true,
+        },
+        function(isConfirm) {
+            if (isConfirm) {
+                $.get("../my-groups/updategrouptype.php", {groupid:groupid,type:type}, function (data) {
+                    //console.log(data);
+                      window.location.reload();
+                });
+                $(".groupdiv_"+groupid).html("");
+               /* $(".groupdiv_"+postid).removeClass('searchable');
+                $(".deldiv_"+postid).removeClass('post_timeline');*/
+            }
+        });
+    });
+
+    function popp() {
+            $("#edit_group").click();
+    }
+
+  </script>

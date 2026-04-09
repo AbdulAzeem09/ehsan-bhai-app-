@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <title></title>
+   <link rel="stylesheet" href="css/bootstrap.min.css" >
+   <!-- Optional theme -->
+   <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+   <!-- <link rel="stylesheet" type="text/css" href="css/docs.theme.min.css"> -->
+   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+   <!-- Latest compiled and minified JavaScript -->
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>	 
+   <link rel="stylesheet" type="text/css" href="css/fl.css">
+</head>
+<body cz-shortcut-listen="true">
+  <section>
+   <div class="container">
+      <div class="row user-menu-container square">
+        <div class="col-md-7 user-details">
+            <div class="row coralbg white">
+                <div class="col-md-8 no-pad">
+                    <div class="user-pad">                        
+                        <h3>Welcome back, Jessica</h3>
+                        <h4 class="white"><i class="fa fa-check-circle-o"></i> San Antonio, TX</h4>
+                        <h4 class="white"><i class="fa fa-twitter"></i> CoolesOCool</h4>
+                        <div style="display: inline-block;">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-o"></i>
+                            <span>4 Reviews</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 no-pad">
+                    <div class="user-image">
+                        <img src="https://farm7.staticflickr.com/6163/6195546981_200e87ddaf_b.jpg" class="img-responsive thumbnail">
+                    </div>
+                </div>
+
+            </div>
+            <div class="row overview p15">
+                <h3>Profile Over View</h3>
+                <div class="pull-right">
+                 <a href="#"><i class="fa fa-heart fa-2x links"></i></a>
+                 <a href="#"><i class="fa fa-share fa-2x links"></i></a>
+                 <a href="#"><i class="fa fa-flag fa-2x links"></i> </a>                          
+             </div>
+             <ul class="user-menu-list">
+                <li>
+                    <p><i class="fa fa-usd coral"></i> 21/hr Hourly Rate: </p>
+                </li>
+                <li>
+                    <p><i class="fa fa-certificate coral"></i> Certification: Jonathan Hawkins followed you.</p>
+                </li>
+                <li>
+                    <p><i class="fa fa-language coral"></i> Language fluency: English, Urdu, Arabic</p>
+                </li>
+                <li>
+                    <p><i class="fa fa-address-card-o coral"></i> Profile Link: <input type="text" disabled name="plink" value="https://www.thesharepage.com/profile/jessica"></p>
+                </li>                        
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-1 user-menu-btns">
+        <div class="btn-group-vertical square" id="responsive">
+            <a href="#" class="btn btn-block btn-default active">
+              <i class="fa fa-envelope fa-3x faicon"></i>
+          </a>
+          <a href="#" class="btn btn-default">
+              <i class="fa fa-laptop fa-3x faicon"></i>
+          </a>
+          <a href="#" class="btn btn-default">
+              <i class="fa fa-certificate fa-3x faicon"></i>
+          </a>
+          <a href="#" class="btn btn-default">
+              <i class="fa fa-check fa-3x faicon"></i>
+          </a>
+      </div>
+  </div>
+  <div class="col-md-4 user-menu user-pad">
+    <div class="user-menu-content active">
+        <div class="col-xs-12 contact-marina-content contactcontent">
+            <form method="post" id="messageform" action="freelance_chat_project.php">
+                <input type="hidden" name="chat_date" value="2022-02-12 10:02">
+                <input type="hidden" name="sender_idspProfiles" value="997">
+                <input type="hidden" name="receiver_idspProfiles" value="574">
+                <div class="form-group">
+                    <label for="spPostingPrice_" class="price_label">Price</label><br>
+                    <label class="radio-inline" for="spPostingPrice_">
+                        <input type="radio" class="spPostField fixedprice" data-filter="0" id="spfixedPrice" name="PriceFixed" checked="" value="Fixed">Fixed Price</label>
+                        <label class="radio-inline" for="spPostingPrice_"><input type="radio" class="spPostField hourlyrate" data-filter="0" id="spfixedPrice" name="PriceFixed" value="Hourly">Hourly Rate</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control activity" id="bidPrice" name="bidPrice" data-filter="0" placeholder="Bid Price...." maxlength="8" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control inputField-textarea" id="myMessage" name="chat_conversation" placeholder="Message">                                
+                        </textarea>
+                    </div>
+                    <div class="form-group">
+                        <input type="button" id="FormSubmitButton" class="form-control inputSubmitField sendbtn" onclick="return message_submit()" value="Hire">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="user-menu-content">
+            <h3>TOP Skills</h3>
+            <span class="label label-default">Mobile Apps Development</span>
+            <span class="label label-default">Website Design</span>
+            <span class="label label-default">Graphics</span>
+            <span class="label label-default">Adobe Suit</span>
+            <span class="label label-default">Digital Marketing</span>
+            <span class="label label-default">Cloud Serving</span>
+            <span class="label label-default">Video Editing</span>
+            <span class="label label-default">Video Promo</span>
+            <span class="label label-default">Default Label</span>
+            <span class="label label-default">Default Label</span>
+        </div>
+        <div class="user-menu-content">
+            <h3>Certifications</h3>
+            <!-- Left-aligned media object -->
+            <div class="media">
+                <div class="media-left">
+                    <img src="img/google-certification.png" class="media-object img-round" style="width:60px">
+                </div>
+                <div class="media-body">
+                  <h4 class="media-heading">Google Certification</h4>
+                  <p>Lorem ipsum dolor sit amet, </p>
+              </div>
+          </div>
+          <hr>
+      </div> 
+      <div class="user-menu-content">
+        <h3>Verification</h3>
+        <ul class="user-menu-list">
+            <li>
+                <h4><i class="fa fa-user coral"></i> Identitiy</h4>
+            </li>
+            <li>
+                <h4><i class="fa fa-phone coral"></i> Phone</h4>
+            </li>
+            <li>
+                <h4><i class="fa fa-envelope-o coral"></i> Email</h4>
+            </li>
+            <li>
+                <h4><i class="fa fa-usd coral"></i> Payment</h4>
+            </li>
+        </ul>
+    </div>
+</div> 
+</div>    
+
+
+</div>
+
+</section>
+<section>
+    <div class="container">
+        <div class="row user-menu-container square">
+            <div class="col-md-12 p15">
+                <h4>Portfolio Items</h4>
+                <div class="col-12 text-center w-100">
+                    <div class="form-row gallery">
+                        <div class="col-sm-6 col-lg-4 mb-2 interior">
+                            <div class="portfolio-wrapper">
+                                <div class="portfolio-image">
+                                    <img src="https://via.placeholder.com/350x350/FFB6C1/000000" alt="..." />
+                                </div>
+                                <div class="portfolio-overlay">
+                                    <div class="portfolio-content">
+                                        <a class="popimg ml-0" href="#">
+                                            <i class="ti-zoom-in display-24 display-md-23 display-lg-22 display-xl-20"></i>
+                                        </a>
+                                        <h4>Logo designs</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-4 mb-2 decor interior">
+                            <div class="portfolio-wrapper">
+                                <div class="portfolio-image">
+                                    <img src="https://via.placeholder.com/350x350/87CEFA/000000" alt="..." />
+                                </div>
+                                <div class="portfolio-overlay">
+                                    <div class="portfolio-content">
+                                        <a class="popimg ml-0" href="#">
+                                            <i class="ti-zoom-in display-24 display-md-23 display-lg-22 display-xl-20"></i>
+                                        </a>
+                                        <h4>Logo designs</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-4 mb-2 architecture">
+                            <div class="portfolio-wrapper">
+                                <div class="portfolio-image">
+                                    <img src="https://via.placeholder.com/350x350/C71585/000000" alt="..." />
+                                </div>
+                                <div class="portfolio-overlay">
+                                    <div class="portfolio-content">
+                                        <a class="popimg ml-0" href="#">
+                                            <i class="ti-zoom-in display-24 display-md-23 display-lg-22 display-xl-20"></i>
+                                        </a>
+                                        <h4>Logo designs</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-4 mb-2 mb-lg-0 interior">
+                            <div class="portfolio-wrapper">
+                                <div class="portfolio-image">
+                                    <img src="https://via.placeholder.com/350x350/20B2AA/000000" alt="..." />
+                                </div>
+                                <div class="portfolio-overlay">
+                                    <div class="portfolio-content">
+                                        <a class="popimg ml-0" href="#">
+                                            <i class="ti-zoom-in display-24 display-md-23 display-lg-22 display-xl-20"></i>
+                                        </a>
+                                        <h4>Logo designs</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-4 mb-2 mb-sm-0 architecture">
+                            <div class="portfolio-wrapper">
+                                <div class="portfolio-image">
+                                    <img src="https://via.placeholder.com/350x350/FFA07A/000000" alt="..." />
+                                </div>
+                                <div class="portfolio-overlay">
+                                    <div class="portfolio-content">
+                                        <a class="popimg ml-0" href="#">
+                                            <i class="ti-zoom-in display-24 display-md-23 display-lg-22 display-xl-20"></i>
+                                        </a>
+                                        <h4>Logo designs</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-4 decor">
+                            <div class="portfolio-wrapper">
+                                <div class="portfolio-image">
+                                    <img src="https://via.placeholder.com/350x350/9932CC/000000" alt="..." />
+                                </div>
+                                <div class="portfolio-overlay">
+                                    <div class="portfolio-content">
+                                        <a class="popimg ml-0" href="#">
+                                            <i class="ti-zoom-in display-24 display-md-23 display-lg-22 display-xl-20"></i>
+                                        </a>
+                                        <h4>Logo designs</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="container">
+        <div class="row user-menu-container square">
+            <div class="col-md-12 p15">
+                <h4>Reviews</h4>
+                <!-- Left-aligned media object -->
+                <div class="media">
+                    <div class="media-left">
+                        <img src="img/google-certification.png" class="media-object img-round" style="width:60px">
+                    </div>
+                    <div class="media-body">
+                        <div style="display: inline-block;">
+                            <i class="fa fa-star coral"></i>
+                            <i class="fa fa-star coral"></i>
+                            <i class="fa fa-star coral"></i>
+                            <i class="fa fa-star coral"></i>
+                            <i class="fa fa-star-o coral"></i>
+                            <span>4 Rating</span>
+                        </div>
+                        <h4 class="media-heading">Jhone</h4>
+                        <p>Lorem ipsum dolor sit amet, </p>
+                        <span class="pull-right bolder"><h2>$ 100</h2></span>
+                    </div>
+                </div>
+                <hr>
+                <!-- Left-aligned media object -->
+                <div class="media">
+                    <div class="media-left">
+                        <img src="img/google-certification.png" class="media-object img-round" style="width:60px">
+                    </div>
+                    <div class="media-body">
+                        <div style="display: inline-block;">
+                            <i class="fa fa-star coral"></i>
+                            <i class="fa fa-star coral"></i>
+                            <i class="fa fa-star coral"></i>
+                            <i class="fa fa-star coral"></i>
+                            <i class="fa fa-star-o coral"></i>
+                            <span>4 Rating</span>
+                        </div>
+                        <h4 class="media-heading">Jhone</h4>
+                        <p>Lorem ipsum dolor sit amet, </p>
+                        <span class="pull-right bolder"><h2>$ 100</h2></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="container">
+        <div class="row user-menu-container square">
+            <div class="col-md-12 p15">
+                <h4>Experience</h4>
+                <ul>
+                    <h3>Head Of IT Department</h3>
+                    <h4>IZMA Group</h4>
+                    <li>Apr 2009 - Present</li>
+                    <li>Leading IT Inhouse team.</li>
+                </ul>                
+            </div>
+        </div>        
+    </div>
+    <div class="container">
+        <div class="row user-menu-container square">
+            <div class="col-md-12 p15">
+                <h4>Education</h4>
+                <ul>
+                    <h3>Master Information Technology</h3>
+                    <h4>Virtual University</h4>
+                    <li>Apr 2000 - Aug 2000</li>
+                    <li>Leanig Computer Programing</li>
+                </ul>                
+            </div>
+        </div>        
+    </div>
+</section>
+
+<script>
+   $(document).ready(function() {
+    var $btnSets = $('#responsive'),
+    $btnLinks = $btnSets.find('a');
+
+    $btnLinks.click(function(e) {
+     e.preventDefault();
+     $(this).siblings('a.active').removeClass("active");
+     $(this).addClass("active");
+     var index = $(this).index();
+     $("div.user-menu>div.user-menu-content").removeClass("active");
+     $("div.user-menu>div.user-menu-content").eq(index).addClass("active");
+ });
+});
+
+    //    $( document ).ready(function() {
+    //     $("[rel='tooltip']").tooltip();    
+
+    //     $('.view').hover(
+    //      function(){
+    //         $(this).find('.caption').slideDown(250); //.fadeIn(250)
+    //     },
+    //     function(){
+    //         $(this).find('.caption').slideUp(250); //.fadeOut(205)
+    //     }
+    //     ); 
+    // });
+
+</script>
+</script>
+
+</body>
+</html>

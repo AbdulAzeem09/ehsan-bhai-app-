@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Promotional Activities</title>
+
+	<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<!-- Template Main CSS File -->
+	<link href="assets/css/style.css" rel="stylesheet">
+	<style type="text/css">
+		#sidebar {
+			min-width: 270px;
+			max-width: 270px;
+			background: #0d3b28;
+			color: #fff;
+			-webkit-transition: all 0.3s;
+			-o-transition: all 0.3s;
+			transition: all 0.3s;
+			position: relative;
+		}
+		.btn-ld{
+			background-color: var(--luckydraw);
+			color: #fff;
+		}
+		#sidebar .custom-menu .btn {
+			width: 60px;
+			height: 60px;
+			border-radius: 50%;
+			position: relative;
+		}
+		#sidebar .custom-menu .btn i {
+			margin-right: -40px;
+			font-size: 14px;
+		}
+		#sidebar .custom-menu .btn.btn-ld {
+			background: transparent;
+			border-color: transparent;
+		}
+		#sidebar .custom-menu .btn.btn-ld:after {
+			z-index: -1;
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			content: "";
+			-webkit-transform: rotate(45deg);
+			-ms-transform: rotate(45deg);
+			transform: rotate(45deg);
+			background: var(--luckydraw);
+			border-radius: 10px;
+		}
+		#sidebar .custom-menu .btn.btn-ld:hover,
+		#sidebar .custom-menu .btn.btn-ld:focus {
+			background: transparent; !important;
+			border-color: transparent!important;
+		}
+		#sidebar ul li a span {
+			color: #f4f4f4;
+		}
+	</style>
+</head>
+<body>
+	
+	<!-- ======= Hero Section ======= -->
+	<section id="luckydraw">
+		<div class="hero-container" data-aos="fade-up">
+			<h1>Wish you best of <span>Luck</span></h1>
+			<h2>$50 to $200 get instantly by inviting your friends on The SharePage via lucky draw</h2>
+			<a href="#" class="btn-get-started scrollto">Invite your Friend</a>
+		</div>
+	</section><!-- End Hero -->
+
+	<div class="wrapper d-flex align-items-stretch">
+		<nav id="sidebar">
+			<div class="custom-menu">
+				<button type="button" id="sidebarCollapse" class="btn btn-ld">
+					<i class="fa fa-bars"></i>
+					<span class="sr-only">Toggle Menu</span>
+				</button>
+			</div>
+			<div class="p-4">
+				<h1>
+					<a href="index.html" class="logo">Promo Rewards <span>The ShaprePage</span></a>
+				</h1>
+				<ul class="list-unstyled components mb-5">					
+					<li>
+						<a href="luckydraw.html" class="active"><span class="fa fa-sticky-note mr-3"></span> How It Works</a>
+					</li>
+					<li>
+						<a href="ldperformance.html"><span class="fa fa-briefcase mr-3"></span> Perfromace</a>
+					</li>															
+					<li>
+						<a href="ldtransaction.html"><span class="fa fa-suitcase mr-3"></span> Transaction History</a>
+					</li>					
+					<li>
+						<a href="ldsupport.html"><span class="fa fa-paper-plane mr-3"></span> Support</a>
+					</li>					
+					<li>
+						<a href="ldprofile.html"><span class="fa fa-paper-plane mr-3"></span> Profile</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+
+		<!-- Page Content  -->
+		<div id="content" class="p-4 p-md-5 pt-5">
+			<h2 class="mb-4">How It works</h2>
+			<p>
+				Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+			</p>
+			<img src="https://www.primetechdigital.com/wp-content/uploads/2017/12/how-it-works.png" class="img-fluid">
+			<ul>
+				<li>step 1</li>
+				<li>step 2</li>
+				<li>step 3</li>
+				<li>step 4</li>
+			</ul>
+		</div>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		(function ($) {
+			"use strict";
+			var fullHeight = function () {
+				$(".js-fullheight").css("height", $(window).height());
+				$(window).resize(function () {
+					$(".js-fullheight").css("height", $(window).height());
+				});
+			};
+			fullHeight();
+			$("#sidebarCollapse").on("click", function () {
+				$("#sidebar").toggleClass("active");
+			});
+		})(jQuery);
+	</script>
+	
+	
+	<script src="assets//js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
