@@ -27,7 +27,11 @@ spl_autoload_register("sp_autoloader");
         <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
         <link rel="stylesheet" href="image/bootstrap-4.0.0-dist/css/bootstrap.css">
-        <link rel="stylesheet" href="image/bootstrap-4.0.0-dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="<?php echo $BaseUrl?>/css/bootstrap.min.css">
+        <link rel="stylesheet" href="<?php echo $BaseUrl?>/css/jquery-ui.min.css">
+        <link rel="stylesheet" href="<?php echo $BaseUrl?>/css/home.css">
+        <link rel="stylesheet" href="<?php echo $BaseUrl?>/css/custom.css">
+        <link rel="stylesheet" href="<?php echo $BaseUrl?>/css/style.css">
         <link rel="stylesheet" href="<?php echo $BaseUrl?>/assets/css/new-homepage.css">
         <link rel="stylesheet" href="<?php echo $BaseUrl?>/assets/css/custom.css">
         <link rel="stylesheet" href="<?php echo $BaseUrl?>/assets/css/time-line.css">

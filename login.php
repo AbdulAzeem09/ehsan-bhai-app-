@@ -8,6 +8,13 @@
 include("./univ/baseurl.php");
 include('component/f_links.php');?>
 <!-- PAGE LINKS -->
+<!-- CSS from /css directory -->
+<link rel="stylesheet" href="<?php echo $BaseUrl; ?>/css/bootstrap.min.css">
+<link rel="stylesheet" href="<?php echo $BaseUrl; ?>/css/jquery-ui.min.css">
+<link rel="stylesheet" href="<?php echo $BaseUrl; ?>/css/home.css">
+<link rel="stylesheet" href="<?php echo $BaseUrl; ?>/css/custom.css">
+<link rel="stylesheet" href="<?php echo $BaseUrl; ?>/css/style.css">
+<!-- END CSS -->
 
 <script src="<?php echo $BaseUrl; ?>/assets/js/register_script.js?<?php echo rand(); ?>"></script>
 <!-- END -->

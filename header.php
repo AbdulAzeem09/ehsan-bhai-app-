@@ -78,6 +78,13 @@ if ($res != false) {
 <script type="text/javascript"
         src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/16.0.8/js/intlTelInput-jquery.min.js"></script>
 
+<!-- CSS from /css directory -->
+<link rel="stylesheet" href="<?php echo $BaseUrl; ?>/css/bootstrap.min.css">
+<link rel="stylesheet" href="<?php echo $BaseUrl; ?>/css/jquery-ui.min.css">
+<link rel="stylesheet" href="<?php echo $BaseUrl; ?>/css/home.css">
+<link rel="stylesheet" href="<?php echo $BaseUrl; ?>/css/custom.css">
+<link rel="stylesheet" href="<?php echo $BaseUrl; ?>/css/style.css">
+
 <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>-->
 
 <!--css from views/common/header.php-->
